@@ -18,6 +18,3 @@ Servers/
 # OS 생성 파일
 .DS_Store
 Thumbs.db
-
-#git dummy
-*.gitkeep
