@@ -1,1 +1,20 @@
-/build/
+# Eclipse 설정 파일 및 폴더
+.metadata/
+.settings/
+.project
+.classpath
+.recommenders/
+
+# Build & Output 결과물 (Dynamic Web Project)
+bin/
+build/
+target/
+*.class
+
+# Tomcat / 서버 로컬 세팅 및 로그
+Servers/
+*.log
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
