@@ -8,14 +8,26 @@
 `src/main/webapp/WEB-INF/views/`
 - **auth/**: 로그인, 회원가입 관련
 - **board/**: 게시판 관련
-- **layout/**: header, footer 등 공통 레이아웃
+- **includes/**: header, footer 등 공통 레이아웃
+- **admin/**: 관리자 페이지
+- **error/**: 에러 페이지
+- **user/**: 사용자 페이지(마이페이지 등)
 
 ## 🔹 Java 클래스 위치
 `src/main/java/com/jsl/`
 - **controller/**: 서블릿 (URL 요청 처리)
+- **service/**  화면(Controller)과 DB(DAO) 사이에서 실제 비즈니스 로직(검증, 계산, 조건 처리)을 담당하는 클래스
 - **dao/**: DB 접근 객체
 - **dto/**: 데이터 전달 객체
 - **util/**: DBManager, EncodingFilter 등 공통 유틸
+
+- 💡 บทบาท 구분 (왜 Service를 쓰나요?)
+
+Controller (서블릿): 요청을 받고, 어느 화면(JSP)으로 이동할지 길 안내만 담당
+
+Service: 실제 머리 쓰는 일 (아이디 중복 검사, 가입 자격 확인, 계산 등)
+
+DAO: DB에서 데이터를 빼오거나 넣는 일만 담당  
 
 ---
 
