@@ -86,3 +86,80 @@
    - `EncodingFilter`가 세팅되어 있으므로 서블릿마다 `request.setCharacterEncoding("UTF-8")`을 별도로 작성하지 않아도 됩니다.
 4. **에러 발생 시:**
    - 이클립스 콘솔창에 빨간 줄(Exception)이 뜨면, **가장 위쪽에 찍힌 첫 번째 에러 메시지**를 복사해서 팀장에게 문의해 주세요.
+
+## 📐 네이밍 규칙 (Naming Conventions)
+
+코드의 일관성과 가독성을 위해 표기법 가이드 및 명명 규칙을 엄격히 준수합니다.
+
+### 🔤 표기법 요약 (Case Styles)
+
+| 표기법 | 명명 형태 | 설명 및 예시 | 주요 사용처 |
+| :--- | :--- | :--- | :--- |
+| **camelCase** | 소문자 시작 + 단어 조합 대문자 | `userId`, `boardList`, `submitBtn` | Java 변수/메서드, JS 변수/함수, HTML ID |
+| **PascalCase** | 대문자 시작 + 단어 조합 대문자 | `BoardController`, `UserDAO` | Java 클래스/인터페이스/컨트롤러 |
+| **kebab-case** | 전체 소문자 + 하이픈(`-`) 연결 | `board-list`, `danger-marker` | HTML Class, URL Path, CSS 스타일 |
+| **SNAKE_CASE** | 전체 대문자 + 언더바(`_`) 연결 | `BOARD_NO`, `MAX_FILE_SIZE` | DB 테이블/컬럼, Java 상수 |
+
+---
+
+### 1. Java (Backend)
+- **컨트롤러명 (Controller)**: `PascalCase` (`[도메인]Controller` 형태)
+  - `BoardController` (`@WebServlet("/board/*")`), `UserController`
+- **DAO / DTO / Service 명**: `PascalCase`
+  - `BoardDAO`, `UserDAO`, `DangerZoneDTO`
+- **변수명 및 메서드명**: `camelCase`
+  - `selectBoardList()`, `dangerZoneList`, `userId`
+- **상수 (Constant)**: `UPPER_SNAKE_CASE`
+  - `MAX_FILE_SIZE`, `DEFAULT_PAGE_SIZE`
+- **패키지명 (Package)**: `lowercase` (전체 소문자)
+  - `com.bear.controller`, `com.bear.dao`, `com.bear.dto`
+
+### 2. Database (Oracle DB)
+- **테이블명 및 컬럼명**: `UPPER_SNAKE_CASE`
+  - 테이블: `BEAR_BOARDS`, `BEAR_DANGER_ZONES`
+  - 컬럼: `BOARD_NO`, `DANGER_LEVEL`, `CREATED_AT`
+- **시퀀스 (Sequence)**: `UPPER_SNAKE_CASE` (`SEQ_[테이블명]_[PK]`)
+  - `SEQ_BEAR_BOARDS_NO`
+
+### 3. Frontend & Web Path
+- **JSP 파일명**: `camelCase` 또는 `lowercase`
+  - `bearMap.jsp`, `boardList.jsp`, `boardWrite.jsp`
+- **URL / Servlet Mapping 경로**: RESTful 스타일 `kebab-case` (확장자 `.do` 제거)
+  - `/board/list`, `/board/write`, `/board/detail`
+  - `/user/login`, `/user/signup`
+- **JavaScript 변수/함수명**: `camelCase`
+  - `initMap()`, `drawDangerZone()`, `selectedLat`
+- **HTML DOM ID / Class**:
+  - `id`: `camelCase` (JS 제어 및 식별 목적 / 예: `#mapContainer`, `#submitBtn`)
+  - `class`: `kebab-case` (CSS 스타일링 목적 / 예: `.danger-marker`, `.board-table`)
+ 
+### 2. Database (Oracle DB) & DAO SQL 작성 규칙
+- **테이블명 및 컬럼명**: `UPPER_SNAKE_CASE` (DB DDL 정의 시)
+  - 테이블: `BEAR_BOARDS`, `BEAR_DANGER_ZONES`
+  - 컬럼: `BOARD_NO`, `DANGER_LEVEL`, `CREATED_AT`
+- **시퀀스 (Sequence)**: `UPPER_SNAKE_CASE` (`SEQ_[테이블명]_[PK]`)
+  - `SEQ_BEAR_BOARDS_NO`
+
+#### ✍️ DAO 클래스 내 SQL 쿼리 대소문자 작성 규칙
+Java DAO 파일 내부에서 PreparedStatement용 SQL 문을 작성할 때 아래 가이드를 준수합니다.
+
+1. **SQL 예약어 / 키워드**: `전체 대문자` 사용
+   - `SELECT`, `FROM`, `WHERE`, `INSERT INTO`, `VALUES`, `UPDATE`, `SET`, `DELETE`, `ORDER BY`, `AND`, `OR` 등
+2. **테이블명 및 컬럼명**: `전체 대문자` (`UPPER_SNAKE_CASE`) 사용
+   - Oracle DB 스키마와 일치시켜 가독성 확보 (`BEAR_BOARDS`, `TITLE`, `CREATED_AT`)
+3. **컬럼 별칭 (Alias)**: `소문자` 또는 `camelCase` 사용 (필요 시 큰따옴표 `" "` 활용)
+   - 예: `COUNT(*) AS totalCount`
+4. **Java 내 텍스트 블록 / String 작성 가이드**:
+   - 가독성을 위해 각 절(`SELECT`, `FROM`, `WHERE` 등)마다 줄바꿈 및 들여쓰기 적용
+
+**[DAO SQL 작성 예시]**
+```java
+// 게시글 목록 조회 쿼리 예시
+String sql = "SELECT BOARD_NO, USER_ID, TITLE, DANGER_LEVEL, READ_COUNT, CREATED_AT "
+           + "FROM BEAR_BOARDS "
+           + "WHERE DANGER_LEVEL = ? "
+           + "ORDER BY BOARD_NO DESC";
+
+// 신규 제보 등록 쿼리 예시
+String sql = "INSERT INTO BEAR_BOARDS (BOARD_NO, USER_ID, TITLE, CONTENT, LATITUDE, LONGITUDE, DANGER_LEVEL) "
+           + "VALUES (SEQ_BEAR_BOARDS_NO.NEXTVAL, ?, ?, ?, ?, ?, ?)";
