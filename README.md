@@ -98,7 +98,6 @@
 | **camelCase** | 소문자 시작 + 단어 조합 대문자 | `userId`, `boardList`, `submitBtn` | Java 변수/메서드, JS 변수/함수, HTML ID |
 | **PascalCase** | 대문자 시작 + 단어 조합 대문자 | `BoardController`, `UserDAO` | Java 클래스/인터페이스/컨트롤러 |
 | **kebab-case** | 전체 소문자 + 하이픈(`-`) 연결 | `board-list`, `danger-marker` | HTML Class, URL Path, CSS 스타일 |
-| **snake_case** | 전체 소문자 + 언더바(`_`) 연결 | `user_id`, `board_list`, `created_at` | Python 변수/함수, DB 컬럼 소문자 표기, JSON 키 |
 | **SNAKE_CASE** | 전체 대문자 + 언더바(`_`) 연결 | `BOARD_NO`, `MAX_FILE_SIZE` | DB 테이블/컬럼(대문자), Java 상수 |
 ---
 
