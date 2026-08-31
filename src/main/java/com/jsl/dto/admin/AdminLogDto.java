@@ -1,6 +1,6 @@
 package com.jsl.dto.admin;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AdminLogDto {
 	
@@ -10,7 +10,7 @@ public class AdminLogDto {
 	private int targetId; //대상 글 번호
 	private String actionType; //APPROVE/REJECT/DELETE/CLEAR
 	private String actionMemo; //처리 사유 메모
-	private Date actionDate; //처리 일시
+	private LocalDateTime actionDate; //처리 일시
 	
 	public Long getLogId() {
 		return logId;
@@ -48,10 +48,10 @@ public class AdminLogDto {
 	public void setActionMemo(String actionMemo) {
 		this.actionMemo = actionMemo;
 	}
-	public Date getActionDate() {
+	public LocalDateTime getActionDate() {
 		return actionDate;
 	}
-	public void setActionDate(Date actionDate) {
+	public void setActionDate(LocalDateTime actionDate) {
 		this.actionDate = actionDate;
 	}
 	

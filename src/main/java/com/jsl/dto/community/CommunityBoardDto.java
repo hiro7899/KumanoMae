@@ -1,6 +1,6 @@
 package com.jsl.dto.community;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class CommunityBoardDto {
 	
@@ -13,8 +13,8 @@ public class CommunityBoardDto {
 	private int viewCnt; //조회수
 	private int likeCnt; //추천수
 	private String status; //Y:노출, N:삭제
-	private Date regDate; //등록일
-	private Date modDate; //수정일
+	private LocalDateTime regDate; //등록일
+	private LocalDateTime modDate; //수정일
 	
 	public Long getcBoardId() {
 		return cBoardId;
@@ -70,16 +70,16 @@ public class CommunityBoardDto {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Date getRegDate() {
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
-	public Date getModDate() {
+	public LocalDateTime getModDate() {
 		return modDate;
 	}
-	public void setModDate(Date modDate) {
+	public void setModDate(LocalDateTime modDate) {
 		this.modDate = modDate;
 	}
 	
