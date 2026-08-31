@@ -1,6 +1,6 @@
 package com.jsl.dto.board;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class BoardDto {
 
@@ -12,15 +12,15 @@ public class BoardDto {
 	private int latitude; //위도
 	private int longitude; //경도
 	private String address; //Geocoder 자동 변환 주소
-	private Date sightingDate; //목격 일시
+	private LocalDateTime sightingDate; //목격 일시
 	private String situationTag; //목격 당시 상황 태그
 	private int viewCnt; //조회수
 	private String status; //W:승인대기, Y:승인, N:반려
 	private String clearYn; //위험 해제 여부(Y=안심마커 전환)
-	private Date clearDate; //위험 해제 처리일
+	private LocalDateTime clearDate; //위험 해제 처리일
 	private String clearMemo; //위험 해제 사유
-	private Date regDate; //등록일
-	private Date modDate; //수정일
+	private LocalDateTime regDate; //등록일
+	private LocalDateTime modDate; //수정일
 	
 	public Long getBoardId() {
 		return boardId;
@@ -70,10 +70,10 @@ public class BoardDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Date getSightingDate() {
+	public LocalDateTime getSightingDate() {
 		return sightingDate;
 	}
-	public void setSightingDate(Date sightingDate) {
+	public void setSightingDate(LocalDateTime sightingDate) {
 		this.sightingDate = sightingDate;
 	}
 	public String getSituationTag() {
@@ -100,10 +100,10 @@ public class BoardDto {
 	public void setClearYn(String clearYn) {
 		this.clearYn = clearYn;
 	}
-	public Date getClearDate() {
+	public LocalDateTime getClearDate() {
 		return clearDate;
 	}
-	public void setClearDate(Date clearDate) {
+	public void setClearDate(LocalDateTime clearDate) {
 		this.clearDate = clearDate;
 	}
 	public String getClearMemo() {
@@ -112,16 +112,16 @@ public class BoardDto {
 	public void setClearMemo(String clearMemo) {
 		this.clearMemo = clearMemo;
 	}
-	public Date getRegDate() {
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
-	public Date getModDate() {
+	public LocalDateTime getModDate() {
 		return modDate;
 	}
-	public void setModDate(Date modDate) {
+	public void setModDate(LocalDateTime modDate) {
 		this.modDate = modDate;
 	}
 	

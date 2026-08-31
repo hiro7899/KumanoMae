@@ -1,14 +1,14 @@
 package com.jsl.dto.community;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class CommunityComment {
+public class CommunityCommentDto {
 
 	private Long cCommentId; //댓글 번호
 	private Long cBoardId; //소속 게시글
 	private Long memberId; //작성자
 	private String content; //댓글 내용
-	private Date regDate; //등록일
+	private LocalDateTime regDate; //등록일
 	
 	public Long getcCommentId() {
 		return cCommentId;
@@ -34,10 +34,10 @@ public class CommunityComment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getRegDate() {
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
 	

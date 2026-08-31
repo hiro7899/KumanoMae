@@ -1,13 +1,13 @@
 package com.jsl.dto.community;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class CommunityLike {
+public class CommunityLikeDto {
 
 	private Long cLikeId; //추천 번호
 	private Long cBoardId; //대상 게시글
 	private Long memberId; //추천 회원
-	private Date regDate; //추천일
+	private LocalDateTime regDate; //추천일
 	
 	public Long getcLikeId() {
 		return cLikeId;
@@ -27,10 +27,10 @@ public class CommunityLike {
 	public void setMemberId(Long memberId) {
 		this.memberId = memberId;
 	}
-	public Date getRegDate() {
+	public LocalDateTime getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
 	
