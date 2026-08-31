@@ -1,6 +1,6 @@
 package com.jsl.dto.community;
 
-public class CommunityFile {
+public class CommunityFileDto {
 
 	private Long cFileId; //파일 번호
 	private Long cBoardId; //소속 게시글
