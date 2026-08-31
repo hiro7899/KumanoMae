@@ -13,6 +13,15 @@
 		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
 
+	<servlet-mapping>
+    <servlet-name>default</servlet-name>
+	    <url-pattern>/resources/*</url-pattern>
+	    <url-pattern>*.css</url-pattern>
+	    <url-pattern>*.js</url-pattern>
+	    <url-pattern>*.png</url-pattern>
+	    <url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+
 	<!-- error pages
 	 <error-page>
 		<error-code>404</error-code>
