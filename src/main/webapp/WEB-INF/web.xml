@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
 	<display-name>KumanoMae</display-name>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
@@ -13,17 +14,34 @@
 		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
 
+	<!-- 정적 리소스용 Default Servlet 매핑 (각 url-pattern 별로 개별 지정) -->
 	<servlet-mapping>
-    <servlet-name>default</servlet-name>
-	    <url-pattern>/resources/*</url-pattern>
-	    <url-pattern>*.css</url-pattern>
-	    <url-pattern>*.js</url-pattern>
-	    <url-pattern>*.png</url-pattern>
-	    <url-pattern>*.jpg</url-pattern>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/resources/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
 	</servlet-mapping>
 
 	<!-- error pages
-	 <error-page>
+	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/error/404.jsp</location>
 	</error-page>
