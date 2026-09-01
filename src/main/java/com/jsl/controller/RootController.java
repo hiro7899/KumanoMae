@@ -31,10 +31,9 @@ public class RootController extends HttpServlet {
 		doAction(request, response);
 	}
 
-	protected void doAction(HttpServletRequest request, HttpServletResponse response)
+	private void doAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// exact-match 패턴이므로 getServletPath()가 "/login", "/logout" 등을 그대로 반환
 		String action = request.getServletPath();
 		String page = null;
 
@@ -56,7 +55,6 @@ public class RootController extends HttpServlet {
 					response.sendRedirect("/");
 					return;
 				}
-				// 로그인 실패 시 errorMsg를 request에 담아 폼 재출력
 				page = "/WEB-INF/views/auth/login.jsp";
 			}
 			break;
@@ -81,7 +79,7 @@ public class RootController extends HttpServlet {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			} else {
 				new FindPasswordService().doCommand(request, response);
-				page = "/WEB-INF/views/auth/find_pw.jsp"; // 처리 결과 메시지와 함께 재출력
+				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
 		case "/board/List":
