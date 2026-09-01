@@ -37,7 +37,7 @@
 
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="boardList.jsp">
+                            <a class="dropdown-item" href="/board/List">
                                 ユーザーコミュニティ
                             </a>
                         </li>
@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="/board/News">
                                 ニュース掲示板
                             </a>
                         </li>
