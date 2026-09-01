@@ -40,11 +40,6 @@ public class MapController extends HttpServlet {
         String path = request.getPathInfo();
 
         switch (path) {
-
-            case "/test":
-                testApiKey(response);
-                break;
-                
             case "/view":
                 request.setAttribute(
                     "googleMapsApiKey",
@@ -81,28 +76,4 @@ public class MapController extends HttpServlet {
         response.getWriter().write(json);
     }
 
-    private void testApiKey(HttpServletResponse response)
-            throws IOException {
-
-        String apiKey = System.getenv("GOOGLE_MAPS_API_KEY");
-
-        boolean isConfigured =
-                apiKey != null && !apiKey.isEmpty();
-
-        System.out.println(
-                "Google Maps API Key configured: "
-                + isConfigured
-        );
-
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-
-        if (isConfigured) {
-            response.getWriter()
-                    .write("Google Maps API Key configured.");
-        } else {
-            response.getWriter()
-                    .write("Google Maps API Key is not configured.");
-        }
-    }
 }
