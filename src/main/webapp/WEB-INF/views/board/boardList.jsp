@@ -17,78 +17,95 @@
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 
 </head>
-<nav class="navbar navbar-expand-lg navbar-jp">
-	<div
-		class="container d-flex align-items-center justify-content-between">
-		<a href="/" class="d-flex align-items-center text-decoration-none">
-			<div class="logo-badge me-2">熊</div>
-			<div class="brand-jp">
-				<div class="jp-title">クマ出没マップ</div>
-				<div class="jp-sub">KUMA SHUTSUBOTSU MAP</div>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-jp">
+		<div
+			class="container d-flex align-items-center justify-content-between">
+			<a href="/" class="d-flex align-items-center text-decoration-none">
+				<div class="logo-badge me-2">熊</div>
+				<div class="brand-jp">
+					<div class="jp-title">クマ出没マップ</div>
+					<div class="jp-sub">KUMA SHUTSUBOTSU MAP</div>
+				</div>
+			</a>
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+				aria-controls="mainNavbar" aria-expanded="false"
+				aria-label="メニューを開く">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse flex-grow-0" id="mainNavbar">
+				<ul class="navbar-nav mx-lg-4 mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link" href="#mapSection">出没マップ</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">目撃情報掲示板</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">ログイン</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">会員登録</a></li>
+				</ul>
 			</div>
-		</a>
 
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-			data-bs-target="#mainNavbar" aria-controls="mainNavbar"
-			aria-expanded="false" aria-label="メニューを開く">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse flex-grow-0" id="mainNavbar">
-			<ul class="navbar-nav mx-lg-4 mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link" href="#mapSection">出没マップ</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">目撃情報掲示板</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">ログイン</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">会員登録</a></li>
-			</ul>
 		</div>
+	</nav>
+	<section class="container my-5">
+		<h2>ユーザーコミュニティ</h2>
 
-	</div>
-</nav>
-<section class="container my-5">
-	<h2>유저 커뮤니티</h2>
+<!-- 필터 + 글쓰기 버튼을 한 줄로 양끝 정렬 -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- 왼쪽: 카테고리 필터 -->
+    <div class="d-flex gap-2">
+        <button class="btn btn-jp-mustard btn-sm">すべて</button>
+        <button class="btn btn-jp-outline btn-sm">登山道情報</button>
+        <button class="btn btn-jp-outline btn-sm">クマ目撃討論</button>
+    </div>
 
-	<div class="row g-4">
-		<div class="col-md-6 col-lg-4">
+    <!-- 오른쪽: 글쓰기 버튼 -->
+    <a href="${pageContext.request.contextPath}/boardWrite.jsp" class="btn btn-jp-mustard btn-sm fw-bold">
+        <i class="bi bi-pencil-fill me-1"></i>新規投稿
+    </a>
+</div>
+		<div class="row g-4">
+			<div class="col-md-6 col-lg-4">
 
-			<div class="card h-100 report-card">
-				<img
-					src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-					class="card-img-top" alt="クマ出没イメージ">
-				<div class="card-body d-flex flex-column">
-					<span class="badge badge-danger-custom mb-2 align-self-start">危険</span>
-					<h5 class="card-title">札幌近郊の登山道でクマを発見</h5>
-					<p class="mb-1 text-muted small">
-						<i class="bi bi-geo-alt-fill"></i> 北海道札幌市
-					</p>
-					<p class="mb-2 text-muted small">
-						<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
-					</p>
-					<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
+				<div class="card h-100 report-card">
+					<img
+						src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
+						class="card-img-top" alt="クマ出没イメージ">
+					<div class="card-body d-flex flex-column">
+						<span class="badge badge-danger-custom mb-2 align-self-start">危険</span>
+						<h5 class="card-title">札幌近郊の登山道でクマを発見</h5>
+						<p class="mb-1 text-muted small">
+							<i class="bi bi-geo-alt-fill"></i> 北海道札幌市
+						</p>
+						<p class="mb-2 text-muted small">
+							<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
+						</p>
+						<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-6 col-lg-4">
+				<div class="card h-100 report-card">
+					<img
+						src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
+						class="card-img-top" alt="クマ出没イメージ">
+					<div class="card-body d-flex flex-column">
+						<span class="badge badge-danger-custom mb-2 align-self-start">危険</span>
+						<h5 class="card-title">札幌近郊の登山道でクマを発見</h5>
+						<p class="mb-1 text-muted small">
+							<i class="bi bi-geo-alt-fill"></i> 北海道札幌市
+						</p>
+						<p class="mb-2 text-muted small">
+							<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
+						</p>
+						<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
+					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="col-md-6 col-lg-4">
-			<div class="card h-100 report-card">
-				<img
-					src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-					class="card-img-top" alt="クマ出没イメージ">
-				<div class="card-body d-flex flex-column">
-					<span class="badge badge-danger-custom mb-2 align-self-start">危険</span>
-					<h5 class="card-title">札幌近郊の登山道でクマを発見</h5>
-					<p class="mb-1 text-muted small">
-						<i class="bi bi-geo-alt-fill"></i> 北海道札幌市
-					</p>
-					<p class="mb-2 text-muted small">
-						<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
-					</p>
-					<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+	</section>
 
 </body>
 </html>
