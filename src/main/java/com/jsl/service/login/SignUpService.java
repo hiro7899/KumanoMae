@@ -29,6 +29,6 @@ public class SignUpService implements Command {
         member.setPhone(phone != null && !phone.isEmpty() ? phone : null);
 
         AuthDao dao = new AuthDao();
-        dao.SignUp(member);
+        dao.signUp(member);
     }
 }

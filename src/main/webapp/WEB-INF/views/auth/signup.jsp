@@ -99,9 +99,30 @@
             </div>
 
 
-            <form>
+            <form method="post" action="signup">
 
                 <!-- 이름 -->
+                <div class="form-group">
+
+                    <label for="name">
+                       	ID
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-person"></i>
+
+                        <input
+                            type="text"
+                            name="userId"
+                            id="name"
+                            class="form-control"
+                            placeholder="IDを入力">
+
+                    </div>
+
+                </div>
+                
                 <div class="form-group">
 
                     <label for="name">
@@ -114,11 +135,40 @@
 
                         <input
                             type="text"
+                            name="userName"
                             id="name"
                             class="form-control"
                             placeholder="お名前を入力">
 
                     </div>
+
+                </div>
+
+
+
+                <!-- 비밀번호 -->
+                <div class="form-group">
+
+                    <label for="password">
+                        パスワード
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-lock"></i>
+
+                        <input
+                            type="password"
+                            name="userPw"
+                            id="password"
+                            class="form-control"
+                            placeholder="パスワードを入力">
+
+                    </div>
+
+                    <p class="form-help">
+                        8文字以上で入力してください。
+                    </p>
 
                 </div>
 
@@ -136,6 +186,7 @@
 
                         <input
                             type="email"
+                            name="email"
                             id="email"
                             class="form-control"
                             placeholder="example@email.com">
@@ -143,33 +194,6 @@
                     </div>
 
                 </div>
-
-
-                <!-- 비밀번호 -->
-                <div class="form-group">
-
-                    <label for="password">
-                        パスワード
-                    </label>
-
-                    <div class="input-wrapper">
-
-                        <i class="bi bi-lock"></i>
-
-                        <input
-                            type="password"
-                            id="password"
-                            class="form-control"
-                            placeholder="パスワードを入力">
-
-                    </div>
-
-                    <p class="form-help">
-                        8文字以上で入力してください。
-                    </p>
-
-                </div>
-
 
                 <!-- 비밀번호 확인 -->
                 <div class="form-group">
@@ -213,7 +237,7 @@
 
                 <!-- 가입 버튼 -->
                 <button
-                    type="button"
+                    type="submit"
                     id="signupBtn"
                     class="signup-submit-btn">
 

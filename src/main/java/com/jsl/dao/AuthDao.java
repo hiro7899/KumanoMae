@@ -1,13 +1,39 @@
 package com.jsl.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.jsl.dto.member.MemberDto;
 import com.jsl.util.DBManager;
 
 public class AuthDao {
 	
-	public boolean SignUp(MemberDto member) {
+	// 아이디 존재 여부 검색
+	public int findUserId(String userId) {
+
+	    String sql = "SELECT USER_ID FROM MEMBER WHERE USER_ID = ?";
+	    
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, userId);
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                return 1;   // 아이디 존재
+	            } else {
+	                return -1;  // 아이디 없음
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return -1;
+	    }
+	}
+	
+	public boolean signUp(MemberDto member) {
 		String sql = """
 				INSERT INTO MEMBER (
 					MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL, PHONE
