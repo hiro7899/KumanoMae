@@ -5,10 +5,9 @@ import java.sql.Connection;
 import com.jsl.dto.member.MemberDto;
 import com.jsl.util.DBManager;
 
-public class LoginDao {
+public class AuthDao {
 	
-	public boolean SingUp(MemberDto member) {
-		// 회원가입 로직 구현
+	public boolean SignUp(MemberDto member) {
 		String sql = """
 				INSERT INTO MEMBER (
 					MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL, PHONE
@@ -27,16 +26,17 @@ public class LoginDao {
 			pstmt.setString(4, member.getEmail());
 			pstmt.setString(5, member.getPhone());
 			
-			int rowsAffected = pstmt.executeUpdate();
+			int result = pstmt.executeUpdate();
 			
-			if (rowsAffected == 0) {
-				return false; // 회원가입 실패 시 false 반환
+			if (result == 0) {
+				return false;
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			return false;
 		}
 		
-		return true; // 회원가입 성공 시 true 반환
+		return true;
 	}
 }
