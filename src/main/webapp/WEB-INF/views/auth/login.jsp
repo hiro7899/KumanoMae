@@ -186,7 +186,7 @@
 
 
                     <!-- 로그인 버튼 -->
-                    <button type="button" class="login-btn">
+                    <button type="button" id="loginBtn" class="login-btn">
                         ログイン
                         <i class="bi bi-arrow-right"></i>
                     </button>
@@ -244,6 +244,12 @@
     </div>
 
 </footer>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 로그인 화면 전용 JS -->
+<script src="/resources/js/login/login.js"></script>
 
 </body>
 

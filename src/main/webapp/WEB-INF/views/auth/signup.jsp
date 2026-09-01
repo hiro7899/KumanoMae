@@ -214,6 +214,7 @@
                 <!-- 가입 버튼 -->
                 <button
                     type="button"
+                    id="signupBtn"
                     class="signup-submit-btn">
 
                     会員登録する
@@ -267,6 +268,12 @@
     </div>
 
 </footer>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 회원가입 화면 전용 JS -->
+<script src="/resources/js/login/signup.js"></script>
 
 </body>
 
