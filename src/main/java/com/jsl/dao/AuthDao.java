@@ -65,4 +65,28 @@ public class AuthDao {
 		
 		return true;
 	}
+	
+	public MemberDto login(String userId) {
+		String sql = "SELECT USER_ID, USER_PW FROM MEMBER WHERE USER_ID = ?";
+		
+		try (Connection conn = DBManager.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, userId);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					MemberDto member = new MemberDto();
+					member.setUserId(rs.getString("USER_ID"));
+					member.setUserPw(rs.getString("USER_PW"));
+					return member;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

@@ -4,14 +4,33 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.jsl.dao.AuthDao;
+import com.jsl.dto.member.MemberDto;
 import com.jsl.service.Command;
+import com.jsl.util.PasswordUtil;
 
-public class LoginService implements Command{
+public class LoginService implements Command {
 
-	@Override
-	public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-	}
+    @Override
+    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        String userId = request.getParameter("userId");
+        String userPw = request.getParameter("userPw");
+
+        MemberDto member = new AuthDao().login(userId);
+
+        if (member != null && PasswordUtil.checkPassword(userPw, member.getUserPw())) {
+
+            HttpSession session = request.getSession();
+            session.setAttribute("userId", member.getUserId());
+
+            response.getWriter().write("success");
+
+        } else {
+
+            response.getWriter().write("fail");
+        }
+    }
 }
