@@ -222,29 +222,6 @@
 </main>
 
 
-<!-- ===================== Footer ===================== -->
-
-<footer class="login-footer">
-
-    <div class="container text-center">
-
-        <div class="footer-logo">
-            <span>熊</span>
-            クマ出没マップ
-        </div>
-
-        <p>
-            里山に近づく足音を見逃さない。
-        </p>
-
-        <div class="footer-copy">
-            © 2026 BearSafe Inc. All Rights Reserved.
-        </div>
-
-    </div>
-
-</footer>
-
 <!-- Bootstrap 5 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
