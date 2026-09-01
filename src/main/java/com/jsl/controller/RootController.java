@@ -20,6 +20,11 @@ import com.jsl.service.login.SignUpService;
 public class RootController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	private final LoginService loginService = new LoginService();
+	private final LogoutService logoutService = new LogoutService();
+	private final SignUpService signUpService = new SignUpService();
+	private final FindPasswordService findPasswordService = new FindPasswordService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -48,7 +53,7 @@ public class RootController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/login.jsp";
 			} else {
-				new LoginService().doCommand(request, response);
+				loginService.doCommand(request, response);
 
 				HttpSession session = request.getSession(false);
 				if (session != null && session.getAttribute("user") != null) {
@@ -60,7 +65,7 @@ public class RootController extends HttpServlet {
 			break;
 
 		case "/logout":
-			new LogoutService().doCommand(request, response);
+			logoutService.doCommand(request, response);
 			response.sendRedirect("/");
 			return;
 
@@ -68,7 +73,7 @@ public class RootController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/signup.jsp";
 			} else {
-				new SignUpService().doCommand(request, response);
+				signUpService.doCommand(request, response);
 				response.sendRedirect("/login");
 				return;
 			}
@@ -78,7 +83,7 @@ public class RootController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			} else {
-				new FindPasswordService().doCommand(request, response);
+				findPasswordService.doCommand(request, response);
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;

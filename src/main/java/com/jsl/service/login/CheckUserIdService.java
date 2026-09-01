@@ -10,14 +10,14 @@ import com.jsl.service.Command;
 
 public class CheckUserIdService implements Command {
 
+	private final AuthDao authDao = new AuthDao();
+	
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String userId = request.getParameter("userId");
 
-        AuthDao dao = new AuthDao();
-
-        if (dao.existsUserId(userId)) {
+        if (authDao.existsUserId(userId)) {
             response.getWriter().write("duplicate");
         } else {
             response.getWriter().write("available");

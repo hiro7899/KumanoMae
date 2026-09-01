@@ -12,8 +12,11 @@ import com.jsl.util.PasswordUtil;
 
 public class SignUpService implements Command {
 
+    private final AuthDao authDao = new AuthDao();
+
     @Override
-    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doCommand(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
 
         MemberDto member = new MemberDto();
 
@@ -26,9 +29,10 @@ public class SignUpService implements Command {
         member.setEmail(request.getParameter("email"));
 
         String phone = request.getParameter("phone");
-        member.setPhone(phone != null && !phone.isEmpty() ? phone : null);
+        member.setPhone(
+            phone != null && !phone.isEmpty() ? phone : null
+        );
 
-        AuthDao dao = new AuthDao();
-        dao.signUp(member);
+        authDao.signUp(member);
     }
 }

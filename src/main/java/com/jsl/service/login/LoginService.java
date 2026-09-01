@@ -14,6 +14,8 @@ import com.jsl.util.PasswordUtil;
 
 public class LoginService implements Command {
 
+    private final AuthDao authDao = new AuthDao();
+
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -21,7 +23,7 @@ public class LoginService implements Command {
         String userId = request.getParameter("userId");
         String userPw = request.getParameter("userPw");
 
-        MemberDto member = new AuthDao().login(userId);
+        MemberDto member = authDao.login(userId);
 
         if (member != null && PasswordUtil.checkPassword(userPw, member.getUserPw())) {
 
