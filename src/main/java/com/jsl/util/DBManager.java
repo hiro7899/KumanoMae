@@ -1,45 +1,30 @@
 package com.jsl.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class DBManager {
-    public static Connection getConnection() {
-        Connection conn = null;
-        
-        String driver = "oracle.jdbc.driver.OracleDriver";
-        String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String id = "jsl28";
-        String pw = "1234";
-        
+
+    private static DataSource dataSource;
+
+    static {
         try {
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url, id, pw);
-        } catch (Exception e) {
-            e.printStackTrace();
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            dataSource = (DataSource) envContext.lookup("jdbc/kumanomae");
+        } catch (NamingException e) {
+            throw new ExceptionInInitializerError("DataSource 초기화 실패: " + e.getMessage());
         }
-        return conn;
     }
 
-    public static void close(Connection conn, Statement stmt, ResultSet rs) {
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private DBManager() {
     }
-    
-    public static void close(Connection conn, Statement stmt) {
-        try {
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
-    
 }
