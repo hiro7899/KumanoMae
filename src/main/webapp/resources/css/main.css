@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.main header {
+	color: #ffffff;
+	padding: 15px 10px;
+}
+
+.upmain nav a {
+	color: white;
+	text-decoration: none;
+	margin-right: 15px; /* 메뉴 항목 간 간격 */
+	font-weight: bold;
+	padding: 0 80px;
+}
+
+.map main page {
+	widhh: 100%;
+	margin: 0 auto;
+}
+
+.header-container {
+	display: flex; /* 요소들을 가로로 나란히 배치 */
+	justify-content: space-between;
+	align-items: center; /* 세로 기준 가운데 정렬 */
+	background-color: #212529; /* 헤더 전체 배경색 */
+	padding: 10px 20px;
+}
+
+.mainlog nav a {
+	color: white;
+	text-decoration: none;
+	margin-right: 5px; /* 메뉴 항목 간 간격 */
+	font-weight: bold;
+	padding: 0 10px;
+}
