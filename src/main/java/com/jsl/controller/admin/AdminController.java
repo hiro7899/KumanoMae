@@ -60,6 +60,22 @@ public class AdminController extends HttpServlet {
             case "/member/delete":
                 // 회원 삭제
                 break;
+            
+            case "/board/list":
+                // 제보 목록
+                break;
+
+            case "/board/approve":
+                // 제보 승인
+                break;
+
+            case "/board/reject":
+                // 제보 반려
+                break;
+
+            case "/board/clear":
+                // 위험 해제
+                break;
 
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
