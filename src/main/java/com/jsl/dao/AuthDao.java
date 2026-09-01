@@ -10,83 +10,79 @@ import com.jsl.util.DBManager;
 public class AuthDao {
 	
 	// 아이디 존재 여부 검색
-	public int findUserId(String userId) {
-
+	public boolean existsUserId(String userId) {
 	    String sql = "SELECT USER_ID FROM MEMBER WHERE USER_ID = ?";
-	    
+
 	    try (Connection conn = DBManager.getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 	        pstmt.setString(1, userId);
 
 	        try (ResultSet rs = pstmt.executeQuery()) {
+	            return rs.next();
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	public boolean signUp(MemberDto member) {
+	    String sql = """
+	            INSERT INTO MEMBER (
+	                MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL, PHONE
+	            )
+	            VALUES (
+	                MEMBER_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?
+	            )
+	            """;
+
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, member.getUserId());
+	        pstmt.setString(2, member.getUserPw());
+	        pstmt.setString(3, member.getUserName());
+	        pstmt.setString(4, member.getEmail());
+	        pstmt.setString(5, member.getPhone());
+
+	        return pstmt.executeUpdate() > 0;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	public MemberDto login(String userId) {
+	    String sql = """
+	            SELECT USER_ID, USER_PW, EMAIL
+	            FROM MEMBER
+	            WHERE USER_ID = ? OR EMAIL = ?
+	            """;
+
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, userId);
+	        pstmt.setString(2, userId);
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next()) {
-	                return 1;   // 아이디 존재
-	            } else {
-	                return -1;  // 아이디 없음
+	                MemberDto member = new MemberDto();
+	                member.setUserId(rs.getString("USER_ID"));
+	                member.setUserPw(rs.getString("USER_PW"));
+	                member.setEmail(rs.getString("EMAIL"));
+
+	                return member;
 	            }
 	        }
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return -1;
 	    }
-	}
-	
-	public boolean signUp(MemberDto member) {
-		String sql = """
-				INSERT INTO MEMBER (
-					MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL, PHONE
-					)
-					VALUES (
-					MEMBER_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?
-					)
-				""";
-		
-		try (Connection conn = DBManager.getConnection();
-				java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
-			pstmt.setString(1, member.getUserId());
-			pstmt.setString(2, member.getUserPw());
-			pstmt.setString(3, member.getUserName());
-			pstmt.setString(4, member.getEmail());
-			pstmt.setString(5, member.getPhone());
-			
-			int result = pstmt.executeUpdate();
-			
-			if (result == 0) {
-				return false;
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public MemberDto login(String userId) {
-		String sql = "SELECT USER_ID, USER_PW FROM MEMBER WHERE USER_ID = ?";
-		
-		try (Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			
-			pstmt.setString(1, userId);
-			
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					MemberDto member = new MemberDto();
-					member.setUserId(rs.getString("USER_ID"));
-					member.setUserPw(rs.getString("USER_PW"));
-					return member;
-				}
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+
+	    return null;
 	}
 }
