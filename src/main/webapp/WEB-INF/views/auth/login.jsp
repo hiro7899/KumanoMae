@@ -3,38 +3,40 @@
 <!DOCTYPE html>
 
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
 <title>ログイン - クマ出没マップ</title>
 
-<!-- Bootstrap 5 CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet">
+<!-- Bootstrap 5 -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
 <!-- Bootstrap Icons -->
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 <!-- 일본어 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-      rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
 
 <!-- 로그인 화면 전용 CSS -->
 <link rel="stylesheet" href="/resources/css/login.css">
-```
 
 </head>
 
 <body>
 
-```
 <!-- ===================== Navbar ===================== -->
+
 <nav class="navbar navbar-jp">
     <div class="container d-flex align-items-center justify-content-between">
 
@@ -46,6 +48,7 @@
             </div>
 
             <div class="brand-jp">
+
                 <div class="jp-title">
                     クマ出没マップ
                 </div>
@@ -53,6 +56,7 @@
                 <div class="jp-sub">
                     KUMA SHUTSUBOTSU MAP
                 </div>
+
             </div>
 
         </a>
@@ -68,6 +72,7 @@
 
 
 <!-- ===================== Login ===================== -->
+
 <main class="login-main">
 
     <div class="container">
@@ -97,12 +102,14 @@
                 </p>
 
                 <div class="intro-warning">
+
                     <i class="bi bi-shield-exclamation"></i>
 
                     <span>
                         安全のため、アカウント情報を
                         他人と共有しないでください。
                     </span>
+
                 </div>
 
             </div>
@@ -112,9 +119,15 @@
             <div class="login-card">
 
                 <div class="login-card-header">
+
                     <span class="header-line"></span>
+
                     <h2>ログイン</h2>
-                    <p>アカウント情報を入力してください</p>
+
+                    <p>
+                        アカウント情報を入力してください
+                    </p>
+
                 </div>
 
 
@@ -135,8 +148,7 @@
                                 type="email"
                                 id="email"
                                 class="form-control"
-                                placeholder="example@email.com"
-                            >
+                                placeholder="example@email.com">
 
                         </div>
 
@@ -166,8 +178,7 @@
                                 type="password"
                                 id="password"
                                 class="form-control"
-                                placeholder="パスワードを入力"
-                            >
+                                placeholder="パスワードを入力">
 
                         </div>
 
@@ -194,7 +205,7 @@
                             アカウントをお持ちでない方
                         </p>
 
-                        <a href="/signup.jsp" class="signup-btn">
+                        <a href="/signup" class="signup-btn">
                             会員登録はこちら
                         </a>
 
@@ -212,6 +223,7 @@
 
 
 <!-- ===================== Footer ===================== -->
+
 <footer class="login-footer">
 
     <div class="container text-center">
@@ -232,7 +244,7 @@
     </div>
 
 </footer>
-```
 
 </body>
+
 </html>

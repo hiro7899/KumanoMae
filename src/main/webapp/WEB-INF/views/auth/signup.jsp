@@ -3,38 +3,40 @@
 <!DOCTYPE html>
 
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
 <title>会員登録 - クマ出没マップ</title>
 
-<!-- Bootstrap 5 CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet">
+<!-- Bootstrap 5 -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
 <!-- Bootstrap Icons -->
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 <!-- 일본어 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-      rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
 
-<!-- 회원가입 화면 전용 CSS -->
+<!-- 회원가입 CSS -->
 <link rel="stylesheet" href="/resources/css/signup.css">
-```
 
 </head>
 
 <body>
 
-```
 <!-- ===================== Navbar ===================== -->
+
 <nav class="navbar navbar-jp">
 
     <div class="container d-flex align-items-center justify-content-between">
@@ -70,38 +72,40 @@
 
 
 <!-- ===================== Signup ===================== -->
+
 <main class="signup-main">
 
     <div class="container">
 
-        <div class="signup-header">
-
-            <p>
-                ― MEMBERS
-            </p>
-
-            <h1>
-                会員登録
-            </h1>
-
-            <span>
-                クマ出没マップのサービスをご利用いただくには
-                会員登録が必要です。
-            </span>
-
-        </div>
-
-
         <div class="signup-card">
+
+            <div class="signup-header">
+
+                <span class="header-line"></span>
+
+                <p class="signup-eyebrow">
+                    ― MEMBERSHIP
+                </p>
+
+                <h1>
+                    会員登録
+                </h1>
+
+                <p>
+                    クマ出没マップをご利用いただくには
+                    会員登録が必要です。
+                </p>
+
+            </div>
+
 
             <form>
 
-                <!-- ユーザー名 -->
-                <div class="form-section">
+                <!-- 이름 -->
+                <div class="form-group">
 
-                    <label for="username">
-                        ユーザー名
-                        <span class="required">必須</span>
+                    <label for="name">
+                        お名前
                     </label>
 
                     <div class="input-wrapper">
@@ -110,26 +114,20 @@
 
                         <input
                             type="text"
-                            id="username"
+                            id="name"
                             class="form-control"
-                            placeholder="ユーザー名を入力してください"
-                        >
+                            placeholder="お名前を入力">
 
                     </div>
-
-                    <p class="form-help">
-                        画面上で表示される名前です。
-                    </p>
 
                 </div>
 
 
                 <!-- 이메일 -->
-                <div class="form-section">
+                <div class="form-group">
 
                     <label for="email">
                         メールアドレス
-                        <span class="required">必須</span>
                     </label>
 
                     <div class="input-wrapper">
@@ -140,8 +138,7 @@
                             type="email"
                             id="email"
                             class="form-control"
-                            placeholder="example@email.com"
-                        >
+                            placeholder="example@email.com">
 
                     </div>
 
@@ -149,11 +146,10 @@
 
 
                 <!-- 비밀번호 -->
-                <div class="form-section">
+                <div class="form-group">
 
                     <label for="password">
                         パスワード
-                        <span class="required">必須</span>
                     </label>
 
                     <div class="input-wrapper">
@@ -164,51 +160,47 @@
                             type="password"
                             id="password"
                             class="form-control"
-                            placeholder="パスワードを入力してください"
-                        >
+                            placeholder="パスワードを入力">
 
                     </div>
 
                     <p class="form-help">
-                        8文字以上のパスワードを設定してください。
+                        8文字以上で入力してください。
                     </p>
 
                 </div>
 
 
                 <!-- 비밀번호 확인 -->
-                <div class="form-section">
+                <div class="form-group">
 
                     <label for="passwordConfirm">
-                        パスワード確認
-                        <span class="required">必須</span>
+                        パスワード（確認）
                     </label>
 
                     <div class="input-wrapper">
 
-                        <i class="bi bi-lock-fill"></i>
+                        <i class="bi bi-shield-lock"></i>
 
                         <input
                             type="password"
                             id="passwordConfirm"
                             class="form-control"
-                            placeholder="もう一度入力してください"
-                        >
+                            placeholder="もう一度入力してください">
 
                     </div>
 
                 </div>
 
 
-                <!-- 이용약관 -->
+                <!-- 약관 -->
                 <div class="agreement-box">
 
                     <label class="agreement-label">
 
                         <input
                             type="checkbox"
-                            id="agree"
-                        >
+                            id="agree">
 
                         <span>
                             利用規約とプライバシーポリシーに同意します。
@@ -219,21 +211,26 @@
                 </div>
 
 
-                <!-- 회원가입 버튼 -->
-                <button type="button" class="signup-submit">
-                    会員登録
+                <!-- 가입 버튼 -->
+                <button
+                    type="button"
+                    class="signup-submit-btn">
+
+                    会員登録する
+
                     <i class="bi bi-arrow-right"></i>
+
                 </button>
 
 
                 <!-- 로그인으로 -->
                 <div class="login-link-area">
 
-                    <span>
-                        すでにアカウントをお持ちですか？
-                    </span>
+                    <p>
+                        すでにアカウントをお持ちの方
+                    </p>
 
-                    <a href="/login.jsp">
+                    <a href="/login">
                         ログインはこちら
                     </a>
 
@@ -249,6 +246,7 @@
 
 
 <!-- ===================== Footer ===================== -->
+
 <footer class="signup-footer">
 
     <div class="container text-center">
@@ -269,7 +267,7 @@
     </div>
 
 </footer>
-```
 
 </body>
+
 </html>

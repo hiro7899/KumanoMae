@@ -50,7 +50,7 @@
                     <li><a href="#">最新情報</a></li>
                     <li><a href="#">安全ガイド</a></li>
                     <li><a href="#">掲示板</a></li>
-                    <li><a href="#">ログイン</a></li>
+                    <li><a href="/login">ログイン</a></li>
                 </ul>
             </nav>
         </div>
