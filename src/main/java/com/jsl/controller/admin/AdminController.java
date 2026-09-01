@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jsl.dto.member.MemberDto;
+import com.jsl.dto.member.LoginUserDto;
 
 @WebServlet("/admin/*")
 public class AdminController extends HttpServlet {
@@ -29,7 +29,7 @@ public class AdminController extends HttpServlet {
     private void doAction(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-    	MemberDto user = (MemberDto) request.getSession().getAttribute("user");
+    	LoginUserDto user = (LoginUserDto) request.getSession().getAttribute("user");
 
         if (user == null) {
             response.sendRedirect("/login");

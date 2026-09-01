@@ -51,7 +51,7 @@ public class RootController extends HttpServlet {
 				new LoginService().doCommand(request, response);
 
 				HttpSession session = request.getSession(false);
-				if (session != null && session.getAttribute("userId") != null) {
+				if (session != null && session.getAttribute("user") != null) {
 					response.sendRedirect("/");
 					return;
 				}

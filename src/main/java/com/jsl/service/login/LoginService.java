@@ -34,11 +34,6 @@ public class LoginService implements Command {
             );
 
             session.setAttribute("user", user);
-
-            response.getWriter().write("success");
-
-        } else {
-            response.getWriter().write("fail");
         }
     }
 }

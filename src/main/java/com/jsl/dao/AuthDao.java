@@ -56,8 +56,9 @@ public class AuthDao {
 	}
 	
 	public MemberDto login(String userId) {
+
 	    String sql = """
-	            SELECT USER_ID, USER_PW, EMAIL
+	            SELECT USER_ID, USER_PW, USER_NAME, EMAIL, USER_GRADE
 	            FROM MEMBER
 	            WHERE USER_ID = ? OR EMAIL = ?
 	            """;
@@ -69,11 +70,16 @@ public class AuthDao {
 	        pstmt.setString(2, userId);
 
 	        try (ResultSet rs = pstmt.executeQuery()) {
+
 	            if (rs.next()) {
+
 	                MemberDto member = new MemberDto();
+
 	                member.setUserId(rs.getString("USER_ID"));
 	                member.setUserPw(rs.getString("USER_PW"));
+	                member.setUserName(rs.getString("USER_NAME"));
 	                member.setEmail(rs.getString("EMAIL"));
+	                member.setUserGrade(rs.getString("USER_GRADE"));
 
 	                return member;
 	            }
