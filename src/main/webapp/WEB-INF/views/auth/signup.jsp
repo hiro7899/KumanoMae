@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
 <title>会員登録 - クマ出没マップ</title>
 
 <!-- Bootstrap 5 CDN -->
@@ -27,13 +26,11 @@
 
 <!-- 회원가입 화면 전용 CSS -->
 <link rel="stylesheet" href="/resources/css/signup.css">
-```
 
 </head>
 
 <body>
 
-```
 <!-- ===================== Navbar ===================== -->
 <nav class="navbar navbar-jp">
 

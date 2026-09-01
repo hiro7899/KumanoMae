@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
 <title>ログイン - クマ出没マップ</title>
 
 <!-- Bootstrap 5 CDN -->
@@ -27,13 +26,11 @@
 
 <!-- 로그인 화면 전용 CSS -->
 <link rel="stylesheet" href="/resources/css/login.css">
-```
 
 </head>
 
 <body>
 
-```
 <!-- ===================== Navbar ===================== -->
 <nav class="navbar navbar-jp">
     <div class="container d-flex align-items-center justify-content-between">
