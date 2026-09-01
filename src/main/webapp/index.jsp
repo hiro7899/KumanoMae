@@ -65,7 +65,7 @@
 						里山に近づく足音を見逃さない。全国の目撃情報と自治体データをリアルタイムに集約し、危険エリアをひと目で確認できる地図サービスです。
 					</p>
 					<div class="d-flex gap-2 flex-wrap">
-						<a href="#mapSection" class="btn btn-jp-mustard btn-lg">地図を見る
+						<a href="/map" class="btn btn-jp-mustard btn-lg">地図を見る
 							→</a> <a href="#" class="btn btn-jp-outline btn-lg">目撃情報を報告する</a>
 					</div>
 					<p class="hero-credit">
@@ -311,7 +311,7 @@
 				<div class="col-md-4 mb-4">
 					<h6 class="fw-bold mb-3 footer-heading">サイトマップ</h6>
 					<ul class="list-unstyled small">
-						<li class="mb-2"><a href="#mapSection">出没マップ</a></li>
+						<li class="mb-2"><a href="/map">出没マップ</a></li>
 						<li class="mb-2"><a href="#">目撃情報掲示板</a></li>
 						<li class="mb-2"><a href="/login">ログイン</a></li>
 						<li class="mb-2"><a href="/signup">会員登録</a></li>
