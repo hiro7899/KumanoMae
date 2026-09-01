@@ -20,5 +20,5 @@ Servers/
 Thumbs.db
 
 # JDBC 드라이버 연결파일
-META-INF/context.xml
+/src/main/webapp/META-INF/context.xml
 
