@@ -40,32 +40,31 @@ public class MapController extends HttpServlet {
         String path = request.getPathInfo();
         String page = null;
 
-        if (path == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-
-        switch (path) {
-
-        case "/view":
+        // /map 또는 /map/ 요청
+        if (path == null || "/".equals(path)) {
             page = "/WEB-INF/views/map/map.jsp";
-            break;
+        } else {
 
-        case "/markers":
-            List<MapMarkerDto> markers = mapService.findAllMarkers();
+            // /map/markers 등
+            switch (path) {
 
-            Gson gson = new Gson();
+            case "/markers":
+                List<MapMarkerDto> markers = mapService.findAllMarkers();
 
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(gson.toJson(markers));
-            return;
+                Gson gson = new Gson();
 
-        default:
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(gson.toJson(markers));
+                return;
+
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
         }
 
+        // JSP 화면 출력
         if (page != null) {
             request.getRequestDispatcher(page).forward(request, response);
         }

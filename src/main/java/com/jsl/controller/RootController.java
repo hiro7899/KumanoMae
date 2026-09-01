@@ -13,10 +13,10 @@ import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.login.SignUpService;
 
-@WebServlet(urlPatterns = { "/", "/index", "/login", "/logout", "/signup", "/forgot-password", "/reset-password",
-		"/board/List", "/board/Write", "/board/News"
-
-})
+@WebServlet(urlPatterns = {
+	    "/", "/index", "/login", "/logout",
+	    "/signup", "/forgot-password", "/reset-password"
+	})
 public class RootController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -87,17 +87,7 @@ public class RootController extends HttpServlet {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
-		case "/board/List":
-			page = "/WEB-INF/views/board/boardList.jsp";
-			break;
-
-		case "/board/Write":
-			page = "/WEB-INF/views/board/boardWrite.jsp";
-			break;
-			
-		case "/board/News":
-			page = "/WEB-INF/views/board/boardNews.jsp";
-			break;
+		
 //        case "/reset_pw":
 //            if ("GET".equalsIgnoreCase(request.getMethod())) {
 //                page = "/WEB-INF/views/auth/reset_pw.jsp";
