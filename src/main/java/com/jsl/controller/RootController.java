@@ -53,7 +53,7 @@ public class RootController extends HttpServlet {
 
 				HttpSession session = request.getSession(false);
 				if (session != null && session.getAttribute("userId") != null) {
-					response.sendRedirect(request.getContextPath() + "/");
+					response.sendRedirect("/");
 					return;
 				}
 				// 로그인 실패 시 errorMsg를 request에 담아 폼 재출력
@@ -63,7 +63,7 @@ public class RootController extends HttpServlet {
 
 		case "/logout":
 			new LogoutService().doCommand(request, response);
-			response.sendRedirect(request.getContextPath() + "/");
+			response.sendRedirect("/");
 			return;
 
 		case "/signup":
@@ -71,7 +71,7 @@ public class RootController extends HttpServlet {
 				page = "/WEB-INF/views/auth/signup.jsp";
 			} else {
 				new SignUpService().doCommand(request, response);
-				response.sendRedirect(request.getContextPath() + "/login");
+				response.sendRedirect("/login");
 				return;
 			}
 			break;
@@ -100,7 +100,7 @@ public class RootController extends HttpServlet {
 //                page = "/WEB-INF/views/auth/reset_pw.jsp";
 //            } else {
 //                new ResetPasswordService().doCommand(request, response);
-//                response.sendRedirect(request.getContextPath() + "/login");
+//                response.sendRedirect("/login");
 //                return;
 //            }
 //            break;

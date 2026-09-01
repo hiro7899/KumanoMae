@@ -13,7 +13,7 @@ public class AuthDao {
 					MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL, PHONE
 					)
 					VALUES (
-					MEMBER_ID_SEQ, ?, ?, ?, ?, ?
+					MEMBER_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?
 					)
 				""";
 		
