@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource
+        name="jdbc/kumanomae"
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="oracle.jdbc.driver.OracleDriver"
+        url="jdbc:oracle:thin:@localhost:1521:xe"
+        username="YOUR_USERNAME"
+        password="YOUR_PASSWORD"
+        maxTotal="20"
+        maxIdle="10"
+        minIdle="5"
+        maxWaitMillis="10000"
+        validationQuery="SELECT 1 FROM DUAL"
+        testOnBorrow="true" />
+</Context>
