@@ -29,7 +29,7 @@
     rel="stylesheet">
 
 <!-- 회원가입 CSS -->
-<link rel="stylesheet" href="/resources/css/signup.css">
+<link rel="stylesheet" href="/resources/css/login/signup.css">
 
 </head>
 

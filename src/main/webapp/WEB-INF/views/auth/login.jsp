@@ -29,7 +29,7 @@
     rel="stylesheet">
 
 <!-- 로그인 화면 전용 CSS -->
-<link rel="stylesheet" href="/resources/css/login.css">
+<link rel="stylesheet" href="/resources/css/login/login.css">
 
 </head>
 
