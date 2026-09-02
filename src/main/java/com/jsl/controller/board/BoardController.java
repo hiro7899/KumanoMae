@@ -1,17 +1,21 @@
 package com.jsl.controller.board;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.jsl.service.board.BoardListService;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	private final BoardListService boardListService = new BoardListService();
+	
     public BoardController() {
         super();
     }
@@ -30,18 +34,8 @@ public class BoardController extends HttpServlet {
 
 		switch (action) {
 		case "/list":
-			if ("GET".equalsIgnoreCase(request.getMethod())) {
-				page = "/WEB-INF/views/board/list.jsp";
-			} else {
-//				selectBoardAllService.doCommand(request, response);
-
-				HttpSession session = request.getSession(false);
-				if (session != null && session.getAttribute("user") != null) {
-					response.sendRedirect("/");
-					return;
-				}
-				page = "/WEB-INF/views/auth/login.jsp";
-			}
+			boardListService.doCommand(request, response);
+			page = "/WEB-INF/views/board/list.jsp";
 			break;
 		case "/detail":
 			page = "/WEB-INF/views/board/detail.jsp";
