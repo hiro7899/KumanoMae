@@ -50,7 +50,7 @@ public class AdminController extends HttpServlet {
                 break;
 
             case "/member/list":
-                // 회원 목록
+            	page = "/WEB-INF/views/admin/member/list.jsp";
                 break;
 
             case "/member/updateGrade":
@@ -62,7 +62,7 @@ public class AdminController extends HttpServlet {
                 break;
             
             case "/board/list":
-                // 제보 목록
+            	page = "/WEB-INF/views/admin/board/list.jsp";
                 break;
 
             case "/board/approve":
