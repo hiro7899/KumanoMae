@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,7 @@ import com.jsl.dao.board.BoardDao;
 import com.jsl.dao.board.BoardFileDao;
 import com.jsl.dto.board.BoardDto;
 import com.jsl.dto.board.BoardFileDto;
-import com.jsl.dto.member.MemberDto; // TODO: 실제 세션 저장 타입에 맞춰 교체
+import com.jsl.dto.member.LoginUserDto;
 import com.jsl.exeption.BoardReportException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
@@ -32,7 +31,9 @@ import com.jsl.util.DBManager;
 public class BoardReportService implements Command {
 
     private static final int MAX_FILE_COUNT = 3;
-    private static final String UPLOAD_DIR = "/resources/upload/board"; // /resources/* 는 정적 서빙 매핑되어 있음
+    private static final String UPLOAD_ROOT = "D:/upload";
+    private static final String BOARD_UPLOAD_DIR = "/board";
+    private static final String BOARD_WEB_PATH = "/uploads/board";
 
     private final BoardDao boardDao = new BoardDao();
     private final BoardFileDao boardFileDao = new BoardFileDao();
@@ -43,7 +44,8 @@ public class BoardReportService implements Command {
         HttpSession session = request.getSession(false);
 
         // TODO: 세션에 실제로 저장된 로그인 객체 타입에 맞춰 캐스팅 수정
-        MemberDto loginUser = (MemberDto) session.getAttribute("user");
+
+        LoginUserDto loginUser = (LoginUserDto) session.getAttribute("user");
         Long memberId = loginUser.getMemberId();
 
         BoardDto board = buildBoardDto(request, memberId);
@@ -60,10 +62,10 @@ public class BoardReportService implements Command {
             throw new BoardReportException("写真は最大" + MAX_FILE_COUNT + "枚まで添付できます。");
         }
 
-        ServletContext ctx = request.getServletContext();
-        File uploadFolder = new File(ctx.getRealPath(UPLOAD_DIR));
-        if (!uploadFolder.exists()) {
-            uploadFolder.mkdirs();
+        File uploadFolder = new File(UPLOAD_ROOT + BOARD_UPLOAD_DIR);
+
+        if (!uploadFolder.exists() && !uploadFolder.mkdirs()) {
+            throw new IOException("アップロードフォルダの作成に失敗しました。");
         }
 
         List<BoardFileDto> fileList = new ArrayList<BoardFileDto>();
@@ -85,7 +87,7 @@ public class BoardReportService implements Command {
                 BoardFileDto fileDto = new BoardFileDto();
                 fileDto.setOriginName(originName);
                 fileDto.setSaveName(saveName);
-                fileDto.setFilePath(UPLOAD_DIR);
+                fileDto.setFilePath(BOARD_WEB_PATH);
                 fileDto.setFileSize((int) part.getSize());
                 fileList.add(fileDto);
             }

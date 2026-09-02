@@ -31,6 +31,7 @@ public class LoginService implements Command {
             HttpSession session = request.getSession();
 
             LoginUserDto user = new LoginUserDto(
+            	member.getMemberId(),
                 member.getUserId(),
                 member.getUserName(),
                 member.getUserGrade()

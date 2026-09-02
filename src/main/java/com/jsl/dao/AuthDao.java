@@ -57,11 +57,11 @@ public class AuthDao {
 	
 	public MemberDto login(String userId) {
 
-	    String sql = """
-	            SELECT USER_ID, USER_PW, USER_NAME, EMAIL, USER_GRADE
-	            FROM MEMBER
-	            WHERE USER_ID = ? OR EMAIL = ?
-	            """;
+		String sql = """
+			    SELECT MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL, USER_GRADE
+			    FROM MEMBER
+			    WHERE USER_ID = ? OR EMAIL = ?
+			    """;
 
 	    try (Connection conn = DBManager.getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -75,6 +75,7 @@ public class AuthDao {
 
 	                MemberDto member = new MemberDto();
 
+	                member.setMemberId(rs.getLong("MEMBER_ID"));
 	                member.setUserId(rs.getString("USER_ID"));
 	                member.setUserPw(rs.getString("USER_PW"));
 	                member.setUserName(rs.getString("USER_NAME"));
