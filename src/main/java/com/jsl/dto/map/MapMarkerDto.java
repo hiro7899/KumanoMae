@@ -8,8 +8,8 @@ public class MapMarkerDto {
     private Long targetId;
     private String title;
     private String displayRisk;
-    private Double latitude;
-    private Double longitude;
+    private double latitude;
+    private double longitude;
     private String address;
     private LocalDateTime eventDate;
     private LocalDateTime regDate;
@@ -38,16 +38,16 @@ public class MapMarkerDto {
 	public void setDisplayRisk(String displayRisk) {
 		this.displayRisk = displayRisk;
 	}
-	public Double getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Double latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public Double getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Double longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getAddress() {
