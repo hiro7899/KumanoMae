@@ -11,20 +11,23 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public BoardController() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public BoardController() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doAction(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doAction(request, response);
 	}
-	
-	private void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	private void doAction(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String action = request.getPathInfo();
 		String page = null;
 
@@ -33,7 +36,6 @@ public class BoardController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/board/list.jsp";
 			} else {
-//				selectBoardAllService.doCommand(request, response);
 
 				HttpSession session = request.getSession(false);
 				if (session != null && session.getAttribute("user") != null) {

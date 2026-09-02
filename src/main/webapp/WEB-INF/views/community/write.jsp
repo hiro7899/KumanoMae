@@ -50,7 +50,7 @@
 					<input type="submit" value="登録" class="btn btn-jp-mustard">
 					<input type="reset" value="リセット" class="btn btn-secondary">
 					<input type="button" value="一覧へ" class="btn btn-jp-outline"
-						onClick="location.href='boardList.jsp';">
+						onClick="location.href='/board/list';">
 				</div>
 			</form>
 		</div>
@@ -73,4 +73,5 @@
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </html>
