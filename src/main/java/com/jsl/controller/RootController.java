@@ -12,6 +12,7 @@ import com.jsl.service.login.FindPasswordService;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.login.SignUpService;
+import com.jsl.service.login.findIdService;
 
 @WebServlet(urlPatterns = { "/", "/index", "/login", "/logout", "/signup", "/forgot-password", "/reset-password"})
 public class RootController extends HttpServlet {
@@ -75,7 +76,16 @@ public class RootController extends HttpServlet {
 				return;
 			}
 			break;
-
+			
+		case "/find_id":
+			if ("GET".equalsIgnoreCase(request.getMethod())) {
+				page = "/WEB-INF/views/auth/find_id.jsp";
+			} else {
+				findIdService.doCommand(request, response);
+				page = "/WEB-INF/views/auth/find_id.jsp";
+			}
+			break;
+			
 		case "/find_pw":
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
