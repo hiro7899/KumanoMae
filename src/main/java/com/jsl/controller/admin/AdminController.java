@@ -76,7 +76,11 @@ public class AdminController extends HttpServlet {
             case "/board/clear":
                 // 위험 해제
                 break;
-
+            
+            case "/community/list":
+            	page = "/WEB-INF/views/admin/community/list.jsp";
+				break;
+             
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
