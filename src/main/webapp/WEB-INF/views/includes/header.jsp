@@ -46,18 +46,26 @@
 
 				<c:choose>
 					<c:when test="${not empty sessionScope.user}">
-						<li class="nav-item"><span class="nav-link">
-								${sessionScope.user.userName}님 </span></li>
+						<!-- 1. 관리자 계정일 때만 '管理者' 버튼 표시 (세션 변수명이나 Role에 맞게 조건 설정) -->
+						<%-- 만약 role 구분이 있다면 test="${sessionScope.user.role eq 'ADMIN'}" 등으로 설정 --%>
+						<li class="nav-item">
+							<a class="nav-link text-danger fw-bold" href="${pageContext.request.contextPath}/admin/main">
+								<i class="bi bi-gear-fill me-1"></i>管理者
+							</a>
+						</li>
 
-						<li class="nav-item"><a class="nav-link" href="/logout">ログアウト</a>
+						<li class="nav-item"><span class="nav-link">
+								${sessionScope.user.userName}さま </span></li>
+
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
 						</li>
 					</c:when>
 
 					<c:otherwise>
-						<li class="nav-item"><a class="nav-link" href="/login">ログイン</a>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/login">ログイン</a>
 						</li>
 
-						<li class="nav-item"><a class="nav-link" href="/signup">会員登録</a>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/signup">会員登録</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

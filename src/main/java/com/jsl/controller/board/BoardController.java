@@ -20,15 +20,18 @@ public class BoardController extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doAction(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doAction(request, response);
 	}
-	
-	private void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	private void doAction(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String action = request.getPathInfo();
 		String page = null;
 
@@ -36,15 +39,13 @@ public class BoardController extends HttpServlet {
 		case "/list":
 			boardListService.doCommand(request, response);
 			page = "/WEB-INF/views/board/list.jsp";
+
 			break;
 		case "/detail":
 			page = "/WEB-INF/views/board/detail.jsp";
 			break;
 		case "/write":
 			page = "/WEB-INF/views/board/write.jsp";
-			break;
-		case "/news":
-			page = "/WEB-INF/views/board/news.jsp";
 			break;
 		default:
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
