@@ -42,6 +42,9 @@ public class AdminController extends HttpServlet {
         }
     	
         String path = request.getPathInfo();
+        if (path == null) {
+            path = "/main";
+        }
         String page = null;
 
         switch (path) {

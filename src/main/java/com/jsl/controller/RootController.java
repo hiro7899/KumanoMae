@@ -1,13 +1,14 @@
 package com.jsl.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.jsl.exeption.LoginException;
 import com.jsl.service.login.FindPasswordService;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
@@ -48,20 +49,21 @@ public class RootController extends HttpServlet {
 			break;
 
 		case "/login":
-			if ("GET".equalsIgnoreCase(request.getMethod())) {
-				page = "/WEB-INF/views/auth/login.jsp";
-			} else {
-				loginService.doCommand(request, response);
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        page = "/WEB-INF/views/auth/login.jsp";
+		    } else {
+		        try {
+		            loginService.doCommand(request, response);
+		            response.sendRedirect(request.getContextPath() + "/");
+		            return;
 
-				HttpSession session = request.getSession(false);
-				if (session != null && session.getAttribute("user") != null) {
-					response.sendRedirect("/");
-					return;
-				}
-				page = "/WEB-INF/views/auth/login.jsp";
-			}
-			break;
-
+		        } catch (LoginException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            page = "/WEB-INF/views/auth/login.jsp";
+		        }
+		    }
+		    break;
+		    
 		case "/logout":
 			logoutService.doCommand(request, response);
 			response.sendRedirect("/");

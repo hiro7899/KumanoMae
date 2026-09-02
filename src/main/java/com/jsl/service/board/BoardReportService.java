@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -31,22 +32,25 @@ import com.jsl.util.DBManager;
 public class BoardReportService implements Command {
 
     private static final int MAX_FILE_COUNT = 3;
+    
     private static final String UPLOAD_ROOT = "D:/upload";
     private static final String BOARD_UPLOAD_DIR = "/board";
     private static final String BOARD_WEB_PATH = "/uploads/board";
 
     private final BoardDao boardDao = new BoardDao();
     private final BoardFileDao boardFileDao = new BoardFileDao();
+    
+    private static final Set<String> VALID_RISK_LEVELS = Set.of("DANGER", "WARNING", "CAUTION");
 
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        HttpSession session = request.getSession(false);
-
-        // TODO: 세션에 실제로 저장된 로그인 객체 타입에 맞춰 캐스팅 수정
-
-        LoginUserDto loginUser = (LoginUserDto) session.getAttribute("user");
-        Long memberId = loginUser.getMemberId();
+    	HttpSession session = request.getSession(false);
+    	if (session == null || session.getAttribute("user") == null) {
+    	    throw new BoardReportException("로그인이 필요합니다.");
+    	}
+    	LoginUserDto loginUser = (LoginUserDto) session.getAttribute("user");
+    	Long memberId = loginUser.getMemberId();
 
         BoardDto board = buildBoardDto(request, memberId);
 
@@ -73,24 +77,25 @@ public class BoardReportService implements Command {
 
         try {
             // 1) 실제 파일 저장 (DB 작업 이전)
-            for (Part part : fileParts) {
-                String originName = part.getSubmittedFileName();
-                String ext = extractExtension(originName);
-                String saveName = UUID.randomUUID().toString() + ext;
+        	for (Part part : fileParts) {
+        	    String originName = part.getSubmittedFileName();
+        	    String ext = extractExtension(originName);
+        	    String saveName = UUID.randomUUID().toString() + ext;
 
-                File target = new File(uploadFolder, saveName);
-                try (InputStream in = part.getInputStream()) {
-                    Files.copy(in, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                }
-                savedFiles.add(target);
+        	    File target = new File(uploadFolder, saveName);
+        	    savedFiles.add(target); // ★ 복사 시도 전에 먼저 등록 — 실패해도 정리 대상에 포함됨
 
-                BoardFileDto fileDto = new BoardFileDto();
-                fileDto.setOriginName(originName);
-                fileDto.setSaveName(saveName);
-                fileDto.setFilePath(BOARD_WEB_PATH);
-                fileDto.setFileSize((int) part.getSize());
-                fileList.add(fileDto);
-            }
+        	    try (InputStream in = part.getInputStream()) {
+        	        Files.copy(in, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        	    }
+
+        	    BoardFileDto fileDto = new BoardFileDto();
+        	    fileDto.setOriginName(originName);
+        	    fileDto.setSaveName(saveName);
+        	    fileDto.setFilePath(BOARD_WEB_PATH);
+        	    fileDto.setFileSize((int) part.getSize());
+        	    fileList.add(fileDto);
+        	}
 
             // 2) BOARD + BOARD_FILE 트랜잭션
             try (Connection conn = DBManager.getConnection()) {
@@ -107,8 +112,12 @@ public class BoardReportService implements Command {
                     conn.commit();
 
                 } catch (SQLException e) {
-                    conn.rollback();
-                    throw new RuntimeException("通報の登録処理中にエラーが発生しました。", e);
+                    try {
+                        conn.rollback();
+                    } catch (SQLException rollbackEx) {
+                        e.addSuppressed(rollbackEx); // 원래 원인(e)에 rollback 실패 이력도 함께 보존
+                    }
+                    throw new RuntimeException("통보 등록 처리 중 오류가 발생했습니다.", e);
                 }
             } catch (SQLException e) {
             	throw new RuntimeException("データベースへの接続に失敗しました。", e);
@@ -132,7 +141,13 @@ public class BoardReportService implements Command {
             board.setMemberId(memberId);
             board.setTitle(require(request, "title"));
             board.setContent(require(request, "content"));
-            board.setRiskLevel(require(request, "riskLevel"));
+
+            String riskLevel = require(request, "riskLevel");
+            if (!VALID_RISK_LEVELS.contains(riskLevel)) {
+                throw new BoardReportException("危険度の値が正しくありません。");
+            }
+            board.setRiskLevel(riskLevel);
+            
             board.setLatitude(Double.parseDouble(require(request, "latitude")));
             board.setLongitude(Double.parseDouble(require(request, "longitude")));
             board.setAddress(request.getParameter("address")); // 선택값
