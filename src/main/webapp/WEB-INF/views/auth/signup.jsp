@@ -105,7 +105,9 @@
 
             <!-- 회원가입 Form -->
 
-            <form method="post" action="/signup">
+            <form method="post" action="/signup" id="signupForm">
+            
+            
 
                 <!-- 아이디 -->
 
@@ -250,6 +252,7 @@
                         <input
                             type="password"
                             id="passwordConfirm"
+                            name="passwordConfirm"
                             class="form-control"
                             placeholder="もう一度入力してください"
                             required>
@@ -280,6 +283,7 @@
 
 
                 <!-- 가입 버튼 -->
+
 
                 <button
                     type="submit"
