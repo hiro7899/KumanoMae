@@ -2,6 +2,7 @@ package com.jsl.service.login;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +14,7 @@ public class CheckUserIdService implements Command {
 	private final AuthDao authDao = new AuthDao();
 	
     @Override
-    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String userId = request.getParameter("userId");
 
