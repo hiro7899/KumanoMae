@@ -438,5 +438,29 @@ Mobile
     padding: 25px 20px;
     box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.12);
 }
+.account-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 10px;
+
+    font-size: 12px;
+}
+
+.account-links a {
+    color: #777;
+    text-decoration: none;
+}
+
+.account-links a:hover {
+    color: #222;
+    text-decoration: underline;
+}
+
+.account-links span {
+    color: #ccc;
+}
 
 }

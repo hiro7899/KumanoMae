@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 
@@ -6,274 +6,224 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ログイン - クマ出没マップ</title>
+<title>ログイン - クマ出没マップ</title>
 
-    <!-- Bootstrap 5 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+<!-- Bootstrap 5 -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-    <!-- 일본어 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 일본어 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-        rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+	rel="stylesheet">
 
-    <!-- 로그인 화면 전용 CSS -->
-    <link rel="stylesheet" href="/resources/css/login/login.css">
+<!-- 로그인 화면 전용 CSS -->
+<link rel="stylesheet" href="/resources/css/login/login.css">
 
 </head>
 
 <body>
 
-<!-- ===================== Navbar ===================== -->
+	<!-- ===================== Navbar ===================== -->
 
-<nav class="navbar navbar-jp">
+	<nav class="navbar navbar-jp">
 
-    <div class="container d-flex align-items-center justify-content-between">
+		<div
+			class="container d-flex align-items-center justify-content-between">
 
-        <!-- 로고 -->
+			<!-- 로고 -->
 
-        <a href="/" class="d-flex align-items-center text-decoration-none">
+			<a href="/" class="d-flex align-items-center text-decoration-none">
 
-            <div class="logo-badge me-2">
-                熊
-            </div>
+				<div class="logo-badge me-2">熊</div>
 
-            <div class="brand-jp">
+				<div class="brand-jp">
 
-                <div class="jp-title">
-                    クマ出没マップ
-                </div>
+					<div class="jp-title">クマ出没マップ</div>
 
-                <div class="jp-sub">
-                    KUMA SHUTSUBOTSU MAP
-                </div>
+					<div class="jp-sub">KUMA SHUTSUBOTSU MAP</div>
 
-            </div>
+				</div>
 
-        </a>
+			</a>
 
-        <!-- 메인으로 -->
+			<!-- 메인으로 -->
 
-        <a href="/" class="back-home">
+			<a href="/" class="back-home"> <i class="bi bi-house-door-fill"></i>
 
-            <i class="bi bi-house-door-fill"></i>
+				ホームへ戻る
 
-            ホームへ戻る
+			</a>
 
-        </a>
+		</div>
 
-    </div>
+	</nav>
 
-</nav>
 
+	<!-- ===================== Login ===================== -->
 
-<!-- ===================== Login ===================== -->
+	<main class="login-main">
 
-<main class="login-main">
+		<div class="container">
 
-    <div class="container">
+			<div class="login-wrapper">
 
-        <div class="login-wrapper">
+				<!-- 왼쪽 설명 영역 -->
 
-            <!-- 왼쪽 설명 영역 -->
+				<div class="login-intro">
 
-            <div class="login-intro">
+					<p class="intro-eyebrow">― MEMBERS</p>
 
-                <p class="intro-eyebrow">
-                    ― MEMBERS
-                </p>
+					<h1>ログイン</h1>
 
-                <h1>
-                    ログイン
-                </h1>
+					<p class="intro-title">
 
-                <p class="intro-title">
+						クマ出没マップへ<br> ようこそ。
 
-                    クマ出没マップへ<br>
-                    ようこそ。
+					</p>
 
-                </p>
+					<p class="intro-text">ログインすると、目撃情報の確認や 今後追加される会員向けサービスを
+						ご利用いただけます。</p>
 
-                <p class="intro-text">
+					<div class="intro-warning">
 
-                    ログインすると、目撃情報の確認や
-                    今後追加される会員向けサービスを
-                    ご利用いただけます。
+						<i class="bi bi-shield-exclamation"></i> <span>
 
-                </p>
+							安全のため、アカウント情報を 他人と共有しないでください。 </span>
 
-                <div class="intro-warning">
+					</div>
 
-                    <i class="bi bi-shield-exclamation"></i>
+				</div>
 
-                    <span>
 
-                        安全のため、アカウント情報を
-                        他人と共有しないでください。
+				<!-- 오른쪽 로그인 폼 -->
 
-                    </span>
+				<div class="login-card">
 
-                </div>
+					<div class="login-card-header">
 
-            </div>
+						<span class="header-line"></span>
 
+						<h2>ログイン</h2>
 
-            <!-- 오른쪽 로그인 폼 -->
+						<p>アカウント情報を入力してください</p>
 
-            <div class="login-card">
+					</div>
 
-                <div class="login-card-header">
 
-                    <span class="header-line"></span>
+					<!-- 로그인 Form -->
 
-                    <h2>
-                        ログイン
-                    </h2>
+					<form method="post" action="/login">
 
-                    <p>
-                        アカウント情報を入力してください
-                    </p>
+						<!-- 아이디 -->
 
-                </div>
+						<div class="form-group">
 
+							<label for="userId"> ID・メールアドレス </label>
 
-                <!-- 로그인 Form -->
+							<div class="input-wrapper">
 
-                <form method="post" action="/login">
+								<i class="bi bi-person"></i> <input type="text" id="userId"
+									name="userId" class="form-control"
+									placeholder="IDまたはメールアドレスを入力" required>
 
-                    <!-- 아이디 -->
+							</div>
 
-                    <div class="form-group">
+						</div>
 
-                        <label for="userId">
-                            ID
-                        </label>
 
-                        <div class="input-wrapper">
 
-                            <i class="bi bi-person"></i>
+						<!-- 비밀번호 -->
 
-                            <input
-                                type="text"
-                                id="userId"
-                                name="userId"
-                                class="form-control"
-                                placeholder="IDを入力"
-                                required>
+						<div class="form-group">
 
-                        </div>
+							<div class="password-label">
 
-                    </div>
+								<label for="userPw"> パスワード </label>
 
+							</div>
 
-                    <!-- 비밀번호 -->
+							<div class="input-wrapper">
 
-                    <div class="form-group">
+								<i class="bi bi-lock"></i> <input type="password" id="userPw"
+									name="userPw" class="form-control" placeholder="パスワードを入力"
+									required>
 
-                        <div class="password-label">
+							</div>
 
-                            <label for="userPw">
-                                パスワード
-                            </label>
 
-                            <a href="/find-pw" class="forgot-password">
-                                パスワードを忘れた方
-                            </a>
+							<!-- 아이디 / 비밀번호 찾기 -->
 
-                        </div>
+							<div class="account-links">
 
-                        <div class="input-wrapper">
+								<a href="/find-id"> IDを忘れた方 </a> <span>|</span> <a
+									href="/find-pw"> パスワードを忘れた方 </a>
 
-                            <i class="bi bi-lock"></i>
+							</div>
 
-                            <input
-                                type="password"
-                                id="userPw"
-                                name="userPw"
-                                class="form-control"
-                                placeholder="パスワードを入力"
-                                required>
+						</div>
 
-                        </div>
 
-                    </div>
+						<!-- 로그인 버튼 -->
 
+						<button type="submit" id="loginBtn" class="login-btn">
 
-                    <!-- 로그인 버튼 -->
+							ログイン <i class="bi bi-arrow-right"></i>
 
-                    <button
-                        type="submit"
-                        id="loginBtn"
-                        class="login-btn">
+						</button>
 
-                        ログイン
 
-                        <i class="bi bi-arrow-right"></i>
+						<!-- 구분선 -->
 
-                    </button>
+						<div class="form-divider">
 
+							<span> または </span>
 
-                    <!-- 구분선 -->
+						</div>
 
-                    <div class="form-divider">
 
-                        <span>
-                            または
-                        </span>
+						<!-- 회원가입 -->
 
-                    </div>
+						<div class="signup-area">
 
+							<p>アカウントをお持ちでない方</p>
 
-                    <!-- 회원가입 -->
+							<a href="/signup" class="signup-btn"> 会員登録はこちら </a>
 
-                    <div class="signup-area">
+						</div>
 
-                        <p>
-                            アカウントをお持ちでない方
-                        </p>
+					</form>
 
-                        <a
-                            href="/signup"
-                            class="signup-btn">
+				</div>
 
-                            会員登録はこちら
+			</div>
 
-                        </a>
+		</div>
 
-                    </div>
+	</main>
 
-                </form>
 
-            </div>
+	<!-- Bootstrap 5 JS -->
 
-        </div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+		
+	</script>
 
-    </div>
+	<!-- 로그인 화면 전용 JS -->
 
-</main>
-
-
-<!-- Bootstrap 5 JS -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
-
-<!-- 로그인 화면 전용 JS -->
-
-<script src="/resources/js/login/login.js"></script>
+	<script src="/resources/js/login/login.js"></script>
 
 </body>
 
