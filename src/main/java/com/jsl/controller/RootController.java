@@ -13,13 +13,18 @@ import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.login.SignUpService;
 
-@WebServlet(urlPatterns = { "/", "/index", "/login", "/logout", "/signup", "/forgot-password", "/reset-password",
-		"/board/List", "/board/Write", "/board/News"
-
-})
+@WebServlet(urlPatterns = {
+	    "/", "/index", "/login", "/logout",
+	    "/signup", "/forgot-password", "/reset-password"
+	})
 public class RootController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	private final LoginService loginService = new LoginService();
+	private final LogoutService logoutService = new LogoutService();
+	private final SignUpService signUpService = new SignUpService();
+	private final FindPasswordService findPasswordService = new FindPasswordService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -31,10 +36,9 @@ public class RootController extends HttpServlet {
 		doAction(request, response);
 	}
 
-	protected void doAction(HttpServletRequest request, HttpServletResponse response)
+	private void doAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// exact-match 패턴이므로 getServletPath()가 "/login", "/logout" 등을 그대로 반환
 		String action = request.getServletPath();
 		String page = null;
 
@@ -49,29 +53,28 @@ public class RootController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/login.jsp";
 			} else {
-				new LoginService().doCommand(request, response);
+				loginService.doCommand(request, response);
 
 				HttpSession session = request.getSession(false);
-				if (session != null && session.getAttribute("userId") != null) {
-					response.sendRedirect(request.getContextPath() + "/");
+				if (session != null && session.getAttribute("user") != null) {
+					response.sendRedirect("/");
 					return;
 				}
-				// 로그인 실패 시 errorMsg를 request에 담아 폼 재출력
 				page = "/WEB-INF/views/auth/login.jsp";
 			}
 			break;
 
 		case "/logout":
-			new LogoutService().doCommand(request, response);
-			response.sendRedirect(request.getContextPath() + "/");
+			logoutService.doCommand(request, response);
+			response.sendRedirect("/");
 			return;
 
 		case "/signup":
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/signup.jsp";
 			} else {
-				new SignUpService().doCommand(request, response);
-				response.sendRedirect(request.getContextPath() + "/login");
+				signUpService.doCommand(request, response);
+				response.sendRedirect("/login");
 				return;
 			}
 			break;
@@ -80,27 +83,17 @@ public class RootController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			} else {
-				new FindPasswordService().doCommand(request, response);
-				page = "/WEB-INF/views/auth/find_pw.jsp"; // 처리 결과 메시지와 함께 재출력
+				findPasswordService.doCommand(request, response);
+				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
-		case "/board/List":
-			page = "/WEB-INF/views/board/boardList.jsp";
-			break;
-
-		case "/board/Write":
-			page = "/WEB-INF/views/board/boardWrite.jsp";
-			break;
-			
-		case "/board/News":
-			page = "/WEB-INF/views/board/boardNews.jsp";
-			break;
+		
 //        case "/reset_pw":
 //            if ("GET".equalsIgnoreCase(request.getMethod())) {
 //                page = "/WEB-INF/views/auth/reset_pw.jsp";
 //            } else {
 //                new ResetPasswordService().doCommand(request, response);
-//                response.sendRedirect(request.getContextPath() + "/login");
+//                response.sendRedirect("/login");
 //                return;
 //            }
 //            break;
