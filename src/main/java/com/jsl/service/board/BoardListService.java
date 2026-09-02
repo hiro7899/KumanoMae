@@ -1,26 +1,26 @@
-package com.jsl.service.login;
+package com.jsl.service.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.jsl.dao.board.BoardDao;
+import com.jsl.dto.board.BoardDto;
 import com.jsl.service.Command;
 
-public class LogoutService implements Command {
+public class BoardListService implements Command {
+
+    private final BoardDao boardDao = new BoardDao();
 
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
+        List<BoardDto> boardList = boardDao.selectApprovedBoard();
 
-        if (session != null) {
-            session.invalidate();
-        }
-
-        response.getWriter().write("success");
+        request.setAttribute("boardList", boardList);
     }
 }

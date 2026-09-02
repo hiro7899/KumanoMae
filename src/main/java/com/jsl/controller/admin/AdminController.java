@@ -62,6 +62,7 @@ public class AdminController extends HttpServlet {
                 break;
             
             case "/board/list":
+            	
             	page = "/WEB-INF/views/admin/board/list.jsp";
                 break;
 

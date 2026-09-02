@@ -2,6 +2,7 @@ package com.jsl.service.login;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,7 +11,7 @@ import com.jsl.service.Command;
 public class FindPasswordService implements Command{
 
 	@Override
-	public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void doCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 	
