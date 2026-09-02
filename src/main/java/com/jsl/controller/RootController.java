@@ -84,18 +84,6 @@ public class RootController extends HttpServlet {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
-		case "/boardList":
-			page = "/WEB-INF/views/board/boardList.jsp";
-			break;
-
-		case "/boardWrite":
-			page = "/WEB-INF/views/board/boardWrite.jsp";
-			break;
-
-		case "/boardNews":
-			page = "/WEB-INF/views/board/boardNews.jsp";
-			break;
-
 //        case "/reset_pw":
 //            if ("GET".equalsIgnoreCase(request.getMethod())) {
 //                page = "/WEB-INF/views/auth/reset_pw.jsp";
