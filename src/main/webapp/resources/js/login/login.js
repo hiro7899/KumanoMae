@@ -8,7 +8,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
+    const passwordInput = document.getElementById("userPw");
     const loginBtn = document.getElementById("loginBtn");
 
     if (!loginBtn) return;
