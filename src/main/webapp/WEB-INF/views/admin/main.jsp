@@ -31,19 +31,19 @@
         <nav class="mt-2">
             <!-- 메인 대시보드 active -->
             <a href="${pageContext.request.contextPath}/admin/main" class="admin-nav-link active">
-                <i class="bi bi-speedometer2 me-2"></i>ダッシュボード (대시보드)
+                <i class="bi bi-speedometer2 me-2"></i>ダッシュボード
             </a>
             <a href="${pageContext.request.contextPath}/admin/board/list" class="admin-nav-link">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>目撃通報管理 (제보 관리)
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>目撃通報管理
             </a>
             <a href="${pageContext.request.contextPath}/admin/community/list" class="admin-nav-link">
-                <i class="bi bi-chat-left-dots-fill me-2"></i>掲示板管理 (커뮤니티)
+                <i class="bi bi-chat-left-dots-fill me-2"></i>掲示板管理
             </a>
             <a href="${pageContext.request.contextPath}/admin/member/list" class="admin-nav-link">
-                <i class="bi bi-people-fill me-2"></i>ユーザー管理 (회원 관리)
+                <i class="bi bi-people-fill me-2"></i>ユーザー管理
             </a>
             <a href="${pageContext.request.contextPath}/" class="admin-nav-link text-warning mt-4">
-                <i class="bi bi-box-arrow-left me-2"></i>サイトへ戻る (메인으로)
+                <i class="bi bi-box-arrow-left me-2"></i>メインページへ
             </a>
         </nav>
     </aside>
@@ -52,7 +52,7 @@
     <main class="admin-content">
         <!-- 상단 타이틀 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold m-0"><span class="dash">―</span>ダッシュボード (어드민 메인)</h2>
+            <h2 class="fw-bold m-0"><span class="dash">―</span>ダッシュボード</h2>
             <span class="small text-muted">最終更新: 2026-09-02</span>
         </div>
 
@@ -61,7 +61,7 @@
             <div class="col-md-3">
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
-                        <div class="small text-muted fw-bold">承認待ち通報 (승인대기)</div>
+                        <div class="small text-muted fw-bold">承認待ち通報</div>
                         <div class="fs-3 fw-bold text-warning">${pendingCount != null ? pendingCount : 3} 件</div>
                     </div>
                     <i class="bi bi-hourglass-split fs-1 text-warning"></i>
@@ -70,7 +70,7 @@
             <div class="col-md-3">
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
-                        <div class="small text-muted fw-bold">危険継続中 (위험지속)</div>
+                        <div class="small text-muted fw-bold">危険継続中</div>
                         <div class="fs-3 fw-bold text-danger">${activeDangerCount != null ? activeDangerCount : 5} 件</div>
                     </div>
                     <i class="bi bi-exclamation-diamond-fill fs-1 text-danger"></i>
@@ -79,7 +79,7 @@
             <div class="col-md-3">
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
-                        <div class="small text-muted fw-bold">総コミュニティ投稿 (전체글)</div>
+                        <div class="small text-muted fw-bold">総コミュニティ投稿</div>
                         <div class="fs-3 fw-bold text-dark">${totalCommunityCount != null ? totalCommunityCount : 28} 件</div>
                     </div>
                     <i class="bi bi-chat-square-text-fill fs-1 text-secondary"></i>
@@ -88,7 +88,7 @@
             <div class="col-md-3">
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
-                        <div class="small text-muted fw-bold">総会員数 (전체회원)</div>
+                        <div class="small text-muted fw-bold">総会員数</div>
                         <div class="fs-3 fw-bold text-primary">${totalMemberCount != null ? totalMemberCount : 14} 名</div>
                     </div>
                     <i class="bi bi-people-fill fs-1 text-primary"></i>
