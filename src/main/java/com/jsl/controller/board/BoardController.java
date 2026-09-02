@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
@@ -29,10 +30,21 @@ public class BoardController extends HttpServlet {
 
 		switch (action) {
 		case "/list":
-			page = "/WEB-INF/views/board/list.jsp";
+			if ("GET".equalsIgnoreCase(request.getMethod())) {
+				page = "/WEB-INF/views/board/list.jsp";
+			} else {
+//				selectBoardAllService.doCommand(request, response);
+
+				HttpSession session = request.getSession(false);
+				if (session != null && session.getAttribute("user") != null) {
+					response.sendRedirect("/");
+					return;
+				}
+				page = "/WEB-INF/views/auth/login.jsp";
+			}
 			break;
-		case "/view":
-			page = "/WEB-INF/views/board/view.jsp";
+		case "/detail":
+			page = "/WEB-INF/views/board/detail.jsp";
 			break;
 		case "/write":
 			page = "/WEB-INF/views/board/write.jsp";
