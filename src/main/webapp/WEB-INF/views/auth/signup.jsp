@@ -5,31 +5,32 @@
 <html lang="ja">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>会員登録 - クマ出没マップ</title>
+    <title>会員登録 - クマ出没マップ</title>
 
-<!-- Bootstrap 5 -->
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
-<!-- Bootstrap Icons -->
-<link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-<!-- 일본어 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 일본어 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-    rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
 
-<!-- 회원가입 CSS -->
-<link rel="stylesheet" href="/resources/css/login/signup.css">
+    <!-- 회원가입 CSS -->
+    <link rel="stylesheet" href="/resources/css/login/signup.css">
 
 </head>
 
@@ -62,8 +63,11 @@
         </a>
 
         <a href="/" class="back-home">
+
             <i class="bi bi-house-door-fill"></i>
+
             ホームへ戻る
+
         </a>
 
     </div>
@@ -99,12 +103,40 @@
             </div>
 
 
-            <form>
+            <!-- 회원가입 Form -->
 
-                <!-- 이름 -->
+            <form method="post" action="/signup">
+
+                <!-- 아이디 -->
+
                 <div class="form-group">
 
-                    <label for="name">
+                    <label for="userId">
+                        ID
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-person"></i>
+
+                        <input
+                            type="text"
+                            id="userId"
+                            name="userId"
+                            class="form-control"
+                            placeholder="IDを入力"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 이름 -->
+
+                <div class="form-group">
+
+                    <label for="userName">
                         お名前
                     </label>
 
@@ -114,9 +146,11 @@
 
                         <input
                             type="text"
-                            id="name"
+                            id="userName"
+                            name="userName"
                             class="form-control"
-                            placeholder="お名前を入力">
+                            placeholder="お名前を入力"
+                            required>
 
                     </div>
 
@@ -124,6 +158,7 @@
 
 
                 <!-- 이메일 -->
+
                 <div class="form-group">
 
                     <label for="email">
@@ -137,8 +172,34 @@
                         <input
                             type="email"
                             id="email"
+                            name="email"
                             class="form-control"
-                            placeholder="example@email.com">
+                            placeholder="example@email.com"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 전화번호 -->
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        電話番号
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="bi bi-telephone"></i>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            class="form-control"
+                            placeholder="電話番号を入力">
 
                     </div>
 
@@ -146,9 +207,10 @@
 
 
                 <!-- 비밀번호 -->
+
                 <div class="form-group">
 
-                    <label for="password">
+                    <label for="userPw">
                         パスワード
                     </label>
 
@@ -158,9 +220,11 @@
 
                         <input
                             type="password"
-                            id="password"
+                            id="userPw"
+                            name="userPw"
                             class="form-control"
-                            placeholder="パスワードを入力">
+                            placeholder="パスワードを入力"
+                            required>
 
                     </div>
 
@@ -172,6 +236,7 @@
 
 
                 <!-- 비밀번호 확인 -->
+
                 <div class="form-group">
 
                     <label for="passwordConfirm">
@@ -186,7 +251,8 @@
                             type="password"
                             id="passwordConfirm"
                             class="form-control"
-                            placeholder="もう一度入力してください">
+                            placeholder="もう一度入力してください"
+                            required>
 
                     </div>
 
@@ -194,13 +260,15 @@
 
 
                 <!-- 약관 -->
+
                 <div class="agreement-box">
 
                     <label class="agreement-label">
 
                         <input
                             type="checkbox"
-                            id="agree">
+                            id="agree"
+                            required>
 
                         <span>
                             利用規約とプライバシーポリシーに同意します。
@@ -212,8 +280,9 @@
 
 
                 <!-- 가입 버튼 -->
+
                 <button
-                    type="button"
+                    type="submit"
                     id="signupBtn"
                     class="signup-submit-btn">
 
@@ -225,6 +294,7 @@
 
 
                 <!-- 로그인으로 -->
+
                 <div class="login-link-area">
 
                     <p>
@@ -246,12 +316,14 @@
 </main>
 
 
-
-
 <!-- Bootstrap 5 JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
 
 <!-- 회원가입 화면 전용 JS -->
+
 <script src="/resources/js/login/signup.js"></script>
 
 </body>

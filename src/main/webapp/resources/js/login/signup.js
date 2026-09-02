@@ -77,9 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // 6. 지금은 백엔드가 없으므로 화면 동작만 안내
-        //    TODO: 백엔드 연동 후 이 부분을 실제 회원가입 요청(fetch 등)으로 교체
-        alert("会員登録機能はバックエンド連携後に有効になります。");
     });
 
 });

@@ -31,17 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // 2. 이메일 형식 간단 체크
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            alert("メールアドレスの形式が正しくありません。");
-            emailInput.focus();
-            return;
-        }
 
-        // 3. 지금은 백엔드가 없으므로 화면 동작만 안내
-        //    TODO: 백엔드 연동 후 이 부분을 실제 로그인 요청(fetch 등)으로 교체
-        alert("ログイン機能はバックエンド連携後に有効になります。");
     });
 
     // Enter 키로도 로그인 버튼이 눌리도록 처리
