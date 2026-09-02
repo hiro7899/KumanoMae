@@ -161,16 +161,11 @@
 									required>
 
 							</div>
-
-
-							<!-- 아이디 / 비밀번호 찾기 -->
-
-							<div class="account-links">
-
-								<a href="/find-id"> IDを忘れた方 </a> <span>|</span> <a
-									href="/find-pw"> パスワードを忘れた方 </a>
-
-							</div>
+						
+						<div>
+							<p>IDを保存</p>
+							<input type="checkbox" id="" class="">
+						</div>
 
 						</div>
 
@@ -183,7 +178,15 @@
 
 						</button>
 
+						<!-- 아이디 / 비밀번호 찾기 -->
 
+						<div class="account-links">
+
+							<a href="/find-id"> IDを忘れた方 </a> <span>|</span> <a
+								href="/find-pw"> パスワードを忘れた方 </a>
+
+						</div>	
+						
 						<!-- 구분선 -->
 
 						<div class="form-divider">
@@ -191,7 +194,7 @@
 							<span> または </span>
 
 						</div>
-
+						
 
 						<!-- 회원가입 -->
 
