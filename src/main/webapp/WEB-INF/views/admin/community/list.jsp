@@ -40,19 +40,17 @@
 			<nav class="mt-2">
 				<a href="${pageContext.request.contextPath}/admin/main"
 					class="admin-nav-link"> <i class="bi bi-speedometer2 me-2"></i>ダッシュボード
-					(대시보드)
 				</a> <a href="${pageContext.request.contextPath}/admin/board/list"
 					class="admin-nav-link"> <i
-					class="bi bi-exclamation-triangle-fill me-2"></i>目撃通報管理 (제보 관리)
+					class="bi bi-exclamation-triangle-fill me-2"></i>目撃通報管理
 				</a> <a href="${pageContext.request.contextPath}/admin/community/list"
 					class="admin-nav-link active"> <i
-					class="bi bi-chat-left-dots-fill me-2"></i>掲示板管理 (커뮤니티)
+					class="bi bi-chat-left-dots-fill me-2"></i>掲示板管理
 				</a> <a href="${pageContext.request.contextPath}/admin/member/list"
 					class="admin-nav-link"> <i class="bi bi-people-fill me-2"></i>ユーザー管理
-					(회원 관리)
 				</a> <a href="${pageContext.request.contextPath}/"
 					class="admin-nav-link text-warning mt-4"> <i
-					class="bi bi-box-arrow-left me-2"></i>サイトへ戻る (메인으로)
+					class="bi bi-box-arrow-left me-2"></i>メインページへ
 				</a>
 			</nav>
 		</aside>
@@ -62,7 +60,7 @@
 			<!-- 상단 타이틀 -->
 			<div class="d-flex justify-content-between align-items-center mb-4">
 				<h2 class="fw-bold m-0">
-					<span class="dash">―</span>掲示板管理 (커뮤니티 게시글 관리)
+					<span class="dash">―</span>掲示板管理
 				</h2>
 				<span class="badge bg-dark px-3 py-2">全 ${not empty communityList ? communityList.size() : 0}
 					件</span>
@@ -74,19 +72,17 @@
 					action="${pageContext.request.contextPath}/admin/community/list"
 					method="get" class="row g-3 align-items-center">
 					<div class="col-md-3">
-						<label class="form-label small fw-bold mb-1">表示状態 (공개 여부)</label>
+						<label class="form-label small fw-bold mb-1">表示状態</label>
 						<select name="status" class="form-select form-select-sm">
-							<option value="">すべて (전체)</option>
-							<option value="Y" ${param.status eq 'Y' ? 'selected' : ''}>表示中
-								(공개)</option>
-							<option value="N" ${param.status eq 'N' ? 'selected' : ''}>非表示
-								(비공개/숨김)</option>
+							<option value="">すべて</option>
+							<option value="Y" ${param.status eq 'Y' ? 'selected' : ''}>表示中</option>
+							<option value="N" ${param.status eq 'N' ? 'selected' : ''}>非表示</option>
 						</select>
 					</div>
 					<div class="col-md-3">
-						<label class="form-label small fw-bold mb-1">カテゴリ (카테고리)</label> <select
+						<label class="form-label small fw-bold mb-1">カテゴリ</label> <select
 							name="category" class="form-select form-select-sm">
-							<option value="">すべて (전체)</option>
+							<option value="">すべて</option>
 							<option value="FREE"
 								${param.category eq 'FREE' ? 'selected' : ''}>自由掲示板</option>
 							<option value="INFO"
@@ -94,7 +90,7 @@
 						</select>
 					</div>
 					<div class="col-md-4">
-						<label class="form-label small fw-bold mb-1">検索 (검색어)</label> <input
+						<label class="form-label small fw-bold mb-1">検索</label> <input
 							type="text" name="keyword" value="${param.keyword}"
 							class="form-control form-control-sm" placeholder="タイトルまたは投稿者">
 					</div>
@@ -120,7 +116,7 @@
 								<th>投稿者</th>
 								<th>作成日時</th>
 								<th>状態</th>
-								<th>管理 (작업)</th>
+								<th>管理</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -180,7 +176,7 @@
 											<div class="d-flex justify-content-center gap-1">
 												<button class="btn btn-outline-danger btn-sm fw-bold">非表示</button>
 												<button class="btn btn-danger btn-sm fw-bold"
-													onclick="return confirm('削除しますか？');">削除</button>
+													onclick="return confirm('本当に削除しますか？');">削除</button>
 											</div>
 										</td>
 									</tr>
@@ -195,7 +191,7 @@
 											<div class="d-flex justify-content-center gap-1">
 												<button class="btn btn-outline-success btn-sm fw-bold">再表示</button>
 												<button class="btn btn-danger btn-sm fw-bold"
-													onclick="return confirm('削除しますか？');">削除</button>
+													onclick="return confirm('本当に削除しますか？');">削除</button>
 											</div>
 										</td>
 									</tr>

@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-<!-- 프로젝트 공통 CSS & 어드민 전용 CSS (경로 수정 완료) -->
+<!-- 프로젝트 공통 CSS & 어드민 전용 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/list.css">
 </head>
@@ -30,19 +30,19 @@
         </div>
         <nav class="mt-2">
             <a href="${pageContext.request.contextPath}/admin/main" class="admin-nav-link">
-                <i class="bi bi-speedometer2 me-2"></i>ダッシュボード (대시보드)
+                <i class="bi bi-speedometer2 me-2"></i>ダッシュボード
             </a>
             <a href="${pageContext.request.contextPath}/admin/board/list" class="admin-nav-link active">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>目撃通報管理 (제보 관리)
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>目撃通報管理
             </a>
             <a href="${pageContext.request.contextPath}/admin/community/list" class="admin-nav-link">
-                <i class="bi bi-chat-left-dots-fill me-2"></i>掲示板管理 (커뮤니티)
+                <i class="bi bi-chat-left-dots-fill me-2"></i>掲示板管理
             </a>
             <a href="${pageContext.request.contextPath}/admin/member/list" class="admin-nav-link">
-                <i class="bi bi-people-fill me-2"></i>ユーザー管理 (회원 관리)
+                <i class="bi bi-people-fill me-2"></i>ユーザー管理
             </a>
             <a href="${pageContext.request.contextPath}/" class="admin-nav-link text-warning mt-4">
-                <i class="bi bi-box-arrow-left me-2"></i>サイトへ戻る (메인으로)
+                <i class="bi bi-box-arrow-left me-2"></i>メインページへ
             </a>
         </nav>
     </aside>
@@ -51,7 +51,7 @@
     <main class="admin-content">
         <!-- 상단 타이틀 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold m-0"><span class="dash">―</span>目撃通報管理 (곰 제보 관리)</h2>
+            <h2 class="fw-bold m-0"><span class="dash">―</span>目撃通報管理</h2>
             <span class="badge bg-dark px-3 py-2">全 ${not empty boardList ? boardList.size() : 0} 件</span>
         </div>
 
@@ -59,24 +59,24 @@
         <div class="stat-card mb-4">
             <form action="${pageContext.request.contextPath}/admin/board/list" method="get" class="row g-3 align-items-center">
                 <div class="col-md-3">
-                    <label class="form-label small fw-bold mb-1">承認ステータス (승인 상태)</label>
+                    <label class="form-label small fw-bold mb-1">承認ステータス</label>
                     <select name="status" class="form-select form-select-sm">
-                        <option value="">すべて (전체)</option>
-                        <option value="W" ${param.status eq 'W' ? 'selected' : ''}>承認待ち (승인대기)</option>
-                        <option value="Y" ${param.status eq 'Y' ? 'selected' : ''}>承認済み (승인완료)</option>
-                        <option value="N" ${param.status eq 'N' ? 'selected' : ''}>却下 (반려)</option>
+                        <option value="">すべて</option>
+                        <option value="W" ${param.status eq 'W' ? 'selected' : ''}>承認待ち</option>
+                        <option value="Y" ${param.status eq 'Y' ? 'selected' : ''}>承認済み</option>
+                        <option value="N" ${param.status eq 'N' ? 'selected' : ''}>却下</option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label small fw-bold mb-1">危険解除 (위험 해제 여부)</label>
+                    <label class="form-label small fw-bold mb-1">危険解除</label>
                     <select name="clearYn" class="form-select form-select-sm">
-                        <option value="">すべて (전체)</option>
-                        <option value="N" ${param.clearYn eq 'N' ? 'selected' : ''}>危険継続中 (위험지속)</option>
-                        <option value="Y" ${param.clearYn eq 'Y' ? 'selected' : ''}>解除済み (위험해제)</option>
+                        <option value="">すべて</option>
+                        <option value="N" ${param.clearYn eq 'N' ? 'selected' : ''}>危険継続中</option>
+                        <option value="Y" ${param.clearYn eq 'Y' ? 'selected' : ''}>解除済み</option>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label small fw-bold mb-1">検索 (검색어)</label>
+                    <label class="form-label small fw-bold mb-1">検索</label>
                     <input type="text" name="keyword" value="${param.keyword}" class="form-control form-control-sm" placeholder="タイトルまたは位置情報">
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
@@ -100,7 +100,7 @@
                             <th>目撃日時</th>
                             <th>ステータス</th>
                             <th>危険状態</th>
-                            <th>管理 (작업)</th>
+                            <th>管理</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -167,8 +167,10 @@
                                     <td><span class="badge bg-warning text-dark">承認待ち</span></td>
                                     <td><span class="badge bg-danger">継続中</span></td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/admin/board/approve?boardId=12" class="btn btn-success btn-sm fw-bold">承認</a>
-                                        <a href="${pageContext.request.contextPath}/admin/board/reject?boardId=12" class="btn btn-danger btn-sm fw-bold">却下</a>
+                                        <div class="d-flex justify-content-center gap-1">
+                                            <a href="${pageContext.request.contextPath}/admin/board/approve?boardId=12" class="btn btn-success btn-sm fw-bold">承認</a>
+                                            <a href="${pageContext.request.contextPath}/admin/board/reject?boardId=12" class="btn btn-danger btn-sm fw-bold">却下</a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -213,8 +215,8 @@
                     <p class="small text-muted mb-3">この通報の危険状態を解除し、マップ上のマーカーを安全表示に切り替えます。</p>
                     
                     <div class="mb-3">
-                        <label for="clearMemo" class="form-label small fw-bold">解除理由 / メモ (해제 사유)</label>
-                        <textarea class="form-control" name="clearMemo" id="clearMemo" rows="3" placeholder="例：自治体による safe 宣言を確認、または駆除完了"></textarea>
+                        <label for="clearMemo" class="form-label small fw-bold">解除理由 / メモ</label>
+                        <textarea class="form-control" name="clearMemo" id="clearMemo" rows="3" placeholder="例：自治体による安全宣言を確認、または駆除完了"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

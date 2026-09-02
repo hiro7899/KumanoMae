@@ -188,7 +188,7 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
 						</p>
 						<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
-						<a href="/board/view" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
@@ -208,7 +208,7 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-19 18:10
 						</p>
 						<p class="small flex-grow-1">農地付近でクマの足跡と糞の痕跡を発見しました。</p>
-						<a href="/board/view" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
@@ -228,7 +228,7 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-18 06:45
 						</p>
 						<p class="small flex-grow-1">登山者がクマと思われる鳴き声を聞いたと報告しています。</p>
-						<a href="/board/view" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
