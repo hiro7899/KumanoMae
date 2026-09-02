@@ -142,4 +142,45 @@ public class BoardDao {
             throw new SQLException("BOARD_ID 채번에 실패했습니다.");
         }
     }
+    
+    /** 제보 승인/반려 공통 처리. status는 'Y' 또는 'N' */
+    public int updateStatus(Connection conn, Long boardId, String status) throws SQLException {
+
+        String sql = "UPDATE BOARD SET STATUS = ?, MOD_DATE = SYSDATE WHERE BOARD_ID = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, status);
+            pstmt.setLong(2, boardId);
+            return pstmt.executeUpdate();
+        }
+    }
+
+    /** 위험 해제 처리 */
+    public int updateClear(Connection conn, Long boardId, String clearMemo) throws SQLException {
+
+        String sql = """
+            UPDATE BOARD
+               SET CLEAR_YN = 'Y', CLEAR_DATE = SYSDATE, CLEAR_MEMO = ?, MOD_DATE = SYSDATE
+             WHERE BOARD_ID = ?
+            """;
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, clearMemo);
+            pstmt.setLong(2, boardId);
+            return pstmt.executeUpdate();
+        }
+    }
+
+    /** 현재 STATUS 조회 - 승인/반려 시 상태 전이 검증용 (예: 이미 승인된 글을 다시 승인 시도 방지) */
+    public String findStatus(Connection conn, Long boardId) throws SQLException {
+
+        String sql = "SELECT STATUS FROM BOARD WHERE BOARD_ID = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, boardId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() ? rs.getString("STATUS") : null;
+            }
+        }
+    }
 }

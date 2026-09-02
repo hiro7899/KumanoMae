@@ -1,7 +1,6 @@
 package com.jsl.controller.admin;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,10 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.dto.member.LoginUserDto;
+import com.jsl.exeption.AdminActionException;
+import com.jsl.service.admin.AdminApproveService;
+import com.jsl.service.admin.AdminClearService;
+import com.jsl.service.admin.AdminRejectService;
 
 @WebServlet("/admin/*")
 public class AdminController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    private final AdminApproveService adminApproveService = new AdminApproveService();
+    private final AdminRejectService adminRejectService = new AdminRejectService();
+    private final AdminClearService adminClearService = new AdminClearService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,18 +36,16 @@ public class AdminController extends HttpServlet {
     private void doAction(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-    	LoginUserDto user = (LoginUserDto) request.getSession().getAttribute("user");
-
+        LoginUserDto user = (LoginUserDto) request.getSession().getAttribute("user");
         if (user == null) {
             response.sendRedirect("/login");
             return;
         }
-
         if (!"A".equals(user.getUserGrade())) {
             response.sendRedirect("/");
             return;
         }
-    	
+
         String path = request.getPathInfo();
         if (path == null) {
             path = "/main";
@@ -53,44 +58,63 @@ public class AdminController extends HttpServlet {
                 break;
 
             case "/member/list":
-            	page = "/WEB-INF/views/admin/member/list.jsp";
+                page = "/WEB-INF/views/admin/member/list.jsp";
                 break;
 
             case "/member/updateGrade":
-                // 회원 등급 변경
                 break;
 
             case "/member/delete":
-                // 회원 삭제
                 break;
-            
+
             case "/board/list":
-            	
-            	page = "/WEB-INF/views/admin/board/list.jsp";
+                page = "/WEB-INF/views/admin/board/list.jsp";
                 break;
 
             case "/board/approve":
-                // 제보 승인
+                try {
+                    adminApproveService.doCommand(request, response);
+                    response.sendRedirect("/admin/board/list");
+                    return;
+                } catch (AdminActionException e) {
+                    request.setAttribute("errorMsg", e.getMessage());
+                    page = "/WEB-INF/views/admin/board/list.jsp";
+                }
                 break;
 
             case "/board/reject":
-                // 제보 반려
+                try {
+                    adminRejectService.doCommand(request, response);
+                    response.sendRedirect("/admin/board/list");
+                    return;
+                } catch (AdminActionException e) {
+                    request.setAttribute("errorMsg", e.getMessage());
+                    page = "/WEB-INF/views/admin/board/list.jsp";
+                }
                 break;
 
             case "/board/clear":
-                // 위험 해제
+                try {
+                    adminClearService.doCommand(request, response);
+                    response.sendRedirect("/admin/board/list");
+                    return;
+                } catch (AdminActionException e) {
+                    request.setAttribute("errorMsg", e.getMessage());
+                    page = "/WEB-INF/views/admin/board/list.jsp";
+                }
                 break;
-            
+
             case "/community/list":
-            	page = "/WEB-INF/views/admin/community/list.jsp";
-				break;
-             
+                page = "/WEB-INF/views/admin/community/list.jsp";
+                break;
+
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
         }
-        
+
         if (page != null) {
-			request.getRequestDispatcher(page).forward(request, response);
-		}
+            request.getRequestDispatcher(page).forward(request, response);
+        }
     }
 }
