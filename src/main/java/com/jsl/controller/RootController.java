@@ -13,8 +13,7 @@ import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.login.SignUpService;
 
-@WebServlet(urlPatterns = { "/", "/index", "/login", "/logout", "/signup", "/forgot-password", "/reset-password",
-		"/boardList", "/boardWrite", "/boardNews" })
+@WebServlet(urlPatterns = { "/", "/index", "/login", "/logout", "/signup", "/forgot-password", "/reset-password"})
 public class RootController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
