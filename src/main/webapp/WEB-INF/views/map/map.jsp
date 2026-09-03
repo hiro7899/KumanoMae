@@ -125,6 +125,7 @@
                     <p><span class="legend-dot risk-danger-dot"></span> DANGER</p>
                     <p><span class="legend-dot risk-warning-dot"></span> WARNING</p>
                     <p><span class="legend-dot risk-caution-dot"></span> CAUTION</p>
+                    
                 </div>
 
             </div>
