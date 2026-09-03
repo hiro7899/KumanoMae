@@ -72,7 +72,7 @@
 				</ul>
 			</div>
 
-			<a href="${pageContext.request.contextPath}/#mapSection"
+			<a href="${pageContext.request.contextPath}/map"
 				class="btn btn-jp-mustard d-none d-lg-inline-block"> 地図を見る </a>
 
 		</div>

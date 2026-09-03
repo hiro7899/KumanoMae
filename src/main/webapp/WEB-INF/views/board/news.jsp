@@ -48,7 +48,7 @@
                         登山や外出の際には十分ご注意ください。
                     </p>
 
-                    <a href="#" class="btn btn-jp-outline btn-sm mt-2">
+                    <a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">
                         詳細を見る
                     </a>
                 </div>
@@ -78,7 +78,7 @@
                         入山前に出没情報を確認し、熊鈴などの装備を準備しましょう。
                     </p>
 
-                    <a href="#" class="btn btn-jp-outline btn-sm mt-2">
+                    <a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">
                         詳細を見る
                     </a>
                 </div>
@@ -108,7 +108,7 @@
                         市内の山間部周辺ではクマの活動が確認されています。
                     </p>
 
-                    <a href="#" class="btn btn-jp-outline btn-sm mt-2">
+                    <a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">
                         詳細を見る
                     </a>
                 </div>
