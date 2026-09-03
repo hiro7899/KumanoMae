@@ -151,8 +151,8 @@
 
 						<div class="account-links">
 
-							<a href="/find-id"> IDを忘れた方 </a> <span>|</span> <a
-								href="/find-pw"> パスワードを忘れた方 </a>
+							<a href="/find_id"> IDを忘れた方 </a> <span>|</span> <a
+								href="/find_pw"> パスワードを忘れた方 </a>
 
 						</div>	
 						
