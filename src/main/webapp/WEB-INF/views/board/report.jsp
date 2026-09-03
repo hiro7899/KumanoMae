@@ -19,98 +19,11 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
 	rel="stylesheet">
 
-<!-- 프로젝트 메인 CSS (index.jsp와 동일) -->
+<!-- 프로젝트 CSS (공통 메인 index.css & 제보페이지 전용 report.css) -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
-
-<style>
-/* index.jsp 고유 스타일 적용 */
-body {
-	background-color: #f7f5ed; /* index.jsp의 크림 베이지 배경 */
-	font-family: 'Noto Sans JP', sans-serif;
-}
-
-.report-container {
-	max-width: 860px;
-	margin: 50px auto 80px;
-	padding: 0 15px;
-}
-
-.card-jp-form {
-	background: #fff;
-	border: 3px solid #000;
-	border-radius: 12px;
-	box-shadow: 6px 6px 0px #000;
-	padding: 35px;
-}
-
-.section-title-jp {
-	border-left: 6px solid #d35400;
-	padding-left: 12px;
-	font-weight: 900;
-}
-
-.form-label-jp {
-	font-weight: 700;
-	font-size: 0.95rem;
-	color: #000;
-}
-
-.map-preview-box {
-	width: 100%;
-	height: 320px;
-	background-color: #e9ecef;
-	border: 2px solid #000;
-	border-radius: 8px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-/* index.jsp 스타일의 머스타드 & 라인 버튼 */
-.btn-jp-mustard {
-	background-color: #f39c12;
-	color: #000;
-	border: 2px solid #000;
-	font-weight: 700;
-	box-shadow: 3px 3px 0px #000;
-	transition: all 0.15s ease-in-out;
-}
-
-.btn-jp-mustard:hover {
-	background-color: #e67e22;
-	color: #000;
-	transform: translate(-1px, -1px);
-	box-shadow: 4px 4px 0px #000;
-}
-
-.btn-jp-outline {
-	background-color: #fff;
-	color: #000;
-	border: 2px solid #000;
-	font-weight: 700;
-	box-shadow: 3px 3px 0px #000;
-}
-
-.btn-jp-outline:hover {
-	background-color: #f8f9fa;
-	color: #000;
-}
-
-/* 상황 태그 체크박스 버튼 스타일 */
-.tag-check-label {
-	border: 2px solid #000 !important;
-	font-weight: 700 !important;
-	border-radius: 6px !important;
-	padding: 6px 14px !important;
-	box-shadow: 2px 2px 0px #000;
-}
-
-.btn-check:checked+.tag-check-label {
-	background-color: #000 !important;
-	color: #fff !important;
-}
-</style>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/report.css">
 </head>
 <body>
 
@@ -124,51 +37,51 @@ body {
 				<span class="dash">―</span>目撃情報提供
 			</p>
 			<h2 class="section-title-jp m-0">クマ出没・目撃情報を報告する</h2>
-			<p class="text-muted small mt-2">地域の safe（安全）のために目撃情報を共有してください。管理者承認後にマップに反映されます。</p>
+			<p class="text-muted small mt-2">地域の安全のために目撃情報を共有してください。管理者承認後にマップに反映されます。</p>
 		</div>
 
 		<!-- 제보 Form 카드 -->
 		<div class="card-jp-form">
 			<form action="${pageContext.request.contextPath}/board/report"
-				method="post" id="reportForm" novalidate>
+				method="post" id="reportForm" enctype="multipart/form-data" novalidate>
 
 				<!-- 1. 제보 제목 (TITLE) -->
 				<div class="mb-4">
 					<label for="title" class="form-label form-label-jp">通報タイトル
 						<span class="text-danger">*</span>
 					</label> <input type="text"
-						class="form-control form-control-lg border-2 border-dark"
+						class="form-control form-control-lg border-secondary-subtle"
 						id="title" name="title" placeholder="例：札幌近郊の登山道でクマを発見">
 				</div>
 
-				<!-- 2. 위험도 (RISK_LEVEL) -->
+				<!-- 2. 목격 유형 및 위험도 구분 -->
 				<div class="mb-4">
-					<label class="form-label form-label-jp">危険度区分 <span
+					<label class="form-label form-label-jp">目撃・遭遇の状況区分 <span
 						class="text-danger">*</span></label>
-					<div
-						class="d-flex gap-4 p-3 bg-light border border-2 border-dark rounded">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="riskLevel"
-								id="riskDanger" value="DANGER" checked> <label
-								class="form-check-label text-danger fw-bold" for="riskDanger">
-								<i class="bi bi-exclamation-octagon-fill me-1"></i> 危険 (DANGER)
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="riskLevel"
-								id="riskWarning" value="WARNING"> <label
-								class="form-check-label text-warning-emphasis fw-bold"
-								for="riskWarning"> <i
-								class="bi bi-exclamation-triangle-fill me-1"></i> 警戒 (WARNING)
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="riskLevel"
-								id="riskCaution" value="CAUTION"> <label
-								class="form-check-label text-primary fw-bold" for="riskCaution">
-								<i class="bi bi-info-circle-fill me-1"></i> 注意 (CAUTION)
-							</label>
-						</div>
+					<div class="risk-selector">
+						<label class="risk-option d-flex align-items-center justify-content-between" for="riskDanger">
+							<div>
+								<input type="radio" name="riskLevel" id="riskDanger" value="DANGER" checked>
+								<span class="fw-bold text-danger"><i class="bi bi-eye-fill me-1"></i> 姿を目撃・撮影 (危険)</span>
+							</div>
+							<span class="small text-muted">クマの本体を直接目視または撮影した場合</span>
+						</label>
+
+						<label class="risk-option d-flex align-items-center justify-content-between" for="riskWarning">
+							<div>
+								<input type="radio" name="riskLevel" id="riskWarning" value="WARNING">
+								<span class="fw-bold text-warning-emphasis"><i class="bi bi-geo-fill me-1"></i> 足跡・痕跡を発見 (警戒)</span>
+							</div>
+							<span class="small text-muted">足跡、糞、爪痕、食害痕などを発見した場合</span>
+						</label>
+
+						<label class="risk-option d-flex align-items-center justify-content-between" for="riskCaution">
+							<div>
+								<input type="radio" name="riskLevel" id="riskCaution" value="CAUTION">
+								<span class="fw-bold text-primary"><i class="bi bi-volume-up-fill me-1"></i> 鳴き声・気配を感知 (注意)</span>
+							</div>
+							<span class="small text-muted">威嚇音、鳴き声、藪の揺れなど不確実だが気配がある場合</span>
+						</label>
 					</div>
 				</div>
 
@@ -177,7 +90,7 @@ body {
 					<label for="sightingDate" class="form-label form-label-jp">目撃日時
 						<span class="text-danger">*</span>
 					</label> <input type="datetime-local"
-						class="form-control border-2 border-dark" id="sightingDate"
+						class="form-control border-secondary-subtle" id="sightingDate"
 						name="sightingDate">
 				</div>
 
@@ -187,7 +100,6 @@ body {
 						class="text-danger">*</span></label>
 					<p class="small text-muted mb-2">マップをクリックして正確な目撃場所を指定してください。</p>
 
-					<!-- 지도 API 영역 -->
 					<div id="map" class="map-preview-box mb-2">
 						<span class="fw-bold text-muted"><i
 							class="bi bi-geo-alt-fill fs-3 d-block text-center mb-1"></i>地図読み込み中...</span>
@@ -196,66 +108,72 @@ body {
 					<div class="row g-2">
 						<div class="col-md-6">
 							<input type="text"
-								class="form-control form-control-sm border-2 border-dark bg-light"
+								class="form-control form-control-sm border-secondary-subtle bg-light"
 								id="address" name="address" placeholder="自動変換住所" readonly>
 						</div>
 						<div class="col-md-3">
 							<input type="text"
-								class="form-control form-control-sm border-2 border-dark bg-light"
+								class="form-control form-control-sm border-secondary-subtle bg-light"
 								id="latitude" name="latitude" placeholder="緯度 (Latitude)"
 								readonly>
 						</div>
 						<div class="col-md-3">
 							<input type="text"
-								class="form-control form-control-sm border-2 border-dark bg-light"
+								class="form-control form-control-sm border-secondary-subtle bg-light"
 								id="longitude" name="longitude" placeholder="経度 (Longitude)"
 								readonly>
 						</div>
 					</div>
 				</div>
 
-				<!-- 5. 상황 태그 (SITUATION_TAG) -->
+				<!-- 5. 현장 사진 첨부 -->
+				<div class="mb-4">
+					<label for="imageFile" class="form-label form-label-jp">現場写真の添付</label>
+					<input class="form-control border-secondary-subtle" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage(this)">
+					<div class="form-text">クマの姿、足跡、現場の状況が分かる写真があれば添付してください。(JPG, PNG)</div>
+					
+					<div id="imagePreviewBox" class="image-preview-container">
+						<img id="imagePreview" src="#" alt="添付写真プレビュー">
+					</div>
+				</div>
+
+				<!-- 6. 상황 태그 (SITUATION_TAG) -->
 				<div class="mb-4">
 					<label class="form-label form-label-jp">状況タグ (複数選択可)</label>
 					<div class="d-flex flex-wrap gap-2">
-						<input type="checkbox" class="btn-check" id="tag1" value="足跡"
-							onchange="updateTags()"> <label
-							class="btn btn-outline-dark tag-check-label" for="tag1">#
-							足跡</label> <input type="checkbox" class="btn-check" id="tag2" value="糞"
-							onchange="updateTags()"> <label
-							class="btn btn-outline-dark tag-check-label" for="tag2">#
-							糞</label> <input type="checkbox" class="btn-check" id="tag3" value="威嚇音"
-							onchange="updateTags()"> <label
-							class="btn btn-outline-dark tag-check-label" for="tag3">#
-							威嚇音</label> <input type="checkbox" class="btn-check" id="tag4" value="成獣"
-							onchange="updateTags()"> <label
-							class="btn btn-outline-dark tag-check-label" for="tag4">#
-							成獣</label> <input type="checkbox" class="btn-check" id="tag5" value="親仔"
-							onchange="updateTags()"> <label
-							class="btn btn-outline-dark tag-check-label" for="tag5">#
-							親仔</label>
+						<input type="checkbox" class="btn-check" id="tag1" value="足跡" onchange="updateTags()">
+						<label class="btn btn-outline-dark tag-check-label" for="tag1"># 足跡</label>
+
+						<input type="checkbox" class="btn-check" id="tag2" value="糞" onchange="updateTags()">
+						<label class="btn btn-outline-dark tag-check-label" for="tag2"># 糞</label>
+
+						<input type="checkbox" class="btn-check" id="tag3" value="威嚇音" onchange="updateTags()">
+						<label class="btn btn-outline-dark tag-check-label" for="tag3"># 威嚇音</label>
+
+						<input type="checkbox" class="btn-check" id="tag4" value="成獣" onchange="updateTags()">
+						<label class="btn btn-outline-dark tag-check-label" for="tag4"># 成獣</label>
+
+						<input type="checkbox" class="btn-check" id="tag5" value="親仔" onchange="updateTags()">
+						<label class="btn btn-outline-dark tag-check-label" for="tag5"># 親仔</label>
 					</div>
-					<!-- 실제 DB로 전송되는 히든 필드 -->
 					<input type="hidden" id="situationTag" name="situationTag">
 				</div>
 
-				<!-- 6. 상세 내용 (CONTENT - CLOB) -->
+				<!-- 7. 상세 내용 (CONTENT) -->
 				<div class="mb-5">
 					<label for="content" class="form-label form-label-jp">詳細内容
 						<span class="text-danger">*</span>
 					</label>
-					<textarea class="form-control border-2 border-dark" id="content"
+					<textarea class="form-control border-secondary-subtle" id="content"
 						name="content" rows="5"
 						placeholder="クマの移動方向、大きさ、当時の状況などを詳細に入力してください。"></textarea>
 				</div>
 
 				<!-- 하단 버튼 영역 -->
-				<div
-					class="d-flex justify-content-between align-items-center pt-3 border-top border-2">
+				<div class="d-flex justify-content-between align-items-center pt-3 border-top">
 					<a href="${pageContext.request.contextPath}/"
 						class="btn btn-jp-outline px-4">キャンセル</a>
-					<button type="submit" class="btn btn-jp-mustard btn-lg px-5">報告を送信する
-						→</button>
+					<button type="submit" class="btn btn-jp-mustard btn-lg px-5">報告を送信する →</button>
 				</div>
 			</form>
 		</div>
@@ -281,23 +199,21 @@ body {
 					<ul class="list-unstyled small footer-muted">
 						<li class="mb-2">株式会社ベアセーフ（BearSafe Inc.）</li>
 						<li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>03-1234-5678</li>
-						<li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>日本
-							北海道 札幌市 中央区 1-1-1</li>
+						<li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>日本 北海道 札幌市 中央区 1-1-1</li>
 					</ul>
 				</div>
 				<div class="col-md-4 mb-4">
 					<h6 class="fw-bold mb-3 footer-heading">サイトマップ</h6>
 					<ul class="list-unstyled small">
-						<li class="mb-2"><a href="/map">出没マップ</a></li>
-						<li class="mb-2"><a href="#">目撃情報掲示板</a></li>
-						<li class="mb-2"><a href="/login">ログイン</a></li>
-						<li class="mb-2"><a href="/signup">会員登録</a></li>
+						<li class="mb-2"><a href="${pageContext.request.contextPath}/">出没マップ</a></li>
+						<li class="mb-2"><a href="${pageContext.request.contextPath}/board/list">目撃情報掲示板</a></li>
+						<li class="mb-2"><a href="${pageContext.request.contextPath}/login">ログイン</a></li>
+						<li class="mb-2"><a href="${pageContext.request.contextPath}/signup">会員登録</a></li>
 					</ul>
 				</div>
 			</div>
 			<hr class="footer-divider">
-			<div class="text-center small footer-copyright">&copy; 2026
-				BearSafe Inc. All Rights Reserved.</div>
+			<div class="text-center small footer-copyright">&copy; 2026 BearSafe Inc. All Rights Reserved.</div>
 		</div>
 	</footer>
 
@@ -320,7 +236,6 @@ body {
 				reportForm.addEventListener('submit', function(e) {
 					let isValid = true;
 					
-					// 필수 검사 대상 필드
 					const requiredFields = [
 						{ id: 'title', name: '通報タイトル' },
 						{ id: 'sightingDate', name: '目撃日時' },
@@ -328,41 +243,32 @@ body {
 						{ id: 'content', name: '詳細内容' }
 					];
 
-					// 기존 에러 표시 초기화
 					document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
 					document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
 
-					// 순회하며 미입력 체크
 					for (let field of requiredFields) {
 						const inputEl = document.getElementById(field.id);
 						
 						if (inputEl && !inputEl.value.trim()) {
 							isValid = false;
-							
-							// 테두리 강조
 							inputEl.classList.add('is-invalid');
 							
-							// 에러 문구 생성
 							const errorDiv = document.createElement('div');
 							errorDiv.className = 'invalid-feedback fw-bold mt-1 d-block';
 							errorDiv.innerText = '⚠️ ' + field.name + 'を入力してください。';
 							
-							// 위치에 따른 에러 메시지 삽입
 							if (field.id === 'address') {
 								inputEl.closest('.row').after(errorDiv);
 							} else {
 								inputEl.after(errorDiv);
 							}
 
-							// 포커스 & 화면 스크롤
 							inputEl.focus();
 							inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-							
 							break;
 						}
 					}
 
-					// 미입력 항목이 있으면 submit 중단
 					if (!isValid) {
 						e.preventDefault();
 					}
@@ -370,11 +276,29 @@ body {
 			}
 		});
 
-		// 3. 상황 태그 콤마(,) 구분 업데이트 함수 (전역 함수)
+		// 3. 상황 태그 콤마(,) 구분 함수
 		function updateTags() {
 			const checkboxes = document.querySelectorAll('.btn-check:checked');
 			const selectedTags = Array.from(checkboxes).map(cb => cb.value);
 			document.getElementById('situationTag').value = selectedTags.join(',');
+		}
+
+		// 4. 이미지 파일 미리보기 함수
+		function previewImage(input) {
+			const previewBox = document.getElementById('imagePreviewBox');
+			const previewImage = document.getElementById('imagePreview');
+
+			if (input.files && input.files[0]) {
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					previewImage.src = e.target.result;
+					previewBox.style.display = 'block';
+				}
+				reader.readAsDataURL(input.files[0]);
+			} else {
+				previewImage.src = '#';
+				previewBox.style.display = 'none';
+			}
 		}
 	</script>
 </body>

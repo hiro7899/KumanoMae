@@ -1,14 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%--
-    =========================================================
-    index.jsp
-    - 사이트 메인(인덱스) 화면
-    - 디자인 컨셉 : 크림 베이지 배경 + 레드/머스타드 포인트,
-      두꺼운 블랙 테두리와 각진 카드/버튼 (일본 포스터/방재 사이트 톤)
-    - 이 단계는 화면 구현만 담당. DB/Servlet/실제 지도 API 연동 없음
-    - 리소스 경로는 루트("/") 배포 기준 절대경로로 고정
-    =========================================================
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>クマ出没マップ</title>
 
-<!-- Bootstrap 5 CDN -->
+<!-- Bootstrap 5 CDN & Icons -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -29,10 +20,18 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
 	rel="stylesheet">
 
-<!-- 이 화면 전용 CSS (다음 단계에서 작성 예정) -->
-<link rel="stylesheet" href="/resources/css/index.css">
+<!-- 이 화면 전용 CSS -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/index.css">
 </head>
-<body>
+
+<%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
+<c:set var="isLogin" value="false" />
+<c:if test="${not empty sessionScope.loginUser or not empty sessionScope.user or not empty sessionScope.loginMember or not empty sessionScope.member}">
+	<c:set var="isLogin" value="true" />
+</c:if>
+
+<body data-is-login="${isLogin}" data-context-path="${pageContext.request.contextPath}">
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
@@ -40,7 +39,9 @@
 			class="close-x" id="alertClose">&times;</span>
 	</div>
 
-<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	<!-- 공통 헤더 INCLUDE -->
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+
 	<%-- ===================== Hero ===================== --%>
 	<section class="hero-jp">
 		<div class="container">
@@ -65,8 +66,10 @@
 						里山に近づく足音を見逃さない。全国の目撃情報と自治体データをリアルタイムに集約し、危険エリアをひと目で確認できる地図サービスです。
 					</p>
 					<div class="d-flex gap-2 flex-wrap">
-						<a href="/map" class="btn btn-jp-mustard btn-lg">地図を見る
-							→</a> <a href="#" class="btn btn-jp-outline btn-lg">目撃情報を報告する</a>
+						<a href="${pageContext.request.contextPath}/map"
+							class="btn btn-jp-mustard btn-lg">地図を見る →</a>
+						<button type="button" class="btn btn-jp-outline btn-lg"
+							onclick="checkLoginAndReport()">目撃情報を報告する</button>
 					</div>
 					<p class="hero-credit">
 						提供元：自治体オープンデータ・警察発表・住民報告を統合<br> ※本サイトはポートフォリオ制作用のデモです
@@ -92,7 +95,7 @@
 		</div>
 	</section>
 
-	<%-- ===================== 出没マップ セクション（플레이스홀더） ===================== --%>
+	<%-- ===================== 出没マップ セクション ===================== --%>
 	<section id="mapSection" class="container my-5">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>出没マップ
@@ -188,7 +191,8 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
 						</p>
 						<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="${pageContext.request.contextPath}/board/detail"
+							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
@@ -208,7 +212,8 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-19 18:10
 						</p>
 						<p class="small flex-grow-1">農地付近でクマの足跡と糞の痕跡を発見しました。</p>
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="${pageContext.request.contextPath}/board/detail"
+							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
@@ -228,14 +233,16 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-18 06:45
 						</p>
 						<p class="small flex-grow-1">登山者がクマと思われる鳴き声を聞いたと報告しています。</p>
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="${pageContext.request.contextPath}/board/detail"
+							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
 
 		</div>
 		<div class="text-center mt-4">
-			<a href="/board/news" class="btn btn-jp-mustard">目撃情報掲示板をすべて見る</a>
+			<a href="${pageContext.request.contextPath}/board/news"
+				class="btn btn-jp-mustard">目撃情報掲示板をすべて見る</a>
 		</div>
 	</section>
 
@@ -280,7 +287,8 @@
 	</section>
 
 	<%-- ===================== 제보하기 플로팅 버튼 ===================== --%>
-	<button type="button" class="btn btn-jp-mustard report-float-btn">
+	<button type="button" class="btn btn-jp-mustard report-float-btn"
+		onclick="checkLoginAndReport()">
 		<i class="bi bi-exclamation-triangle-fill"></i> クマ出没を報告する
 	</button>
 
@@ -311,10 +319,14 @@
 				<div class="col-md-4 mb-4">
 					<h6 class="fw-bold mb-3 footer-heading">サイトマップ</h6>
 					<ul class="list-unstyled small">
-						<li class="mb-2"><a href="/map">出没マップ</a></li>
-						<li class="mb-2"><a href="#">目撃情報掲示板</a></li>
-						<li class="mb-2"><a href="/login">ログイン</a></li>
-						<li class="mb-2"><a href="/signup">会員登録</a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/map">出没マップ</a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/board/news">目撃情報掲示板</a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/login">ログイン</a></li>
+						<li class="mb-2"><a
+							href="${pageContext.request.contextPath}/signup">会員登録</a></li>
 					</ul>
 				</div>
 			</div>
@@ -327,9 +339,22 @@
 	<!-- Bootstrap 5 JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 
-	<!-- 이 화면 전용 JS (필요 시 다음 단계에서 작성) -->
-	<script src="/resources/js/index.js"></script>
+	<!-- 안전한 DOM 기반 로그인 판별 스크립트 -->
+	<script>
+		function checkLoginAndReport() {
+			// body 태그의 HTML data-속성에서 정보를 직접 읽어옴
+			const isLogin = document.body.dataset.isLogin === "true";
+			const contextPath = document.body.dataset.contextPath;
 
+			if (!isLogin) {
+				alert("目撃情報の報告機能は、ログイン後に利用できます。");
+				location.href = contextPath + "/login";
+			} else {
+				location.href = contextPath + "/board/report";
+			}
+		}
+	</script>
 </body>
 </html>
