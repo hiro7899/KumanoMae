@@ -43,10 +43,10 @@ public class RootController extends HttpServlet {
 	private void doAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String action = request.getServletPath();
+		String path = request.getServletPath();
 		String page = null;
 
-		switch (action) {
+		switch (path) {
 
 		case "/":
 		case "/index":
