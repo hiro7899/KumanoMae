@@ -1,0 +1,125 @@
+/* 공통 Header */
+.header-sticky-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    box-shadow: 0 4px 12px rgba(51, 45, 37, 0.2);
+}
+
+.header-sticky-wrap .navbar-jp {
+    background-color: #1a1a1a !important;
+    border-bottom: 2px solid #e3ac1f;
+    padding: 12px 0;
+}
+
+.header-sticky-wrap .logo-badge {
+    width: 40px;
+    height: 40px;
+    background-color: #b23a2e;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.header-sticky-wrap .brand-jp {
+    line-height: 1.1;
+}
+
+.header-sticky-wrap .brand-jp .jp-title {
+    color: #fff !important;
+    font-weight: 900;
+    font-size: 1.15rem;
+}
+
+.header-sticky-wrap .brand-jp .jp-sub {
+    color: #c9c1b0 !important;
+    font-size: .65rem;
+    letter-spacing: .12em;
+}
+
+.header-sticky-wrap .nav-link {
+    color: #f2ece0 !important;
+    font-weight: 500;
+}
+
+.header-sticky-wrap .nav-link:hover {
+    color: #e3ac1f !important;
+}
+
+.header-sticky-wrap .report-nav-link {
+    color: #e3ac1f !important;
+    font-weight: 700 !important;
+}
+
+.header-sticky-wrap .navbar-toggler {
+    border-color: rgba(255, 255, 255, .3);
+}
+
+.header-sticky-wrap .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.header-sticky-wrap .btn-jp-mustard {
+    background-color: #e3ac1f;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+/* 공통 Footer */
+.footer-jp {
+    background-color: #1a1a1a;
+    color: #f2ece0;
+    margin-top: 3rem;
+}
+
+.footer-jp .logo-badge {
+    width: 40px;
+    height: 40px;
+    background-color: #b23a2e;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+}
+
+.footer-jp .brand-jp .jp-title {
+    color: #fff;
+    font-weight: 900;
+    font-size: 1.15rem;
+}
+
+.footer-jp a {
+    color: #f2ece0;
+    text-decoration: none;
+}
+
+.footer-jp a:hover {
+    color: #e3ac1f;
+}
+
+.footer-jp .footer-muted {
+    color: #c9c1b0;
+}
+
+.footer-jp .footer-heading {
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+}
+
+.footer-jp .footer-divider {
+    border-color: #444;
+}
+
+.footer-jp .footer-copyright {
+    color: #a89f8c;
+}
