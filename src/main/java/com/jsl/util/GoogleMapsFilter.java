@@ -9,7 +9,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter("/*")
+@WebFilter(urlPatterns = {
+		"/", "/map", "/board/report", 
+		})
 public class GoogleMapsFilter implements Filter {
 
     @Override
