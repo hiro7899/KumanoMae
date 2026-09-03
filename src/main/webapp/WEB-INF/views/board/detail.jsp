@@ -168,9 +168,7 @@
 			</div>
 		</div>
 	</main>
-	<footer class="board-footer">
-		<div class="container">© 2026 BearSafe Inc. All Rights Reserved.</div>
-	</footer>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
