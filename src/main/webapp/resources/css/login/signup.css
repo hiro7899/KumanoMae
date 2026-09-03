@@ -10,6 +10,7 @@
 --color-muted: #6b6355;
 --color-white: #fdfaf3;
 --color-border: #cfc4ae;
+--color-mustard-dark: #c6900f;
 }
 
 * {
@@ -345,4 +346,159 @@ Mobile
     font-size: 1.7rem;
 }
 
+}
+
+/* 이메일 인증 */
+.email-auth-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.email-auth-btn {
+    flex-shrink: 0;
+    min-width: 132px;
+    border: 2px solid var(--color-ink);
+    border-radius: 0;
+    background-color: var(--color-mustard);
+    color: var(--color-ink);
+    font-size: .78rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.email-auth-btn:hover:not(:disabled) {
+    background-color: var(--color-mustard-dark);
+}
+
+.email-auth-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.verify-btn {
+    background-color: var(--color-red);
+    color: #fff;
+}
+
+.verify-btn:hover:not(:disabled) {
+    background-color: var(--color-red-dark);
+}
+
+.email-auth-message {
+    min-height: 1.2rem;
+    margin: 7px 0 0;
+    color: var(--color-muted);
+    font-size: .75rem;
+}
+
+.email-auth-message.success {
+    color: #2d6a3d;
+    font-weight: 700;
+}
+
+.email-auth-message.error {
+    color: var(--color-red);
+    font-weight: 700;
+}
+
+.signup-submit-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 575.98px) {
+    .email-auth-row {
+        flex-direction: column;
+    }
+
+    .email-auth-btn {
+        min-height: 44px;
+        width: 100%;
+    }
+}
+/* ID 중복 확인 */
+.availability-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.availability-btn {
+    min-width: 104px;
+    border: 2px solid var(--color-ink);
+    border-radius: 0;
+    background-color: var(--color-bg-soft);
+    color: var(--color-ink);
+    font-size: .78rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.availability-btn:hover:not(:disabled) {
+    background-color: var(--color-ink);
+    color: #fff;
+}
+
+.availability-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.availability-message {
+    min-height: 1.2rem;
+    margin: 7px 0 0;
+    color: var(--color-muted);
+    font-size: .75rem;
+}
+
+.availability-message.success {
+    color: #2d6a3d;
+    font-weight: 700;
+}
+
+.availability-message.error {
+    color: var(--color-red);
+    font-weight: 700;
+}
+
+/* 비밀번호 표시 / 숨기기 */
+.password-input {
+    padding-right: 46px !important;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 3;
+    transform: translateY(-50%);
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--color-red);
+}
+
+/* 기존 .input-wrapper i 규칙을 비밀번호 눈 아이콘에는 적용하지 않음 */
+.input-wrapper .password-toggle i {
+    position: static;
+    transform: none;
+    color: inherit;
+    font-size: 1.15rem;
+}
+
+@media (max-width: 575.98px) {
+    .availability-row {
+        flex-direction: column;
+    }
+
+    .availability-btn {
+        min-height: 44px;
+        width: 100%;
+    }
 }

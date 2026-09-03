@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 
@@ -6,297 +6,259 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>会員登録 - クマ出没マップ</title>
+<title>会員登録 - クマ出没マップ</title>
 
-    <!-- Bootstrap 5 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+<!-- Bootstrap 5 -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-    <!-- 일본어 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 일본어 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-        rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+	rel="stylesheet">
 
-    <!-- 회원가입 CSS -->
-    <link rel="stylesheet" href="/resources/css/login/signup.css">
-    
-    <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<!-- 회원가입 CSS -->
+<link rel="stylesheet" href="/resources/css/login/signup.css">
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 
 </head>
 
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
 
-<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-<!-- ===================== Signup ===================== -->
+	<!-- ===================== Signup ===================== -->
 
-<main class="signup-main">
+	<main class="signup-main">
 
-    <div class="container">
+		<div class="container">
 
-        <div class="signup-card">
+			<div class="signup-card">
 
-            <div class="signup-header">
+				<div class="signup-header">
 
-                <span class="header-line"></span>
+					<span class="header-line"></span>
 
-                <p class="signup-eyebrow">
-                    ― MEMBERSHIP
-                </p>
+					<p class="signup-eyebrow">― MEMBERSHIP</p>
 
-                <h1>
-                    会員登録
-                </h1>
+					<h1>会員登録</h1>
 
-                <p>
-                    クマ出没マップをご利用いただくには
-                    会員登録が必要です。
-                </p>
+					<p>クマ出没マップをご利用いただくには 会員登録が必要です。</p>
 
-            </div>
+				</div>
 
 
-            <!-- 회원가입 Form -->
+				<!-- 회원가입 Form -->
 
-            <form method="post" action="/signup" id="signupForm">
-            
-            
+				<form method="post" action="/signup" id="signupForm">
 
-                <!-- 아이디 -->
 
-                <div class="form-group">
 
-                    <label for="userId">
-                        ID
-                    </label>
+					<!-- ID + 중복 확인 -->
+					<div class="form-group">
+						<label for="userId">ID</label>
 
-                    <div class="input-wrapper">
+						<div class="availability-row">
+							<div class="input-wrapper flex-grow-1">
+								<i class="bi bi-person"></i> <input type="text" id="userId"
+									name="userId" class="form-control" placeholder="IDを入力"
+									autocomplete="username" required>
+							</div>
 
-                        <i class="bi bi-person"></i>
+							<button type="button" id="checkUserIdBtn"
+								class="availability-btn">重複確認</button>
+						</div>
 
-                        <input
-                            type="text"
-                            id="userId"
-                            name="userId"
-                            class="form-control"
-                            placeholder="IDを入力"
-                            required>
+						<p id="userIdCheckMessage" class="availability-message"
+							aria-live="polite"></p>
+					</div>
 
-                    </div>
 
-                </div>
+					<!-- 이름 -->
 
+					<div class="form-group">
 
-                <!-- 이름 -->
+						<label for="userName"> お名前 </label>
 
-                <div class="form-group">
+						<div class="input-wrapper">
 
-                    <label for="userName">
-                        お名前
-                    </label>
+							<i class="bi bi-person"></i> <input type="text" id="userName"
+								name="userName" class="form-control" placeholder="お名前を入力"
+								required>
 
-                    <div class="input-wrapper">
+						</div>
 
-                        <i class="bi bi-person"></i>
+					</div>
 
-                        <input
-                            type="text"
-                            id="userName"
-                            name="userName"
-                            class="form-control"
-                            placeholder="お名前を入力"
-                            required>
 
-                    </div>
+					<!-- 이메일 + 인증번호 발송 -->
+					<div class="form-group">
+						<label for="email">メールアドレス</label>
 
-                </div>
+						<div class="email-auth-row">
+							<div class="input-wrapper flex-grow-1">
+								<i class="bi bi-envelope"></i> <input type="email" id="email"
+									name="email" class="form-control"
+									placeholder="example@email.com" autocomplete="email" required>
+							</div>
 
+							<button type="button" id="sendVerificationBtn"
+								class="email-auth-btn">重複確認・認証送信</button>
 
-                <!-- 이메일 -->
+						</div>
 
-                <div class="form-group">
+						<p id="emailAuthMessage" class="email-auth-message"
+							aria-live="polite"></p>
+					</div>
 
-                    <label for="email">
-                        メールアドレス
-                    </label>
+					<!-- 인증번호 확인: 발송 후 표시 -->
+					<div id="verificationArea"
+						class="form-group verification-area d-none">
+						<label for="verificationCode">認証番号</label>
 
-                    <div class="input-wrapper">
+						<div class="email-auth-row">
+							<div class="input-wrapper flex-grow-1">
+								<i class="bi bi-shield-check"></i> <input type="text"
+									id="verificationCode" class="form-control"
+									placeholder="メールで届いた認証番号を入力" inputmode="numeric" maxlength="6">
+							</div>
 
-                        <i class="bi bi-envelope"></i>
+							<button type="button" id="verifyEmailBtn"
+								class="email-auth-btn verify-btn">認証する</button>
+						</div>
+					</div>
 
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="example@email.com"
-                            required>
 
-                    </div>
+					<!-- 전화번호 -->
 
-                </div>
+					<div class="form-group">
 
+						<label for="phone"> 電話番号 </label>
 
-                <!-- 전화번호 -->
+						<div class="input-wrapper">
 
-                <div class="form-group">
+							<i class="bi bi-telephone"></i> <input type="tel" id="phone"
+								name="phone" class="form-control" placeholder="09012345678"
+								inputmode="numeric" pattern="[0-9]*" maxlength="11">
 
-                    <label for="phone">
-                        電話番号
-                    </label>
+						</div>
 
-                    <div class="input-wrapper">
+					</div>
 
-                        <i class="bi bi-telephone"></i>
 
-                        <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            class="form-control"
-                            placeholder="電話番号を入力">
+					<!-- 비밀번호 -->
 
-                    </div>
+					<div class="form-group">
 
-                </div>
+						<label for="userPw"> パスワード </label>
 
+						<div class="input-wrapper">
 
-                <!-- 비밀번호 -->
+							<i class="bi bi-lock"></i> <input type="password" id="userPw"
+								name="userPw" class="form-control password-input"
+								placeholder="パスワードを入力" required>
+							<button type="button" class="password-toggle"
+								data-target="userPw" aria-label="パスワードを表示">
+								<i class="bi bi-eye"></i>
+							</button>
 
-                <div class="form-group">
+						</div>
 
-                    <label for="userPw">
-                        パスワード
-                    </label>
+						<p class="form-help">8文字以上で入力してください。</p>
 
-                    <div class="input-wrapper">
+					</div>
 
-                        <i class="bi bi-lock"></i>
 
-                        <input
-                            type="password"
-                            id="userPw"
-                            name="userPw"
-                            class="form-control"
-                            placeholder="パスワードを入力"
-                            required>
+					<!-- 비밀번호 확인 -->
 
-                    </div>
+					<div class="form-group">
 
-                    <p class="form-help">
-                        8文字以上で入力してください。
-                    </p>
+						<label for="passwordConfirm"> パスワード（確認） </label>
 
-                </div>
+						<div class="input-wrapper">
 
+							<i class="bi bi-shield-lock"></i> <input type="password"
+								id="passwordConfirm" name="passwordConfirm"
+								class="form-control password-input" placeholder="もう一度入力してください"
+								required>
+							<button type="button" class="password-toggle"
+								data-target="passwordConfirm" aria-label="パスワードを表示">
+								<i class="bi bi-eye"></i>
+							</button>
 
-                <!-- 비밀번호 확인 -->
+						</div>
 
-                <div class="form-group">
+					</div>
 
-                    <label for="passwordConfirm">
-                        パスワード（確認）
-                    </label>
 
-                    <div class="input-wrapper">
+					<!-- 약관 -->
 
-                        <i class="bi bi-shield-lock"></i>
+					<div class="agreement-box">
 
-                        <input
-                            type="password"
-                            id="passwordConfirm"
-                            name="passwordConfirm"
-                            class="form-control"
-                            placeholder="もう一度入力してください"
-                            required>
+						<label class="agreement-label"> <input type="checkbox"
+							id="agree" required> <span> 利用規約とプライバシーポリシーに同意します。
+						</span>
 
-                    </div>
+						</label>
 
-                </div>
+					</div>
 
 
-                <!-- 약관 -->
+					<!-- 가입 버튼 -->
 
-                <div class="agreement-box">
 
-                    <label class="agreement-label">
+					<button type="submit" id="signupBtn" class="signup-submit-btn"
+						disabled>
 
-                        <input
-                            type="checkbox"
-                            id="agree"
-                            required>
+						会員登録する <i class="bi bi-arrow-right"></i>
 
-                        <span>
-                            利用規約とプライバシーポリシーに同意します。
-                        </span>
+					</button>
 
-                    </label>
 
-                </div>
+					<!-- 로그인으로 -->
 
+					<div class="login-link-area">
 
-                <!-- 가입 버튼 -->
+						<p>すでにアカウントをお持ちの方</p>
 
+						<a href="/login"> ログインはこちら </a>
 
-                <button
-                    type="submit"
-                    id="signupBtn"
-                    class="signup-submit-btn">
+					</div>
 
-                    会員登録する
+				</form>
 
-                    <i class="bi bi-arrow-right"></i>
+			</div>
 
-                </button>
+		</div>
 
+	</main>
 
-                <!-- 로그인으로 -->
 
-                <div class="login-link-area">
+	<!-- Bootstrap 5 JS -->
 
-                    <p>
-                        すでにアカウントをお持ちの方
-                    </p>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+		
+	</script>
 
-                    <a href="/login">
-                        ログインはこちら
-                    </a>
+	<!-- 회원가입 화면 전용 JS -->
 
-                </div>
+	<script src="/resources/js/login/signup.js"></script>
 
-            </form>
-
-        </div>
-
-    </div>
-
-</main>
-
-
-<!-- Bootstrap 5 JS -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
-
-<!-- 회원가입 화면 전용 JS -->
-
-<script src="/resources/js/login/signup.js"></script>
-
-<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
 

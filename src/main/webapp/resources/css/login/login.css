@@ -464,3 +464,30 @@ Mobile
 }
 
 }
+.password-input {
+    padding-right: 46px !important;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 3;
+    transform: translateY(-50%);
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--color-red);
+}
+
+.input-wrapper .password-toggle i {
+    position: static;
+    transform: none;
+    color: inherit;
+    font-size: 1.15rem;
+}
