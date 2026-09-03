@@ -1,14 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%--
-    =========================================================
-    index.jsp
-    - 사이트 메인(인덱스) 화면
-    - 디자인 컨셉 : 크림 베이지 배경 + 레드/머스타드 포인트,
-      두꺼운 블랙 테두리와 각진 카드/버튼 (일본 포스터/방재 사이트 톤)
-    - 이 단계는 화면 구현만 담당. DB/Servlet/실제 지도 API 연동 없음
-    - 리소스 경로는 루트("/") 배포 기준 절대경로로 고정
-    =========================================================
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>クマ出没マップ</title>
 
-<!-- Bootstrap 5 CDN -->
+<!-- Bootstrap 5 CDN & Icons -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -29,10 +20,21 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
 	rel="stylesheet">
 
-<!-- 이 화면 전용 CSS (다음 단계에서 작성 예정) -->
-<link rel="stylesheet" href="/resources/css/index.css">
+<!-- 이 화면 전용 CSS -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/index.css">
+
+<!-- Google Maps API 스크립트 (API 키 직접 반영) -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxAezyz3OSn1SwfHDMqDA7BnI8mnu2vuU&callback=initMap&libraries=places&loading=async" async defer></script>
 </head>
-<body>
+
+<%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
+<c:set var="isLogin" value="false" />
+<c:if test="${not empty sessionScope.loginUser or not empty sessionScope.user or not empty sessionScope.loginMember or not empty sessionScope.member}">
+	<c:set var="isLogin" value="true" />
+</c:if>
+
+<body data-is-login="${isLogin}" data-context-path="${pageContext.request.contextPath}">
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
@@ -40,7 +42,9 @@
 			class="close-x" id="alertClose">&times;</span>
 	</div>
 
-<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	<!-- 공통 헤더 INCLUDE -->
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+
 	<%-- ===================== Hero ===================== --%>
 	<section class="hero-jp">
 		<div class="container">
@@ -65,8 +69,10 @@
 						里山に近づく足音を見逃さない。全国の目撃情報と自治体データをリアルタイムに集約し、危険エリアをひと目で確認できる地図サービスです。
 					</p>
 					<div class="d-flex gap-2 flex-wrap">
-						<a href="/map" class="btn btn-jp-mustard btn-lg">地図を見る
-							→</a> <a href="#" class="btn btn-jp-outline btn-lg">目撃情報を報告する</a>
+						<a href="${pageContext.request.contextPath}/map"
+							class="btn btn-jp-mustard btn-lg">地図を見る →</a>
+						<button type="button" class="btn btn-jp-outline btn-lg"
+							onclick="checkLoginAndReport()">目撃情報を報告する</button>
 					</div>
 					<p class="hero-credit">
 						提供元：自治体オープンデータ・警察発表・住民報告を統合<br> ※本サイトはポートフォリオ制作用のデモです
@@ -92,7 +98,7 @@
 		</div>
 	</section>
 
-	<%-- ===================== 出没マップ セクション（플레이스홀더） ===================== --%>
+	<%-- ===================== 出没マップ セクション ===================== --%>
 	<section id="mapSection" class="container my-5">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>出没マップ
@@ -100,8 +106,9 @@
 		<div class="row g-4">
 			<div class="col-lg-9">
 				<div class="card card-jp">
-					<div class="card-body">
-						<div id="mapContainer">地図表示エリア（今後実装予定）</div>
+					<div class="card-body p-0">
+						<!-- 구글 맵이 출력될 영역 -->
+						<div id="mapContainer" style="height: 480px; width: 100%;"></div>
 					</div>
 				</div>
 			</div>
@@ -157,7 +164,7 @@
 						<input type="text" class="form-control" id="areaSearchInput"
 							placeholder="例：札幌市、富山県">
 						<button class="btn btn-jp-mustard" type="button"
-							id="areaSearchBtn">
+							id="areaSearchBtn" onclick="searchArea()">
 							<i class="bi bi-search"></i> 検索
 						</button>
 					</div>
@@ -188,7 +195,8 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
 						</p>
 						<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="${pageContext.request.contextPath}/board/detail"
+							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
@@ -208,7 +216,8 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-19 18:10
 						</p>
 						<p class="small flex-grow-1">農地付近でクマの足跡と糞の痕跡を発見しました。</p>
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="${pageContext.request.contextPath}/board/detail"
+							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
@@ -228,14 +237,16 @@
 							<i class="bi bi-clock-fill"></i> 2026-08-18 06:45
 						</p>
 						<p class="small flex-grow-1">登山者がクマと思われる鳴き声を聞いたと報告しています。</p>
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+						<a href="${pageContext.request.contextPath}/board/detail"
+							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
 					</div>
 				</div>
 			</div>
 
 		</div>
 		<div class="text-center mt-4">
-			<a href="/board/news" class="btn btn-jp-mustard">目撃情報掲示板をすべて見る</a>
+			<a href="${pageContext.request.contextPath}/board/news"
+				class="btn btn-jp-mustard">目撃情報掲示板をすべて見る</a>
 		</div>
 	</section>
 
@@ -280,56 +291,74 @@
 	</section>
 
 	<%-- ===================== 제보하기 플로팅 버튼 ===================== --%>
-	<button type="button" class="btn btn-jp-mustard report-float-btn">
+	<button type="button" class="btn btn-jp-mustard report-float-btn"
+		onclick="checkLoginAndReport()">
 		<i class="bi bi-exclamation-triangle-fill"></i> クマ出没を報告する
 	</button>
 
 	<%-- ===================== Footer ===================== --%>
-	<footer class="footer-jp pt-5 pb-3">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mb-4">
-					<div class="d-flex align-items-center mb-3">
-						<div class="logo-badge me-2">熊</div>
-						<div class="brand-jp">
-							<div class="jp-title">クマ出没マップ</div>
-						</div>
-					</div>
-					<p class="small footer-muted">
-						里山に近づく足音を見逃さない。<br>全国のクマ目撃情報をリアルタイムに共有するサービスです。
-					</p>
-				</div>
-				<div class="col-md-4 mb-4">
-					<h6 class="fw-bold mb-3 footer-heading">会社情報</h6>
-					<ul class="list-unstyled small footer-muted">
-						<li class="mb-2">株式会社ベアセーフ（BearSafe Inc.）</li>
-						<li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>03-1234-5678</li>
-						<li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>日本
-							北海道 札幌市 中央区 1-1-1</li>
-					</ul>
-				</div>
-				<div class="col-md-4 mb-4">
-					<h6 class="fw-bold mb-3 footer-heading">サイトマップ</h6>
-					<ul class="list-unstyled small">
-						<li class="mb-2"><a href="/map">出没マップ</a></li>
-						<li class="mb-2"><a href="#">目撃情報掲示板</a></li>
-						<li class="mb-2"><a href="/login">ログイン</a></li>
-						<li class="mb-2"><a href="/signup">会員登録</a></li>
-					</ul>
-				</div>
-			</div>
-			<hr class="footer-divider">
-			<div class="text-center small footer-copyright">&copy; 2026
-				BearSafe Inc. All Rights Reserved.</div>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 	<!-- Bootstrap 5 JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 
-	<!-- 이 화면 전용 JS (필요 시 다음 단계에서 작성) -->
-	<script src="/resources/js/index.js"></script>
+	<!-- Google Map 및 관련 로직 -->
+	<script>
+		let map;
+		let geocoder;
 
+		// 1. Google Map 초기화 함수 (콜백 함수)
+		function initMap() {
+			// 기본 위치: 홋카이도/일본 중심부 부근
+			const defaultCenter = { lat: 43.0621, lng: 141.3544 };
+
+			map = new google.maps.Map(document.getElementById("mapContainer"), {
+				zoom: 7,
+				center: defaultCenter,
+			});
+
+			geocoder = new google.maps.Geocoder();
+		}
+
+		// 2. 지역 검색 버튼 기능 (Geocoding)
+		function searchArea() {
+			const address = document.getElementById("areaSearchInput").value;
+			if (!address) {
+				alert("検索する地域を入力してください。");
+				return;
+			}
+
+			geocoder.geocode({ address: address }, function (results, status) {
+				if (status === "OK") {
+					map.setCenter(results[0].geometry.location);
+					map.setZoom(11);
+				} else {
+					alert("該当する地域が見つかりませんでした。");
+				}
+			});
+		}
+
+		// 엔터키 입력 시 지역 검색 실행
+		document.getElementById("areaSearchInput").addEventListener("keypress", function(e) {
+			if (e.key === 'Enter') {
+				searchArea();
+			}
+		});
+
+		// 3. 로그인 판별 후 제보 페이지 이동
+		function checkLoginAndReport() {
+			const isLogin = document.body.dataset.isLogin === "true";
+			const contextPath = document.body.dataset.contextPath;
+
+			if (!isLogin) {
+				alert("目撃情報の報告機能は、ログイン後に利用できます。");
+				location.href = contextPath + "/login";
+			} else {
+				location.href = contextPath + "/board/report";
+			}
+		}
+	</script>
 </body>
 </html>

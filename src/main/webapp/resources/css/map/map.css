@@ -5,6 +5,8 @@
      (화이트/오프화이트 배경 + 네이비 메인 + 그레이 보조,
       DANGER=빨강 / WARNING=주황 / CAUTION=노랑)
    - 반응형 : 모바일(~575) / 태블릿(576~991) / 데스크탑(992~)
+   - Google Maps 연동 이후 : SVG 가짜 지도 / 커스텀 마커 스타일 제거,
+     InfoWindow 내부 콘텐츠 스타일(.info-badge 등)은 재사용
    ===================================================== */
 
 :root {
@@ -72,7 +74,6 @@ a { text-decoration: none; }
     border-bottom-color: var(--color-caution);
 }
 
-/* 모바일에서는 세로 목록으로 */
 @media (max-width: 991.98px) {
     .header-nav {
         flex-direction: column;
@@ -173,7 +174,6 @@ a { text-decoration: none; }
     cursor: pointer;
 }
 
-/* 체크된 상태일 때 각 위험도 색상으로 채워짐 (Bootstrap .btn-check + label 조합) */
 .btn-check:checked + .risk-danger {
     background-color: var(--color-danger);
     border-color: var(--color-danger);
@@ -192,6 +192,13 @@ a { text-decoration: none; }
     color: #333;
 }
 
+/* 검색 / 리셋 버튼 */
+.filter-submit {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 10px;
+}
+
 .btn-search {
     background-color: var(--color-navy);
     color: #fff;
@@ -206,21 +213,37 @@ a { text-decoration: none; }
     color: #fff;
 }
 
+.btn-reset {
+    background-color: #fff;
+    color: var(--color-navy);
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 4px;
+    border: 2px solid var(--color-navy);
+}
+
+.btn-reset:hover {
+    background-color: var(--color-navy);
+    color: #fff;
+}
+
 @media (max-width: 767.98px) {
     .filter-row {
         flex-direction: column;
         align-items: stretch;
     }
     .filter-submit {
+        flex-direction: row;
         width: 100%;
     }
-    .filter-submit .btn-search {
-        width: 100%;
+    .filter-submit .btn-search,
+    .filter-submit .btn-reset {
+        flex: 1;
     }
 }
 
 /* =====================================================
-   4~7. 지도 영역 (SVG 지도 + 마커 + 인포윈도우 + 범례)
+   4~7. 지도 영역 (Google Maps + 범례)
    ===================================================== */
 .map-section {
     padding: 28px 0;
@@ -242,83 +265,18 @@ a { text-decoration: none; }
     overflow: hidden;
 }
 
-/* 일본 열도 SVG : 지도 영역 가운데에 크게 배치 */
-.japan-svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 92%;
-    width: auto;
-}
-
-.japan-svg .island {
-    fill: #c9d6c5;
-    stroke: #a9bba4;
-    stroke-width: 1.5;
-}
-
-/* 마커 레이어 : 지도 위에 절대좌표로 마커가 올라가는 투명 레이어 */
-.marker-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
+/* Google Map이 렌더링되는 컨테이너 : 부모(.map-area) 전체를 채운다 */
+#googleMap {
     width: 100%;
     height: 100%;
 }
 
-/* 개별 마커 (map.js 가 이 클래스로 동적 생성) */
-.bear-marker {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,.3);
-    cursor: pointer;
-    transform: translate(-50%, -50%);
-    transition: transform .15s ease, box-shadow .15s ease;
+/* Google Maps InfoWindow 내부 콘텐츠 (기존 디자인 톤 재사용) */
+.gmap-infowindow {
+    max-width: 200px;
+    font-family: "Noto Sans JP", "Malgun Gothic", sans-serif;
 }
 
-.bear-marker:hover {
-    transform: translate(-50%, -50%) scale(1.35);
-    box-shadow: 0 3px 10px rgba(0,0,0,.4);
-    z-index: 20;
-}
-
-.bear-marker.danger  { background-color: var(--color-danger); }
-.bear-marker.warning { background-color: var(--color-warning); }
-.bear-marker.caution { background-color: var(--color-caution); }
-
-/* 마커 클릭 시 나타나는 인포윈도우 */
-.info-window {
-    position: absolute;
-    width: 220px;
-    background-color: #fff;
-    border: 1px solid var(--color-gray-light);
-    border-radius: 6px;
-    box-shadow: 0 4px 14px rgba(0,0,0,.18);
-    padding: 14px;
-    z-index: 30;
-}
-
-.info-window.d-none { display: none; }
-
-.info-window-close {
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    background: none;
-    border: none;
-    font-size: 1.1rem;
-    line-height: 1;
-    color: var(--color-gray);
-    cursor: pointer;
-}
-
-.info-window-close:hover { color: #222; }
-
-/* map.js 가 infoWindowBody 안에 채워 넣을 요소들 */
 .info-badge {
     display: inline-block;
     font-size: .72rem;
@@ -333,25 +291,9 @@ a { text-decoration: none; }
 .info-badge.warning { background-color: var(--color-warning); }
 .info-badge.caution { background-color: var(--color-caution); color:#333; }
 
-.info-region { font-weight: 700; font-size: .95rem; margin: 0 0 4px; }
-.info-date   { font-size: .78rem; color: var(--color-gray); margin: 0 0 8px; }
-.info-content{ font-size: .85rem; margin: 0 0 12px; }
-
-.info-detail-btn {
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-    background-color: var(--color-navy);
-    color: #fff;
-    font-size: .82rem;
-    font-weight: 700;
-    padding: 6px 0;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-}
-
-.info-detail-btn:hover { background-color: var(--color-navy-dark); color: #fff; }
+.info-region { font-weight: 700; font-size: .95rem; margin: 0 0 4px; color: #222; }
+.info-date   { font-size: .78rem; color: var(--color-gray); margin: 0 0 4px; }
+.info-content{ font-size: .85rem; margin: 0; color: #222; }
 
 /* 지도 범례 */
 .map-legend {
@@ -392,7 +334,6 @@ a { text-decoration: none; }
 .risk-warning-dot { background-color: var(--color-warning); }
 .risk-caution-dot { background-color: var(--color-caution); }
 
-/* 태블릿 이하 : 범례를 지도 아래로 내림 */
 @media (max-width: 991.98px) {
     .map-wrapper {
         flex-direction: column;
@@ -409,8 +350,8 @@ a { text-decoration: none; }
     .map-area {
         height: 380px;
     }
-    .info-window {
-        width: 190px;
+    .gmap-infowindow {
+        max-width: 170px;
     }
 }
 
@@ -440,7 +381,6 @@ a { text-decoration: none; }
     overflow: hidden;
 }
 
-/* map.js 가 아래 구조로 <li> 를 동적 생성 */
 .bear-item {
     display: flex;
     align-items: center;
@@ -507,7 +447,6 @@ a { text-decoration: none; }
     color: #fff;
 }
 
-/* 모바일에서는 목록 항목을 세로로 쌓음 */
 @media (max-width: 575.98px) {
     .bear-item {
         flex-wrap: wrap;

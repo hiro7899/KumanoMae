@@ -1,8 +1,9 @@
 /* =====================================================
    index.js
-   - index.jsp 화면 동작만 담당 (DB/API/실제 검색·제보 기능 없음)
-   - 지금은 UI 동작(버튼 클릭 반응, 배너 닫기 등)만 구현하고,
-     나중에 로그인/게시판/지도API가 붙으면 이 자리에 실제 로직을 채운다.
+   - index.jsp 화면 동작만 담당 (DB/API/실제 검색 기능 없음)
+   - "報告する" 버튼 클릭 시 로그인 여부 확인 로직은
+     index.jsp의 checkLoginAndReport() 함수(인라인 스크립트)가
+     담당하므로, 여기서는 더 이상 별도 처리하지 않는다.
    ===================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -52,18 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     /* -----------------------------------------------
-       4. 目撃情報を報告する / クマ出没を報告する 버튼
-          (지금은 로그인·게시판 기능이 없으므로 안내만 표시)
+       ※ 4. "目撃情報を報告する" / "クマ出没を報告する" 버튼 처리는
+          index.jsp의 checkLoginAndReport() 함수가 onclick으로
+          직접 담당하므로 여기서는 제거함 (중복 실행 방지)
        ----------------------------------------------- */
-    const reportButtons = document.querySelectorAll(".report-float-btn, .btn-jp-outline");
-
-    reportButtons.forEach(function (btn) {
-        // "詳細を見る" 버튼과는 별개로, 텍스트가 제보 관련 버튼일 때만 동작
-        if (btn.textContent.includes("報告する")) {
-            btn.addEventListener("click", function () {
-                alert("目撃情報の報告機能は、ログイン・掲示板の実装後に利用できます。");
-            });
-        }
-    });
 
 });

@@ -265,12 +265,6 @@
                         パスワードをお忘れの方
                     </a>
 
-
-                    <span class="link-sep">
-                        |
-                    </span>
-
-
                     <a href="/login">
                         ログインはこちら
                     </a>
