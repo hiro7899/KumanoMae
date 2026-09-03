@@ -72,8 +72,8 @@
 					action="${pageContext.request.contextPath}/admin/community/list"
 					method="get" class="row g-3 align-items-center">
 					<div class="col-md-3">
-						<label class="form-label small fw-bold mb-1">表示状態</label>
-						<select name="status" class="form-select form-select-sm">
+						<label class="form-label small fw-bold mb-1">表示状態</label> <select
+							name="status" class="form-select form-select-sm">
 							<option value="">すべて</option>
 							<option value="Y" ${param.status eq 'Y' ? 'selected' : ''}>表示中</option>
 							<option value="N" ${param.status eq 'N' ? 'selected' : ''}>非表示</option>
@@ -83,10 +83,12 @@
 						<label class="form-label small fw-bold mb-1">カテゴリ</label> <select
 							name="category" class="form-select form-select-sm">
 							<option value="">すべて</option>
+							<option value="REVIEW"
+								${param.category eq 'REVIEW' ? 'selected' : ''}>探訪レビュー</option>
+							<option value="GEAR"
+								${param.category eq 'GEAR' ? 'selected' : ''}>装備おすすめ</option>
 							<option value="FREE"
 								${param.category eq 'FREE' ? 'selected' : ''}>自由掲示板</option>
-							<option value="INFO"
-								${param.category eq 'INFO' ? 'selected' : ''}>登山道情報</option>
 						</select>
 					</div>
 					<div class="col-md-4">
@@ -113,7 +115,7 @@
 								<th>No</th>
 								<th>カテゴリ</th>
 								<th>タイトル</th>
-								<th>投稿者</th>
+								<th>投稿者ID</th>
 								<th>作成日時</th>
 								<th>状態</th>
 								<th>管理</th>
@@ -124,13 +126,24 @@
 								<c:when test="${not empty communityList}">
 									<c:forEach var="item" items="${communityList}">
 										<tr>
-											<td>${item.id}</td>
-											<td><span class="badge bg-secondary">${item.category}</span></td>
+											<td>${item.cBoardId}</td>
+											<td><c:choose>
+													<c:when test="${item.category eq 'REVIEW'}">
+														<span class="badge bg-info text-dark">レビュー</span>
+													</c:when>
+													<c:when test="${item.category eq 'GEAR'}">
+														<span class="badge bg-warning text-dark">装備</span>
+													</c:when>
+													<c:otherwise>
+														<span class="badge bg-secondary">自由</span>
+													</c:otherwise>
+												</c:choose></td>
 											<td class="text-start fw-bold"><a
-												href="${pageContext.request.contextPath}/board/view?id=${item.id}"
+												href="${pageContext.request.contextPath}/community/view?cBoardId=${item.cBoardId}"
 												target="_blank" class="text-decoration-none text-dark">
-													${item.title} </a></td>
-											<td>${item.writer}</td>
+													<c:out value="${item.title}" />
+											</a></td>
+											<td>${item.memberId}</td>
 											<td>${item.regDate}</td>
 											<td><c:choose>
 													<c:when test="${item.status eq 'Y'}">
@@ -145,17 +158,17 @@
 													<c:choose>
 														<c:when test="${item.status eq 'Y'}">
 															<a
-																href="${pageContext.request.contextPath}/admin/community/hide?id=${item.id}"
+																href="${pageContext.request.contextPath}/admin/community/hide?cBoardId=${item.cBoardId}"
 																class="btn btn-outline-danger btn-sm fw-bold">非表示</a>
 														</c:when>
 														<c:otherwise>
 															<a
-																href="${pageContext.request.contextPath}/admin/community/show?id=${item.id}"
+																href="${pageContext.request.contextPath}/admin/community/show?cBoardId=${item.cBoardId}"
 																class="btn btn-outline-success btn-sm fw-bold">再表示</a>
 														</c:otherwise>
 													</c:choose>
 													<a
-														href="${pageContext.request.contextPath}/admin/community/delete?id=${item.id}"
+														href="${pageContext.request.contextPath}/admin/community/delete?cBoardId=${item.cBoardId}"
 														class="btn btn-danger btn-sm fw-bold"
 														onclick="return confirm('本当に削除しますか？');">削除</a>
 												</div>
@@ -164,12 +177,12 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<!-- 프론트엔드 확인용 샘플 데이터 -->
+									<!-- 샘플 데이터 -->
 									<tr>
 										<td>5</td>
-										<td><span class="badge bg-secondary">登山道情報</span></td>
+										<td><span class="badge bg-info text-dark">レビュー</span></td>
 										<td class="text-start fw-bold">札幌近郊の登山道でクマを発見</td>
-										<td>user01</td>
+										<td>12</td>
 										<td>2026-08-20 07:30</td>
 										<td><span class="badge bg-success">表示中</span></td>
 										<td>
@@ -182,9 +195,9 @@
 									</tr>
 									<tr>
 										<td>4</td>
-										<td><span class="badge bg-secondary">自由掲示板</span></td>
+										<td><span class="badge bg-secondary">自由</span></td>
 										<td class="text-start fw-bold">不適切な書き込みテスト</td>
-										<td>bad_user</td>
+										<td>7</td>
 										<td>2026-08-19 14:20</td>
 										<td><span class="badge bg-secondary">非表示</span></td>
 										<td>
@@ -203,7 +216,7 @@
 			</div>
 		</main>
 	</div>
-	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

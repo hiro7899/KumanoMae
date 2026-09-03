@@ -26,33 +26,15 @@
 
     <!-- 이 화면 전용 CSS -->
     <link rel="stylesheet" href="/resources/css/map/map.css">
+    
+    <link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+      
 </head>
+
 <body>
 
-    <%-- ===================== 1. Header ===================== --%>
-    <header class="site-header">
-        <div class="container d-flex align-items-center justify-content-between">
-            <a href="/" class="header-logo text-decoration-none">
-                🐻 クマ出没情報
-            </a>
-
-            <button class="navbar-toggler d-lg-none" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#headerNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <nav class="collapse navbar-collapse flex-grow-0" id="headerNav">
-                <ul class="header-nav">
-                    <li><a href="/">ホーム</a></li>
-                    <li><a href="#" class="active">出没マップ</a></li>
-                    <li><a href="#">最新情報</a></li>
-                    <li><a href="#">安全ガイド</a></li>
-                    <li><a href="#">掲示板</a></li>
-                    <li><a href="/login">ログイン</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
     <%-- ===================== 2. 페이지 제목 ===================== --%>
     <section class="page-title-area">
@@ -174,6 +156,8 @@
         ==========================================================
     --%>
     <script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap" async defer></script>
+    
+    <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
 </html>

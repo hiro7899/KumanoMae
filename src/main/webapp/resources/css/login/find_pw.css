@@ -1,1 +1,297 @@
 @charset "UTF-8";
+
+/* =====================================================
+   find_pw.jsp 전용 CSS
+   index.jsp와 같은 크림/블랙/머스타드 색감
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Noto Sans JP", sans-serif;
+    background-color: #ede4d1;
+    color: #1a1a1a;
+}
+
+/* 공통 Header */
+.header-sticky-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    box-shadow: 0 4px 12px rgba(51, 45, 37, .2);
+}
+
+.header-sticky-wrap .navbar-jp {
+    height: auto;
+    padding: 12px 0;
+    background-color: #1a1a1a !important;
+    border-bottom: 2px solid #e3ac1f;
+}
+
+.header-sticky-wrap .logo-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #b23a2e;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+.header-sticky-wrap .brand-jp {
+    line-height: 1.1;
+}
+
+.header-sticky-wrap .brand-jp .jp-title {
+    color: #fff !important;
+    font-size: 1.15rem;
+    font-weight: 900;
+}
+
+.header-sticky-wrap .brand-jp .jp-sub {
+    color: #c9c1b0 !important;
+    font-size: .65rem;
+    letter-spacing: .12em;
+}
+
+.header-sticky-wrap .nav-link {
+    color: #f2ece0 !important;
+}
+
+.header-sticky-wrap .nav-link:hover,
+.header-sticky-wrap .report-nav-link {
+    color: #e3ac1f !important;
+}
+
+.header-sticky-wrap .navbar-toggler {
+    border-color: rgba(255, 255, 255, .35);
+}
+
+.header-sticky-wrap .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* 본문 */
+.findpw-main {
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - 66px);
+    padding: 60px 20px;
+    background-color: #ede4d1;
+}
+
+.findpw-main .container {
+    max-width: 560px;
+}
+
+.findpw-card {
+    width: 100%;
+    padding: 50px 52px;
+    background-color: #fdfaf3;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+}
+
+.findpw-header {
+    margin-bottom: 38px;
+}
+
+.header-line {
+    display: block;
+    width: 42px;
+    height: 3px;
+    margin-bottom: 20px;
+    background-color: #b23a2e;
+}
+
+.findpw-eyebrow {
+    margin: 0 0 8px;
+    color: #6b6355;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .18em;
+}
+
+.findpw-header h1 {
+    margin: 0 0 14px;
+    color: #1a1a1a;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -.03em;
+}
+
+.findpw-header > p:last-child {
+    margin: 0;
+    color: #6b6355;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    color: #1a1a1a;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper > i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    z-index: 2;
+    transform: translateY(-50%);
+    color: #6b6355;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.input-wrapper .form-control {
+    height: 50px;
+    padding: 0 15px 0 44px;
+    background-color: #fdfaf3;
+    border: 1px solid #cfc4ae;
+    border-radius: 0;
+    box-shadow: none;
+    color: #1a1a1a;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.input-wrapper .form-control:focus {
+    border-color: #b23a2e;
+    box-shadow: 0 0 0 3px rgba(178, 58, 46, .15);
+}
+
+.findpw-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 52px;
+    margin-top: 10px;
+    background-color: #e3ac1f;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+    color: #1a1a1a;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.findpw-submit-btn:hover {
+    background-color: #c6900f;
+}
+
+.findpw-submit-btn i {
+    transition: transform .2s ease;
+}
+
+.findpw-submit-btn:hover i {
+    transform: translateX(4px);
+}
+
+.find-link-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    font-size: 12px;
+}
+
+.find-link-area a {
+    color: #6b6355;
+    text-decoration: none;
+}
+
+.find-link-area a:hover {
+    color: #b23a2e;
+    text-decoration: underline;
+}
+
+/* 공통 Footer */
+.footer-jp {
+    margin-top: 0;
+    background-color: #1a1a1a;
+    color: #f2ece0;
+}
+
+.footer-jp .logo-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #b23a2e;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 900;
+}
+
+.footer-jp .brand-jp .jp-title {
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 900;
+}
+
+.footer-jp a {
+    color: #f2ece0;
+    text-decoration: none;
+}
+
+.footer-jp a:hover {
+    color: #e3ac1f;
+}
+
+.footer-jp .footer-muted {
+    color: #c9c1b0;
+}
+
+.footer-jp .footer-heading {
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+}
+
+.footer-jp .footer-divider {
+    border-color: #444;
+}
+
+.footer-jp .footer-copyright {
+    color: #a89f8c;
+}
+
+@media (max-width: 576px) {
+    .findpw-main {
+        padding: 35px 15px;
+    }
+
+    .findpw-card {
+        padding: 38px 24px;
+    }
+
+    .findpw-header h1 {
+        font-size: 24px;
+    }
+}
