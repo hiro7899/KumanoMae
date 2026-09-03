@@ -29,10 +29,11 @@
 	rel="stylesheet">
 
 <!-- 로그인 화면 전용 CSS -->
-<link rel="stylesheet" href="/resources/css/login/login.css">
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/login/login.css">
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 
 </head>
 

@@ -29,10 +29,11 @@
 	rel="stylesheet">
 
 <!-- 회원가입 CSS -->
-<link rel="stylesheet" href="/resources/css/login/signup.css">
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/login/signup.css">
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 
 </head>
 
