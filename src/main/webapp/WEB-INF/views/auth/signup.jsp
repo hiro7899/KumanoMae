@@ -31,49 +31,15 @@
 
     <!-- 회원가입 CSS -->
     <link rel="stylesheet" href="/resources/css/login/signup.css">
+    
+    <link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 
 </head>
 
 <body>
 
-<!-- ===================== Navbar ===================== -->
-
-<nav class="navbar navbar-jp">
-
-    <div class="container d-flex align-items-center justify-content-between">
-
-        <a href="/" class="d-flex align-items-center text-decoration-none">
-
-            <div class="logo-badge me-2">
-                熊
-            </div>
-
-            <div class="brand-jp">
-
-                <div class="jp-title">
-                    クマ出没マップ
-                </div>
-
-                <div class="jp-sub">
-                    KUMA SHUTSUBOTSU MAP
-                </div>
-
-            </div>
-
-        </a>
-
-        <a href="/" class="back-home">
-
-            <i class="bi bi-house-door-fill"></i>
-
-            ホームへ戻る
-
-        </a>
-
-    </div>
-
-</nav>
-
+<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 <!-- ===================== Signup ===================== -->
 
@@ -329,6 +295,8 @@
 <!-- 회원가입 화면 전용 JS -->
 
 <script src="/resources/js/login/signup.js"></script>
+
+<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
 
