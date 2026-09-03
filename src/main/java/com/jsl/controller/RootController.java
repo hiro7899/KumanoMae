@@ -9,13 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.exeption.LoginException;
-import com.jsl.service.login.FindPasswordService;
+import com.jsl.service.login.ForgotPasswordService;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.login.SignUpService;
 import com.jsl.service.login.findIdService;
 
-@WebServlet(urlPatterns = { "/", "/index", "/login", "/logout", "/signup", "/forgot-password", "/reset-password"})
+@WebServlet(urlPatterns = {
+        "/", "/index",
+        "/login", "/logout", "/signup",
+        "/forgot-password", "/reset-password",
+        "/verify-email"   // ★ 추가
+})
 public class RootController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -23,7 +28,7 @@ public class RootController extends HttpServlet {
 	private final LoginService loginService = new LoginService();
 	private final LogoutService logoutService = new LogoutService();
 	private final SignUpService signUpService = new SignUpService();
-	private final FindPasswordService findPasswordService = new FindPasswordService();
+	private final ForgotPasswordService forgotPasswordService = new ForgotPasswordService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -92,7 +97,7 @@ public class RootController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			} else {
-				findPasswordService.doCommand(request, response);
+				forgotPasswordService.doCommand(request, response);
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
