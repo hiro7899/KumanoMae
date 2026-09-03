@@ -10,8 +10,8 @@
 			<a href="${pageContext.request.contextPath}/" class="d-flex align-items-center text-decoration-none">
 				<div class="logo-badge me-2">熊</div>
 				<div class="brand-jp">
-					<div class="jp-title">クマ出没マップ</div>
-					<div class="jp-sub">KUMA SHUTSUBOTSU MAP</div>
+					<div class="jp-title">熊の前</div>
+					<div class="jp-sub">KUMA NO MAE</div>
 				</div>
 			</a>
 
@@ -36,7 +36,7 @@
 						aria-expanded="false"> コミュニティ </a>
 
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/board/list">
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/list">
 									ユーザーコミュニティ </a></li>
 							<li><a class="dropdown-item" target="_blank"
 								href="https://webshop.montbell.jp/goods/list.php?category=379300">

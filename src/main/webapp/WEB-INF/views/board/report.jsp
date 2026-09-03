@@ -24,6 +24,9 @@
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/report.css">
+
+<!-- Google Maps API 스크립트 (callback=initMap 적용) -->
+<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places" async defer></script>
 </head>
 <body>
 
@@ -100,10 +103,8 @@
 						class="text-danger">*</span></label>
 					<p class="small text-muted mb-2">マップをクリックして正確な目撃場所を指定してください。</p>
 
-					<div id="map" class="map-preview-box mb-2">
-						<span class="fw-bold text-muted"><i
-							class="bi bi-geo-alt-fill fs-3 d-block text-center mb-1"></i>地図読み込み中...</span>
-					</div>
+					<!-- Google Maps 영역 (style 높이 지정 필수) -->
+					<div id="map" class="map-preview-box mb-2" style="height: 350px; width: 100%;"></div>
 
 					<div class="row g-2">
 						<div class="col-md-6">
@@ -180,57 +181,78 @@
 	</main>
 
 	<!-- Footer Include -->
-	<footer class="footer-jp pt-5 pb-3">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mb-4">
-					<div class="d-flex align-items-center mb-3">
-						<div class="logo-badge me-2">熊</div>
-						<div class="brand-jp">
-							<div class="jp-title">クマ出没マップ</div>
-						</div>
-					</div>
-					<p class="small footer-muted">
-						里山に近づく足音を見逃さない。<br>全国のクマ目撃情報をリアルタイムに共有するサービスです。
-					</p>
-				</div>
-				<div class="col-md-4 mb-4">
-					<h6 class="fw-bold mb-3 footer-heading">会社情報</h6>
-					<ul class="list-unstyled small footer-muted">
-						<li class="mb-2">株式会社ベアセーフ（BearSafe Inc.）</li>
-						<li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>03-1234-5678</li>
-						<li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>日本 北海道 札幌市 中央区 1-1-1</li>
-					</ul>
-				</div>
-				<div class="col-md-4 mb-4">
-					<h6 class="fw-bold mb-3 footer-heading">サイトマップ</h6>
-					<ul class="list-unstyled small">
-						<li class="mb-2"><a href="${pageContext.request.contextPath}/">出没マップ</a></li>
-						<li class="mb-2"><a href="${pageContext.request.contextPath}/board/list">目撃情報掲示板</a></li>
-						<li class="mb-2"><a href="${pageContext.request.contextPath}/login">ログイン</a></li>
-						<li class="mb-2"><a href="${pageContext.request.contextPath}/signup">会員登録</a></li>
-					</ul>
-				</div>
-			</div>
-			<hr class="footer-divider">
-			<div class="text-center small footer-copyright">&copy; 2026 BearSafe Inc. All Rights Reserved.</div>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 
 	<!-- Bootstrap 5 JS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script>
+		let map;
+		let marker;
+		let geocoder;
+
+		// 1. Google Map 초기화 함수 (콜백으로 자동 호출됨)
+		function initMap() {
+			// 기본 중심점: 삿포로시 중심부 (위도, 경도)
+			const defaultCenter = { lat: 43.0621, lng: 141.3544 };
+
+			map = new google.maps.Map(document.getElementById("map"), {
+				zoom: 12,
+				center: defaultCenter,
+			});
+
+			geocoder = new google.maps.Geocoder();
+
+			// 지도 클릭 이벤트 핸들러
+			map.addListener("click", function (e) {
+				const lat = e.latLng.lat();
+				const lng = e.latLng.lng();
+
+				// 기존 마커가 있다면 위치 이동, 없으면 생성
+				if (marker) {
+					marker.setPosition(e.latLng);
+				} else {
+					marker = new google.maps.Marker({
+						position: e.latLng,
+						map: map,
+					});
+				}
+
+				// input 필드에 위도, 경도 입력
+				document.getElementById("latitude").value = lat.toFixed(6);
+				document.getElementById("longitude").value = lng.toFixed(6);
+
+				// 좌표를 일본 주소로 변환 (Reverse Geocoding)
+				geocodeLatLng(lat, lng);
+			});
+		}
+
+		// 2. 위도/경도를 주소 문자열로 변환하는 함수
+		function geocodeLatLng(lat, lng) {
+			const latlng = { lat: lat, lng: lng };
+			geocoder.geocode({ location: latlng }, function (results, status) {
+				if (status === "OK") {
+					if (results[0]) {
+						// 주소 입력 칸에 변환된 주소 자동 삽입
+						document.getElementById("address").value = results[0].formatted_address;
+					} else {
+						document.getElementById("address").value = "住所が見つかりません。";
+					}
+				} else {
+					console.error("Geocoder failed due to: " + status);
+				}
+			});
+		}
+
 		document.addEventListener('DOMContentLoaded', function() {
 			
-			// 1. 현재 시간을 datetime-local 기본값으로 설정
+			// 현재 시간을 datetime-local 기본값으로 설정
 			const sightingDateInput = document.getElementById('sightingDate');
 			if (sightingDateInput && !sightingDateInput.value) {
 				sightingDateInput.value = new Date().toISOString().slice(0, 16);
 			}
 
-			// 2. 폼 제출 유효성 검사 (Validation)
+			// 폼 제출 유효성 검사 (Validation)
 			const reportForm = document.getElementById('reportForm');
 			if (reportForm) {
 				reportForm.addEventListener('submit', function(e) {
@@ -276,14 +298,14 @@
 			}
 		});
 
-		// 3. 상황 태그 콤마(,) 구분 함수
+		// 상황 태그 콤마(,) 구분 함수
 		function updateTags() {
 			const checkboxes = document.querySelectorAll('.btn-check:checked');
 			const selectedTags = Array.from(checkboxes).map(cb => cb.value);
 			document.getElementById('situationTag').value = selectedTags.join(',');
 		}
 
-		// 4. 이미지 파일 미리보기 함수
+		// 이미지 파일 미리보기 함수
 		function previewImage(input) {
 			const previewBox = document.getElementById('imagePreviewBox');
 			const previewImage = document.getElementById('imagePreview');

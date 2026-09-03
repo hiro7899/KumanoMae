@@ -23,6 +23,9 @@
 <!-- 이 화면 전용 CSS -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
+
+<!-- Google Maps API 스크립트 (API 키 직접 반영) -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxAezyz3OSn1SwfHDMqDA7BnI8mnu2vuU&callback=initMap&libraries=places&loading=async" async defer></script>
 </head>
 
 <%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
@@ -103,8 +106,9 @@
 		<div class="row g-4">
 			<div class="col-lg-9">
 				<div class="card card-jp">
-					<div class="card-body">
-						<div id="mapContainer">地図表示エリア（今後実装予定）</div>
+					<div class="card-body p-0">
+						<!-- 구글 맵이 출력될 영역 -->
+						<div id="mapContainer" style="height: 480px; width: 100%;"></div>
 					</div>
 				</div>
 			</div>
@@ -160,7 +164,7 @@
 						<input type="text" class="form-control" id="areaSearchInput"
 							placeholder="例：札幌市、富山県">
 						<button class="btn btn-jp-mustard" type="button"
-							id="areaSearchBtn">
+							id="areaSearchBtn" onclick="searchArea()">
 							<i class="bi bi-search"></i> 検索
 						</button>
 					</div>
@@ -293,58 +297,58 @@
 	</button>
 
 	<%-- ===================== Footer ===================== --%>
-	<footer class="footer-jp pt-5 pb-3">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mb-4">
-					<div class="d-flex align-items-center mb-3">
-						<div class="logo-badge me-2">熊</div>
-						<div class="brand-jp">
-							<div class="jp-title">クマ出没マップ</div>
-						</div>
-					</div>
-					<p class="small footer-muted">
-						里山に近づく足音を見逃さない。<br>全国のクマ目撃情報をリアルタイムに共有するサービスです。
-					</p>
-				</div>
-				<div class="col-md-4 mb-4">
-					<h6 class="fw-bold mb-3 footer-heading">会社情報</h6>
-					<ul class="list-unstyled small footer-muted">
-						<li class="mb-2">株式会社ベアセーフ（BearSafe Inc.）</li>
-						<li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>03-1234-5678</li>
-						<li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>日本
-							北海道 札幌市 中央区 1-1-1</li>
-					</ul>
-				</div>
-				<div class="col-md-4 mb-4">
-					<h6 class="fw-bold mb-3 footer-heading">サイトマップ</h6>
-					<ul class="list-unstyled small">
-						<li class="mb-2"><a
-							href="${pageContext.request.contextPath}/map">出没マップ</a></li>
-						<li class="mb-2"><a
-							href="${pageContext.request.contextPath}/board/news">目撃情報掲示板</a></li>
-						<li class="mb-2"><a
-							href="${pageContext.request.contextPath}/login">ログイン</a></li>
-						<li class="mb-2"><a
-							href="${pageContext.request.contextPath}/signup">会員登録</a></li>
-					</ul>
-				</div>
-			</div>
-			<hr class="footer-divider">
-			<div class="text-center small footer-copyright">&copy; 2026
-				BearSafe Inc. All Rights Reserved.</div>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 	<!-- Bootstrap 5 JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 
-	<!-- 안전한 DOM 기반 로그인 판별 스크립트 -->
+	<!-- Google Map 및 관련 로직 -->
 	<script>
+		let map;
+		let geocoder;
+
+		// 1. Google Map 초기화 함수 (콜백 함수)
+		function initMap() {
+			// 기본 위치: 홋카이도/일본 중심부 부근
+			const defaultCenter = { lat: 43.0621, lng: 141.3544 };
+
+			map = new google.maps.Map(document.getElementById("mapContainer"), {
+				zoom: 7,
+				center: defaultCenter,
+			});
+
+			geocoder = new google.maps.Geocoder();
+		}
+
+		// 2. 지역 검색 버튼 기능 (Geocoding)
+		function searchArea() {
+			const address = document.getElementById("areaSearchInput").value;
+			if (!address) {
+				alert("検索する地域を入力してください。");
+				return;
+			}
+
+			geocoder.geocode({ address: address }, function (results, status) {
+				if (status === "OK") {
+					map.setCenter(results[0].geometry.location);
+					map.setZoom(11);
+				} else {
+					alert("該当する地域が見つかりませんでした。");
+				}
+			});
+		}
+
+		// 엔터키 입력 시 지역 검색 실행
+		document.getElementById("areaSearchInput").addEventListener("keypress", function(e) {
+			if (e.key === 'Enter') {
+				searchArea();
+			}
+		});
+
+		// 3. 로그인 판별 후 제보 페이지 이동
 		function checkLoginAndReport() {
-			// body 태그의 HTML data-속성에서 정보를 직접 읽어옴
 			const isLogin = document.body.dataset.isLogin === "true";
 			const contextPath = document.body.dataset.contextPath;
 
