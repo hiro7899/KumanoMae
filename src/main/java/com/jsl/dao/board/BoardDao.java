@@ -22,7 +22,7 @@ public class BoardDao {
              ORDER BY REG_DATE DESC
             """;
 
-        List<BoardDto> list = new ArrayList<>();
+        List<BoardDto> list = new ArrayList<BoardDto>();
 
         try (Connection conn = DBManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
