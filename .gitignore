@@ -18,3 +18,7 @@ Servers/
 # OS 생성 파일
 .DS_Store
 Thumbs.db
+
+# JDBC 드라이버 연결파일
+/src/main/webapp/META-INF/context.xml
+

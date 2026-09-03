@@ -1,0 +1,480 @@
+/* =====================================================
+
+   findId.css
+
+   - findId.jsp 전용 CSS
+   - 아이디 찾기 화면 디자인
+   - 일본어 UI / 깔끔한 계정 찾기 페이지
+
+   ===================================================== */
+
+
+/* =====================================================
+   기본 설정
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+
+body {
+    font-family: "Noto Sans JP", sans-serif;
+    background-color: #f5f6f8;
+    color: #333;
+}
+
+
+/* =====================================================
+   Navbar
+   ===================================================== */
+
+.navbar-jp {
+    height: 72px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+.navbar-jp .container {
+    height: 100%;
+}
+
+
+/* 로고 */
+
+.navbar-jp a {
+    color: inherit;
+}
+
+
+.logo-badge {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background-color: #222;
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 900;
+}
+
+
+/* 브랜드 */
+
+.brand-jp {
+    line-height: 1.2;
+}
+
+
+.jp-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #222;
+}
+
+
+.jp-sub {
+    margin-top: 3px;
+
+    font-size: 9px;
+    font-weight: 500;
+
+    letter-spacing: 0.12em;
+    color: #999;
+}
+
+
+/* 홈으로 돌아가기 */
+
+.back-home {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #666 !important;
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.back-home:hover {
+    color: #222 !important;
+}
+
+
+/* =====================================================
+   Main
+   ===================================================== */
+
+.findid-main {
+    min-height: calc(100vh - 72px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 60px 20px;
+}
+
+
+/* Bootstrap container 너비 보정 */
+
+.findid-main .container {
+    max-width: 560px;
+}
+
+
+/* =====================================================
+   Find ID Card
+   ===================================================== */
+
+.findid-card {
+    width: 100%;
+
+    padding: 50px 52px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e7e7e7;
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =====================================================
+   Header
+   ===================================================== */
+
+.findid-header {
+    margin-bottom: 38px;
+}
+
+
+.header-line {
+    display: block;
+
+    width: 42px;
+    height: 3px;
+
+    margin-bottom: 20px;
+
+    background-color: #222;
+}
+
+
+.findid-eyebrow {
+    margin: 0 0 8px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+
+    color: #999;
+}
+
+
+.findid-header h1 {
+    margin: 0 0 14px;
+
+    font-size: 28px;
+    font-weight: 900;
+
+    letter-spacing: -0.03em;
+
+    color: #222;
+}
+
+
+.findid-header > p:last-child {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.8;
+
+    color: #777;
+}
+
+
+/* =====================================================
+   Form
+   ===================================================== */
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #333;
+}
+
+
+/* 선택 입력 표시 */
+
+.optional {
+    margin-left: 5px;
+
+    font-size: 11px;
+    font-weight: 400;
+
+    color: #aaa;
+}
+
+
+/* =====================================================
+   Input
+   ===================================================== */
+
+.input-wrapper {
+    position: relative;
+}
+
+
+.input-wrapper > i {
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 2;
+
+    font-size: 16px;
+
+    color: #aaa;
+
+    pointer-events: none;
+}
+
+
+.input-wrapper .form-control {
+    height: 50px;
+
+    padding: 0 15px 0 44px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 14px;
+
+    color: #333;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.input-wrapper .form-control::placeholder {
+    color: #b5b5b5;
+}
+
+
+.input-wrapper .form-control:focus {
+    border-color: #555;
+
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+
+    outline: none;
+}
+
+
+/* =====================================================
+   Submit Button
+   ===================================================== */
+
+.findid-submit-btn {
+    width: 100%;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 10px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #222;
+    color: #ffffff;
+
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.findid-submit-btn i {
+    font-size: 15px;
+
+    transition: transform 0.2s ease;
+}
+
+
+.findid-submit-btn:hover {
+    background-color: #111;
+}
+
+
+.findid-submit-btn:hover i {
+    transform: translateX(4px);
+}
+
+
+.findid-submit-btn:active {
+    transform: translateY(1px);
+}
+
+
+/* =====================================================
+   Link Area
+   ===================================================== */
+
+.find-link-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 28px;
+
+    font-size: 12px;
+}
+
+
+.find-link-area a {
+    color: #666;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.find-link-area a:hover {
+    color: #111;
+
+    text-decoration: underline;
+}
+
+
+.link-sep {
+    margin: 0 12px;
+
+    color: #d0d0d0;
+}
+
+
+/* =====================================================
+   Responsive
+   ===================================================== */
+
+@media (max-width: 576px) {
+
+
+    .navbar-jp {
+        height: 64px;
+    }
+
+
+    .logo-badge {
+        width: 36px;
+        height: 36px;
+
+        font-size: 17px;
+    }
+
+
+    .jp-title {
+        font-size: 15px;
+    }
+
+
+    .jp-sub {
+        font-size: 8px;
+    }
+
+
+    .back-home {
+        font-size: 12px;
+    }
+
+
+    .findid-main {
+        min-height: calc(100vh - 64px);
+
+        padding: 35px 15px;
+    }
+
+
+    .findid-card {
+        padding: 38px 24px;
+
+        border-radius: 12px;
+    }
+
+
+    .findid-header h1 {
+        font-size: 24px;
+    }
+
+
+    .findid-header > p:last-child {
+        font-size: 12px;
+    }
+
+
+    .find-link-area {
+        flex-wrap: wrap;
+
+        gap: 4px;
+    }
+
+
+    .link-sep {
+        margin: 0 7px;
+    }
+
+}
