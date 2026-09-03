@@ -98,7 +98,7 @@
 		</div>
 	</section>
 
-	<%-- ===================== 出没マップ セクション ===================== --%>
+<%-- ===================== 出没マップ セクション ===================== --%>
 	<section id="mapSection" class="container my-5">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>出没マップ
@@ -116,20 +116,31 @@
 				<div class="card card-jp h-100">
 					<div class="card-body map-legend">
 						<h6 class="fw-bold mb-3">危険度の凡例</h6>
-						<p class="mb-2">
-							<span class="legend-dot danger"></span>危険（DANGER）
-						</p>
-						<p class="mb-2">
-							<span class="legend-dot warning"></span>警戒（WARNING）
-						</p>
-						<p class="mb-0">
-							<span class="legend-dot caution"></span>注意（CAUTION）
-						</p>
+						
+						<div class="mb-3">
+							<p class="mb-1 fw-bold">
+								<span class="legend-dot danger"></span>危険（DANGER）
+							</p>
+							<small class="text-muted d-block ps-3">姿を目撃・撮影</small>
+						</div>
+
+						<div class="mb-3">
+							<p class="mb-1 fw-bold">
+								<span class="legend-dot warning"></span>警戒（WARNING）
+							</p>
+							<small class="text-muted d-block ps-3">足跡・痕跡を発見</small>
+						</div>
+
+						<div>
+							<p class="mb-1 fw-bold">
+								<span class="legend-dot caution"></span>注意（CAUTION）
+							</p>
+							<small class="text-muted d-block ps-3">鳴き声・気配を感知</small>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<div class="filter-box mt-4">
 			<div class="row g-3 align-items-end">
 				<div class="col-md-4">
