@@ -31,6 +31,10 @@ public class LoginService implements Command {
         if (member == null || !PasswordUtil.checkPassword(userPw, member.getUserPw())) {
             throw new LoginException("IDまたはパスワードが正しくありません。");
         }
+        
+        if (!"Y".equals(member.getEmailVerifiedYn())) {
+            throw new LoginException("メール認証が完了していません。メールをご確認ください。");
+        }
 
         HttpSession oldSession = request.getSession(false);
         if (oldSession != null) {
