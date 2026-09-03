@@ -52,13 +52,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.1rem;
 }
 
-/* ---------------- Navbar ---------------- */
-.navbar-jp {
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
-    padding: 18px 0;
-}
-
 .logo-badge {
     width: 40px;
     height: 40px;
@@ -76,9 +69,6 @@ h1, h2, h3, h4, h5, h6 {
 .brand-jp { line-height: 1.1; }
 .brand-jp .jp-title { font-weight: 900; font-size: 1.15rem; color: var(--color-ink); }
 .brand-jp .jp-sub { font-size: .65rem; letter-spacing: .12em; color: var(--color-muted); }
-
-.navbar-jp .nav-link { color: var(--color-ink) !important; font-weight: 500; }
-.navbar-jp .nav-link:hover { color: var(--color-red) !important; }
 
 /* ---------------- 공통 버튼 ---------------- */
 .btn-jp-mustard {
@@ -228,24 +218,59 @@ h1, h2, h3, h4, h5, h6 {
 .section-title-jp .dash { color: var(--color-red); margin-right: 10px; font-weight: 900; }
 
 .card-jp {
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    box-shadow: none;
+    border: none;
+    border-radius: 4px;
     background-color: #fdfaf3;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.10);
+    overflow: hidden;
+}
+/* =====================================================
+   Google Maps / 지도 카드 테두리 제거
+   ===================================================== */
+
+/* 지도 바깥 카드 */
+#mapSection .card-jp,
+#mapSection .card-jp.card {
+    border: none !important;
+    outline: none !important;
+    border-radius: 4px;
+    background-color: #fdfaf3;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.10);
+    overflow: hidden;
 }
 
-/* 出没マップ 플레이스홀더 영역 */
+/* Bootstrap card-body */
+#mapSection .card-jp .card-body {
+    border: none !important;
+    outline: none !important;
+}
+
+/* 지도 영역 */
 #mapContainer {
     width: 100%;
     height: 420px;
     background-color: #e4d9c1;
-    border: 1px solid var(--color-border);
+    border: none !important;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-muted);
     font-size: 1.05rem;
+}
+
+/* Google Maps iframe */
+#mapContainer iframe {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Google Maps가 생성하는 바깥 요소 */
+#mapContainer > div {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .map-legend .legend-dot {
@@ -284,36 +309,57 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ---------------- 최근 목격정보 카드 ---------------- */
 .report-card {
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    border: none;
+    border-radius: 4px;
     background-color: #fdfaf3;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.10);
     overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.14);
 }
 
 .report-card img {
-    height: 150px;
+    width: 100%;
+    height: 210px;
     object-fit: cover;
-    filter: sepia(8%);
+    filter: none;
+    display: block;
+}
+
+.report-card .card-body {
+    padding: 15px 16px 17px;
 }
 
 .report-card .card-title {
     font-size: 1rem;
     font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.45;
 }
 
 /* ---------------- 안내 카드 ---------------- */
 .info-card {
     height: 100%;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
+    border: none;
+    border-radius: 4px;
     background-color: #fdfaf3;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.10);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.info-card .card-title { font-size: 1.05rem; }
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.14);
+}
 
-.icon-red { color: var(--color-red); }
-.icon-mustard { color: var(--color-mustard-dark); }
+.info-card .card-title {
+    font-size: 1.05rem;
+}
 
 /* ---------------- 제보하기 플로팅 버튼 ---------------- */
 .report-float-btn {
