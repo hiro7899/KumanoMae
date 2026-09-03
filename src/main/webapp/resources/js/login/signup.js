@@ -1,154 +1,294 @@
-/* =====================================================
-
-   signup.js
-
-   - signup.jsp 화면 동작만 담당 (실제 회원가입 처리/DB 연동 없음)
-
-   - 지금은 입력값 유효성 검사(빈 값/형식/일치 체크)만 화면에서 확인하고,
-
-     나중에 백엔드가 연결되면 fetch/폼 전송으로 교체한다.
-
-   ===================================================== */
-
 document.addEventListener("DOMContentLoaded", function () {
-
     const form = document.getElementById("signupForm");
-    const nameInput = document.getElementById("userName");
+
+    const userIdInput = document.getElementById("userId");
+    const userNameInput = document.getElementById("userName");
     const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("phone");
     const passwordInput = document.getElementById("userPw");
     const passwordConfirmInput = document.getElementById("passwordConfirm");
     const agreeCheckbox = document.getElementById("agree");
 
-    if (!form) return;
+    const checkUserIdBtn = document.getElementById("checkUserIdBtn");
+    const userIdCheckMessage = document.getElementById("userIdCheckMessage");
 
-    form.addEventListener("submit", function (e) {
+    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
+    const verificationArea = document.getElementById("verificationArea");
+    const verificationCodeInput = document.getElementById("verificationCode");
+    const verifyEmailBtn = document.getElementById("verifyEmailBtn");
+    const emailAuthMessage = document.getElementById("emailAuthMessage");
 
-        const name = nameInput.value.trim();
+    const signupBtn = document.getElementById("signupBtn");
+    const contextPath = document.body.dataset.contextPath || "";
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    let userIdChecked = false;
+    let emailVerified = false;
+
+    if (!form) {
+        return;
+    }
+
+    function showUserIdMessage(message, type) {
+        userIdCheckMessage.textContent = message;
+        userIdCheckMessage.className = "availability-message " + type;
+    }
+
+    function showEmailMessage(message, type) {
+        emailAuthMessage.textContent = message;
+        emailAuthMessage.className = "email-auth-message " + type;
+    }
+
+    function updateSignupButton() {
+        signupBtn.disabled = !(userIdChecked && emailVerified);
+    }
+
+    function resetUserIdCheck() {
+        userIdChecked = false;
+        showUserIdMessage("", "");
+        updateSignupButton();
+    }
+
+    function resetEmailVerification() {
+        emailVerified = false;
+        verificationArea.classList.add("d-none");
+        verificationCodeInput.value = "";
+        showEmailMessage("", "");
+        updateSignupButton();
+    }
+
+    userIdInput.addEventListener("input", resetUserIdCheck);
+    emailInput.addEventListener("input", resetEmailVerification);
+
+    /* 전화번호: 숫자만 허용 */
+    phoneInput.addEventListener("input", function () {
+        phoneInput.value = phoneInput.value.replace(/\D/g, "");
+    });
+
+    /* ID 중복 확인 */
+    checkUserIdBtn.addEventListener("click", async function () {
+        const userId = userIdInput.value.trim();
+
+        if (userId === "") {
+            showUserIdMessage("IDを入力してください。", "error");
+            userIdInput.focus();
+            return;
+        }
+
+        checkUserIdBtn.disabled = true;
+        showUserIdMessage("IDを確認しています。", "");
+
+        try {
+            const response = await fetch(
+                contextPath + "/api/signup/check-user-id",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ userId: userId })
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok || !result.available) {
+                throw new Error(result.message || "すでに使用されているIDです。");
+            }
+
+            userIdChecked = true;
+            showUserIdMessage("使用可能なIDです。", "success");
+            updateSignupButton();
+        } catch (error) {
+            userIdChecked = false;
+            showUserIdMessage(error.message, "error");
+            updateSignupButton();
+        } finally {
+            checkUserIdBtn.disabled = false;
+        }
+    });
+
+    /* 이메일 중복 확인 후 인증번호 발송 */
+    sendVerificationBtn.addEventListener("click", async function () {
+        const email = emailInput.value.trim();
+
+        if (!emailPattern.test(email)) {
+            showEmailMessage("正しいメールアドレスを入力してください。", "error");
+            emailInput.focus();
+            return;
+        }
+
+        sendVerificationBtn.disabled = true;
+        showEmailMessage("メールアドレスを確認しています。", "");
+
+        try {
+            const checkResponse = await fetch(
+                contextPath + "/api/signup/check-email",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: email })
+                }
+            );
+
+            const checkResult = await checkResponse.json();
+
+            if (!checkResponse.ok || !checkResult.available) {
+                throw new Error(
+                    checkResult.message || "すでに登録されているメールアドレスです。"
+                );
+            }
+
+            showEmailMessage("認証番号を送信しています。", "");
+
+            const sendResponse = await fetch(
+                contextPath + "/api/email-verification/send",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: email })
+                }
+            );
+
+            const sendResult = await sendResponse.json();
+
+            if (!sendResponse.ok || !sendResult.success) {
+                throw new Error(
+                    sendResult.message || "認証番号の送信に失敗しました。"
+                );
+            }
+
+            verificationArea.classList.remove("d-none");
+            showEmailMessage("認証番号をメールに送信しました。", "success");
+            verificationCodeInput.focus();
+        } catch (error) {
+            showEmailMessage(error.message, "error");
+        } finally {
+            sendVerificationBtn.disabled = false;
+        }
+    });
+
+    /* 이메일 인증번호 확인 */
+    verifyEmailBtn.addEventListener("click", async function () {
+        const email = emailInput.value.trim();
+        const code = verificationCodeInput.value.trim();
+
+        if (!/^\d{6}$/.test(code)) {
+            showEmailMessage("6桁の認証番号を入力してください。", "error");
+            verificationCodeInput.focus();
+            return;
+        }
+
+        verifyEmailBtn.disabled = true;
+
+        try {
+            const response = await fetch(
+                contextPath + "/api/email-verification/verify",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: email,
+                        code: code
+                    })
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "認証番号が正しくありません。");
+            }
+
+            emailVerified = true;
+            emailInput.readOnly = true;
+            verificationCodeInput.readOnly = true;
+            sendVerificationBtn.disabled = true;
+            verifyEmailBtn.disabled = true;
+
+            showEmailMessage("メール認証が完了しました。", "success");
+            updateSignupButton();
+        } catch (error) {
+            showEmailMessage(error.message, "error");
+        } finally {
+            if (!emailVerified) {
+                verifyEmailBtn.disabled = false;
+            }
+        }
+    });
+
+    /* 비밀번호 보기 / 숨기기 */
+    document.querySelectorAll(".password-toggle").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const target = document.getElementById(button.dataset.target);
+            const icon = button.querySelector("i");
+            const isHidden = target.type === "password";
+
+            target.type = isHidden ? "text" : "password";
+            icon.className = isHidden ? "bi bi-eye-slash" : "bi bi-eye";
+            button.setAttribute(
+                "aria-label",
+                isHidden ? "パスワードを隠す" : "パスワードを表示"
+            );
+        });
+    });
+
+    form.addEventListener("submit", function (event) {
+        const userId = userIdInput.value.trim();
+        const userName = userNameInput.value.trim();
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
         const passwordConfirm = passwordConfirmInput.value.trim();
 
+        if (userId === "") {
+            event.preventDefault();
+            alert("IDを入力してください。");
+            userIdInput.focus();
+            return;
+        }
 
-        // 1. 이름 빈 값 체크
+        if (!userIdChecked) {
+            event.preventDefault();
+            alert("IDの重複確認を完了してください。");
+            return;
+        }
 
-        if (name === "") {
-
-            e.preventDefault();
-
+        if (userName === "") {
+            event.preventDefault();
             alert("お名前を入力してください。");
-
-            nameInput.focus();
-
+            userNameInput.focus();
             return;
-
         }
-
-
-        // 2. 이메일 빈 값 + 형식 체크
-
-        if (email === "") {
-
-            e.preventDefault();
-
-            alert("メールアドレスを入力してください。");
-
-            emailInput.focus();
-
-            return;
-
-        }
-
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailPattern.test(email)) {
-
-            e.preventDefault();
-
-            alert("メールアドレスの形式が正しくありません。");
-
+            event.preventDefault();
+            alert("正しいメールアドレスを入力してください。");
             emailInput.focus();
-
             return;
-
         }
 
-
-        // 3. 비밀번호 빈 값 + 길이 체크 (8자 이상)
-
-        if (password === "") {
-
-            e.preventDefault();
-
-            alert("パスワードを入力してください。");
-
-            passwordInput.focus();
-
+        if (!emailVerified) {
+            event.preventDefault();
+            alert("メール認証を完了してください。");
             return;
-
         }
-
 
         if (password.length < 8) {
-
-            e.preventDefault();
-
+            event.preventDefault();
             alert("パスワードは8文字以上で入力してください。");
-
             passwordInput.focus();
-
             return;
-
         }
-
-
-        // 4. 비밀번호 확인 일치 체크
-
-        if (passwordConfirm === "") {
-
-            e.preventDefault();
-
-            alert("パスワード（確認）を入力してください。");
-
-            passwordConfirmInput.focus();
-
-            return;
-
-        }
-
 
         if (password !== passwordConfirm) {
-
-            e.preventDefault();
-
+            event.preventDefault();
             alert("パスワードが一致しません。");
-
             passwordConfirmInput.focus();
-
             return;
-
         }
-
-
-        // 5. 약관 동의 체크
 
         if (!agreeCheckbox.checked) {
-
-            e.preventDefault();
-
+            event.preventDefault();
             alert("利用規約とプライバシーポリシーに同意してください。");
-
             agreeCheckbox.focus();
-
-            return;
-
         }
-
-
-        // 모든 유효성 검사를 통과하면
-        // e.preventDefault()가 실행되지 않으므로
-        // form이 정상적으로 서버에 제출됩니다.
-
     });
-
 });

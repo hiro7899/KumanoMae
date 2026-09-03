@@ -1,47 +1,39 @@
-/* =====================================================
-   login.js
-   - login.jsp 화면 동작만 담당 (실제 로그인 처리/DB 연동 없음)
-   - 지금은 입력값 유효성 검사(빈 값 체크)만 화면에서 확인하고,
-     나중에 백엔드가 연결되면 fetch/폼 전송으로 교체한다.
-   ===================================================== */
-
 document.addEventListener("DOMContentLoaded", function () {
-
-    const emailInput = document.getElementById("email");
+    const loginForm = document.querySelector("form[action='/login']");
+    const userIdInput = document.getElementById("userId");
     const passwordInput = document.getElementById("userPw");
-    const loginBtn = document.getElementById("loginBtn");
 
-    if (!loginBtn) return;
+    document.querySelectorAll(".password-toggle").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const target = document.getElementById(button.dataset.target);
+            const icon = button.querySelector("i");
+            const isHidden = target.type === "password";
 
-    loginBtn.addEventListener("click", function () {
-
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
-
-        // 1. 빈 값 체크
-        if (email === "") {
-            alert("メールアドレスを入力してください。");
-            emailInput.focus();
-            return;
-        }
-
-        if (password === "") {
-            alert("パスワードを入力してください。");
-            passwordInput.focus();
-            return;
-        }
-
-
-    });
-
-    // Enter 키로도 로그인 버튼이 눌리도록 처리
-    [emailInput, passwordInput].forEach(function (input) {
-        if (!input) return;
-        input.addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                loginBtn.click();
-            }
+            target.type = isHidden ? "text" : "password";
+            icon.className = isHidden ? "bi bi-eye-slash" : "bi bi-eye";
+            button.setAttribute(
+                "aria-label",
+                isHidden ? "パスワードを隠す" : "パスワードを表示"
+            );
         });
     });
 
+    if (!loginForm) {
+        return;
+    }
+
+    loginForm.addEventListener("submit", function (event) {
+        if (userIdInput.value.trim() === "") {
+            event.preventDefault();
+            alert("IDまたはメールアドレスを入力してください。");
+            userIdInput.focus();
+            return;
+        }
+
+        if (passwordInput.value.trim() === "") {
+            event.preventDefault();
+            alert("パスワードを入力してください。");
+            passwordInput.focus();
+        }
+    });
 });
