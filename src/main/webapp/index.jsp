@@ -22,6 +22,8 @@
 
 <!-- 이 화면 전용 CSS -->
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 
 </head>
@@ -184,80 +186,51 @@
 		</div>
 	</section>
 
-	<%-- ===================== 最近の目撃情報 ===================== --%>
+	<%-- ===================== 最新ニュース ===================== --%>
 	<section class="container my-5">
 		<h3 class="section-title-jp">
-			<span class="dash">―</span>最近の目撃情報
+			<span class="dash">―</span>最新ニュース
 		</h3>
-		<div class="row g-4">
-
-			<div class="col-md-4 col-sm-6">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-						class="card-img-top" alt="クマ出没イメージ">
-					<div class="card-body d-flex flex-column">
-						<span class="badge badge-danger-custom mb-2 align-self-start">危険</span>
-						<h5 class="card-title">札幌近郊の登山道でクマを発見</h5>
-						<p class="mb-1 text-muted small">
-							<i class="bi bi-geo-alt-fill"></i> 北海道札幌市
-						</p>
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
-						</p>
-						<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
-						<a href="${pageContext.request.contextPath}/board/detail"
-							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+		<c:choose>
+			<c:when test="${not empty newsList}">
+				<div class="row g-4">
+					<c:forEach var="news" items="${newsList}" end="2">
+						<div class="col-md-4 col-sm-6">
+							<article class="card h-100 report-card">
+								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
+									class="card-img-top" alt="クマ関連ニュース">
+								<div class="card-body d-flex flex-column">
+									<c:choose>
+										<c:when test="${news.sourceType eq 'SIGHTING'}"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span></c:when>
+										<c:when test="${news.sourceType eq 'SAFETY'}"><span class="badge badge-warning-custom mb-2 align-self-start">安全対策</span></c:when>
+										<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">自治体のお知らせ</span></c:otherwise>
+									</c:choose>
+									<h5 class="card-title"><c:out value="${news.title}" /></h5>
+									<p class="mb-2 text-muted small">
+										<i class="bi bi-building"></i> <c:out value="${news.sourceName}" />
+										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out value="${news.publishedDate}" /></span>
+									</p>
+									<p class="small flex-grow-1"><c:out value="${news.summary}" /></p>
+									<a href="${news.sourceUrl}" target="_blank" rel="noopener noreferrer"
+										class="btn btn-jp-outline btn-sm mt-2">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+								</div>
+							</article>
+						</div>
+					</c:forEach>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="card card-jp border-0 py-4 text-center">
+					<div class="card-body text-muted">
+						<i class="bi bi-newspaper fs-1 d-block mb-2"></i>
+						<p class="fw-bold mb-0">現在表示できるニュースはありません。</p>
 					</div>
 				</div>
-			</div>
-
-			<div class="col-md-4 col-sm-6">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1465311440653-ba9b1d9b5f04?w=600"
-						class="card-img-top" alt="クマ出没イメージ">
-					<div class="card-body d-flex flex-column">
-						<span class="badge badge-warning-custom mb-2 align-self-start">警戒</span>
-						<h5 class="card-title">農地周辺でクマの足跡を発見</h5>
-						<p class="mb-1 text-muted small">
-							<i class="bi bi-geo-alt-fill"></i> 青森県
-						</p>
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-19 18:10
-						</p>
-						<p class="small flex-grow-1">農地付近でクマの足跡と糞の痕跡を発見しました。</p>
-						<a href="${pageContext.request.contextPath}/board/detail"
-							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4 col-sm-6">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1500534623283-312aade485b2?w=600"
-						class="card-img-top" alt="クマ出没イメージ">
-					<div class="card-body d-flex flex-column">
-						<span class="badge badge-caution-custom mb-2 align-self-start">注意</span>
-						<h5 class="card-title">登山道でクマの鳴き声を確認</h5>
-						<p class="mb-1 text-muted small">
-							<i class="bi bi-geo-alt-fill"></i> 岩手県
-						</p>
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-18 06:45
-						</p>
-						<p class="small flex-grow-1">登山者がクマと思われる鳴き声を聞いたと報告しています。</p>
-						<a href="${pageContext.request.contextPath}/board/detail"
-							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
-					</div>
-				</div>
-			</div>
-
-		</div>
+			</c:otherwise>
+		</c:choose>
 		<div class="text-center mt-4">
 			<a href="${pageContext.request.contextPath}/board/news"
-				class="btn btn-jp-mustard">目撃情報掲示板をすべて見る</a>
+				class="btn btn-jp-mustard">ニュースをすべて見る</a>
 		</div>
 	</section>
 
