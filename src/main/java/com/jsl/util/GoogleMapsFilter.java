@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 @WebFilter(urlPatterns = {
-		"/", "/map", "/board/report", 
+		"/", "/map", "/map/*", "/board/report", 
 		})
 public class GoogleMapsFilter implements Filter {
 
