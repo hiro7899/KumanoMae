@@ -1,11 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY");
-	if (googleMapsApiKey == null || googleMapsApiKey.trim().isEmpty()) {
-		throw new IllegalStateException("GOOGLE_MAPS_API_KEY 환경변수가 설정되지 않았습니다.");
-	}
-%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -31,7 +25,7 @@
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 
 <!-- Google Maps API 스크립트 -->
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap&libraries=places&loading=async" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places"></script>
 </head>
 
 <%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
