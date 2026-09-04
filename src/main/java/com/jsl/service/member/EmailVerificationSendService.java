@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.dao.AuthDao;
 import com.jsl.dao.EmailTokenDao;
+import com.jsl.dto.api.EmailRequest;
 import com.jsl.dto.member.MemberDto;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 import com.jsl.util.EmailUtil;
+import com.jsl.util.JsonRequestUtil;
 import com.jsl.util.JsonResponseUtil;
 
 public class EmailVerificationSendService implements Command {
@@ -25,7 +27,8 @@ public class EmailVerificationSendService implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String email = request.getParameter("email");
+    	EmailRequest body = JsonRequestUtil.parseBody(request, EmailRequest.class);
+    	String email = body.getEmail();
         if (email == null || email.trim().isEmpty()) {
             JsonResponseUtil.writeError(response, 400, "メールアドレスを入力してください。");
             return;

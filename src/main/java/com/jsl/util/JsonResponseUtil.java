@@ -3,28 +3,28 @@ package com.jsl.util;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.jsl.dto.api.ApiResponse;
+
 public class JsonResponseUtil {
 
+    private static final Gson gson = new Gson();
+
     public static void writeSuccess(HttpServletResponse response) throws IOException {
-        write(response, 200, "{\"success\":true}");
+        write(response, 200, ApiResponse.ok());
     }
 
-    public static void writeSuccess(HttpServletResponse response, String key, boolean value) throws IOException {
-        write(response, 200, "{\"success\":true,\"" + key + "\":" + value + "}");
+    public static void writeSuccess(HttpServletResponse response, boolean available) throws IOException {
+        write(response, 200, ApiResponse.ok(available));
     }
 
     public static void writeError(HttpServletResponse response, int statusCode, String message) throws IOException {
-        write(response, statusCode, "{\"success\":false,\"message\":\"" + escape(message) + "\"}");
+        write(response, statusCode, ApiResponse.fail(message));
     }
 
-    private static void write(HttpServletResponse response, int statusCode, String json) throws IOException {
+    private static void write(HttpServletResponse response, int statusCode, ApiResponse body) throws IOException {
         response.setStatus(statusCode);
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(json);
-    }
-
-    private static String escape(String s) {
-        if (s == null) return "";
-        return s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", " ").replace("\r", "");
+        response.getWriter().write(gson.toJson(body));
     }
 }

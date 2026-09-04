@@ -1,4 +1,4 @@
-package com.jsl.controller;
+	package com.jsl.controller;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.exeption.LoginException;
+import com.jsl.exeption.SignUpException;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.member.FindIdService;
@@ -76,14 +77,23 @@ public class RootController extends HttpServlet {
 			return;
 
 		case "/signup":
-			if ("GET".equalsIgnoreCase(request.getMethod())) {
-				page = "/WEB-INF/views/auth/signup.jsp";
-			} else {
-				signUpService.doCommand(request, response);
-				response.sendRedirect("/login");
-				return;
-			}
-			break;
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        page = "/WEB-INF/views/auth/signup.jsp";
+		    } else {
+		        try {
+		            signUpService.doCommand(request, response);
+		            response.sendRedirect("/signup/complete"); // 또는 request 속성으로 forward
+		            return;
+		        } catch (SignUpException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            page = "/WEB-INF/views/auth/signup.jsp";
+		        }
+		    }
+		    break;
+
+		case "/signup/complete":
+		    page = "/WEB-INF/views/auth/signup_complete.jsp"; // "메일을 확인해주세요" + 재발송 버튼
+		    break;
 			
 		case "/find_id":
 			if ("GET".equalsIgnoreCase(request.getMethod())) {

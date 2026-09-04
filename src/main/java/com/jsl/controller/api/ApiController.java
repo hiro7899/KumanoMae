@@ -40,7 +40,7 @@ public class ApiController extends HttpServlet {
 
         String path = request.getPathInfo();
         if (path == null) {
-            JsonResponseUtil.writeError(response, 404, "존재하지 않는 API입니다.");
+            JsonResponseUtil.writeError(response, 404, "存在しないAPIです。");
             return;
         }
 
@@ -49,22 +49,21 @@ public class ApiController extends HttpServlet {
                 case "/signup/check-user-id":
                     checkUserIdService.doCommand(request, response);
                     break;
-
                 case "/signup/check-email":
                     checkEmailService.doCommand(request, response);
                     break;
-
                 case "/email-verification/send":
                     emailVerificationSendService.doCommand(request, response);
                     break;
-
                 case "/email-verification/verify":
-                	emailVerifyService.doCommand(request, response);
+                    emailVerifyService.doCommand(request, response);
                     break;
-
                 default:
-                    JsonResponseUtil.writeError(response, 404, "존재하지 않는 API입니다.");
+                    JsonResponseUtil.writeError(response, 404, "存在しないAPIです。");
             }
+        } catch (IOException e) {
+            // JsonRequestUtil.parseBody()가 JSON 형식 오류 시 던지는 IOException
+            JsonResponseUtil.writeError(response, 400, e.getMessage());
         } catch (RuntimeException e) {
             e.printStackTrace();
             JsonResponseUtil.writeError(response, 500, "サーバーエラーが発生しました。");
