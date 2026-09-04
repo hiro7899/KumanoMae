@@ -1,5 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY");
+	if (googleMapsApiKey == null || googleMapsApiKey.trim().isEmpty()) {
+		throw new IllegalStateException("GOOGLE_MAPS_API_KEY 환경변수가 설정되지 않았습니다.");
+	}
+%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -24,8 +30,8 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 
-<!-- Google Maps API 스크립트 (API 키 직접 반영) -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxAezyz3OSn1SwfHDMqDA7BnI8mnu2vuU&callback=initMap&libraries=places&loading=async" async defer></script>
+<!-- Google Maps API 스크립트 -->
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap&libraries=places&loading=async" async defer></script>
 </head>
 
 <%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
@@ -38,7 +44,7 @@
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
-		<span>🍂</span> <span>秋の入山特別警戒期間（10月〜11月）— 冬眠前のクマの活動が活発化しています</span> <span
+		<span>🍂</span> <span>秋の入山特別警戒期間（09月〜11月）— 冬眠前のクマの活動が活発化しています</span> <span
 			class="close-x" id="alertClose">&times;</span>
 	</div>
 
