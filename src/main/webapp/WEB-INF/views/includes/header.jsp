@@ -22,7 +22,7 @@
 			</button>
 
 			<div class="collapse navbar-collapse flex-grow-0" id="mainNavbar">
-				<ul class="navbar-nav mx-lg-4 mb-2 mb-lg-0 align-items-lg-center">
+				<ul class="navbar-nav main-nav-links mx-lg-4 mb-2 mb-lg-0 align-items-lg-center">
 
 					<li class="nav-item"><a class="nav-link report-nav-link"
 						href="${pageContext.request.contextPath}/board/report"> <i
@@ -63,10 +63,10 @@
 						</c:when>
 
 						<c:otherwise>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/login">ログイン</a>
+							<li class="nav-item d-lg-none"><a class="nav-link" href="${pageContext.request.contextPath}/login">ログイン</a>
 							</li>
 
-							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/signup">会員登録</a>
+							<li class="nav-item d-lg-none"><a class="nav-link" href="${pageContext.request.contextPath}/signup">会員登録</a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -74,8 +74,12 @@
 				</ul>
 			</div>
 
-			<a href="${pageContext.request.contextPath}/map"
-				class="btn btn-jp-mustard d-none d-lg-inline-block"> 地図を見る </a>
+			<c:if test="${empty sessionScope.user}">
+				<div class="auth-nav-links d-none d-lg-flex align-items-center">
+					<a class="nav-link" href="${pageContext.request.contextPath}/login">ログイン</a>
+					<a class="nav-link" href="${pageContext.request.contextPath}/signup">会員登録</a>
+				</div>
+			</c:if>
 
 		</div>
 	</nav>

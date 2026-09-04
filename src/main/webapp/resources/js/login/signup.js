@@ -38,9 +38,13 @@ document.addEventListener("DOMContentLoaded", function () {
         emailAuthMessage.className = "email-auth-message " + type;
     }
 
-    function updateSignupButton() {
-        signupBtn.disabled = !(userIdChecked && emailVerified);
-    }
+	function updateSignupButton() {
+	    signupBtn.disabled = !(
+	        userIdChecked
+	        && emailVerified
+	        && agreeCheckbox.checked
+	    );
+	}
 
     function resetUserIdCheck() {
         userIdChecked = false;

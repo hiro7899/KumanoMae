@@ -50,145 +50,84 @@
 				onclick="filterNews('all', this)">すべて</button>
 			<button type="button"
 				class="btn btn-jp-outline btn-sm px-3 filter-btn"
-				onclick="filterNews('出没情報', this)">出没情報</button>
+				onclick="filterNews('SIGHTING', this)">出没情報</button>
 			<button type="button"
 				class="btn btn-jp-outline btn-sm px-3 filter-btn"
-				onclick="filterNews('安全対策', this)">安全対策</button>
+				onclick="filterNews('SAFETY', this)">安全対策</button>
 			<button type="button"
 				class="btn btn-jp-outline btn-sm px-3 filter-btn"
-				onclick="filterNews('自治体のお知らせ', this)">自治体のお知らせ</button>
+				onclick="filterNews('OFFICIAL', this)">自治体のお知らせ</button>
 		</div>
 
-		<!-- [메인 헤드라인 뉴스] -->
-		<div class="card card-jp mb-5 news-main-card">
-			<div class="row g-0 align-items-center">
-				<div class="col-lg-7">
-					<div class="position-relative">
-						<img
-							src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=900"
-							class="img-fluid rounded-start w-100"
-							style="height: 340px; object-fit: cover;" alt="緊急ニュース"> <span
-							class="badge badge-danger-custom position-absolute top-0 start-0 m-3 fs-6">
-							<i class="bi bi-exclamation-triangle-fill"></i> 緊急速報
-						</span>
-					</div>
-				</div>
-				<div class="col-lg-5">
-					<div class="card-body p-4">
-						<div class="d-flex align-items-center gap-2 mb-2 text-muted small">
-							<span class="badge bg-secondary">北海道庁 発表</span> <span><i
-								class="bi bi-clock-fill"></i> 2026-09-02</span>
+		<c:choose>
+			<c:when test="${not empty newsList}">
+				<c:set var="headline" value="${newsList[0]}" />
+
+				<!-- 메인 헤드라인 뉴스 -->
+				<div class="card card-jp mb-5 news-main-card" data-category="${headline.sourceType}">
+					<div class="row g-0 align-items-center">
+						<div class="col-lg-7">
+							<div class="position-relative">
+								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=900"
+									class="img-fluid rounded-start w-100"
+									style="height: 340px; object-fit: cover;" alt="クマ関連ニュース">
+								<span class="badge badge-danger-custom position-absolute top-0 start-0 m-3 fs-6">
+									<i class="bi bi-newspaper"></i> 最新ニュース
+								</span>
+							</div>
 						</div>
-						<h4 class="card-title fw-bold mb-3" style="line-height: 1.4;">
-							秋のヒグマ注意強調期間における入山・登山の警戒推奨について</h4>
-						<p class="card-text text-muted small mb-4"
-							style="line-height: 1.7;">
-							冬眠前のクマの活動が活発化することに伴い、北海道全域で目撃情報が増加しています。登山の際は必ず熊鈴やスプレーを携帯してください。
-						</p>
-						<a href="/board/detail" class="btn btn-jp-mustard btn-sm">
-							記事全文を読む → </a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- [뉴스 카드 그리드] -->
-		<h5 class="fw-bold mb-3">
-			<i class="bi bi-newspaper"></i> 最新の報道・アナウンス一覧
-		</h5>
-
-		<div class="row g-4">
-
-			<!-- 카드 1 -->
-			<div class="col-md-6 col-lg-4">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-						class="card-img-top" alt="クマ出没ニュース">
-
-					<div class="card-body d-flex flex-column">
-						<div
-							class="d-flex justify-content-between align-items-center mb-2">
-							<span class="badge badge-danger-custom">出没情報</span> <small
-								class="text-muted"><i class="bi bi-building"></i> 札幌市</small>
+						<div class="col-lg-5">
+							<div class="card-body p-4">
+								<div class="d-flex align-items-center gap-2 mb-2 text-muted small">
+									<span class="badge bg-secondary"><c:out value="${headline.sourceName}" /></span>
+									<span><i class="bi bi-clock-fill"></i> <c:out value="${headline.publishedDate}" /></span>
+								</div>
+								<h4 class="card-title fw-bold mb-3" style="line-height: 1.4;"><c:out value="${headline.title}" /></h4>
+								<p class="card-text text-muted small mb-4" style="line-height: 1.7;"><c:out value="${headline.summary}" /></p>
+								<a href="${headline.sourceUrl}" target="_blank" rel="noopener noreferrer"
+									class="btn btn-jp-mustard btn-sm">記事全文を読む <i class="bi bi-box-arrow-up-right"></i></a>
+							</div>
 						</div>
-
-						<h5 class="card-title fw-bold">北海道でクマの目撃情報が相次ぐ</h5>
-
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-09-01
-						</p>
-
-						<p class="small text-muted flex-grow-1">
-							札幌市近郊の登山道周辺で成獣のクマが目撃されました。外出の際は十分ご注意ください。</p>
-
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-3">
-							詳細を見る </a>
 					</div>
 				</div>
-			</div>
 
-			<!-- 카드 2 -->
-			<div class="col-md-6 col-lg-4">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1465311440653-ba9b1d9b5f04?w=600"
-						class="card-img-top" alt="安全対策ニュース">
-
-					<div class="card-body d-flex flex-column">
-						<div
-							class="d-flex justify-content-between align-items-center mb-2">
-							<span class="badge badge-warning-custom">安全対策</span> <small
-								class="text-muted"><i class="bi bi-shield-check"></i>
-								環境省</small>
+				<h5 class="fw-bold mb-3"><i class="bi bi-newspaper"></i> 最新の報道・アナウンス一覧</h5>
+				<div class="row g-4" id="newsCardGrid">
+					<c:forEach var="news" items="${newsList}" begin="1">
+						<div class="col-md-6 col-lg-4 news-card-column" data-category="${news.sourceType}">
+							<article class="card h-100 report-card">
+								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
+									class="card-img-top" alt="クマ関連ニュース">
+								<div class="card-body d-flex flex-column">
+									<div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+										<c:choose>
+											<c:when test="${news.sourceType eq 'SIGHTING'}"><span class="badge badge-danger-custom">出没情報</span></c:when>
+											<c:when test="${news.sourceType eq 'SAFETY'}"><span class="badge badge-warning-custom">安全対策</span></c:when>
+											<c:otherwise><span class="badge badge-caution-custom">自治体のお知らせ</span></c:otherwise>
+										</c:choose>
+										<small class="text-muted"><i class="bi bi-building"></i> <c:out value="${news.sourceName}" /></small>
+									</div>
+									<h5 class="card-title fw-bold"><c:out value="${news.title}" /></h5>
+									<p class="mb-2 text-muted small"><i class="bi bi-clock-fill"></i> <c:out value="${news.publishedDate}" /></p>
+									<p class="small text-muted flex-grow-1"><c:out value="${news.summary}" /></p>
+									<a href="${news.sourceUrl}" target="_blank" rel="noopener noreferrer"
+										class="btn btn-jp-outline btn-sm mt-3">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+								</div>
+							</article>
 						</div>
-
-						<h5 class="card-title fw-bold">秋の登山シーズンに向けた安全対策</h5>
-
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-30
-						</p>
-
-						<p class="small text-muted flex-grow-1">
-							入山前に出没マップを確認し、音の出る熊鈴やクマスプレーなどの装備を準備しましょう。</p>
-
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-3">
-							詳細を見る </a>
+					</c:forEach>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="card card-jp border-0 py-5 text-center">
+					<div class="card-body text-muted">
+						<i class="bi bi-newspaper fs-1 d-block mb-3"></i>
+						<p class="fw-bold mb-1">現在表示できるニュースはありません。</p>
+						<small>新しいニュースが取得されると、こちらに表示されます。</small>
 					</div>
 				</div>
-			</div>
-
-			<!-- 카드 3 -->
-			<div class="col-md-6 col-lg-4">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1500534623283-312aade485b2?w=600"
-						class="card-img-top" alt="自治体お知らせ">
-
-					<div class="card-body d-flex flex-column">
-						<div
-							class="d-flex justify-content-between align-items-center mb-2">
-							<span class="badge badge-caution-custom">自治体のお知らせ</span> <small
-								class="text-muted"><i class="bi bi-building"></i> 青森県</small>
-						</div>
-
-						<h5 class="card-title fw-bold">農地周辺でのクマ出没に伴う注意喚起</h5>
-
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-28
-						</p>
-
-						<p class="small text-muted flex-grow-1">
-							農地周辺でクマの足跡および痕跡が発見されました。自治体では電気柵の設置や注意を呼びかけています。</p>
-
-						<a href="/board/detail" class="btn btn-jp-outline btn-sm mt-3">
-							詳細を見る </a>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
+			</c:otherwise>
+		</c:choose>
 	</main>
 
 	<!-- 공통 푸터 INCLUDE -->
@@ -206,17 +145,12 @@
 	    btn.classList.remove('btn-jp-outline');
 	    btn.classList.add('btn-jp-mustard', 'active');
 
-	    // 2. 카드 필터링 (카드 내 뱃지 텍스트 기준)
-	    const cards = document.querySelectorAll('.report-card');
+	    // 2. 백엔드에서 전달된 sourceType을 기준으로 카드 필터링
+	    const cards = document.querySelectorAll('.news-card-column');
 	    cards.forEach(card => {
-	        const badgeText = card.querySelector('.badge').innerText.trim();
-	        const parentCol = card.closest('.col-md-6'); // 카드를 감싸는 컬럼
-
-	        if (category === 'all' || badgeText === category) {
-	            parentCol.style.display = 'block';
-	        } else {
-	            parentCol.style.display = 'none';
-	        }
+	        card.style.display = category === 'all' || card.dataset.category === category
+	            ? 'block'
+	            : 'none';
 	    });
 	}
 	</script>

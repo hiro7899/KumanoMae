@@ -56,6 +56,31 @@
     font-weight: 700 !important;
 }
 
+@media (min-width: 992px) {
+    .header-sticky-wrap .main-nav-links > .nav-item + .nav-item::before {
+        content: "/";
+        color: #8f8779;
+        margin: 0 0.2rem;
+    }
+
+    .header-sticky-wrap .main-nav-links > .nav-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .header-sticky-wrap .auth-nav-links::before {
+        content: "|";
+        color: #e3ac1f;
+        margin-right: 0.65rem;
+    }
+
+    .header-sticky-wrap .auth-nav-links .nav-link + .nav-link::before {
+        content: "/";
+        color: #8f8779;
+        margin-right: 0.65rem;
+    }
+}
+
 .header-sticky-wrap .navbar-toggler {
     border-color: rgba(255, 255, 255, .3);
 }

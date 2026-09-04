@@ -1,7 +1,33 @@
 @charset "UTF-8";
 
+<<<<<<< HEAD
 @import url("layout.css");
 
+=======
+<<<<<<< HEAD
+/* =========================================================
+   admin.css - KUMANO_MAE 관리자 전용 스타일
+   ========================================================= */
+/* 사이드바 로고 붉은 원형 뱃지 */
+.admin-brand .logo-badge {
+    width: 44px;
+    height: 44px;
+    background-color: var(--color-red, #c0392b); /* 메인 레드 컬러 */
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+/* 레이아웃 구조 */
+=======
+@import url("layout.css");
+
+>>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
+>>>>>>> branch 'feature/byeonggyu' of https://github.com/hiro7899/KumanoMae.git
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
