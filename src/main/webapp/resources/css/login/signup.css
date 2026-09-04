@@ -15,11 +15,7 @@
   --color-ink: #332d25;       /* index.css / login.css와 동일한 짙은 브라운 */
   --color-muted: #6b6355;
   --color-white: #fdfaf3;
-<<<<<<< Upstream, based on branch 'feature/byeonggyu' of https://github.com/hiro7899/KumanoMae.git
   --color-border: #9e9382;    
-=======
-  --color-border: #9e9382;    /* index.css / login.css와 동일한 부드러운 테두리 색상 */
->>>>>>> 3f50f9f Style: 枠線を修正
 }
 
 * {
@@ -568,7 +564,3 @@ body {
 		
    }
 }
-=======
-  }
-}
->>>>>>> 3f50f9f Style: 枠線を修正
