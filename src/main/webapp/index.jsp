@@ -98,6 +98,7 @@
 
 			</div>
 		</div>
+
 	</section>
 
 	<%-- ===================== 出没マップ セクション ===================== --%>
@@ -268,6 +269,32 @@
 							<i class="bi bi-shield-fill-exclamation"></i> クマに遭遇した時の対処法
 						</h5>
 						<p class="text-muted">背を向けず、ゆっくり後退して距離をとり、大声を出さないでください。</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card card-jp border-danger mt-4">
+			<div class="card-body p-4">
+				<div class="row align-items-center g-4">
+					<div class="col-lg-8">
+						<h4 class="fw-bold text-danger mb-3">
+							<i class="bi bi-exclamation-octagon-fill me-2"></i>緊急時の対応
+						</h4>
+						<p class="mb-2">クマに遭遇した場合は、走ったり背中を見せたりせず、落ち着いてゆっくり後退してください。</p>
+						<p class="mb-0 text-muted small">
+							子グマには近づかないでください。近くに母グマがいる可能性があります。安全を確保した後、目撃場所を警察または自治体へ連絡してください。
+						</p>
+					</div>
+					<div class="col-lg-4">
+						<div class="d-grid gap-2">
+							<a href="tel:110" class="btn btn-danger fw-bold">
+								<i class="bi bi-telephone-fill me-2"></i>緊急の危険：警察 110
+							</a>
+							<a href="tel:119" class="btn btn-jp-outline fw-bold">
+								<i class="bi bi-heart-pulse-fill me-2"></i>けが人：消防・救急 119
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
