@@ -65,11 +65,16 @@
 }
 
 .header-sticky-wrap .btn-jp-mustard {
-    background-color: #e3ac1f;
-    border: 2px solid #1a1a1a;
-    border-radius: 4px;
-    color: #1a1a1a;
+    background-color: var(--color-mustard);
+    color: var(--color-ink);
+    border: 2px solid var(--color-ink);
+    border-radius: 8px;
     font-weight: 700;
+}
+
+.header-sticky-wrap .btn-jp-mustard:hover {
+    background-color: var(--color-mustard-dark);
+    color: var(--color-ink);
 }
 
 /* 공통 Footer */
