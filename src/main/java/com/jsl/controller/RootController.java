@@ -82,8 +82,9 @@ public class RootController extends HttpServlet {
 		    } else {
 		        try {
 		            signUpService.doCommand(request, response);
-		            response.sendRedirect("/signup/complete"); // 또는 request 속성으로 forward
+		            response.sendRedirect("/signup/complete");
 		            return;
+
 		        } catch (SignUpException e) {
 		            request.setAttribute("errorMsg", e.getMessage());
 		            page = "/WEB-INF/views/auth/signup.jsp";

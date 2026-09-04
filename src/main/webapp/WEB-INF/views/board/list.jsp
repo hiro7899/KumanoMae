@@ -64,83 +64,61 @@
 
 		<!-- 제보 카드 목록 -->
 		<div class="row g-4">
+			<c:forEach var="board" items="${boardList}">
+				<div class="col-md-6 col-lg-4">
+					<article class="card h-100 report-card shadow-sm">
+						<img
+							src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
+							class="card-img-top" alt="クマ出没イメージ"
+							style="height: 180px; object-fit: cover;">
+						<div class="card-body d-flex flex-column">
+							<div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+								<c:choose>
+									<c:when test="${board.riskLevel eq 'DANGER'}">
+										<span class="badge badge-danger-custom">危険</span>
+									</c:when>
+									<c:when test="${board.riskLevel eq 'WARNING'}">
+										<span class="badge badge-warning-custom">警戒</span>
+									</c:when>
+									<c:otherwise>
+										<span class="badge badge-caution-custom">注意</span>
+									</c:otherwise>
+								</c:choose>
+								<small class="text-muted text-end"><i class="bi bi-clock-fill me-1"></i><c:out value="${board.sightingDate}" /></small>
+							</div>
 
-			<!-- 제보 Item 1 (위험) -->
-			<div class="col-md-6 col-lg-4">
-				<div class="card h-100 report-card shadow-sm">
-					<img
-						src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-						class="card-img-top" alt="クマ出没イメージ"
-						style="height: 180px; object-fit: cover;">
-					<div class="card-body d-flex flex-column">
-						<div class="d-flex justify-content-between align-items-center mb-2">
-							<span class="badge badge-danger-custom">危険</span> 
-							<small class="text-muted"><i class="bi bi-clock-fill me-1"></i>2026-08-20 07:30</small>
+							<h5 class="card-title text-truncate fw-bold"><c:out value="${board.title}" /></h5>
+							<p class="mb-2 text-danger small fw-bold">
+								<i class="bi bi-geo-alt-fill me-1"></i><c:out value="${board.address}" />
+							</p>
+							<p class="small text-secondary flex-grow-1"><c:out value="${board.content}" /></p>
+
+							<hr class="my-2">
+
+							<div class="d-flex justify-content-between align-items-center text-muted small mt-auto">
+								<span><i class="bi bi-shield-check me-1"></i> 住民報告</span>
+								<span><i class="bi bi-eye me-1"></i> ${board.viewCnt}</span>
+							</div>
+
+							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}"
+								class="btn btn-jp-outline btn-sm mt-3 fw-bold">詳細を見る</a>
 						</div>
-						<h5 class="card-title text-truncate fw-bold">札幌近郊の登山道でクマを発見</h5>
-						<p class="mb-2 text-danger small fw-bold">
-							<i class="bi bi-geo-alt-fill me-1"></i>北海道札幌市 南区
-						</p>
-						<p class="small text-secondary flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
+					</article>
+				</div>
+			</c:forEach>
 
-						<hr class="my-2">
-
-						<!-- 제보자 및 등록일 정보 -->
-						<div class="d-flex justify-content-between align-items-center text-muted small mt-auto">
-							<span><i class="bi bi-shield-check me-1"></i> 住民報告</span>
-							<span><i class="bi bi-eye me-1"></i> 124</span>
+			<c:if test="${empty boardList}">
+				<div class="col-12">
+					<div class="card border-0 bg-light py-5 text-center">
+						<div class="card-body text-muted">
+							<i class="bi bi-geo-alt fs-1 d-block mb-3"></i>
+							<p class="fw-bold mb-1">現在表示できる目撃情報はありません。</p>
+							<small>新しい情報が承認されると、こちらに表示されます。</small>
 						</div>
-
-						<a href="${pageContext.request.contextPath}/board/view"
-							class="btn btn-jp-outline btn-sm mt-3 fw-bold">詳細を見る</a>
 					</div>
 				</div>
-			</div>
-
-			<!-- 제보 Item 2 (경계) -->
-			<div class="col-md-6 col-lg-4">
-				<div class="card h-100 report-card shadow-sm">
-					<img
-						src="https://images.unsplash.com/photo-1465311440653-ba9b1d9b5f04?w=600"
-						class="card-img-top" alt="クマ出没イメージ"
-						style="height: 180px; object-fit: cover;">
-					<div class="card-body d-flex flex-column">
-						<div class="d-flex justify-content-between align-items-center mb-2">
-							<span class="badge badge-warning-custom">警戒</span> 
-							<small class="text-muted"><i class="bi bi-clock-fill me-1"></i>2026-08-19 18:10</small>
-						</div>
-						<h5 class="card-title text-truncate fw-bold">農地周辺でクマの足跡を発見</h5>
-						<p class="mb-2 text-warning text-dark small fw-bold">
-							<i class="bi bi-geo-alt-fill me-1"></i>青森県 弘前市
-						</p>
-						<p class="small text-secondary flex-grow-1">農地付近でクマの足跡と糞の痕跡を発見しました。ご注意ください。</p>
-
-						<hr class="my-2">
-
-						<div class="d-flex justify-content-between align-items-center text-muted small mt-auto">
-							<span><i class="bi bi-building me-1"></i> 自治体発表</span>
-							<span><i class="bi bi-eye me-1"></i> 89</span>
-						</div>
-
-						<a href="${pageContext.request.contextPath}/board/view"
-							class="btn btn-jp-outline btn-sm mt-3 fw-bold">詳細を見る</a>
-					</div>
-				</div>
-			</div>
-
+			</c:if>
 		</div>
-
-		<!-- 하단 페이지네이션 -->
-		<nav class="mt-5">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disabled"><a class="page-link" href="#"
-					tabindex="-1">前へ</a></li>
-				<li class="page-item active"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">次へ</a></li>
-			</ul>
-		</nav>
 	</section>
 
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

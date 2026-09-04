@@ -3,6 +3,7 @@ package com.jsl.service.signup;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -50,18 +51,38 @@ public class SignUpService implements Command {
                         "<p>下記リンクをクリックして会員登録を完了してください（24時間有効）。</p>"
                         + "<p><a href=\"" + verifyUrl + "\">" + verifyUrl + "</a></p>");
 
+            } catch (SQLIntegrityConstraintViolationException e) {
+                // ★ 여기가 오늘 추가된 부분 — 제약조건 위반을 필드별로 구분해서 친절한 메시지로 변환
+                try {
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    e.addSuppressed(rollbackEx);
+                }
+
+                String msg = e.getMessage();
+                if (msg != null && msg.contains("UQ_MEMBER_USER_ID")) {
+                    throw new SignUpException("すでに使用されているIDです。", e);
+                } else if (msg != null && msg.contains("UQ_MEMBER_EMAIL")) {
+                    throw new SignUpException("すでに登録されているメールアドレスです。", e);
+                } else {
+                    throw new SignUpException("会員登録に失敗しました。もう一度お試しください。", e);
+                }
+
             } catch (SQLException e) {
-                try { conn.rollback(); } catch (SQLException rollbackEx) { e.addSuppressed(rollbackEx); }
-                throw new SignUpException("会員登録処理中にエラーが発生しました。", e);
+                try {
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    e.addSuppressed(rollbackEx);
+                }
+                throw new RuntimeException("会員登録処理中にエラーが発生しました。", e);
             }
         } catch (SQLException e) {
-            throw new SignUpException("データベースへの接続に失敗しました。", e);
+            throw new RuntimeException("データベースへの接続に失敗しました。", e);
         }
     }
 
     private String baseUrl(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName()
                 + (request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : ":" + request.getServerPort());
-        // ROOT 컨텍스트 배포 전제이므로 contextPath는 붙이지 않음
     }
 }

@@ -319,6 +319,7 @@
 	<script>
 		let map;
 		let geocoder;
+		let markerInfoWindow;
 
 		// 1. Google Map 초기화 함수 (콜백 함수)
 		function initMap() {
@@ -335,9 +336,96 @@
 					});
 
 			geocoder = new google.maps.Geocoder();
+			markerInfoWindow = new google.maps.InfoWindow();
+			loadSightingMarkers();
 		}
 
-		// 2. 지역 검색 버튼 기능 (Geocoding)
+		// 2. 등록된 목격 정보 마커 표시
+		async function loadSightingMarkers() {
+			const contextPath = document.body.dataset.contextPath;
+
+			try {
+				const response = await fetch(contextPath + "/map/markers", {
+					headers: { "Accept": "application/json" }
+				});
+
+				if (!response.ok) {
+					throw new Error("マーカー情報の取得に失敗しました。");
+				}
+
+				const sightings = await response.json();
+				const bounds = new google.maps.LatLngBounds();
+				let markerCount = 0;
+
+				sightings.forEach(function(sighting) {
+					const latitude = Number(sighting.latitude);
+					const longitude = Number(sighting.longitude);
+
+					if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+						return;
+					}
+
+					const position = { lat: latitude, lng: longitude };
+					const marker = new google.maps.Marker({
+						map: map,
+						position: position,
+						title: sighting.title || "クマ目撃情報",
+						icon: createRiskMarkerIcon(sighting.displayRisk)
+					});
+
+					marker.addListener("click", function() {
+						markerInfoWindow.setContent(createMarkerInfoContent(sighting));
+						markerInfoWindow.open({ map: map, anchor: marker });
+					});
+
+					bounds.extend(position);
+					markerCount++;
+				});
+
+				if (markerCount === 1) {
+					map.setCenter(bounds.getCenter());
+					map.setZoom(12);
+				} else if (markerCount > 1) {
+					map.fitBounds(bounds, 50);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		}
+
+		function createRiskMarkerIcon(displayRisk) {
+			const riskColors = {
+				DANGER: "#b23a2e",
+				WARNING: "#e3ac1f",
+				CAUTION: "#f5e39a"
+			};
+			const normalizedRisk = String(displayRisk || "").toUpperCase();
+
+			return {
+				path: google.maps.SymbolPath.CIRCLE,
+				fillColor: riskColors[normalizedRisk] || "#b23a2e",
+				fillOpacity: 0.95,
+				strokeColor: "#ffffff",
+				strokeWeight: 2,
+				scale: 9
+			};
+		}
+
+		function createMarkerInfoContent(sighting) {
+			return '<div style="max-width:240px; padding:4px;">' +
+				'<strong style="display:block; margin-bottom:6px;">' + escapeHtml(sighting.title || "クマ目撃情報") + '</strong>' +
+				'<div style="font-size:12px; color:#6b6355;">危険度: ' + escapeHtml(sighting.displayRisk || "-") + '</div>' +
+				'<div style="font-size:12px; color:#6b6355; margin-top:3px;">' + escapeHtml(sighting.address || "住所情報なし") + '</div>' +
+				'</div>';
+		}
+
+		function escapeHtml(value) {
+			const element = document.createElement("div");
+			element.textContent = String(value);
+			return element.innerHTML;
+		}
+
+		// 3. 지역 검색 버튼 기능 (Geocoding)
 		function searchArea() {
 			const address = document.getElementById("areaSearchInput").value;
 			if (!address) {
@@ -365,7 +453,7 @@
 					}
 				});
 
-		// 3. 로그인 판별 후 제보 페이지 이동
+		// 4. 로그인 판별 후 제보 페이지 이동
 		function checkLoginAndReport() {
 			const isLogin = document.body.dataset.isLogin === "true";
 			const contextPath = document.body.dataset.contextPath;
