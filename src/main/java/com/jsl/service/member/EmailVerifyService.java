@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.jsl.dao.AuthDao;
 import com.jsl.dao.EmailTokenDao;
 import com.jsl.dto.EmailTokenDto;
+import com.jsl.dto.api.TokenRequest;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
+import com.jsl.util.JsonRequestUtil;
 import com.jsl.util.JsonResponseUtil;
 
 public class EmailVerifyService implements Command {
@@ -22,7 +24,8 @@ public class EmailVerifyService implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String token = request.getParameter("token");
+    	TokenRequest body = JsonRequestUtil.parseBody(request, TokenRequest.class);
+    	String token = body.getToken();
         if (token == null || token.trim().isEmpty()) {
             JsonResponseUtil.writeError(response, 400, "認証リンクが正しくありません。");
             return;

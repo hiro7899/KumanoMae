@@ -491,3 +491,32 @@ Mobile
     color: inherit;
     font-size: 1.15rem;
 }
+.login-error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 11px 13px;
+    background-color: #f9ded9;
+    border: 1px solid var(--color-red);
+    color: var(--color-red-dark);
+    font-size: .8rem;
+    font-weight: 700;
+}
+.save-id-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    color: #332d25;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.save-id-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #c6900f;
+    cursor: pointer;
+}

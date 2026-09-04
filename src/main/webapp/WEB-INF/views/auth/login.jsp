@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 
@@ -30,10 +31,10 @@
 
 <!-- 로그인 화면 전용 CSS -->
 <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/login/login.css">
+	href="${pageContext.request.contextPath}/resources/css/login/login.css">
 
 <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 
 </head>
 
@@ -82,6 +83,13 @@
 				<div class="login-card">
 
 					<div class="login-card-header">
+
+						<c:if test="${not empty errorMsg}">
+							<div class="login-error-message" role="alert">
+								<i class="bi bi-exclamation-circle-fill"></i>
+								<c:out value="${errorMsg}" />
+							</div>
+						</c:if>
 
 						<span class="header-line"></span>
 
@@ -136,10 +144,10 @@
 
 							</div>
 
-							<div>
-								<p>IDを保存</p>
-								<input type="checkbox" id="" class="">
-							</div>
+							<label class="save-id-option" for="saveUserId"> <input
+								type="checkbox" id="saveUserId" name="saveUserId" value="true">
+								<span>IDを保存</span>
+							</label>
 
 						</div>
 
