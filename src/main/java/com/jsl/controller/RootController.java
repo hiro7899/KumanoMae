@@ -20,7 +20,7 @@ import com.jsl.service.signup.SignUpService;
         "/", "/index",
         "/login", "/logout", "/signup",
         "/forgot-password", "/reset-password",
-        "/verify-email"   // ★ 추가
+        "/verify-email"
 })
 public class RootController extends HttpServlet {
 
@@ -111,6 +111,8 @@ public class RootController extends HttpServlet {
                 return;
             }
             break;
+        case "/verify-email":
+            page = "/WEB-INF/views/auth/verify_email.jsp";
 
 		default:
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
