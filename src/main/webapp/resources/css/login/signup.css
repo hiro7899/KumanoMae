@@ -1,29 +1,21 @@
 @charset "UTF-8";
+/* =====================================================
+   signup.css
+   - signup.jsp 전용 스타일
+   - index.css / login.css와 동일한 컬러 톤 / 헤더 스타일로 통일
+   ===================================================== */
 
 :root {
-<<<<<<< Upstream, based on branch 'feature/surim' of https://github.com/hiro7899/KumanoMae.git
---color-bg: #ede4d1;
---color-bg-soft: #e4d9c1;
---color-red: #b23a2e;
---color-red-dark: #8c2c22;
---color-mustard: #e3ac1f;
---color-ink: #1a1a1a;
---color-muted: #6b6355;
---color-white: #fdfaf3;
---color-border: #cfc4ae;
---color-mustard-dark: #c6900f;
-=======
   --color-bg: #ede4d1;
   --color-bg-soft: #e4d9c1;
   --color-red: #b23a2e;
   --color-red-dark: #8c2c22;
   --color-mustard: #e3ac1f;
   --color-mustard-dark: #c6900f;
-  --color-ink: #332d25;      
+  --color-ink: #332d25;       /* index.css / login.css와 동일한 짙은 브라운 */
   --color-muted: #6b6355;
   --color-white: #fdfaf3;
-  --color-border: #9e9382;    
->>>>>>> eec3af7 Style: 枠線を修正する
+  --color-border: #9e9382;    /* index.css / login.css와 동일한 부드러운 테두리 색상 */
 }
 
 * {
@@ -44,7 +36,7 @@ body {
 }
 
 /* =========================
-   Navbar 
+   Navbar (index.css / login.css와 동일한 다크 헤더)
    ========================= */
 
 .header-sticky-wrap {
@@ -103,6 +95,7 @@ body {
   border-bottom-color: var(--color-mustard);
 }
 
+/* 기본 메뉴 글자색 */
 .navbar-jp .nav-link {
   color: #f2ece0 !important;
   font-weight: 500;
@@ -112,6 +105,7 @@ body {
   color: var(--color-mustard) !important;
 }
 
+/* '目撃を報告する' 메뉴 포인트 컬러 (index.css와 동일) */
 .navbar-jp .report-nav-link {
   color: var(--color-mustard) !important;
   font-weight: 700 !important;
@@ -121,6 +115,7 @@ body {
   color: #ffffff !important;
 }
 
+/* 모바일 햄버거 버튼 (어두운 배경용) */
 .navbar-jp .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.3);
 }
@@ -316,7 +311,7 @@ body {
 }
 
 /* =========================
-   제보하기 플로팅 버튼 
+   제보하기 플로팅 버튼 (index.css / login.css와 동일)
    ========================= */
 
 .report-float-btn {
@@ -408,166 +403,5 @@ body {
 
   .signup-header h1 {
     font-size: 1.7rem;
-<<<<<<< Upstream, based on branch 'feature/surim' of https://github.com/hiro7899/KumanoMae.git
-}
-
-}
-
-/* 이메일 인증 */
-.email-auth-row {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-}
-
-.email-auth-btn {
-    flex-shrink: 0;
-    min-width: 132px;
-    border: 2px solid var(--color-ink);
-    border-radius: 0;
-    background-color: var(--color-mustard);
-    color: var(--color-ink);
-    font-size: .78rem;
-    font-weight: 900;
-    cursor: pointer;
-}
-
-.email-auth-btn:hover:not(:disabled) {
-    background-color: var(--color-mustard-dark);
-}
-
-.email-auth-btn:disabled {
-    opacity: .55;
-    cursor: not-allowed;
-}
-
-.verify-btn {
-    background-color: var(--color-red);
-    color: #fff;
-}
-
-.verify-btn:hover:not(:disabled) {
-    background-color: var(--color-red-dark);
-}
-
-.email-auth-message {
-    min-height: 1.2rem;
-    margin: 7px 0 0;
-    color: var(--color-muted);
-    font-size: .75rem;
-}
-
-.email-auth-message.success {
-    color: #2d6a3d;
-    font-weight: 700;
-}
-
-.email-auth-message.error {
-    color: var(--color-red);
-    font-weight: 700;
-}
-
-.signup-submit-btn:disabled {
-    opacity: .5;
-    cursor: not-allowed;
-}
-
-@media (max-width: 575.98px) {
-    .email-auth-row {
-        flex-direction: column;
-    }
-
-    .email-auth-btn {
-        min-height: 44px;
-        width: 100%;
-    }
-}
-/* ID 중복 확인 */
-.availability-row {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-}
-
-.availability-btn {
-    min-width: 104px;
-    border: 2px solid var(--color-ink);
-    border-radius: 0;
-    background-color: var(--color-bg-soft);
-    color: var(--color-ink);
-    font-size: .78rem;
-    font-weight: 900;
-    cursor: pointer;
-}
-
-.availability-btn:hover:not(:disabled) {
-    background-color: var(--color-ink);
-    color: #fff;
-}
-
-.availability-btn:disabled {
-    opacity: .55;
-    cursor: not-allowed;
-}
-
-.availability-message {
-    min-height: 1.2rem;
-    margin: 7px 0 0;
-    color: var(--color-muted);
-    font-size: .75rem;
-}
-
-.availability-message.success {
-    color: #2d6a3d;
-    font-weight: 700;
-}
-
-.availability-message.error {
-    color: var(--color-red);
-    font-weight: 700;
-}
-
-/* 비밀번호 표시 / 숨기기 */
-.password-input {
-    padding-right: 46px !important;
-}
-
-.password-toggle {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    z-index: 3;
-    transform: translateY(-50%);
-    padding: 4px;
-    border: 0;
-    background: transparent;
-    color: var(--color-muted);
-    cursor: pointer;
-}
-
-.password-toggle:hover {
-    color: var(--color-red);
-}
-
-/* 기존 .input-wrapper i 규칙을 비밀번호 눈 아이콘에는 적용하지 않음 */
-.input-wrapper .password-toggle i {
-    position: static;
-    transform: none;
-    color: inherit;
-    font-size: 1.15rem;
-}
-
-@media (max-width: 575.98px) {
-    .availability-row {
-        flex-direction: column;
-    }
-
-    .availability-btn {
-        min-height: 44px;
-        width: 100%;
-    }
-}
-=======
   }
 }
->>>>>>> eec3af7 Style: 枠線を修正する
