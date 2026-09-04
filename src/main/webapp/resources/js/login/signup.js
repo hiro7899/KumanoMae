@@ -62,41 +62,48 @@ document.addEventListener("DOMContentLoaded", function () {
         phoneInput.value = phoneInput.value.replace(/\D/g, "");
     });
 
-    checkUserIdBtn.addEventListener("click", async function () {
-        const userId = userIdInput.value.trim();
+	checkUserIdBtn.addEventListener("click", async function () {
+	    const userId = userIdInput.value.trim();
 
-        if (userId === "") {
-            showUserIdMessage("IDを入力してください。", "error");
-            userIdInput.focus();
-            return;
-        }
+	    if (userId === "") {
+	        showUserIdMessage("IDを入力してください。", "error");
+	        userIdInput.focus();
+	        return;
+	    }
 
-        checkUserIdBtn.disabled = true;
-        showUserIdMessage("IDを確認しています。", "");
+	    checkUserIdBtn.disabled = true;
+	    showUserIdMessage("IDを確認しています。", "");
 
-        try {
-            const response = await fetch(
-                contextPath + "/api/signup/check-user-id?userId="
-                + encodeURIComponent(userId),
-                { method: "GET" }
-            );
+	    try {
+	        const response = await fetch(
+	            contextPath + "/api/signup/check-user-id",
+	            {
+	                method: "POST",
+	                headers: {
+	                    "Content-Type": "application/json"
+	                },
+	                body: JSON.stringify({
+	                    userId: userId
+	                })
+	            }
+	        );
 
-            const result = await response.json();
+	        const result = await response.json();
 
-            if (!response.ok || !result.success || !result.available) {
-                throw new Error(result.message || "すでに使用されているIDです。");
-            }
+	        if (!response.ok || !result.success || !result.available) {
+	            throw new Error(result.message || "すでに使用されているIDです。");
+	        }
 
-            userIdChecked = true;
-            showUserIdMessage("使用可能なIDです。", "success");
-        } catch (error) {
-            userIdChecked = false;
-            showUserIdMessage(error.message, "error");
-        } finally {
-            checkUserIdBtn.disabled = false;
-            updateSignupButton();
-        }
-    });
+	        userIdChecked = true;
+	        showUserIdMessage("使用可能なIDです。", "success");
+	    } catch (error) {
+	        userIdChecked = false;
+	        showUserIdMessage(error.message, "error");
+	    } finally {
+	        checkUserIdBtn.disabled = false;
+	        updateSignupButton();
+	    }
+	});
 
     sendVerificationBtn.addEventListener("click", async function () {
         const email = emailInput.value.trim();
@@ -111,19 +118,26 @@ document.addEventListener("DOMContentLoaded", function () {
         showEmailMessage("メールアドレスを確認しています。", "");
 
         try {
-            const checkResponse = await fetch(
-                contextPath + "/api/signup/check-email?email="
-                + encodeURIComponent(email),
-                { method: "GET" }
-            );
+			const checkResponse = await fetch(
+			    contextPath + "/api/signup/check-email",
+			    {
+			        method: "POST",
+			        headers: {
+			            "Content-Type": "application/json"
+			        },
+			        body: JSON.stringify({
+			            email: email
+			        })
+			    }
+			);
 
-            const checkResult = await checkResponse.json();
+			const checkResult = await checkResponse.json();
 
-            if (!checkResponse.ok || !checkResult.success || !checkResult.available) {
-                throw new Error(
-                    checkResult.message || "すでに登録されているメールアドレスです。"
-                );
-            }
+			if (!checkResponse.ok || !checkResult.success || !checkResult.available) {
+			    throw new Error(
+			        checkResult.message || "すでに登録されているメールアドレスです。"
+			    );
+			}
 
             showEmailMessage("認証メールを送信しています。", "");
 
@@ -131,10 +145,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 contextPath + "/api/email-verification/send",
                 {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                    },
-                    body: new URLSearchParams({ email: email })
+					headers: {
+					    "Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+					    email: email
+					})
                 }
             );
 
