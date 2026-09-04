@@ -115,7 +115,7 @@ public class AuthDao {
 
     /** 비밀번호 재설정 흐름 - 트랜잭션 시작 전 이메일로 회원 존재 여부만 확인하는 용도 */
     public MemberDto findByEmail(String email) {
-        String sql = "SELECT MEMBER_ID, USER_ID, USER_NAME, EMAIL FROM MEMBER WHERE EMAIL = ?";
+        String sql = "SELECT MEMBER_ID, USER_ID, USER_NAME, EMAIL, EMAIL_VERIFIED_YN FROM MEMBER WHERE EMAIL = ?"; // ★ EMAIL_VERIFIED_YN 추가
         try (Connection conn = DBManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, email);
@@ -126,6 +126,7 @@ public class AuthDao {
                     member.setUserId(rs.getString("USER_ID"));
                     member.setUserName(rs.getString("USER_NAME"));
                     member.setEmail(rs.getString("EMAIL"));
+                    member.setEmailVerifiedYn(rs.getString("EMAIL_VERIFIED_YN")); // ★ 추가
                     return member;
                 }
             }

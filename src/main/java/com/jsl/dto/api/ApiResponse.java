@@ -4,7 +4,8 @@ public class ApiResponse {
 
     private boolean success;
     private String message;
-    private Boolean available; // check-user-id / check-email 전용, 그 외엔 null(Gson이 자동으로 응답에서 생략)
+    private Boolean available;
+    private Boolean verified; // ★ 추가
 
     public static ApiResponse ok() {
         ApiResponse r = new ApiResponse();
@@ -19,6 +20,13 @@ public class ApiResponse {
         return r;
     }
 
+    public static ApiResponse verified(boolean verified) { // ★ 추가
+        ApiResponse r = new ApiResponse();
+        r.success = true;
+        r.verified = verified;
+        return r;
+    }
+
     public static ApiResponse fail(String message) {
         ApiResponse r = new ApiResponse();
         r.success = false;
@@ -29,4 +37,5 @@ public class ApiResponse {
     public boolean isSuccess() { return success; }
     public String getMessage() { return message; }
     public Boolean getAvailable() { return available; }
+    public Boolean getVerified() { return verified; }
 }
