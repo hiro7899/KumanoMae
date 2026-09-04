@@ -156,7 +156,7 @@
           이 스크립트가 async/defer로 늦게 로드되어 콜백을 호출해도 문제없다.
         ==========================================================
     --%>
-    <script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places"></script>
     
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
