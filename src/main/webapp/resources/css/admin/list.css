@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+<<<<<<< Upstream, based on branch 'feature/byeonggyu' of https://github.com/hiro7899/KumanoMae.git
 <<<<<<< HEAD
 /* =========================================================
    admin.css - KUMANO_MAE 관리자 전용 스타일
@@ -23,6 +24,10 @@
 @import url("layout.css");
 
 >>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
+=======
+@import url("layout.css");
+
+>>>>>>> 760ad85 Style: ヘッダー・フッターの重複箇所を整理して統一する
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
