@@ -23,6 +23,8 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/report.css">
 
 <!-- Google Maps API 스크립트 (callback=initMap 적용) -->
