@@ -24,8 +24,8 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 
-<!-- Google Maps API 스크립트 (API 키 직접 반영) -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxAezyz3OSn1SwfHDMqDA7BnI8mnu2vuU&callback=initMap&libraries=places&loading=async" async defer></script>
+<!-- Google Maps API 스크립트 -->
+<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places"></script>
 </head>
 
 <%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
@@ -38,7 +38,7 @@
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
-		<span>🍂</span> <span>秋の入山特別警戒期間（10月〜11月）— 冬眠前のクマの活動が活発化しています</span> <span
+		<span>🍂</span> <span>秋の入山特別警戒期間（09月〜11月）— 冬眠前のクマの活動が活発化しています</span> <span
 			class="close-x" id="alertClose">&times;</span>
 	</div>
 
@@ -98,7 +98,7 @@
 		</div>
 	</section>
 
-	<%-- ===================== 出没マップ セクション ===================== --%>
+<%-- ===================== 出没マップ セクション ===================== --%>
 	<section id="mapSection" class="container my-5">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>出没マップ
@@ -116,20 +116,31 @@
 				<div class="card card-jp h-100">
 					<div class="card-body map-legend">
 						<h6 class="fw-bold mb-3">危険度の凡例</h6>
-						<p class="mb-2">
-							<span class="legend-dot danger"></span>危険（DANGER）
-						</p>
-						<p class="mb-2">
-							<span class="legend-dot warning"></span>警戒（WARNING）
-						</p>
-						<p class="mb-0">
-							<span class="legend-dot caution"></span>注意（CAUTION）
-						</p>
+						
+						<div class="mb-3">
+							<p class="mb-1 fw-bold">
+								<span class="legend-dot danger"></span>危険（DANGER）
+							</p>
+							<small class="text-muted d-block ps-3">姿を目撃・撮影</small>
+						</div>
+
+						<div class="mb-3">
+							<p class="mb-1 fw-bold">
+								<span class="legend-dot warning"></span>警戒（WARNING）
+							</p>
+							<small class="text-muted d-block ps-3">足跡・痕跡を発見</small>
+						</div>
+
+						<div>
+							<p class="mb-1 fw-bold">
+								<span class="legend-dot caution"></span>注意（CAUTION）
+							</p>
+							<small class="text-muted d-block ps-3">鳴き声・気配を感知</small>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<div class="filter-box mt-4">
 			<div class="row g-3 align-items-end">
 				<div class="col-md-4">

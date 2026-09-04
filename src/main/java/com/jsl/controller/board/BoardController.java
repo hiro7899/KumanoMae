@@ -43,14 +43,14 @@ public class BoardController extends HttpServlet {
     private void doAction(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getPathInfo();
-        if (action == null) {
-            action = "/list";
+        String path = request.getPathInfo();
+        if (path == null) {
+        	path = "/list";
         }
 
         String page = null;
 
-        switch (action) {
+        switch (path) {
         case "/list":
             boardListService.doCommand(request, response);
             page = "/WEB-INF/views/board/list.jsp";

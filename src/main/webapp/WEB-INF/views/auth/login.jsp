@@ -29,7 +29,8 @@
 	rel="stylesheet">
 
 <!-- 로그인 화면 전용 CSS -->
-<link rel="stylesheet" href="/resources/css/login/login.css">
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/login/login.css">
 
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
@@ -38,7 +39,7 @@
 
 <body>
 
-<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 	<!-- ===================== Login ===================== -->
 
@@ -126,15 +127,19 @@
 							<div class="input-wrapper">
 
 								<i class="bi bi-lock"></i> <input type="password" id="userPw"
-									name="userPw" class="form-control" placeholder="パスワードを入力"
-									required>
+									name="userPw" class="form-control password-input"
+									placeholder="パスワードを入力" required>
+								<button type="button" class="password-toggle"
+									data-target="userPw" aria-label="パスワードを表示">
+									<i class="bi bi-eye"></i>
+								</button>
 
 							</div>
-						
-						<div>
-							<p>IDを保存</p>
-							<input type="checkbox" id="" class="">
-						</div>
+
+							<div>
+								<p>IDを保存</p>
+								<input type="checkbox" id="" class="">
+							</div>
 
 						</div>
 
@@ -151,11 +156,11 @@
 
 						<div class="account-links">
 
-							<a href="/find-id"> IDを忘れた方 </a> <span>|</span> <a
-								href="/find-pw"> パスワードを忘れた方 </a>
+							<a href="/find_id"> IDを忘れた方 </a> <span>|</span> <a
+								href="/find_pw"> パスワードを忘れた方 </a>
 
-						</div>	
-						
+						</div>
+
 						<!-- 구분선 -->
 
 						<div class="form-divider">
@@ -163,7 +168,7 @@
 							<span> または </span>
 
 						</div>
-						
+
 
 						<!-- 회원가입 -->
 
@@ -196,7 +201,7 @@
 	<!-- 로그인 화면 전용 JS -->
 
 	<script src="/resources/js/login/login.js"></script>
-	
+
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>

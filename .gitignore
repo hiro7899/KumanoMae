@@ -22,3 +22,5 @@ Thumbs.db
 # JDBC 드라이버 연결파일
 /src/main/webapp/META-INF/context.xml
 
+# Gmail 계정 정보 파일
+/src/main/webapp/WEB-INF/classes/mail.properties
