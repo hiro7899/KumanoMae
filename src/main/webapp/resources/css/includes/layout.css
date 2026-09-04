@@ -67,7 +67,7 @@
 .header-sticky-wrap .btn-jp-mustard {
     background-color: #e3ac1f;
     border: 2px solid #1a1a1a;
-    border-radius: 0;
+    border-radius: 4px;
     color: #1a1a1a;
     font-weight: 700;
 }

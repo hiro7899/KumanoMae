@@ -28,11 +28,13 @@
 
 <%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
 <c:set var="isLogin" value="false" />
-<c:if test="${not empty sessionScope.loginUser or not empty sessionScope.user or not empty sessionScope.loginMember or not empty sessionScope.member}">
+<c:if
+	test="${not empty sessionScope.loginUser or not empty sessionScope.user or not empty sessionScope.loginMember or not empty sessionScope.member}">
 	<c:set var="isLogin" value="true" />
 </c:if>
 
-<body data-is-login="${isLogin}" data-context-path="${pageContext.request.contextPath}">
+<body data-is-login="${isLogin}"
+	data-context-path="${pageContext.request.contextPath}">
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
@@ -96,7 +98,7 @@
 		</div>
 	</section>
 
-<%-- ===================== 出没マップ セクション ===================== --%>
+	<%-- ===================== 出没マップ セクション ===================== --%>
 	<section id="mapSection" class="container my-5">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>出没マップ
@@ -114,7 +116,7 @@
 				<div class="card card-jp h-100">
 					<div class="card-body map-legend">
 						<h6 class="fw-bold mb-3">危険度の凡例</h6>
-						
+
 						<div class="mb-3">
 							<p class="mb-1 fw-bold">
 								<span class="legend-dot danger"></span>危険（DANGER）
@@ -322,12 +324,16 @@
 		// 1. Google Map 초기화 함수 (콜백 함수)
 		function initMap() {
 			// 기본 위치: 홋카이도/일본 중심부 부근
-			const defaultCenter = { lat: 43.0621, lng: 141.3544 };
+			const defaultCenter = {
+				lat : 43.0621,
+				lng : 141.3544
+			};
 
-			map = new google.maps.Map(document.getElementById("mapContainer"), {
-				zoom: 7,
-				center: defaultCenter,
-			});
+			map = new google.maps.Map(document.getElementById("mapContainer"),
+					{
+						zoom : 7,
+						center : defaultCenter,
+					});
 
 			geocoder = new google.maps.Geocoder();
 			markerInfoWindow = new google.maps.InfoWindow();
@@ -427,7 +433,9 @@
 				return;
 			}
 
-			geocoder.geocode({ address: address }, function (results, status) {
+			geocoder.geocode({
+				address : address
+			}, function(results, status) {
 				if (status === "OK") {
 					map.setCenter(results[0].geometry.location);
 					map.setZoom(11);
@@ -438,11 +446,12 @@
 		}
 
 		// 엔터키 입력 시 지역 검색 실행
-		document.getElementById("areaSearchInput").addEventListener("keypress", function(e) {
-			if (e.key === 'Enter') {
-				searchArea();
-			}
-		});
+		document.getElementById("areaSearchInput").addEventListener("keypress",
+				function(e) {
+					if (e.key === 'Enter') {
+						searchArea();
+					}
+				});
 
 		// 4. 로그인 판별 후 제보 페이지 이동
 		function checkLoginAndReport() {
@@ -458,6 +467,6 @@
 		}
 	</script>
 	<script async
-		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
 </body>
 </html>
