@@ -1,348 +1,399 @@
 @charset "UTF-8";
 
 :root {
---color-bg: #ede4d1;
---color-bg-soft: #e4d9c1;
---color-red: #b23a2e;
---color-red-dark: #8c2c22;
---color-mustard: #e3ac1f;
---color-ink: #1a1a1a;
---color-muted: #6b6355;
---color-white: #fdfaf3;
---color-border: #cfc4ae;
+  --color-bg: #ede4d1;
+  --color-bg-soft: #e4d9c1;
+  --color-red: #b23a2e;
+  --color-red-dark: #8c2c22;
+  --color-mustard: #e3ac1f;
+  --color-mustard-dark: #c6900f;
+  --color-ink: #332d25;      
+  --color-muted: #6b6355;
+  --color-white: #fdfaf3;
+  --color-border: #9e9382;    
 }
 
 * {
   box-sizing: border-box;
-  }
+}
 
 html,
 body {
-margin: 0;
-padding: 0;
-min-height: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
 }
 
 body {
-font-family: "Noto Sans JP", sans-serif;
-background-color: var(--color-bg);
-color: var(--color-ink);
+  font-family: "Noto Sans JP", sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
 }
 
 /* =========================
-Navbar
-========================= */
+   Navbar 
+   ========================= */
+
+.header-sticky-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  box-shadow: 0 4px 12px rgba(51, 45, 37, 0.2);
+}
 
 .navbar-jp {
-background-color: var(--color-bg);
-border-bottom: 2px solid var(--color-ink);
-padding: 18px 0;
+  background-color: var(--color-ink) !important;
+  border-bottom: 2px solid var(--color-mustard);
+  padding: 12px 0;
 }
 
 .logo-badge {
-width: 40px;
-height: 40px;
-background-color: var(--color-red);
-color: #fff;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-font-weight: 900;
-font-size: 1.1rem;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-red);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.1rem;
 }
 
 .brand-jp {
-line-height: 1.1;
+  line-height: 1.1;
 }
 
 .brand-jp .jp-title {
-font-weight: 900;
-font-size: 1.15rem;
-color: var(--color-ink);
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #ffffff !important;
 }
 
 .brand-jp .jp-sub {
-font-size: 0.65rem;
-letter-spacing: 0.12em;
-color: var(--color-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: #c9c1b0 !important;
 }
 
 .back-home {
-color: var(--color-ink);
-text-decoration: none;
-font-size: 0.9rem;
-font-weight: 700;
+  color: #f2ece0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 3px;
 }
 
 .back-home:hover {
-color: var(--color-red);
+  color: var(--color-mustard);
+  border-bottom-color: var(--color-mustard);
+}
+
+.navbar-jp .nav-link {
+  color: #f2ece0 !important;
+  font-weight: 500;
+}
+
+.navbar-jp .nav-link:hover {
+  color: var(--color-mustard) !important;
+}
+
+.navbar-jp .report-nav-link {
+  color: var(--color-mustard) !important;
+  font-weight: 700 !important;
+}
+
+.navbar-jp .report-nav-link:hover {
+  color: #ffffff !important;
+}
+
+.navbar-jp .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-jp .navbar-toggler-icon {
+  filter: invert(1);
 }
 
 /* =========================
-Signup Main
-========================= */
+   Signup Main
+   ========================= */
 
 .signup-main {
-min-height: calc(100vh - 180px);
-padding: 60px 0;
+  min-height: calc(100vh - 180px);
+  padding: 60px 0;
 }
 
 .signup-card {
-width: 100%;
-max-width: 620px;
-margin: 0 auto;
-padding: 42px;
-background-color: var(--color-white);
-border: 2px solid var(--color-ink);
-box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 42px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-ink);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.12);
 }
 
 /* =========================
-Header
-========================= */
+   Header
+   ========================= */
 
 .signup-header {
-margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .header-line {
-display: block;
-width: 45px;
-height: 4px;
-background-color: var(--color-red);
-margin-bottom: 14px;
+  display: block;
+  width: 45px;
+  height: 4px;
+  background-color: var(--color-red);
+  margin-bottom: 14px;
 }
 
 .signup-eyebrow {
-color: var(--color-red);
-font-size: 0.78rem;
-font-weight: 900;
-letter-spacing: 0.12em;
-margin-bottom: 10px;
+  color: var(--color-red);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
 }
 
 .signup-header h1 {
-font-size: 2rem;
-font-weight: 900;
-margin-bottom: 12px;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 12px;
 }
 
 .signup-header > p:last-child {
-color: var(--color-muted);
-font-size: 0.85rem;
-line-height: 1.7;
-margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  margin-bottom: 0;
 }
 
 /* =========================
-Form
-========================= */
+   Form
+   ========================= */
 
 .form-group {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-display: block;
-font-size: 0.85rem;
-font-weight: 700;
-margin-bottom: 8px;
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .input-wrapper {
-position: relative;
+  position: relative;
 }
 
 .input-wrapper i {
-position: absolute;
-left: 14px;
-top: 50%;
-transform: translateY(-50%);
-color: var(--color-muted);
-z-index: 2;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-muted);
+  z-index: 2;
 }
 
 .input-wrapper .form-control {
-height: 48px;
-padding-left: 42px;
-border: 2px solid var(--color-border);
-border-radius: 0;
-background-color: #fff;
+  height: 48px;
+  padding-left: 42px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  background-color: #fff;
 }
 
 .input-wrapper .form-control:focus {
-border-color: var(--color-ink);
-box-shadow: none;
+  border-color: var(--color-ink);
+  box-shadow: none;
 }
 
 .form-help {
-color: var(--color-muted);
-font-size: 0.7rem;
-margin: 6px 0 0;
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  margin: 6px 0 0;
 }
 
 /* =========================
-Agreement
-========================= */
+   Agreement
+   ========================= */
 
 .agreement-box {
-margin: 25px 0;
-padding: 14px;
-background-color: var(--color-bg-soft);
-border: 1px solid var(--color-border);
+  margin: 25px 0;
+  padding: 14px;
+  background-color: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
 }
 
 .agreement-label {
-display: flex;
-align-items: flex-start;
-gap: 9px;
-cursor: pointer;
-font-size: 0.78rem;
-line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  line-height: 1.6;
 }
 
 .agreement-label input {
-margin-top: 4px;
-accent-color: var(--color-red);
+  margin-top: 4px;
+  accent-color: var(--color-red);
 }
 
 /* =========================
-Signup Button
-========================= */
+   Signup Button
+   ========================= */
 
 .signup-submit-btn {
-width: 100%;
-height: 52px;
-border: 2px solid var(--color-ink);
-border-radius: 0;
-background-color: var(--color-red);
-color: #fff;
-font-size: 0.95rem;
-font-weight: 900;
-cursor: pointer;
-transition: 0.2s;
+  width: 100%;
+  height: 52px;
+  border: 2px solid var(--color-ink);
+  border-radius: 8px;
+  background-color: var(--color-red);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .signup-submit-btn:hover {
-background-color: var(--color-red-dark);
+  background-color: var(--color-red-dark);
 }
 
 .signup-submit-btn i {
-margin-left: 8px;
+  margin-left: 8px;
 }
 
 /* =========================
-Login Link
-========================= */
+   Login Link
+   ========================= */
 
 .login-link-area {
-text-align: center;
-margin-top: 25px;
-padding-top: 22px;
-border-top: 1px solid var(--color-border);
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 22px;
+  border-top: 1px solid var(--color-border);
 }
 
 .login-link-area p {
-color: var(--color-muted);
-font-size: 0.78rem;
-margin-bottom: 8px;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  margin-bottom: 8px;
 }
 
 .login-link-area a {
-color: var(--color-ink);
-font-size: 0.82rem;
-font-weight: 700;
-text-decoration: none;
-border-bottom: 1px solid var(--color-ink);
-padding-bottom: 2px;
+  color: var(--color-ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: 2px;
 }
 
 .login-link-area a:hover {
-color: var(--color-red);
-border-color: var(--color-red);
+  color: var(--color-red);
+  border-color: var(--color-red);
 }
 
 /* =========================
-Footer
-========================= */
+   제보하기 플로팅 버튼 
+   ========================= */
+
+.report-float-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1030;
+  border-radius: 4px;
+  padding: 14px 22px;
+  font-weight: 900;
+  border: 1.5px solid var(--color-ink);
+  box-shadow: 4px 5px 0 rgba(51, 45, 37, 0.2);
+}
+
+/* =========================
+   Footer
+   ========================= */
 
 .signup-footer {
-background-color: var(--color-ink);
-color: #f2ece0;
-padding: 30px 0 25px;
+  background-color: var(--color-ink);
+  color: #f2ece0;
+  padding: 30px 0 25px;
 }
 
 .footer-logo {
-font-weight: 900;
-margin-bottom: 8px;
+  font-weight: 900;
+  margin-bottom: 8px;
 }
 
 .footer-logo span {
-display: inline-flex;
-width: 30px;
-height: 30px;
-align-items: center;
-justify-content: center;
-background-color: var(--color-red);
-color: #fff;
-border-radius: 50%;
-margin-right: 6px;
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-red);
+  color: #fff;
+  border-radius: 50%;
+  margin-right: 6px;
 }
 
 .signup-footer p {
-color: #c9c1b0;
-font-size: 0.78rem;
-margin-bottom: 15px;
+  color: #c9c1b0;
+  font-size: 0.78rem;
+  margin-bottom: 15px;
 }
 
 .footer-copy {
-color: #a89f8c;
-font-size: 0.7rem;
+  color: #a89f8c;
+  font-size: 0.7rem;
 }
 
 /* =========================
-Tablet
-========================= */
+   Tablet
+   ========================= */
 
 @media (max-width: 767.98px) {
-
-.signup-card {
+  .signup-card {
     max-width: 560px;
     padding: 32px;
-}
-
+  }
 }
 
 /* =========================
-Mobile
-========================= */
+   Mobile
+   ========================= */
 
 @media (max-width: 575.98px) {
-
-.navbar-jp {
+  .navbar-jp {
     padding: 14px 0;
-}
+  }
 
-.brand-jp .jp-sub {
+  .brand-jp .jp-sub {
     display: none;
-}
+  }
 
-.back-home {
+  .back-home {
     font-size: 0.78rem;
-}
+  }
 
-.signup-main {
+  .signup-main {
     padding: 35px 0;
-}
+  }
 
-.signup-card {
+  .signup-card {
     padding: 25px 20px;
-    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.12);
-}
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
+  }
 
-.signup-header h1 {
+  .signup-header h1 {
     font-size: 1.7rem;
-}
-
+  }
 }

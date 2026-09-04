@@ -1,12 +1,5 @@
 @charset "UTF-8";
-/* =====================================================
-   index.css
-   - index.jsp 전용 스타일
-   - 컨셉 : 크림 베이지 배경 + 레드/머스타드 포인트,
-     두꺼운 블랙 테두리 + 그림자 오프셋의 각진 포스터 톤
-   - Bootstrap 5(CDN)의 grid/유틸리티 클래스를 그대로 사용하고,
-     여기서는 색상/폰트/전용 컴포넌트만 추가로 정의한다.
-   ===================================================== */
+
 :root {
 	--color-bg: #ede4d1;
 	--color-bg-soft: #e4d9c1;
@@ -14,8 +7,9 @@
 	--color-red-dark: #8c2c22;
 	--color-mustard: #e3ac1f;
 	--color-mustard-dark: #c6900f;
-	--color-ink: #1a1a1a;
+	--color-ink: #332d25;
 	--color-muted: #6b6355;
+	--color-border: #9e9382;
 }
 
 * {
@@ -54,11 +48,19 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 1.1rem;
 }
 
-/* ---------------- Navbar ---------------- */
+/* ---------------- Header Sticky ---------------- */
+.header-sticky-wrap {
+	position: sticky;
+	top: 0;
+	z-index: 1050;
+	box-shadow: 0 4px 12px rgba(51, 45, 37, 0.2);
+}
+
+/* ---------------- Navbar (다크 브라운 헤더) ---------------- */
 .navbar-jp {
-	background-color: var(--color-bg);
-	border-bottom: 2px solid var(--color-ink);
-	padding: 18px 0;
+	background-color: var(--color-ink) !important;
+	border-bottom: 2px solid var(--color-mustard);
+	padding: 12px 0;
 }
 
 .logo-badge {
@@ -82,30 +84,49 @@ h1, h2, h3, h4, h5, h6 {
 .brand-jp .jp-title {
 	font-weight: 900;
 	font-size: 1.15rem;
-	color: var(--color-ink);
+	color: #ffffff !important;
 }
 
 .brand-jp .jp-sub {
 	font-size: .65rem;
 	letter-spacing: .12em;
-	color: var(--color-muted);
+	color: #c9c1b0 !important;
 }
 
 .navbar-jp .nav-link {
-	color: var(--color-ink) !important;
+	color: #f2ece0 !important;
 	font-weight: 500;
 }
 
 .navbar-jp .nav-link:hover {
-	color: var(--color-red) !important;
+	color: var(--color-mustard) !important;
 }
 
-/* ---------------- 공통 버튼 (각진 스타일) ---------------- */
+/* '目撃を報告する' 메뉴 포인트 컬러 */
+.navbar-jp .report-nav-link {
+	color: var(--color-mustard) !important;
+	font-weight: 700 !important;
+}
+
+.navbar-jp .report-nav-link:hover {
+	color: #ffffff !important;
+}
+
+/* 모바일 햄버거 버튼 (어두운 배경용) */
+.navbar-jp .navbar-toggler {
+	border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-jp .navbar-toggler-icon {
+	filter: invert(1);
+}
+
+/* ---------------- 공통 버튼 (살짝 둥근 스타일) ---------------- */
 .btn-jp-mustard {
 	background-color: var(--color-mustard);
 	color: var(--color-ink);
 	border: 2px solid var(--color-ink);
-	border-radius: 0;
+	border-radius: 8px;
 	font-weight: 700;
 }
 
@@ -118,7 +139,7 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: transparent;
 	color: var(--color-ink);
 	border: 2px solid var(--color-ink);
-	border-radius: 0;
+	border-radius: 8px;
 	font-weight: 700;
 }
 
@@ -131,7 +152,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-jp {
 	position: relative;
 	padding: 70px 0 50px;
-	border-bottom: 2px dashed var(--color-ink);
+	border-bottom: 2px dashed var(--color-border);
 }
 
 .hero-sidebar {
@@ -206,11 +227,12 @@ h1, h2, h3, h4, h5, h6 {
 	height: 220px;
 	background-color: var(--color-mustard);
 	border: 6px solid var(--color-ink);
+	border-radius: 16px;
 	transform: rotate(45deg);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 8px 10px 0 rgba(0, 0, 0, 0.12);
+	box-shadow: 6px 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 .warning-sign-inner {
@@ -266,9 +288,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .card-jp {
 	border: 2px solid var(--color-ink);
-	border-radius: 0;
-	box-shadow: none;
+	border-radius: 12px;
+	box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.12);
 	background-color: #fdfaf3;
+	overflow: hidden;
 }
 
 /* ---------------- 제보하기 플로팅 버튼 ---------------- */
@@ -277,10 +300,11 @@ h1, h2, h3, h4, h5, h6 {
 	right: 24px;
 	bottom: 24px;
 	z-index: 1030;
-	border-radius: 0;
+	border-radius: 8px;
 	padding: 14px 22px;
 	font-weight: 900;
-	box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.25);
+	border: 1.5px solid var(--color-ink);
+	box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.25);
 }
 
 /* ---------------- Footer ---------------- */
@@ -329,6 +353,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media ( max-width : 575.98px) {
+	.navbar-jp {
+		padding: 14px 0;
+	}
 	.top-alert {
 		font-size: .78rem;
 		padding: 8px 40px;
