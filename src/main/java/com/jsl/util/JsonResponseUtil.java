@@ -27,4 +27,8 @@ public class JsonResponseUtil {
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(gson.toJson(body));
     }
+    
+    public static void writeVerified(HttpServletResponse response, boolean verified) throws IOException {
+        write(response, 200, ApiResponse.verified(verified));
+    }
 }
