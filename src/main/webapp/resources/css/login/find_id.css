@@ -1,22 +1,5 @@
-/* =====================================================
 
-   findId.css
-
-   - findId.jsp 전용 CSS
-   - 아이디 찾기 화면 디자인
-   - 일본어 UI / 깔끔한 계정 찾기 페이지
-
-   ===================================================== */
-
-
-/* =====================================================
-   기본 설정
-   ===================================================== */
-
-* {
-    box-sizing: border-box;
-}
-
+* {box-sizing: border-box;}
 
 html,
 body {
@@ -24,8 +7,6 @@ body {
     padding: 0;
     min-height: 100%;
 }
-
-
 body {
     font-family: "Noto Sans JP", sans-serif;
     background-color: #f5f6f8;
@@ -465,7 +446,6 @@ body {
     }
 
 }
-/* index.jsp 색감 적용 - 반드시 CSS 파일 맨 아래 */
 
 body {
     background-color: #ede4d1;
@@ -541,50 +521,3 @@ body {
     border-radius: 0;
     color: #1a1a1a;
 }
-
-.footer-jp {
-    background-color: #1a1a1a;
-    color: #f2ece0;
-}
-
-.footer-jp a {
-    color: #f2ece0;
-}
-
-.footer-jp .footer-muted {
-    color: #c9c1b0;
-}
-.footer-jp .logo-badge {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #b23a2e;
-    color: #fff;
-}
-
-.footer-jp .brand-jp .jp-title {
-    color: #fff;
-    font-size: 1.15rem;
-    font-weight: 900;
-}
-
-.footer-jp .footer-heading {
-    border-bottom: 1px solid #444;
-    padding-bottom: 8px;
-}
-
-.footer-jp .footer-divider {
-    border-color: #444;
-}
-
-.footer-jp .footer-copyright {
-    color: #a89f8c;
-}
-/* ---------------- Header Sticky & Background Style ----------------헤더 따라오는기능 */ 
-.header-sticky-wrap {
-    position: sticky;
-    top: 0;
-    z-index: 1050;
-    box-shadow: 0 4px 12px rgba(51, 45, 37, 0.2);
-}
-
