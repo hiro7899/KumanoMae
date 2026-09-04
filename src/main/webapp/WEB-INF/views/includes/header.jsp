@@ -33,16 +33,18 @@
 
 					<li class="nav-item dropdown community-menu"><a
 						class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-						aria-expanded="false"> コミュニティ </a>
+						aria-expanded="false"> 情報・コミュニティ </a>
 
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/list">
 									ユーザーコミュニティ </a></li>
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/board/list">
+									クマ目撃情報 </a></li>
+							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/board/news">
+									ニュース・お知らせ </a></li>
 							<li><a class="dropdown-item" target="_blank"
 								href="https://webshop.montbell.jp/goods/list.php?category=379300">
-									関連装備ショッピング </a></li>
-							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/board/news"> ニュース掲示板
-							</a></li>
+									関連装備ショッピング <i class="bi bi-box-arrow-up-right ms-1"></i></a></li>
 						</ul></li>
 
 					<c:choose>
