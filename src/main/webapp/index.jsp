@@ -24,8 +24,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 
-<!-- Google Maps API 스크립트 -->
-<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places"></script>
 </head>
 
 <%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
@@ -371,5 +369,7 @@
 			}
 		}
 	</script>
+	<script async
+		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
 </body>
 </html>
