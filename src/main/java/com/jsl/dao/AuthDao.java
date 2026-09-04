@@ -24,6 +24,20 @@ public class AuthDao {
             return false;
         }
     }
+    
+    public boolean existsEmail(String email) {
+        String sql = "SELECT 1 FROM MEMBER WHERE EMAIL = ?";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * 회원가입. Connection은 Service에서 전달받아 그대로 사용한다 (트랜잭션 공유).

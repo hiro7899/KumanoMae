@@ -9,17 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.exeption.LoginException;
-import com.jsl.service.login.ForgotPasswordService;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
-import com.jsl.service.login.SignUpService;
-import com.jsl.service.login.findIdService;
+import com.jsl.service.member.FindIdService;
+import com.jsl.service.member.ForgotPasswordService;
+import com.jsl.service.member.ResetPasswordService;
+import com.jsl.service.signup.SignUpService;
 
 @WebServlet(urlPatterns = {
         "/", "/index",
         "/login", "/logout", "/signup",
         "/forgot-password", "/reset-password",
-        "/verify-email"   // ★ 추가
+        "/verify-email"
 })
 public class RootController extends HttpServlet {
 
@@ -88,7 +89,7 @@ public class RootController extends HttpServlet {
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/find_id.jsp";
 			} else {
-				findIdService.doCommand(request, response);
+				FindIdService.doCommand(request, response);
 				page = "/WEB-INF/views/auth/find_id.jsp";
 			}
 			break;
@@ -101,15 +102,17 @@ public class RootController extends HttpServlet {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
-//        case "/reset_pw":
-//            if ("GET".equalsIgnoreCase(request.getMethod())) {
-//                page = "/WEB-INF/views/auth/reset_pw.jsp";
-//            } else {
-//                new ResetPasswordService().doCommand(request, response);
-//                response.sendRedirect("/login");
-//                return;
-//            }
-//            break;
+        case "/reset_pw":
+            if ("GET".equalsIgnoreCase(request.getMethod())) {
+                page = "/WEB-INF/views/auth/reset_pw.jsp";
+            } else {
+                new ResetPasswordService().doCommand(request, response);
+                response.sendRedirect("/login");
+                return;
+            }
+            break;
+        case "/verify-email":
+            page = "/WEB-INF/views/auth/verify_email.jsp";
 
 		default:
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);

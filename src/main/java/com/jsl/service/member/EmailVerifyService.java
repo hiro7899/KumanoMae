@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.jsl.dao.AuthDao;
 import com.jsl.dao.EmailTokenDao;
 import com.jsl.dto.EmailTokenDto;
-import com.jsl.exeption.EmailTokenException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
+import com.jsl.util.JsonResponseUtil;
 
 public class EmailVerifyService implements Command {
 
@@ -24,7 +24,8 @@ public class EmailVerifyService implements Command {
 
         String token = request.getParameter("token");
         if (token == null || token.trim().isEmpty()) {
-            throw new EmailTokenException("認証リンクが正しくありません。");
+            JsonResponseUtil.writeError(response, 400, "認証リンクが正しくありません。");
+            return;
         }
 
         try (Connection conn = DBManager.getConnection()) {
@@ -33,13 +34,16 @@ public class EmailVerifyService implements Command {
 
                 EmailTokenDto tokenDto = emailTokenDao.findValidToken(conn, token, "SIGNUP_VERIFY");
                 if (tokenDto == null) {
-                    throw new EmailTokenException("認証リンクが無効か、期限切れです。");
+                    JsonResponseUtil.writeError(response, 400, "認証リンクが無効か、期限切れです。");
+                    conn.rollback();
+                    return;
                 }
 
                 authDao.updateEmailVerified(conn, tokenDto.getMemberId(), "Y");
                 emailTokenDao.markUsed(conn, tokenDto.getTokenId());
 
                 conn.commit();
+                JsonResponseUtil.writeSuccess(response);
 
             } catch (SQLException e) {
                 try { conn.rollback(); } catch (SQLException rollbackEx) { e.addSuppressed(rollbackEx); }

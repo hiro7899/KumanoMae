@@ -117,7 +117,7 @@ public class BoardReportService implements Command {
                     } catch (SQLException rollbackEx) {
                         e.addSuppressed(rollbackEx); // 원래 원인(e)에 rollback 실패 이력도 함께 보존
                     }
-                    throw new RuntimeException("통보 등록 처리 중 오류가 발생했습니다.", e);
+                    throw new RuntimeException("登録処理に問題が発生しました。", e);
                 }
             } catch (SQLException e) {
             	throw new RuntimeException("データベースへの接続に失敗しました。", e);
