@@ -5,6 +5,7 @@
 .classpath
 .recommenders/
 
+/src/main/webapp/.vscode/
 .vscode/
 
 # Build & Output 결과물 (Dynamic Web Project)
