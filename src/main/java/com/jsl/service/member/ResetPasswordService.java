@@ -25,12 +25,17 @@ public class ResetPasswordService implements Command {
 
         String token = request.getParameter("token");
         String newPw = request.getParameter("newPw");
+        String newPwConfirm = request.getParameter("newPwConfirm");
+
+        if (newPw == null || newPw.trim().length() < 8) {
+            throw new EmailTokenException("パスワードは8文字以上で入力してください。");
+        }
+        if (!newPw.equals(newPwConfirm)) {
+            throw new EmailTokenException("パスワードが一致しません。");
+        }
 
         if (token == null || token.trim().isEmpty()) {
             throw new EmailTokenException("リンクが正しくありません。");
-        }
-        if (newPw == null || newPw.trim().length() < 8) {
-            throw new EmailTokenException("パスワードは8文字以上で入力してください。");
         }
 
         try (Connection conn = DBManager.getConnection()) {
