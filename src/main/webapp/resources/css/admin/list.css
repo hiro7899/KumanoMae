@@ -1,10 +1,28 @@
 @charset "UTF-8";
 
+<<<<<<< HEAD
 /* =========================================================
    admin.css - KUMANO_MAE 관리자 전용 스타일
    ========================================================= */
-
+/* 사이드바 로고 붉은 원형 뱃지 */
+.admin-brand .logo-badge {
+    width: 44px;
+    height: 44px;
+    background-color: var(--color-red, #c0392b); /* 메인 레드 컬러 */
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
 /* 레이아웃 구조 */
+=======
+@import url("layout.css");
+
+>>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
@@ -12,7 +30,7 @@
 
 .admin-sidebar {
     width: 260px;
-    background-color: #2b2b2b;
+    background-color: var(--color-ink, #2b2b2b);
     color: #fff;
     flex-shrink: 0;
     border-right: 3px solid #000;
@@ -20,11 +38,10 @@
 
 .admin-content {
     flex-grow: 1;
-    background-color: #fcf8f2; /* index.jsp와 동일한 크림 베이지 배경 */
+    background-color: var(--color-bg, #fcf8f2);
     padding: 2rem;
 }
 
-/* 사이드바 네비게이션 */
 .admin-brand {
     padding: 1.2rem;
     border-bottom: 2px solid #000;
@@ -41,14 +58,13 @@
     transition: all 0.2s ease-in-out;
 }
 
-.admin-nav-link:hover, 
+.admin-nav-link:hover,
 .admin-nav-link.active {
-    background-color: #e5a93c; /* 머스타드 포인트 컬러 */
+    background-color: var(--color-mustard, #e5a93c);
     color: #000;
     font-weight: 700;
 }
 
-/* 통계 카드 (Dashboard) */
 .stat-card {
     border: 2.5px solid #000;
     box-shadow: 4px 4px 0px #000;
@@ -69,7 +85,6 @@
     margin: 0.25rem 0;
 }
 
-/* 어드민 전용 테이블 스타일 */
 .admin-table-card {
     border: 2.5px solid #000;
     box-shadow: 5px 5px 0px #000;
@@ -79,7 +94,7 @@
 }
 
 .admin-table thead {
-    background-color: #2b2b2b;
+    background-color: var(--color-ink, #2b2b2b);
     color: #fff;
 }
 

@@ -13,12 +13,14 @@
     --color-red-dark: #8c2c22;
     --color-mustard: #e3ac1f;
     --color-mustard-dark: #c6900f;
-    --color-ink: #332d25;       /* 텍스트 및 강한 포인트용 짙은 브라운 */
-    --color-border: #9e9382;    /* 검은색 대신 배경과 어울리는 부드러운 테두리 색상 */
+    --color-ink: #332d25;       
+    --color-border: #9e9382;    
     --color-muted: #6b6355;
 }
 
-* { box-sizing: border-box; }
+* {
+	box-sizing: border-box;
+}
 
 body {
     font-family: "Noto Sans JP", sans-serif;
@@ -375,24 +377,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ---------------- Footer ---------------- */
-.footer-jp {
-    background-color: var(--color-ink);
-    color: #f2ece0;
-}
-
-.footer-jp a {
-    color: #f2ece0;
-    text-decoration: none;
-}
-
-.footer-jp a:hover {
-    color: var(--color-mustard);
-}
-
-.footer-muted { color: #c9c1b0; }
-.footer-heading { border-bottom: 1px solid #444; padding-bottom: 8px; }
-.footer-divider { border-color: #444; }
-.footer-copyright { color: #a89f8c; }
 
 /* =====================================================
    반응형 : 모바일(~575) / 태블릿(576~991) / 데스크탑(992~)
@@ -470,4 +454,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-jp .navbar-toggler-icon {
     filter: invert(1);
+}
+
+/* ---------------- 뉴스 필터 버튼 활성화(active) 스타일 ---------------- */
+.filter-btn.active,
+.filter-btn.btn-jp-mustard {
+	background-color: var(--color-mustard) !important;
+	color: var(--color-ink) !important;
+	border: 2px solid var(--color-ink) !important;
+	font-weight: 900 !important;
+	box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2) !important; /* 눌린 효과 */
+}
+
+.filter-btn.btn-jp-outline:not(.active) {
+	background-color: transparent !important;
+	color: var(--color-ink) !important;
+	border: 2px solid var(--color-ink) !important;
 }

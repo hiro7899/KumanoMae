@@ -126,21 +126,6 @@
 					</div>
 
 					<!-- 인증번호 확인: 발송 후 표시 -->
-					<div id="verificationArea"
-						class="form-group verification-area d-none">
-						<label for="verificationCode">認証番号</label>
-
-						<div class="email-auth-row">
-							<div class="input-wrapper flex-grow-1">
-								<i class="bi bi-shield-check"></i> <input type="text"
-									id="verificationCode" class="form-control"
-									placeholder="メールで届いた認証番号を入力" inputmode="numeric" maxlength="6">
-							</div>
-
-							<button type="button" id="verifyEmailBtn"
-								class="email-auth-btn verify-btn">認証する</button>
-						</div>
-					</div>
 
 
 					<!-- 전화번호 -->

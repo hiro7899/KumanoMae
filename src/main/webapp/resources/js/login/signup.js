@@ -79,20 +79,19 @@ document.addEventListener("DOMContentLoaded", function () {
         showUserIdMessage("IDを確認しています。", "");
 
         try {
-            const response = await fetch(
-                contextPath + "/api/signup/check-user-id",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId: userId })
-                }
-            );
+			const response = await fetch(
+			    contextPath + "/api/signup/check-user-id?userId="
+			    + encodeURIComponent(userId),
+			    {
+			        method: "GET"
+			    }
+			);
 
-            const result = await response.json();
+			const result = await response.json();
 
-            if (!response.ok || !result.available) {
-                throw new Error(result.message || "すでに使用されているIDです。");
-            }
+			if (!response.ok || !result.success || !result.available) {
+			    throw new Error(result.message || "すでに使用されているIDです。");
+			}
 
             userIdChecked = true;
             showUserIdMessage("使用可能なIDです。", "success");
@@ -120,22 +119,21 @@ document.addEventListener("DOMContentLoaded", function () {
         showEmailMessage("メールアドレスを確認しています。", "");
 
         try {
-            const checkResponse = await fetch(
-                contextPath + "/api/signup/check-email",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: email })
-                }
-            );
+			const checkResponse = await fetch(
+			    contextPath + "/api/signup/check-email?email="
+			    + encodeURIComponent(email),
+			    {
+			        method: "GET"
+			    }
+			);
 
-            const checkResult = await checkResponse.json();
+			const checkResult = await checkResponse.json();
 
-            if (!checkResponse.ok || !checkResult.available) {
-                throw new Error(
-                    checkResult.message || "すでに登録されているメールアドレスです。"
-                );
-            }
+			if (!checkResponse.ok || !checkResult.success || !checkResult.available) {
+			    throw new Error(
+			        checkResult.message || "すでに登録されているメールアドレスです。"
+			    );
+			}
 
             showEmailMessage("認証番号を送信しています。", "");
 

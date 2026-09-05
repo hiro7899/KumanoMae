@@ -22,17 +22,21 @@
 
 <!-- 이 화면 전용 CSS -->
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 
 </head>
 
 <%-- body 태그에 세션 로그인 여부(true/false)와 ContextPath를 속성값으로 심어둠 --%>
 <c:set var="isLogin" value="false" />
-<c:if test="${not empty sessionScope.loginUser or not empty sessionScope.user or not empty sessionScope.loginMember or not empty sessionScope.member}">
+<c:if
+	test="${not empty sessionScope.loginUser or not empty sessionScope.user or not empty sessionScope.loginMember or not empty sessionScope.member}">
 	<c:set var="isLogin" value="true" />
 </c:if>
 
-<body data-is-login="${isLogin}" data-context-path="${pageContext.request.contextPath}">
+<body data-is-login="${isLogin}"
+	data-context-path="${pageContext.request.contextPath}">
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
@@ -94,9 +98,10 @@
 
 			</div>
 		</div>
+
 	</section>
 
-<%-- ===================== 出没マップ セクション ===================== --%>
+	<%-- ===================== 出没マップ セクション ===================== --%>
 	<section id="mapSection" class="container my-5">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>出没マップ
@@ -114,7 +119,7 @@
 				<div class="card card-jp h-100">
 					<div class="card-body map-legend">
 						<h6 class="fw-bold mb-3">危険度の凡例</h6>
-						
+
 						<div class="mb-3">
 							<p class="mb-1 fw-bold">
 								<span class="legend-dot danger"></span>危険（DANGER）
@@ -182,80 +187,51 @@
 		</div>
 	</section>
 
-	<%-- ===================== 最近の目撃情報 ===================== --%>
+	<%-- ===================== 最新ニュース ===================== --%>
 	<section class="container my-5">
 		<h3 class="section-title-jp">
-			<span class="dash">―</span>最近の目撃情報
+			<span class="dash">―</span>最新ニュース
 		</h3>
-		<div class="row g-4">
-
-			<div class="col-md-4 col-sm-6">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-						class="card-img-top" alt="クマ出没イメージ">
-					<div class="card-body d-flex flex-column">
-						<span class="badge badge-danger-custom mb-2 align-self-start">危険</span>
-						<h5 class="card-title">札幌近郊の登山道でクマを発見</h5>
-						<p class="mb-1 text-muted small">
-							<i class="bi bi-geo-alt-fill"></i> 北海道札幌市
-						</p>
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-20 07:30
-						</p>
-						<p class="small flex-grow-1">登山道入口付近で成獣のクマ1頭を発見、登山客は避難済みです。</p>
-						<a href="${pageContext.request.contextPath}/board/detail"
-							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
+		<c:choose>
+			<c:when test="${not empty newsList}">
+				<div class="row g-4">
+					<c:forEach var="news" items="${newsList}" end="2">
+						<div class="col-md-4 col-sm-6">
+							<article class="card h-100 report-card">
+								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
+									class="card-img-top" alt="クマ関連ニュース">
+								<div class="card-body d-flex flex-column">
+									<c:choose>
+										<c:when test="${news.sourceType eq 'SIGHTING'}"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span></c:when>
+										<c:when test="${news.sourceType eq 'SAFETY'}"><span class="badge badge-warning-custom mb-2 align-self-start">安全対策</span></c:when>
+										<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">自治体のお知らせ</span></c:otherwise>
+									</c:choose>
+									<h5 class="card-title"><c:out value="${news.title}" /></h5>
+									<p class="mb-2 text-muted small">
+										<i class="bi bi-building"></i> <c:out value="${news.sourceName}" />
+										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out value="${news.publishedDate}" /></span>
+									</p>
+									<p class="small flex-grow-1"><c:out value="${news.summary}" /></p>
+									<a href="${news.sourceUrl}" target="_blank" rel="noopener noreferrer"
+										class="btn btn-jp-outline btn-sm mt-2">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+								</div>
+							</article>
+						</div>
+					</c:forEach>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="card card-jp border-0 py-4 text-center">
+					<div class="card-body text-muted">
+						<i class="bi bi-newspaper fs-1 d-block mb-2"></i>
+						<p class="fw-bold mb-0">現在表示できるニュースはありません。</p>
 					</div>
 				</div>
-			</div>
-
-			<div class="col-md-4 col-sm-6">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1465311440653-ba9b1d9b5f04?w=600"
-						class="card-img-top" alt="クマ出没イメージ">
-					<div class="card-body d-flex flex-column">
-						<span class="badge badge-warning-custom mb-2 align-self-start">警戒</span>
-						<h5 class="card-title">農地周辺でクマの足跡を発見</h5>
-						<p class="mb-1 text-muted small">
-							<i class="bi bi-geo-alt-fill"></i> 青森県
-						</p>
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-19 18:10
-						</p>
-						<p class="small flex-grow-1">農地付近でクマの足跡と糞の痕跡を発見しました。</p>
-						<a href="${pageContext.request.contextPath}/board/detail"
-							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4 col-sm-6">
-				<div class="card h-100 report-card">
-					<img
-						src="https://images.unsplash.com/photo-1500534623283-312aade485b2?w=600"
-						class="card-img-top" alt="クマ出没イメージ">
-					<div class="card-body d-flex flex-column">
-						<span class="badge badge-caution-custom mb-2 align-self-start">注意</span>
-						<h5 class="card-title">登山道でクマの鳴き声を確認</h5>
-						<p class="mb-1 text-muted small">
-							<i class="bi bi-geo-alt-fill"></i> 岩手県
-						</p>
-						<p class="mb-2 text-muted small">
-							<i class="bi bi-clock-fill"></i> 2026-08-18 06:45
-						</p>
-						<p class="small flex-grow-1">登山者がクマと思われる鳴き声を聞いたと報告しています。</p>
-						<a href="${pageContext.request.contextPath}/board/detail"
-							class="btn btn-jp-outline btn-sm mt-2">詳細を見る</a>
-					</div>
-				</div>
-			</div>
-
-		</div>
+			</c:otherwise>
+		</c:choose>
 		<div class="text-center mt-4">
 			<a href="${pageContext.request.contextPath}/board/news"
-				class="btn btn-jp-mustard">目撃情報掲示板をすべて見る</a>
+				class="btn btn-jp-mustard">ニュースをすべて見る</a>
 		</div>
 	</section>
 
@@ -297,6 +273,32 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="card card-jp border-danger mt-4">
+			<div class="card-body p-4">
+				<div class="row align-items-center g-4">
+					<div class="col-lg-8">
+						<h4 class="fw-bold text-danger mb-3">
+							<i class="bi bi-exclamation-octagon-fill me-2"></i>緊急時の対応
+						</h4>
+						<p class="mb-2">クマに遭遇した場合は、走ったり背中を見せたりせず、落ち着いてゆっくり後退してください。</p>
+						<p class="mb-0 text-muted small">
+							子グマには近づかないでください。近くに母グマがいる可能性があります。安全を確保した後、目撃場所を警察または自治体へ連絡してください。
+						</p>
+					</div>
+					<div class="col-lg-4">
+						<div class="d-grid gap-2">
+							<a href="tel:110" class="btn btn-danger fw-bold">
+								<i class="bi bi-telephone-fill me-2"></i>緊急の危険：警察 110
+							</a>
+							<a href="tel:119" class="btn btn-jp-outline fw-bold">
+								<i class="bi bi-heart-pulse-fill me-2"></i>けが人：消防・救急 119
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<%-- ===================== 제보하기 플로팅 버튼 ===================== --%>
@@ -317,21 +319,113 @@
 	<script>
 		let map;
 		let geocoder;
+		let markerInfoWindow;
 
 		// 1. Google Map 초기화 함수 (콜백 함수)
 		function initMap() {
 			// 기본 위치: 홋카이도/일본 중심부 부근
-			const defaultCenter = { lat: 43.0621, lng: 141.3544 };
+			const defaultCenter = {
+				lat : 43.0621,
+				lng : 141.3544
+			};
 
-			map = new google.maps.Map(document.getElementById("mapContainer"), {
-				zoom: 7,
-				center: defaultCenter,
-			});
+			map = new google.maps.Map(document.getElementById("mapContainer"),
+					{
+						zoom : 7,
+						center : defaultCenter,
+					});
 
 			geocoder = new google.maps.Geocoder();
+			markerInfoWindow = new google.maps.InfoWindow();
+			loadSightingMarkers();
 		}
 
-		// 2. 지역 검색 버튼 기능 (Geocoding)
+		// 2. 등록된 목격 정보 마커 표시
+		async function loadSightingMarkers() {
+			const contextPath = document.body.dataset.contextPath;
+
+			try {
+				const response = await fetch(contextPath + "/map/markers", {
+					headers: { "Accept": "application/json" }
+				});
+
+				if (!response.ok) {
+					throw new Error("マーカー情報の取得に失敗しました。");
+				}
+
+				const sightings = await response.json();
+				const bounds = new google.maps.LatLngBounds();
+				let markerCount = 0;
+
+				sightings.forEach(function(sighting) {
+					const latitude = Number(sighting.latitude);
+					const longitude = Number(sighting.longitude);
+
+					if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+						return;
+					}
+
+					const position = { lat: latitude, lng: longitude };
+					const marker = new google.maps.Marker({
+						map: map,
+						position: position,
+						title: sighting.title || "クマ目撃情報",
+						icon: createRiskMarkerIcon(sighting.displayRisk)
+					});
+
+					marker.addListener("click", function() {
+						markerInfoWindow.setContent(createMarkerInfoContent(sighting));
+						markerInfoWindow.open({ map: map, anchor: marker });
+					});
+
+					bounds.extend(position);
+					markerCount++;
+				});
+
+				if (markerCount === 1) {
+					map.setCenter(bounds.getCenter());
+					map.setZoom(12);
+				} else if (markerCount > 1) {
+					map.fitBounds(bounds, 50);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		}
+
+		function createRiskMarkerIcon(displayRisk) {
+			const riskColors = {
+				DANGER: "#b23a2e",
+				WARNING: "#e3ac1f",
+				CAUTION: "#f5e39a"
+			};
+			const normalizedRisk = String(displayRisk || "").toUpperCase();
+
+			return {
+				path: google.maps.SymbolPath.CIRCLE,
+				fillColor: riskColors[normalizedRisk] || "#b23a2e",
+				fillOpacity: 0.95,
+				strokeColor: "#ffffff",
+				strokeWeight: 2,
+				scale: 9
+			};
+		}
+
+		function createMarkerInfoContent(sighting) {
+			return '<div style="max-width:240px; padding:4px;">' +
+				'<strong style="display:block; margin-bottom:6px;">' + escapeHtml(sighting.title || "クマ目撃情報") + '</strong>' +
+				'<div style="font-size:12px; color:#6b6355;">危険度: ' + escapeHtml(sighting.displayRisk || "-") + '</div>' +
+				'<div style="font-size:12px; color:#6b6355; margin-top:3px;">' + escapeHtml(sighting.address || "住所情報なし") + '</div>' +
+				'</div>';
+		}
+
+		function escapeHtml(value) {
+			const element = document.createElement("div");
+			element.textContent = String(value);
+			return element.innerHTML;
+		}
+
+		// 3. 지역 검색 버튼 기능 (Geocoding)
 		function searchArea() {
 			const address = document.getElementById("areaSearchInput").value;
 			if (!address) {
@@ -339,7 +433,9 @@
 				return;
 			}
 
-			geocoder.geocode({ address: address }, function (results, status) {
+			geocoder.geocode({
+				address : address
+			}, function(results, status) {
 				if (status === "OK") {
 					map.setCenter(results[0].geometry.location);
 					map.setZoom(11);
@@ -350,13 +446,14 @@
 		}
 
 		// 엔터키 입력 시 지역 검색 실행
-		document.getElementById("areaSearchInput").addEventListener("keypress", function(e) {
-			if (e.key === 'Enter') {
-				searchArea();
-			}
-		});
+		document.getElementById("areaSearchInput").addEventListener("keypress",
+				function(e) {
+					if (e.key === 'Enter') {
+						searchArea();
+					}
+				});
 
-		// 3. 로그인 판별 후 제보 페이지 이동
+		// 4. 로그인 판별 후 제보 페이지 이동
 		function checkLoginAndReport() {
 			const isLogin = document.body.dataset.isLogin === "true";
 			const contextPath = document.body.dataset.contextPath;
@@ -370,6 +467,6 @@
 		}
 	</script>
 	<script async
-		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
 </body>
 </html>
