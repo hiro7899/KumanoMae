@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jsl.service.community.CommunityLikeToggleService;
 import com.jsl.service.member.EmailVerificationSendService;
 import com.jsl.service.member.EmailVerificationStatusService;
 import com.jsl.service.member.EmailVerifyService;
@@ -24,6 +25,8 @@ public class ApiController extends HttpServlet {
     private final EmailVerificationSendService emailVerificationSendService = new EmailVerificationSendService();
     private final EmailVerifyService emailVerifyService = new EmailVerifyService();
     private final EmailVerificationStatusService emailVerificationStatusService = new EmailVerificationStatusService();
+    
+    private final CommunityLikeToggleService communityLikeToggleService = new CommunityLikeToggleService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -62,6 +65,10 @@ public class ApiController extends HttpServlet {
                     break;
                 case "/email-verification/status":
                     emailVerificationStatusService.doCommand(request, response);
+                    break;
+                    
+                case "/community/like/toggle":
+                    communityLikeToggleService.doCommand(request, response);
                     break;
                 default:
                     JsonResponseUtil.writeError(response, 404, "存在しないAPIです。");

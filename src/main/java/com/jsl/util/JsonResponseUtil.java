@@ -31,4 +31,8 @@ public class JsonResponseUtil {
     public static void writeVerified(HttpServletResponse response, boolean verified) throws IOException {
         write(response, 200, ApiResponse.verified(verified));
     }
+    
+    public static void writeLikeResult(HttpServletResponse response, boolean liked, int likeCnt) throws IOException {
+        write(response, 200, ApiResponse.likeResult(liked, likeCnt));
+    }
 }

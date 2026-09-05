@@ -16,10 +16,10 @@ public class CommunityBoardDto {
 	private LocalDateTime regDate; //등록일
 	private LocalDateTime modDate; //수정일
 	
-	public Long getcBoardId() {
+	public Long getCBoardId() {
 		return cBoardId;
 	}
-	public void setcBoardId(Long cBoardId) {
+	public void setCBoardId(Long cBoardId) {
 		this.cBoardId = cBoardId;
 	}
 	public Long getMemberId() {

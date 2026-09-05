@@ -7,6 +7,9 @@ public class ApiResponse {
     private Boolean available;
     private Boolean verified; // ★ 추가
 
+    private Boolean liked;
+    private Integer likeCnt;
+    
     public static ApiResponse ok() {
         ApiResponse r = new ApiResponse();
         r.success = true;
@@ -38,4 +41,15 @@ public class ApiResponse {
     public String getMessage() { return message; }
     public Boolean getAvailable() { return available; }
     public Boolean getVerified() { return verified; }
+    
+    public static ApiResponse likeResult(boolean liked, int likeCnt) {
+        ApiResponse r = new ApiResponse();
+        r.success = true;
+        r.liked = liked;
+        r.likeCnt = likeCnt;
+        return r;
+    }
+
+    public Boolean getLiked() { return liked; }
+    public Integer getLikeCnt() { return likeCnt; }
 }
