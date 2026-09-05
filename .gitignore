@@ -5,6 +5,8 @@
 .classpath
 .recommenders/
 
+.vscode/
+
 # Build & Output 결과물 (Dynamic Web Project)
 bin/
 build/
