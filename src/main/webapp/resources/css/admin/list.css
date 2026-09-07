@@ -1,5 +1,19 @@
 @charset "UTF-8";
 
+.admin-brand .logo-badge {
+    width: 44px;
+    height: 44px;
+    background-color: var(--color-red, #c0392b);
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
