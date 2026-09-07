@@ -133,7 +133,7 @@
 								<c:when test="${not empty communityList}">
 									<c:forEach var="item" items="${communityList}">
 										<tr>
-											<td>${item.cBoardId}</td>
+											<td>${item.CBoardId}</td>
 											<td><c:choose>
 													<c:when test="${item.category eq 'REVIEW'}">
 														<span class="badge bg-info text-dark">レビュー</span>
@@ -146,7 +146,7 @@
 													</c:otherwise>
 												</c:choose></td>
 											<td class="text-start fw-bold"><a
-												href="${pageContext.request.contextPath}/admin/community/detail?cBoardId=${item.cBoardId}"
+												href="${pageContext.request.contextPath}/admin/community/detail?cBoardId=${item.CBoardId}"
 												class="text-decoration-none text-dark">
 													<c:out value="${item.title}" />
 											</a></td>
@@ -166,21 +166,21 @@
 														<c:when test="${item.status eq 'Y'}">
 															<form action="${pageContext.request.contextPath}/admin/community/hide" method="post" class="d-inline"
 																onsubmit="return confirm('この投稿を非表示にしますか？');">
-																<input type="hidden" name="cBoardId" value="${item.cBoardId}">
+																<input type="hidden" name="cBoardId" value="${item.CBoardId}">
 																<button type="submit" class="btn btn-outline-danger btn-sm fw-bold">非表示</button>
 															</form>
 														</c:when>
 														<c:otherwise>
 															<form action="${pageContext.request.contextPath}/admin/community/show" method="post" class="d-inline"
 																onsubmit="return confirm('この投稿を再表示しますか？');">
-																<input type="hidden" name="cBoardId" value="${item.cBoardId}">
+																<input type="hidden" name="cBoardId" value="${item.CBoardId}">
 																<button type="submit" class="btn btn-outline-success btn-sm fw-bold">再表示</button>
 															</form>
 														</c:otherwise>
 													</c:choose>
 													<form action="${pageContext.request.contextPath}/admin/community/delete" method="post" class="d-inline"
 														onsubmit="return confirm('この投稿を削除しますか？');">
-														<input type="hidden" name="cBoardId" value="${item.cBoardId}">
+														<input type="hidden" name="cBoardId" value="${item.CBoardId}">
 														<button type="submit" class="btn btn-danger btn-sm fw-bold">削除</button>
 													</form>
 												</div>
@@ -203,8 +203,6 @@
 			</div>
 		</main>
 	</div>
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

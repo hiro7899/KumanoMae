@@ -243,6 +243,23 @@
     border-top: 1px solid #d7cfbf;
 }
 
+/* 관리자 목격정보 위험도 */
+.badge-risk-danger {
+    background-color: var(--color-red, #b23a2e);
+    color: #fff;
+}
+
+.badge-risk-warning {
+    background-color: var(--color-mustard, #e3ac1f);
+    color: #1f1f1f;
+}
+
+.badge-risk-caution {
+    background-color: #f5e39a;
+    border: 1px solid #d5bd62;
+    color: #1f1f1f;
+}
+
 @media (max-width: 767.98px) {
     .admin-content {
         padding: 1.25rem;

@@ -118,13 +118,14 @@
                                         <td>${board.boardId}</td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${board.riskLevel eq 'DANGER'}"><span class="badge badge-danger-custom">危険</span></c:when>
-                                                <c:when test="${board.riskLevel eq 'WARNING'}"><span class="badge badge-warning-custom">警戒</span></c:when>
-                                                <c:otherwise><span class="badge badge-caution-custom">注意</span></c:otherwise>
+                                                <c:when test="${board.riskLevel eq 'DANGER'}"><span class="badge bg-danger text-white">危険</span></c:when>
+                                                <c:when test="${board.riskLevel eq 'WARNING'}"><span class="badge bg-warning text-dark">警戒</span></c:when>
+                                                <c:otherwise><span class="badge text-dark" style="background-color: #f5e39a; border: 1px solid #d5bd62;">注意</span></c:otherwise>
                                             </c:choose>
                                         </td>
                                         <td class="text-start">
-                                            <div class="fw-bold">${board.title}</div>
+                                            <a href="${pageContext.request.contextPath}/admin/board/detail?boardId=${board.boardId}"
+                                                class="fw-bold text-decoration-none text-dark"><c:out value="${board.title}"/></a>
                                             <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> ${board.address} (${board.latitude}, ${board.longitude})</small>
                                         </td>
                                         <td>${board.memberId}</td>
@@ -162,7 +163,6 @@
                                                         危険解除
                                                     </button>
                                                 </c:if>
-                                                <a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}" class="btn btn-jp-outline btn-sm">詳細</a>
                                             </div>
                                         </td>
                                     </tr>
