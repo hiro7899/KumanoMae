@@ -265,6 +265,40 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 2px;
 }
 
+.map-legend-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.map-risk-count {
+    min-width: 46px;
+    padding: 0.28rem 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+}
+
+.map-risk-count.danger {
+    background: var(--color-red);
+    color: #fff;
+}
+
+.map-risk-count.warning {
+    background: var(--color-mustard);
+    color: var(--color-ink);
+}
+
+.map-risk-count.caution {
+    background: #f5e39a;
+    border-color: #d5bd62;
+    color: var(--color-ink);
+}
+
 .legend-dot.danger  { background-color: var(--color-red); }
 .legend-dot.warning { background-color: var(--color-mustard); }
 .legend-dot.caution { background-color: #f5e39a; }
@@ -388,4 +422,50 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: transparent !important;
 	color: var(--color-ink) !important;
 	border: 2px solid var(--color-ink) !important;
+}
+
+/* 지도 위험도 필터 */
+.risk-filter {
+    margin: 0 0.35rem 0.35rem 0 !important;
+    padding: 0.34rem 0.58rem 0.34rem 1.9rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.risk-filter .form-check-input {
+    margin-left: -1.32rem;
+}
+
+.risk-filter.danger {
+    background: #f9dfdc;
+    border-color: var(--color-red);
+    color: #8d291f;
+}
+
+.risk-filter.danger .form-check-input:checked {
+    background-color: var(--color-red);
+    border-color: var(--color-red);
+}
+
+.risk-filter.warning {
+    background: #fff0c4;
+    border-color: var(--color-mustard);
+    color: #6f5100;
+}
+
+.risk-filter.warning .form-check-input:checked {
+    background-color: var(--color-mustard);
+    border-color: var(--color-mustard);
+}
+
+.risk-filter.caution {
+    background: #fff8dc;
+    border-color: #d5bd62;
+    color: #6b5820;
+}
+
+.risk-filter.caution .form-check-input:checked {
+    background-color: #d5bd62;
+    border-color: #d5bd62;
 }

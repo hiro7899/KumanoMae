@@ -13,7 +13,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <<<<<<< HEAD
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/community.css">
@@ -92,7 +91,19 @@
                     <c:forEach var="file" items="${fileList}">
                         <c:set var="fileName" value="${fn:toLowerCase(file.originName)}"/>
                         <c:if test="${fn:endsWith(fileName, '.jpg') or fn:endsWith(fileName, '.jpeg') or fn:endsWith(fileName, '.png') or fn:endsWith(fileName, '.gif') or fn:endsWith(fileName, '.webp')}">
-                            <c:url var="imageUrl" value="${file.filePath}/${file.saveName}"/>
+                            <%-- 경로 슬래시 중복/누락 처리 및 ContextPath 결합 --%>
+                            <c:set var="rawPath" value="${file.filePath}${fn:endsWith(file.filePath, '/') ? '' : '/'}${file.saveName}"/>
+                            <c:choose>
+                                <c:when test="${fn:startsWith(rawPath, 'http')}">
+                                    <c:set var="imageUrl" value="${rawPath}"/>
+                                </c:when>
+                                <c:when test="${fn:startsWith(rawPath, '/')}">
+                                    <c:set var="imageUrl" value="${pageContext.request.contextPath}${rawPath}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="imageUrl" value="${pageContext.request.contextPath}/${rawPath}"/>
+                                </c:otherwise>
+                            </c:choose>
                             <a href="${imageUrl}" target="_blank" rel="noopener">
                                 <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}">
                             </a>
@@ -109,7 +120,18 @@
                         <c:forEach var="file" items="${fileList}">
                             <c:set var="fileName" value="${fn:toLowerCase(file.originName)}"/>
                             <c:if test="${not (fn:endsWith(fileName, '.jpg') or fn:endsWith(fileName, '.jpeg') or fn:endsWith(fileName, '.png') or fn:endsWith(fileName, '.gif') or fn:endsWith(fileName, '.webp'))}">
-                            <c:url var="downloadUrl" value="${file.filePath}/${file.saveName}"/>
+                            <c:set var="rawPath" value="${file.filePath}${fn:endsWith(file.filePath, '/') ? '' : '/'}${file.saveName}"/>
+                            <c:choose>
+                                <c:when test="${fn:startsWith(rawPath, 'http')}">
+                                    <c:set var="downloadUrl" value="${rawPath}"/>
+                                </c:when>
+                                <c:when test="${fn:startsWith(rawPath, '/')}">
+                                    <c:set var="downloadUrl" value="${pageContext.request.contextPath}${rawPath}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="downloadUrl" value="${pageContext.request.contextPath}/${rawPath}"/>
+                                </c:otherwise>
+                            </c:choose>
                             <li>
                                 <a href="${downloadUrl}" download="${fn:escapeXml(file.originName)}">
                                     <i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i>

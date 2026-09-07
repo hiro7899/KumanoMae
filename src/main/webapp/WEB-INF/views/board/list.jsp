@@ -71,10 +71,6 @@
 			<c:forEach var="board" items="${boardList}">
 				<div class="col-md-6 col-lg-4">
 					<article class="card h-100 report-card shadow-sm">
-						<img
-							src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-							class="card-img-top" alt="クマ出没イメージ"
-							style="height: 180px; object-fit: cover;">
 						<div class="card-body d-flex flex-column">
 							<div class="d-flex justify-content-between align-items-center gap-2 mb-2">
 								<c:choose>
