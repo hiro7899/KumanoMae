@@ -2,22 +2,23 @@ package com.jsl.dto.community;
 
 public class CommunityFileDto {
 
-	private Long cFileId; //파일 번호
-	private Long cBoardId; //소속 게시글
-	private String originName; //원본 파일명
-	private String saveName; //서버 저장 파일명
-	private String filePath; //저장 경로
-	
-	public Long getcFileId() {
+	private Long cFileId;
+    private Long cBoardId;
+    private String originName;
+    private String saveName;
+    private String filePath;
+    private int fileSize;
+    
+	public Long getCFileId() {
 		return cFileId;
 	}
-	public void setcFileId(Long cFileId) {
+	public void setCFileId(Long cFileId) {
 		this.cFileId = cFileId;
 	}
-	public Long getcBoardId() {
+	public Long getCBoardId() {
 		return cBoardId;
 	}
-	public void setcBoardId(Long cBoardId) {
+	public void setCBoardId(Long cBoardId) {
 		this.cBoardId = cBoardId;
 	}
 	public String getOriginName() {
@@ -38,5 +39,10 @@ public class CommunityFileDto {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	
+	public int getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(int fileSize) {
+		this.fileSize = fileSize;
+	}
 }

@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jsl.exeption.EmailTokenException;
 import com.jsl.exeption.LoginException;
 import com.jsl.exeption.SignUpException;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.member.FindIdService;
 import com.jsl.service.member.ForgotPasswordService;
+import com.jsl.service.member.ResetPasswordFormService;
 import com.jsl.service.member.ResetPasswordService;
 import com.jsl.service.signup.SignUpService;
 
@@ -31,6 +33,8 @@ public class RootController extends HttpServlet {
 	private final LogoutService logoutService = new LogoutService();
 	private final SignUpService signUpService = new SignUpService();
 	private final ForgotPasswordService forgotPasswordService = new ForgotPasswordService();
+	private final ResetPasswordService resetPasswordService = new ResetPasswordService();
+	private final ResetPasswordFormService resetPasswordFormService = new ResetPasswordFormService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -113,17 +117,28 @@ public class RootController extends HttpServlet {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
-        case "/reset_pw":
-            if ("GET".equalsIgnoreCase(request.getMethod())) {
-                page = "/WEB-INF/views/auth/reset_pw.jsp";
-            } else {
-                new ResetPasswordService().doCommand(request, response);
-                response.sendRedirect("/login");
-                return;
-            }
-            break;
+			
+		case "/reset-password":
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        resetPasswordFormService.doCommand(request, response);
+		        page = "/WEB-INF/views/auth/reset_password.jsp";
+		    } else {
+		        try {
+		            resetPasswordService.doCommand(request, response);
+		            response.sendRedirect("/login");
+		            return;
+		        } catch (EmailTokenException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            request.setAttribute("token", request.getParameter("token"));
+		            request.setAttribute("tokenValid", true); // 폼은 유지하고 에러 메시지만 표시
+		            page = "/WEB-INF/views/auth/reset_password.jsp";
+		        }
+		    }
+		    break;
+		    
         case "/verify-email":
             page = "/WEB-INF/views/auth/verify_email.jsp";
+            break;
 
 		default:
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
