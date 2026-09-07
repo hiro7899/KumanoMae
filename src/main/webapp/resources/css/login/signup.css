@@ -502,3 +502,9 @@ Mobile
         width: 100%;
     }
 }
+.email-auth-guide {
+    margin: 6px 0 0;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    line-height: 1.5;
+}

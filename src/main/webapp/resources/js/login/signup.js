@@ -102,7 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-	sendVerificationBtn.addEventListener("click", async function () {
+
+	checkEmailBtn.addEventListener("click", async function () {
 	    const email = emailInput.value.trim();
 
 	    if (!emailPattern.test(email)) {
@@ -111,12 +112,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	        return;
 	    }
 
-	    sendVerificationBtn.disabled = true;
+	    checkEmailBtn.disabled = true;
 	    showEmailMessage("メールアドレスを確認しています。", "");
 
 	    try {
-	        /* 이메일 중복확인 */
-	        const checkResponse = await fetch(
+	        const response = await fetch(
 	            contextPath + "/api/signup/check-email?email="
 	            + encodeURIComponent(email),
 	            {
@@ -130,84 +130,32 @@ document.addEventListener("DOMContentLoaded", function () {
 	            }
 	        );
 
-	        const checkResult = await checkResponse.json();
+	        const result = await response.json();
 
-	        if (!checkResponse.ok || !checkResult.success || !checkResult.available) {
+	        if (!response.ok || !result.success || !result.available) {
 	            throw new Error(
-	                checkResult.message || "すでに登録されているメールアドレスです。"
+	                result.message || "すでに登録されているメールアドレスです。"
 	            );
 	        }
 
-	        /* 인증메일 발송 */
-	        const sendResponse = await fetch(
-	            contextPath + "/api/email-verification/send?email="
-	            + encodeURIComponent(email),
-	            {
-	                method: "POST",
-	                headers: {
-	                    "Content-Type": "application/json"
-	                },
-	                body: JSON.stringify({
-	                    email: email
-	                })
-	            }
-	        );
-
-	        const sendResult = await sendResponse.json();
-
-	        if (!sendResponse.ok || !sendResult.success) {
-	            throw new Error(
-	                sendResult.message || "認証メールの送信に失敗しました。"
-	            );
-	        }
-
-	        verificationRequested = true;
+	        emailChecked = true;
 
 	        showEmailMessage(
-	            "使用可能なメールアドレスです。認証メールを送信しました。メール本文のリンクをクリックしてください。",
+	            "使用可能なメールアドレスです。会員登録後に認証メールを送信します。",
 	            "success"
 	        );
 	    } catch (error) {
+	        emailChecked = false;
+
 	        showEmailMessage(
 	            error.message || "メールアドレスの確認に失敗しました。",
 	            "error"
 	        );
 	    } finally {
-	        sendVerificationBtn.disabled = false;
+	        checkEmailBtn.disabled = false;
+	        updateSignupButton();
 	    }
 	});
-
-    async function refreshEmailVerificationStatus() {
-        const email = emailInput.value.trim();
-
-        if (!verificationRequested || !emailPattern.test(email)) {
-            return;
-        }
-
-        try {
-            const response = await fetch(
-                contextPath + "/api/email-verification/status?email="
-                + encodeURIComponent(email),
-                { method: "GET" }
-            );
-
-            const result = await response.json();
-
-            if (response.ok && result.success && result.verified) {
-                emailVerified = true;
-                emailInput.readOnly = true;
-                sendVerificationBtn.disabled = true;
-
-                showEmailMessage("メール認証が完了しました。", "success");
-                updateSignupButton();
-            }
-        } catch (error) {
-            // 인증 메일을 클릭하기 전에는 별도 오류를 표시하지 않음
-        }
-    }
-
-    window.addEventListener("focus", refreshEmailVerificationStatus);
-
     document.querySelectorAll(".password-toggle").forEach(function (button) {
         button.addEventListener("click", function () {
             const target = document.getElementById(button.dataset.target);
@@ -253,11 +201,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (!emailVerified) {
-            event.preventDefault();
-            alert("メール認証を完了してください。");
-            return;
-        }
+		if (!emailChecked) {
+		    event.preventDefault();
+		    alert("メールアドレスの重複確認を完了してください。");
+		    return;
+		}
 
         if (password.length < 8) {
             event.preventDefault();

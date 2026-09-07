@@ -116,8 +116,7 @@
 									placeholder="example@email.com" autocomplete="email" required>
 							</div>
 
-							<button type="button" id="sendVerificationBtn"
-								class="email-auth-btn">重複確認</button>
+							<button type="button" id="checkEmailBtn" class="email-auth-btn">重複確認</button>
 
 						</div>
 
