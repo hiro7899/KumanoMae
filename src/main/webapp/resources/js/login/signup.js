@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	        && agreeCheckbox.checked
 	    );
 	}
+	
+	agreeCheckbox.addEventListener("change", updateSignupButton);
 
     function resetUserIdCheck() {
         userIdChecked = false;
@@ -71,12 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	    if (userId === "") {
 	        showUserIdMessage("IDを入力してください。", "error");
-	        userIdInput.focus();
 	        return;
 	    }
-
-	    checkUserIdBtn.disabled = true;
-	    showUserIdMessage("IDを確認しています。", "");
 
 	    try {
 	        const response = await fetch(
@@ -86,98 +84,93 @@ document.addEventListener("DOMContentLoaded", function () {
 	                headers: {
 	                    "Content-Type": "application/json"
 	                },
-	                body: JSON.stringify({
-	                    userId: userId
-	                })
+	                body: JSON.stringify({ userId: userId })
 	            }
 	        );
 
 	        const result = await response.json();
 
-	        if (!response.ok || !result.success || !result.available) {
-	            throw new Error(result.message || "すでに使用されているIDです。");
+	        if (response.ok && result.success && result.available) {
+	            userIdChecked = true;
+	            showUserIdMessage("使用可能なIDです。", "success");
+	        } else {
+	            userIdChecked = false;
+	            showUserIdMessage(
+	                result.message || "すでに使用されているIDです。",
+	                "error"
+	            );
 	        }
-
-	        userIdChecked = true;
-	        showUserIdMessage("使用可能なIDです。", "success");
 	    } catch (error) {
 	        userIdChecked = false;
-	        showUserIdMessage(error.message, "error");
-	    } finally {
-	        checkUserIdBtn.disabled = false;
-	        updateSignupButton();
+	        showUserIdMessage("IDの確認に失敗しました。", "error");
 	    }
+
+	    updateSignupButton();
 	});
 
-    sendVerificationBtn.addEventListener("click", async function () {
-        const email = emailInput.value.trim();
+	sendVerificationBtn.addEventListener("click", async function () {
+	    const email = emailInput.value.trim();
 
-        if (!emailPattern.test(email)) {
-            showEmailMessage("正しいメールアドレスを入力してください。", "error");
-            emailInput.focus();
-            return;
-        }
+	    if (!emailPattern.test(email)) {
+	        showEmailMessage("正しいメールアドレスを入力してください。", "error");
+	        return;
+	    }
 
-        sendVerificationBtn.disabled = true;
-        showEmailMessage("メールアドレスを確認しています。", "");
+	    try {
+	        const response = await fetch(
+	            contextPath + "/api/signup/check-email",
+	            {
+	                method: "POST",
+	                headers: {
+	                    "Content-Type": "application/json"
+	                },
+	                body: JSON.stringify({ email: email })
+	            }
+	        );
 
-        try {
-			const checkResponse = await fetch(
-			    contextPath + "/api/signup/check-email",
-			    {
-			        method: "POST",
-			        headers: {
-			            "Content-Type": "application/json"
-			        },
-			        body: JSON.stringify({
-			            email: email
-			        })
-			    }
-			);
+	        const result = await response.json();
 
-			const checkResult = await checkResponse.json();
-
-			if (!checkResponse.ok || !checkResult.success || !checkResult.available) {
-			    throw new Error(
-			        checkResult.message || "すでに登録されているメールアドレスです。"
+			if (response.ok && result.success && result.available) {
+			    const sendResponse = await fetch(
+			        contextPath + "/api/email-verification/send",
+			        {
+			            method: "POST",
+			            headers: {
+			                "Content-Type": "application/json"
+			            },
+			            body: JSON.stringify({
+			                email: email
+			            })
+			        }
 			    );
-			}
 
-            showEmailMessage("認証メールを送信しています。", "");
+			    const sendResult = await sendResponse.json();
 
-            const sendResponse = await fetch(
-                contextPath + "/api/email-verification/send",
-                {
-                    method: "POST",
-					headers: {
-					    "Content-Type": "application/json"
-					},
-					body: JSON.stringify({
-					    email: email
-					})
-                }
-            );
+			    if (!sendResponse.ok || !sendResult.success) {
+			        throw new Error(
+			            sendResult.message || "認証メールの送信に失敗しました。"
+			        );
+			    }
 
-            const sendResult = await sendResponse.json();
+			    verificationRequested = true;
 
-            if (!sendResponse.ok || !sendResult.success) {
-                throw new Error(
-                    sendResult.message || "認証メールの送信に失敗しました。"
-                );
-            }
-
-            verificationRequested = true;
-
-            showEmailMessage(
-                "認証メールを送信しました。メール本文のリンクをクリックして認証を完了してください。",
-                "success"
-            );
-        } catch (error) {
-            showEmailMessage(error.message, "error");
-        } finally {
-            sendVerificationBtn.disabled = false;
-        }
-    });
+			    showEmailMessage(
+			        "使用可能なメールアドレスです。認証メールを送信しました。",
+			        "success"
+			    );
+			} else {
+	            showEmailMessage(
+	                result.message || "すでに登録されているメールアドレスです。",
+	                "error"
+	            );
+	        }
+	    } 		catch (error) {
+		    showEmailMessage(
+		        error.message || "メールアドレスの確認に失敗しました。",
+		        "error"
+		    );
+		}
+	});
 
     async function refreshEmailVerificationStatus() {
         const email = emailInput.value.trim();

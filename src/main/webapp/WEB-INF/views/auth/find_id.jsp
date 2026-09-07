@@ -58,8 +58,8 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/login/find_id.css">
+<link rel="stylesheet" 
+	href="${pageContext.request.contextPath}/resources/css/login/find_id.css">
 
 </head>
 

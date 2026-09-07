@@ -19,8 +19,10 @@
 	rel="stylesheet">
 
 <!-- 프로젝트 공통 CSS & 어드민 CSS -->
-<link rel="stylesheet" href="/resources/css/main.css">
-<link rel="stylesheet" href="/resources/css/admin/list.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet" 
+	href="${pageContext.request.contextPath}/resources/css/admin/list.css">
 </head>
 <body>
 

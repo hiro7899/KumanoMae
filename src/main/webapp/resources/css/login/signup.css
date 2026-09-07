@@ -1,9 +1,4 @@
 @charset "UTF-8";
-/* =====================================================
-   signup.css
-   - signup.jsp 전용 스타일
-   - index.css / login.css와 동일한 컬러 톤 / 헤더 스타일로 통일
-   ===================================================== */
 
 :root {
   --color-bg: #ede4d1;
@@ -12,10 +7,10 @@
   --color-red-dark: #8c2c22;
   --color-mustard: #e3ac1f;
   --color-mustard-dark: #c6900f;
-  --color-ink: #332d25;       /* index.css / login.css와 동일한 짙은 브라운 */
+  --color-ink: #332d25;       
   --color-muted: #6b6355;
   --color-white: #fdfaf3;
-  --color-border: #9e9382;    /* index.css / login.css와 동일한 부드러운 테두리 색상 */
+  --color-border: #9e9382;    
 }
 
 * {
@@ -35,52 +30,6 @@ body {
   color: var(--color-ink);
 }
 
-/* =========================
-   Navbar (index.css / login.css와 동일한 다크 헤더)
-   ========================= */
-
-.header-sticky-wrap {
-  position: sticky;
-  top: 0;
-  z-index: 1050;
-  box-shadow: 0 4px 12px rgba(51, 45, 37, 0.2);
-}
-
-.navbar-jp {
-  background-color: var(--color-ink) !important;
-  border-bottom: 2px solid var(--color-mustard);
-  padding: 12px 0;
-}
-
-.logo-badge {
-  width: 40px;
-  height: 40px;
-  background-color: var(--color-red);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 1.1rem;
-}
-
-.brand-jp {
-  line-height: 1.1;
-}
-
-.brand-jp .jp-title {
-  font-weight: 900;
-  font-size: 1.15rem;
-  color: #ffffff !important;
-}
-
-.brand-jp .jp-sub {
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  color: #c9c1b0 !important;
-}
-
 .back-home {
   color: #f2ece0;
   text-decoration: none;
@@ -94,39 +43,6 @@ body {
   color: var(--color-mustard);
   border-bottom-color: var(--color-mustard);
 }
-
-/* 기본 메뉴 글자색 */
-.navbar-jp .nav-link {
-  color: #f2ece0 !important;
-  font-weight: 500;
-}
-
-.navbar-jp .nav-link:hover {
-  color: var(--color-mustard) !important;
-}
-
-/* '目撃を報告する' 메뉴 포인트 컬러 (index.css와 동일) */
-.navbar-jp .report-nav-link {
-  color: var(--color-mustard) !important;
-  font-weight: 700 !important;
-}
-
-.navbar-jp .report-nav-link:hover {
-  color: #ffffff !important;
-}
-
-/* 모바일 햄버거 버튼 (어두운 배경용) */
-.navbar-jp .navbar-toggler {
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.navbar-jp .navbar-toggler-icon {
-  filter: invert(1);
-}
-
-/* =========================
-   Signup Main
-   ========================= */
 
 .signup-main {
   min-height: calc(100vh - 180px);
@@ -143,10 +59,6 @@ body {
   border-radius: 12px;
   box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.12);
 }
-
-/* =========================
-   Header
-   ========================= */
 
 .signup-header {
   margin-bottom: 30px;
@@ -180,10 +92,6 @@ body {
   line-height: 1.7;
   margin-bottom: 0;
 }
-
-/* =========================
-   Form
-   ========================= */
 
 .form-group {
   margin-bottom: 20px;
@@ -228,10 +136,6 @@ body {
   margin: 6px 0 0;
 }
 
-/* =========================
-   Agreement
-   ========================= */
-
 .agreement-box {
   margin: 25px 0;
   padding: 14px;
@@ -254,10 +158,6 @@ body {
   accent-color: var(--color-red);
 }
 
-/* =========================
-   Signup Button
-   ========================= */
-
 .signup-submit-btn {
   width: 100%;
   height: 52px;
@@ -279,9 +179,10 @@ body {
   margin-left: 8px;
 }
 
-/* =========================
-   Login Link
-   ========================= */
+.signup-submit-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
 
 .login-link-area {
   text-align: center;
@@ -310,10 +211,6 @@ body {
   border-color: var(--color-red);
 }
 
-/* =========================
-   제보하기 플로팅 버튼 (index.css / login.css와 동일)
-   ========================= */
-
 .report-float-btn {
   position: fixed;
   right: 24px;
@@ -325,10 +222,6 @@ body {
   border: 1.5px solid var(--color-ink);
   box-shadow: 4px 5px 0 rgba(51, 45, 37, 0.2);
 }
-
-/* =========================
-   Footer
-   ========================= */
 
 .signup-footer {
   background-color: var(--color-ink);
@@ -364,9 +257,130 @@ body {
   font-size: 0.7rem;
 }
 
-/* =========================
-   Tablet
-   ========================= */
+.email-auth-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.email-auth-btn {
+    flex-shrink: 0;
+    min-width: 132px;
+    border: 2px solid var(--color-ink);
+    border-radius: 0;
+    background-color: var(--color-mustard);
+    color: var(--color-ink);
+    font-size: .78rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.email-auth-btn:hover:not(:disabled) {
+    background-color: var(--color-mustard-dark);
+}
+
+.email-auth-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.verify-btn {
+    background-color: var(--color-red);
+    color: #fff;
+}
+
+.verify-btn:hover:not(:disabled) {
+    background-color: var(--color-red-dark);
+}
+
+.email-auth-message {
+    min-height: 1.2rem;
+    margin: 7px 0 0;
+    color: var(--color-muted);
+    font-size: .75rem;
+}
+
+.email-auth-message.success {
+    color: #2d6a3d;
+    font-weight: 700;
+}
+
+.email-auth-message.error {
+    color: var(--color-red);
+    font-weight: 700;
+}
+
+.availability-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.availability-btn {
+    min-width: 104px;
+    border: 2px solid var(--color-ink);
+    border-radius: 0;
+    background-color: var(--color-bg-soft);
+    color: var(--color-ink);
+    font-size: .78rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.availability-btn:hover:not(:disabled) {
+    background-color: var(--color-ink);
+    color: #fff;
+}
+
+.availability-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.availability-message {
+    min-height: 1.2rem;
+    margin: 7px 0 0;
+    color: var(--color-muted);
+    font-size: .75rem;
+}
+
+.availability-message.success {
+    color: #2d6a3d;
+    font-weight: 700;
+}
+
+.availability-message.error {
+    color: var(--color-red);
+    font-weight: 700;
+}
+
+.password-input {
+    padding-right: 46px !important;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 3;
+    transform: translateY(-50%);
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--color-red);
+}
+
+.input-wrapper .password-toggle i {
+    position: static;
+    transform: none;
+    color: inherit;
+    font-size: 1.15rem;
+}
 
 @media (max-width: 767.98px) {
   .signup-card {
@@ -375,15 +389,7 @@ body {
   }
 }
 
-/* =========================
-   Mobile
-   ========================= */
-
 @media (max-width: 575.98px) {
-  .navbar-jp {
-    padding: 14px 0;
-  }
-
   .brand-jp .jp-sub {
     display: none;
   }
@@ -403,5 +409,23 @@ body {
 
   .signup-header h1 {
     font-size: 1.7rem;
+  }
+
+  .email-auth-row {
+    flex-direction: column;
+  }
+
+  .email-auth-btn {
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .availability-row {
+    flex-direction: column;
+  }
+
+  .availability-btn {
+    min-height: 44px;
+    width: 100%;
   }
 }

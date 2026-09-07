@@ -29,11 +29,11 @@
 	rel="stylesheet">
 
 <!-- 회원가입 CSS -->
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/login/signup.css">
 
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/login/signup.css">
 
 </head>
 
@@ -242,7 +242,9 @@
 
 	<!-- 회원가입 화면 전용 JS -->
 
-	<script src="/resources/js/login/signup.js"></script>
+	<script
+    src="${pageContext.request.contextPath}/resources/js/login/signup.js?v=20260907">
+</script>
 
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
