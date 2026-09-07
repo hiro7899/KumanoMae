@@ -92,7 +92,7 @@ public class CommunityController extends HttpServlet {
                     page = "/WEB-INF/views/community/update.jsp";
                 } else {
                     communityUpdateService.doCommand(request, response);
-                    response.sendRedirect("/community/view?cBoardId=" + request.getParameter("cBoardId"));
+                    response.sendRedirect("/community/detail?cBoardId=" + request.getParameter("cBoardId"));
                     return;
                 }
                 break;
@@ -104,13 +104,13 @@ public class CommunityController extends HttpServlet {
 
             case "/comment/add":
                 communityCommentAddService.doCommand(request, response);
-                response.sendRedirect("/community/view?cBoardId=" + request.getParameter("cBoardId"));
+                response.sendRedirect("/community/detail?cBoardId=" + request.getParameter("cBoardId"));
                 return;
 
             case "/comment/delete":
                 communityCommentDeleteService.doCommand(request, response);
                 Long redirectId = (Long) request.getAttribute("redirectCBoardId");
-                response.sendRedirect("/community/view?cBoardId=" + redirectId);
+                response.sendRedirect("/community/detail?cBoardId=" + redirectId);
                 return;
 
             default:

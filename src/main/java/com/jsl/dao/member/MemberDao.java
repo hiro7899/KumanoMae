@@ -85,4 +85,16 @@ public class MemberDao {
             return pstmt.executeUpdate();
         }
     }
+    
+    public int countActive() {
+        String sql = "SELECT COUNT(*) FROM MEMBER WHERE STATUS = 'Y'";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

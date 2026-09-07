@@ -412,10 +412,19 @@
 		}
 
 		function createMarkerInfoContent(sighting) {
+			const contextPath = document.body.dataset.contextPath || "";
+			const targetId = Number(sighting.targetId);
+			const detailLink = Number.isInteger(targetId)
+				? '<a href="' + contextPath + '/board/detail?boardId=' + encodeURIComponent(targetId) + '" ' +
+					'style="display:inline-block; margin-top:9px; color:#1f1f1f; font-size:12px; font-weight:700;">' +
+					'詳細を見る <i class="bi bi-arrow-right"></i></a>'
+				: '';
+
 			return '<div style="max-width:240px; padding:4px;">' +
 				'<strong style="display:block; margin-bottom:6px;">' + escapeHtml(sighting.title || "クマ目撃情報") + '</strong>' +
 				'<div style="font-size:12px; color:#6b6355;">危険度: ' + escapeHtml(sighting.displayRisk || "-") + '</div>' +
 				'<div style="font-size:12px; color:#6b6355; margin-top:3px;">' + escapeHtml(sighting.address || "住所情報なし") + '</div>' +
+				detailLink +
 				'</div>';
 		}
 

@@ -183,4 +183,30 @@ public class BoardDao {
             }
         }
     }
+    
+    public int countByStatus(String status) {
+        String sql = "SELECT COUNT(*) FROM BOARD WHERE STATUS = ?";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, status);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countActiveDanger() {
+        String sql = "SELECT COUNT(*) FROM BOARD WHERE STATUS = 'Y' AND RISK_LEVEL = 'DANGER' AND CLEAR_YN = 'N'";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
