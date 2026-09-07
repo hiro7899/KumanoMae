@@ -1,9 +1,4 @@
 @charset "UTF-8";
-/* =====================================================
-   login.css
-   - login.jsp 전용 스타일
-   - index.css와 동일한 컬러 톤 / 헤더 스타일로 통일
-   ===================================================== */
 
 :root {
   --color-bg: #ede4d1;
@@ -12,10 +7,10 @@
   --color-red-dark: #8c2c22;
   --color-mustard: #e3ac1f;
   --color-mustard-dark: #c6900f;
-  --color-ink: #332d25;       /* index.css와 동일한 짙은 브라운 */
+  --color-ink: #332d25;       
   --color-muted: #6b6355;
   --color-white: #fdfaf3;
-  --color-border: #9e9382;    /* index.css와 동일한 부드러운 테두리 색상 */
+  --color-border: #9e9382;    
 }
 
 * {
@@ -33,17 +28,6 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   background-color: var(--color-bg);
   color: var(--color-ink);
-}
-
-/* =========================
-   Navbar (index.css와 동일한 다크 헤더)
-   ========================= */
-
-.header-sticky-wrap {
-  position: sticky;
-  top: 0;
-  z-index: 1050;
-  box-shadow: 0 4px 12px rgba(51, 45, 37, 0.2);
 }
 
 .navbar-jp {
@@ -95,7 +79,6 @@ body {
   border-bottom-color: var(--color-mustard);
 }
 
-/* 기본 메뉴 글자색 */
 .navbar-jp .nav-link {
   color: #f2ece0 !important;
   font-weight: 500;

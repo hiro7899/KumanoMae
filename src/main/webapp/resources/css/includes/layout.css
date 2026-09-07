@@ -1,4 +1,4 @@
-/* 공통 Header */
+
 .header-sticky-wrap {
     position: sticky;
     top: 0;
@@ -77,7 +77,6 @@
     color: var(--color-ink);
 }
 
-/* 공통 Footer */
 .footer-jp {
     background-color: #332d25 !important;
     color: #f2ece0;

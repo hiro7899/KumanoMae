@@ -1,4 +1,3 @@
-
 * {box-sizing: border-box;}
 
 html,
@@ -9,198 +8,91 @@ body {
 }
 body {
     font-family: "Noto Sans JP", sans-serif;
-    background-color: #f5f6f8;
-    color: #333;
+    background-color: #ede4d1;
+    color: #1a1a1a;
 }
-
-
-/* =====================================================
-   Navbar
-   ===================================================== */
-
-.navbar-jp {
-    height: 72px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e5e5e5;
-}
-
 
 .navbar-jp .container {
     height: 100%;
 }
 
-
-/* 로고 */
-
 .navbar-jp a {
     color: inherit;
 }
-
-
-.logo-badge {
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    background-color: #222;
-    color: #ffffff;
-
-    font-size: 20px;
-    font-weight: 900;
-}
-
-
-/* 브랜드 */
-
-.brand-jp {
-    line-height: 1.2;
-}
-
-
-.jp-title {
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: #222;
-}
-
-
-.jp-sub {
-    margin-top: 3px;
-
-    font-size: 9px;
-    font-weight: 500;
-
-    letter-spacing: 0.12em;
-    color: #999;
-}
-
-
-/* 홈으로 돌아가기 */
 
 .back-home {
     display: flex;
     align-items: center;
     gap: 6px;
-
     font-size: 13px;
     font-weight: 500;
-
     color: #666 !important;
     text-decoration: none;
-
     transition: color 0.2s ease;
 }
-
 
 .back-home:hover {
     color: #222 !important;
 }
 
-
-/* =====================================================
-   Main
-   ===================================================== */
-
 .findid-main {
     min-height: calc(100vh - 72px);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 60px 20px;
+    background-color: #ede4d1;
 }
-
-
-/* Bootstrap container 너비 보정 */
 
 .findid-main .container {
     max-width: 560px;
 }
 
-
-/* =====================================================
-   Find ID Card
-   ===================================================== */
-
 .findid-card {
     width: 100%;
-
     padding: 50px 52px;
-
-    background-color: #ffffff;
-
-    border: 1px solid #e7e7e7;
-    border-radius: 14px;
-
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    background-color: #fdfaf3;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+    box-shadow: none;
 }
-
-
-/* =====================================================
-   Header
-   ===================================================== */
 
 .findid-header {
     margin-bottom: 38px;
 }
 
-
 .header-line {
     display: block;
-
     width: 42px;
     height: 3px;
-
     margin-bottom: 20px;
-
-    background-color: #222;
+    background-color: #b23a2e;
 }
-
 
 .findid-eyebrow {
     margin: 0 0 8px;
-
     font-size: 11px;
     font-weight: 700;
-
     letter-spacing: 0.18em;
-
-    color: #999;
+    color: #6b6355;
 }
 
 
 .findid-header h1 {
     margin: 0 0 14px;
-
     font-size: 28px;
     font-weight: 900;
-
     letter-spacing: -0.03em;
-
-    color: #222;
+    color: #1a1a1a;
 }
 
 
 .findid-header > p:last-child {
     margin: 0;
-
     font-size: 13px;
     line-height: 1.8;
-
-    color: #777;
+    color: #6b6355;
 }
-
-
-/* =====================================================
-   Form
-   ===================================================== */
 
 .form-group {
     margin-bottom: 24px;
@@ -209,150 +101,96 @@ body {
 
 .form-group label {
     display: block;
-
     margin-bottom: 9px;
-
     font-size: 13px;
     font-weight: 700;
-
-    color: #333;
+    color: #1a1a1a;
 }
-
-
-/* 선택 입력 표시 */
 
 .optional {
     margin-left: 5px;
-
     font-size: 11px;
     font-weight: 400;
-
     color: #aaa;
 }
-
-
-/* =====================================================
-   Input
-   ===================================================== */
 
 .input-wrapper {
     position: relative;
 }
 
-
 .input-wrapper > i {
     position: absolute;
-
     left: 15px;
     top: 50%;
-
     transform: translateY(-50%);
-
     z-index: 2;
-
     font-size: 16px;
-
     color: #aaa;
-
     pointer-events: none;
 }
 
-
 .input-wrapper .form-control {
     height: 50px;
-
     padding: 0 15px 0 44px;
-
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-
-    background-color: #ffffff;
-
+    border: 1px solid #cfc4ae;
+    border-radius: 0;
+    background-color: #fdfaf3;
     font-family: "Noto Sans JP", sans-serif;
     font-size: 14px;
-
     color: #333;
-
     box-shadow: none;
-
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
 }
 
-
 .input-wrapper .form-control::placeholder {
     color: #b5b5b5;
 }
 
-
 .input-wrapper .form-control:focus {
     border-color: #555;
-
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
-
     outline: none;
 }
-
-
-/* =====================================================
-   Submit Button
-   ===================================================== */
 
 .findid-submit-btn {
     width: 100%;
     height: 52px;
-
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-
     margin-top: 10px;
-
-    border: none;
-    border-radius: 8px;
-
-    background-color: #222;
-    color: #ffffff;
-
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+    background-color: #e3ac1f;
+    color: #1a1a1a;
     font-family: "Noto Sans JP", sans-serif;
     font-size: 14px;
     font-weight: 700;
-
     cursor: pointer;
-
     transition:
         background-color 0.2s ease,
         transform 0.2s ease;
 }
 
-
 .findid-submit-btn i {
     font-size: 15px;
-
     transition: transform 0.2s ease;
 }
 
-
 .findid-submit-btn:hover {
-    background-color: #111;
+    background-color: #c6900f;
 }
-
 
 .findid-submit-btn:hover i {
     transform: translateX(4px);
 }
 
-
 .findid-submit-btn:active {
     transform: translateY(1px);
 }
-
-
-/* =====================================================
-   Link Area
-   ===================================================== */
 
 .find-link-area {
     display: flex;
@@ -374,150 +212,37 @@ body {
     text-decoration: underline;
 }
 
-
-/* =====================================================
-   Responsive
-   ===================================================== */
-
 @media (max-width: 576px) {
 
-
-    .navbar-jp {
-        height: 64px;
-    }
-
-
-    .logo-badge {
-        width: 36px;
-        height: 36px;
-
-        font-size: 17px;
-    }
-
-
-    .jp-title {
-        font-size: 15px;
-    }
-
-
-    .jp-sub {
-        font-size: 8px;
-    }
-
-
-    .back-home {
-        font-size: 12px;
-    }
-
-
-    .findid-main {
-        min-height: calc(100vh - 64px);
-
-        padding: 35px 15px;
-    }
-
-
-    .findid-card {
-        padding: 38px 24px;
-
-        border-radius: 12px;
-    }
-
-
-    .findid-header h1 {
-        font-size: 24px;
-    }
-
-
-    .findid-header > p:last-child {
-        font-size: 12px;
-    }
-
-
-    .find-link-area {
-        flex-wrap: wrap;
-
-        gap: 4px;
-    }
-
-
-    .link-sep {
-        margin: 0 7px;
-    }
-
+.back-home {
+    font-size: 12px;
 }
 
-body {
-    background-color: #ede4d1;
-    color: #1a1a1a;
-}
-
-.header-sticky-wrap .navbar-jp {
-    height: auto;
-    padding: 12px 0;
-    background-color: #1a1a1a !important;
-    border-bottom: 2px solid #e3ac1f;
-}
-
-.header-sticky-wrap .logo-badge {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #b23a2e;
-    color: #fff;
-}
-
-.header-sticky-wrap .brand-jp .jp-title {
-    color: #fff !important;
-}
-
-.header-sticky-wrap .brand-jp .jp-sub {
-    color: #c9c1b0 !important;
-}
-
-.header-sticky-wrap .nav-link {
-    color: #f2ece0 !important;
-}
-
-.header-sticky-wrap .nav-link:hover,
-.header-sticky-wrap .report-nav-link {
-    color: #e3ac1f !important;
-}
 
 .findid-main {
-    background-color: #ede4d1;
+    min-height: calc(100vh - 64px);
+    padding: 35px 15px;
 }
 
 .findid-card {
-    background-color: #fdfaf3;
-    border: 2px solid #1a1a1a;
-    border-radius: 0;
-    box-shadow: none;
+    padding: 38px 24px;
 }
 
-.header-line {
-    background-color: #b23a2e;
+.findid-header h1 {
+    font-size: 24px;
 }
 
-.findid-header h1,
-.form-group label {
-    color: #1a1a1a;
-}
-
-.findid-eyebrow,
 .findid-header > p:last-child {
-    color: #6b6355;
+    font-size: 12px;
 }
 
-.input-wrapper .form-control {
-    background-color: #fdfaf3;
-    border-color: #cfc4ae;
-    border-radius: 0;
+.find-link-area {
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
-.findid-submit-btn {
-    background-color: #e3ac1f;
-    border: 2px solid #1a1a1a;
-    border-radius: 0;
-    color: #1a1a1a;
+.link-sep {
+    margin: 0 7px;
+}
+
 }

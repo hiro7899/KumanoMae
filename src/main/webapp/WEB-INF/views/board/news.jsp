@@ -22,8 +22,10 @@
 	rel="stylesheet">
 
 <!-- 전용 CSS -->
-<link rel="stylesheet" href="/resources/css/main.css">
-<link rel="stylesheet" href="/resources/css/index.css">
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/index.css">
 
 </head>
 <body>
