@@ -57,6 +57,13 @@
 
 		<!-- ===================== 메인 콘텐츠 영역 ===================== -->
 		<main class="admin-content">
+			<c:if test="${not empty errorMsg}">
+				<div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+					<i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+					<span><c:out value="${errorMsg}" /></span>
+				</div>
+			</c:if>
+
 			<!-- 상단 타이틀 -->
 			<div class="d-flex justify-content-between align-items-center mb-4">
 				<h2 class="fw-bold m-0">
@@ -139,8 +146,8 @@
 													</c:otherwise>
 												</c:choose></td>
 											<td class="text-start fw-bold"><a
-												href="${pageContext.request.contextPath}/community/view?cBoardId=${item.cBoardId}"
-												target="_blank" class="text-decoration-none text-dark">
+												href="${pageContext.request.contextPath}/admin/community/detail?cBoardId=${item.cBoardId}"
+												class="text-decoration-none text-dark">
 													<c:out value="${item.title}" />
 											</a></td>
 											<td>${item.memberId}</td>
@@ -157,57 +164,37 @@
 												<div class="d-flex justify-content-center gap-1">
 													<c:choose>
 														<c:when test="${item.status eq 'Y'}">
-															<a
-																href="${pageContext.request.contextPath}/admin/community/hide?cBoardId=${item.cBoardId}"
-																class="btn btn-outline-danger btn-sm fw-bold">非表示</a>
+															<form action="${pageContext.request.contextPath}/admin/community/hide" method="post" class="d-inline"
+																onsubmit="return confirm('この投稿を非表示にしますか？');">
+																<input type="hidden" name="cBoardId" value="${item.cBoardId}">
+																<button type="submit" class="btn btn-outline-danger btn-sm fw-bold">非表示</button>
+															</form>
 														</c:when>
 														<c:otherwise>
-															<a
-																href="${pageContext.request.contextPath}/admin/community/show?cBoardId=${item.cBoardId}"
-																class="btn btn-outline-success btn-sm fw-bold">再表示</a>
+															<form action="${pageContext.request.contextPath}/admin/community/show" method="post" class="d-inline"
+																onsubmit="return confirm('この投稿を再表示しますか？');">
+																<input type="hidden" name="cBoardId" value="${item.cBoardId}">
+																<button type="submit" class="btn btn-outline-success btn-sm fw-bold">再表示</button>
+															</form>
 														</c:otherwise>
 													</c:choose>
-													<a
-														href="${pageContext.request.contextPath}/admin/community/delete?cBoardId=${item.cBoardId}"
-														class="btn btn-danger btn-sm fw-bold"
-														onclick="return confirm('本当に削除しますか？');">削除</a>
+													<form action="${pageContext.request.contextPath}/admin/community/delete" method="post" class="d-inline"
+														onsubmit="return confirm('この投稿を削除しますか？');">
+														<input type="hidden" name="cBoardId" value="${item.cBoardId}">
+														<button type="submit" class="btn btn-danger btn-sm fw-bold">削除</button>
+													</form>
 												</div>
 											</td>
 										</tr>
 									</c:forEach>
-								</c:when>
-								<c:otherwise>
-									<!-- 샘플 데이터 -->
-									<tr>
-										<td>5</td>
-										<td><span class="badge bg-info text-dark">レビュー</span></td>
-										<td class="text-start fw-bold">札幌近郊の登山道でクマを発見</td>
-										<td>12</td>
-										<td>2026-08-20 07:30</td>
-										<td><span class="badge bg-success">表示中</span></td>
-										<td>
-											<div class="d-flex justify-content-center gap-1">
-												<button class="btn btn-outline-danger btn-sm fw-bold">非表示</button>
-												<button class="btn btn-danger btn-sm fw-bold"
-													onclick="return confirm('本当に削除しますか？');">削除</button>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>4</td>
-										<td><span class="badge bg-secondary">自由</span></td>
-										<td class="text-start fw-bold">不適切な書き込みテスト</td>
-										<td>7</td>
-										<td>2026-08-19 14:20</td>
-										<td><span class="badge bg-secondary">非表示</span></td>
-										<td>
-											<div class="d-flex justify-content-center gap-1">
-												<button class="btn btn-outline-success btn-sm fw-bold">再表示</button>
-												<button class="btn btn-danger btn-sm fw-bold"
-													onclick="return confirm('本当に削除しますか？');">削除</button>
-											</div>
-										</td>
-									</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan="7" class="text-center text-muted py-5">
+										<i class="bi bi-inbox fs-3 d-block mb-2" aria-hidden="true"></i>
+										該当する投稿はありません。
+									</td>
+								</tr>
 								</c:otherwise>
 							</c:choose>
 						</tbody>
