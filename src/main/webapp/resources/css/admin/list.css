@@ -109,3 +109,146 @@
     padding: 0.8rem;
     vertical-align: middle;
 }
+
+/* 회원 관리: 상태와 관리 작업의 위계를 분리해 테이블 밀도를 낮춘다. */
+.member-table-card {
+    box-shadow: 6px 6px 0 #000;
+}
+
+.member-management-table th {
+    white-space: nowrap;
+}
+
+.member-management-table td {
+    font-size: 0.9rem;
+}
+
+.member-row-inactive td {
+    background: #f5f2ec !important;
+    color: #8a8479;
+}
+
+.member-role-badge,
+.member-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 82px;
+    padding: 0.36rem 0.62rem;
+    border: 1.5px solid #1f1f1f;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.member-role-admin {
+    background: var(--color-red, #c0392b);
+    color: #fff;
+}
+
+.member-role-member {
+    background: #ece5d8;
+    color: #2b2b2b;
+}
+
+.member-status-active {
+    background: #e4f3e7;
+    color: #236537;
+}
+
+.member-status-stopped {
+    background: #353535;
+    color: #fff;
+}
+
+.member-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 184px;
+}
+
+.member-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    min-height: 32px;
+    padding: 0.35rem 0.55rem;
+    border: 1.5px solid #1f1f1f;
+    border-radius: 6px;
+    background: #fff;
+    color: #1f1f1f;
+    font-size: 0.75rem;
+    font-weight: 800;
+    white-space: nowrap;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.member-action-button:hover {
+    transform: translateY(-1px);
+}
+
+.member-grade-button:hover {
+    background: var(--color-mustard, #e5a93c);
+}
+
+.member-stop-button {
+    border-color: var(--color-red, #c0392b);
+    color: var(--color-red, #c0392b);
+}
+
+.member-stop-button:hover {
+    background: var(--color-red, #c0392b);
+    color: #fff;
+}
+
+.member-actions-muted {
+    color: #8a8479;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.member-grade-modal {
+    overflow: hidden;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0 #000;
+}
+
+.member-grade-modal .modal-header {
+    border-bottom: 2px solid #000;
+    background: var(--color-ink, #2b2b2b);
+    color: #fff;
+}
+
+.member-grade-modal .modal-title {
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.member-grade-modal .modal-body {
+    padding: 1.5rem;
+}
+
+.member-grade-target {
+    margin-bottom: 1.25rem;
+    color: #6c655b;
+    font-size: 0.88rem;
+}
+
+.member-grade-modal .modal-footer {
+    border-top: 1px solid #d7cfbf;
+}
+
+@media (max-width: 767.98px) {
+    .admin-content {
+        padding: 1.25rem;
+    }
+
+    .member-actions {
+        min-width: 164px;
+    }
+}
