@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,13 +27,13 @@ import com.jsl.dto.member.LoginUserDto;
 import com.jsl.exeption.CommunityException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
+import com.jsl.util.UploadPathUtil;
 
 public class CommunityUpdateService implements Command {
 
-    private static final int MAX_FILE_COUNT = 5;
-    private static final String UPLOAD_ROOT = "D:/upload";
-    private static final String COMMUNITY_UPLOAD_DIR = "/community";
-    private static final String COMMUNITY_WEB_PATH = "/uploads/community";
+	private static final int MAX_FILE_COUNT = 5;
+	private static final String COMMUNITY_SUBDIR = "/community";
+	
     private static final Set<String> VALID_CATEGORIES = Set.of("REVIEW", "GEAR", "FREE");
 
     private final CommunityBoardDao communityBoardDao = new CommunityBoardDao();
@@ -86,37 +87,39 @@ public class CommunityUpdateService implements Command {
         List<File> oldPhysicalFiles = new ArrayList<File>();
 
         try {
-            if (!fileParts.isEmpty()) {
-                File uploadFolder = new File(UPLOAD_ROOT + COMMUNITY_UPLOAD_DIR);
-                if (!uploadFolder.exists() && !uploadFolder.mkdirs()) {
-                    throw new IOException("アップロードフォルダの作成に失敗しました。");
-                }
+        	if (!fileParts.isEmpty()) {
+        	    String webRelativeDir = UploadPathUtil.getUploadDir() + COMMUNITY_SUBDIR;
+        	    ServletContext ctx = request.getServletContext();
+        	    File uploadFolder = new File(ctx.getRealPath(webRelativeDir));
 
-                // 교체 대상이 될 기존 파일들의 실제 경로를 미리 확보 (커밋 후 삭제)
-                for (var f : communityFileDao.selectFilesByBoardId(cBoardId)) {
-                    oldPhysicalFiles.add(new File(uploadFolder, f.getSaveName()));
-                }
+        	    if (!uploadFolder.exists() && !uploadFolder.mkdirs()) {
+        	        throw new IOException("アップロードフォルダの作成に失敗しました。");
+        	    }
 
-                for (Part part : fileParts) {
-                    String originName = part.getSubmittedFileName();
-                    String ext = extractExtension(originName);
-                    String saveName = UUID.randomUUID().toString() + ext;
+        	    for (var f : communityFileDao.selectFilesByBoardId(cBoardId)) {
+        	        oldPhysicalFiles.add(new File(uploadFolder, f.getSaveName()));
+        	    }
 
-                    File target = new File(uploadFolder, saveName);
-                    savedFiles.add(target);
+        	    for (Part part : fileParts) {
+        	        String originName = part.getSubmittedFileName();
+        	        String ext = extractExtension(originName);
+        	        String saveName = UUID.randomUUID().toString() + ext;
 
-                    try (InputStream in = part.getInputStream()) {
-                        Files.copy(in, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    }
+        	        File target = new File(uploadFolder, saveName);
+        	        savedFiles.add(target);
 
-                    CommunityFileDto fileDto = new CommunityFileDto();
-                    fileDto.setOriginName(originName);
-                    fileDto.setSaveName(saveName);
-                    fileDto.setFilePath(COMMUNITY_WEB_PATH);
-                    fileDto.setFileSize((int) part.getSize());
-                    newFileList.add(fileDto);
-                }
-            }
+        	        try (InputStream in = part.getInputStream()) {
+        	            Files.copy(in, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        	        }
+
+        	        CommunityFileDto fileDto = new CommunityFileDto();
+        	        fileDto.setOriginName(originName);
+        	        fileDto.setSaveName(saveName);
+        	        fileDto.setFilePath(webRelativeDir); // ★ 웹 경로
+        	        fileDto.setFileSize((int) part.getSize());
+        	        newFileList.add(fileDto);
+        	    }
+        	}
 
             try (Connection conn = DBManager.getConnection()) {
                 try {

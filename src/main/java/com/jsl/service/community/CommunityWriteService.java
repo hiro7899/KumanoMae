@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,13 +27,12 @@ import com.jsl.dto.member.LoginUserDto;
 import com.jsl.exeption.CommunityException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
+import com.jsl.util.UploadPathUtil;
 
 public class CommunityWriteService implements Command {
 
-    private static final int MAX_FILE_COUNT = 5; // BOARD(3)와 별개 값
-    private static final String UPLOAD_ROOT = "D:/upload";
-    private static final String COMMUNITY_UPLOAD_DIR = "/community";
-    private static final String COMMUNITY_WEB_PATH = "/uploads/community";
+	private static final int MAX_FILE_COUNT = 5;
+	private static final String COMMUNITY_SUBDIR = "/community";
     private static final Set<String> VALID_CATEGORIES = Set.of("REVIEW", "GEAR", "FREE");
 
     private final CommunityBoardDao communityBoardDao = new CommunityBoardDao();
@@ -59,7 +59,10 @@ public class CommunityWriteService implements Command {
             throw new CommunityException("写真は最大" + MAX_FILE_COUNT + "枚まで添付できます。");
         }
 
-        File uploadFolder = new File(UPLOAD_ROOT + COMMUNITY_UPLOAD_DIR);
+        String webRelativeDir = UploadPathUtil.getUploadDir() + COMMUNITY_SUBDIR; // /resources/img/uploads/community
+        ServletContext ctx = request.getServletContext();
+        File uploadFolder = new File(ctx.getRealPath(webRelativeDir));
+
         if (!uploadFolder.exists() && !uploadFolder.mkdirs()) {
             throw new IOException("アップロードフォルダの作成に失敗しました。");
         }
@@ -83,7 +86,7 @@ public class CommunityWriteService implements Command {
                 CommunityFileDto fileDto = new CommunityFileDto();
                 fileDto.setOriginName(originName);
                 fileDto.setSaveName(saveName);
-                fileDto.setFilePath(COMMUNITY_WEB_PATH);
+                fileDto.setFilePath(webRelativeDir);
                 fileDto.setFileSize((int) part.getSize());
                 fileList.add(fileDto);
             }

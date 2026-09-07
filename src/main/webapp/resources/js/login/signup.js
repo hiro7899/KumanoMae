@@ -77,10 +77,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	    }
 
 	    try {
-	        const response = await fetch(
-	            contextPath + "/api/signup/check-user-id",
-	            {
-	                method: "POST",
+			const response = await fetch(
+			    contextPath + "/api/signup/check-user-id?userId="
+			    + encodeURIComponent(userId),
+			    {
+			        method: "POST",
 	                headers: {
 	                    "Content-Type": "application/json"
 	                },
@@ -118,9 +119,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	    try {
 	        const response = await fetch(
-	            contextPath + "/api/signup/check-email",
-	            {
-	                method: "POST",
+				contextPath + "/api/signup/check-email?email="
+				    + encodeURIComponent(email),
+				    {
+				        method: "POST",
 	                headers: {
 	                    "Content-Type": "application/json"
 	                },
@@ -132,8 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 			if (response.ok && result.success && result.available) {
 			    const sendResponse = await fetch(
-			        contextPath + "/api/email-verification/send",
-			        {
+					contextPath + "/api/email-verification/send?email="
+					    + encodeURIComponent(email),
+					    {
 			            method: "POST",
 			            headers: {
 			                "Content-Type": "application/json"

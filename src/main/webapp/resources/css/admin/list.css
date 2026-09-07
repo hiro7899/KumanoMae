@@ -1,7 +1,4 @@
 @charset "UTF-8";
-
-<<<<<<< Upstream, based on branch 'feature/byeonggyu' of https://github.com/hiro7899/KumanoMae.git
-<<<<<<< HEAD
 /* =========================================================
    admin.css - KUMANO_MAE 관리자 전용 스타일
    ========================================================= */
@@ -20,20 +17,16 @@
     flex-shrink: 0;
 }
 /* 레이아웃 구조 */
-=======
-@import url("layout.css");
-
->>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
-=======
-@import url("layout.css");
-
->>>>>>> 760ad85 Style: ヘッダー・フッターの重複箇所を整理して統一する
 .admin-wrapper {
-    display: flex;
+    display: grid !important;
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: stretch;
     min-height: 100vh;
 }
 
 .admin-sidebar {
+    grid-column: 1;
+    grid-row: 1;
     width: 260px;
     background-color: var(--color-ink, #2b2b2b);
     color: #fff;
@@ -42,6 +35,9 @@
 }
 
 .admin-content {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
     flex-grow: 1;
     background-color: var(--color-bg, #fcf8f2);
     padding: 2rem;
