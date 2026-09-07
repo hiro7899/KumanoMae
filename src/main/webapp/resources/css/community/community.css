@@ -1,16 +1,11 @@
 @charset "UTF-8";
-/* =====================================================
-   community.css
-   - 커뮤니티 게시판 전용 스타일 (index.css 변수 재활용)
-   ===================================================== */
 
-/* 커뮤니티 카드가 들어가는 전체 배경 및 구조 */
 .community-container {
     padding-top: 2rem;
     padding-bottom: 4rem;
 }
 
-/* 커뮤니티 테이블 카드 */
+
 .community-card {
     border: none;
     border-radius: 4px;
@@ -19,7 +14,7 @@
     overflow: hidden;
 }
 
-/* 커뮤니티 테이블 헤더/본문 */
+
 .community-table {
     margin-bottom: 0;
     color: var(--color-ink, #332d25);
@@ -47,6 +42,7 @@
     background-color: #f5efe3;
 }
 
+<<<<<<< HEAD
 .community-table th,
 .community-table td {
     white-space: nowrap;
@@ -96,6 +92,8 @@
 }
 
 /* 카테고리 태그 뱃지 */
+=======
+>>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
 .badge-cat-board {
     background-color: var(--color-bg-soft, #e4d9c1);
     color: var(--color-ink, #332d25);
@@ -112,7 +110,6 @@
     color: #ffffff;
 }
 
-/* 게시물 비어있음 문구 */
 .empty-msg-box {
     padding: 80px 0;
     color: var(--color-muted, #6b6355);
@@ -125,9 +122,6 @@
     margin-bottom: 12px;
 }
 
-/* =====================================================
-   커뮤니티 글쓰기/수정 폼 전용 스타일
-   ===================================================== */
 .community-form-card {
     border: none;
     border-radius: 6px;
@@ -151,9 +145,6 @@
     box-shadow: 0 0 0 0.25rem rgba(227, 172, 31, 0.25);
 }
 
-/* =====================================================
-   커뮤니티 상세보기 전용 스타일
-   ===================================================== */
 .community-detail-card {
     border: none;
     border-radius: 6px;
@@ -176,9 +167,6 @@
     margin-bottom: 10px;
 }
 
-/* =====================================================
-   뉴스형(가로 카드) 리스트 스타일
-   ===================================================== */
 .news-item-card {
     background-color: #fdfaf3;
     border: 1px solid var(--color-border, #9e9382);
@@ -200,7 +188,6 @@
     background-color: #e4d9c1;
 }
 
-/* 모바일 화면 대응 */
 @media (max-width: 576px) {
     .news-thumb-img {
         width: 100%;
@@ -208,9 +195,6 @@
     }
 }
 
-/* =====================================================
-   커뮤니티 목록 화면
-   ===================================================== */
 .community-container {
     max-width: 960px;
     padding-top: 3rem;
@@ -465,9 +449,6 @@
     }
 }
 
-/* =====================================================
-   커뮤니티 상세 화면
-   ===================================================== */
 .community-detail-container {
     max-width: 880px;
     padding-top: 2rem;
@@ -819,9 +800,6 @@
     }
 }
 
-/* =====================================================
-   커뮤니티 글쓰기/수정 화면
-   ===================================================== */
 .community-write-container {
     max-width: 820px;
     padding-top: 2rem;

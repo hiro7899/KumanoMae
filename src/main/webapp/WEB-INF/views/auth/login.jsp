@@ -144,10 +144,10 @@
 
 							</div>
 
-							<div class="save-id-option">
-								<input type="checkbox" id="saveUserId" name="saveUserId"
-									value="true"> <label for="saveUserId">IDを保存</label>
-							</div>
+							<label class="save-id-option" for="saveUserId"> <input
+								type="checkbox" id="saveUserId" name="saveUserId" value="true">
+								<span>IDを保存</span>
+							</label>
 
 						</div>
 

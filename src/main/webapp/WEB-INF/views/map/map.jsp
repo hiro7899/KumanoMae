@@ -30,10 +30,10 @@
 	rel="stylesheet">
 
 <!-- 이 화면 전용 CSS -->
-<link rel="stylesheet" href="/resources/css/map/map.css">
-
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet" 
+	href="${pageContext.request.contextPath}/resources/css/map/map.css">
 
 </head>
 
