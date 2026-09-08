@@ -22,17 +22,10 @@
 	rel="stylesheet">
 
 <!-- 전용 CSS -->
-<<<<<<< HEAD
-<link rel="stylesheet" href="/resources/css/main.css">
-<link rel="stylesheet" href="/resources/css/index.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
-=======
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
->>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
 
 </head>
 <body>

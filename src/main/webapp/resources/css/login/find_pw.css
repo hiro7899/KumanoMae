@@ -177,25 +177,3 @@ body {
         font-size: 24px;
     }
 }
-.find-result-message {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 0 20px;
-    padding: 12px 14px;
-    border-left: 5px solid;
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
-.find-result-message.success {
-    color: #2d6a3f;
-    border-color: #2d6a3f;
-    background-color: #dff1e4;
-}
-
-.find-result-message.error {
-    color: #8c2c22;
-    border-color: #b23a2e;
-    background-color: #f9ded9;
-}
