@@ -8,11 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.jsl.exeption.BoardReportException;
+import com.jsl.exeption.EmailNotVerifiedException;
 import com.jsl.service.board.BoardListService;
 import com.jsl.service.board.BoardReportService;
+import com.jsl.service.member.EmailVerificationGuardService;
 
 @WebServlet("/board/*")
 @MultipartConfig(
@@ -25,6 +26,7 @@ public class BoardController extends HttpServlet {
 
     private final BoardListService boardListService = new BoardListService();
     private final BoardReportService boardReportService = new BoardReportService();
+    private final EmailVerificationGuardService emailVerificationGuardService = new EmailVerificationGuardService();
 
     public BoardController() {
         super();
@@ -61,15 +63,15 @@ public class BoardController extends HttpServlet {
             break;
 
         case "/report":
-            HttpSession session = request.getSession(false);
-
-            if (session == null || session.getAttribute("user") == null) {
-                response.sendRedirect(request.getContextPath() + "/login");
+        	try {
+                emailVerificationGuardService.checkVerified(request);
+            } catch (EmailNotVerifiedException e) {
+                response.sendRedirect("LOGIN_REQUIRED".equals(e.getCode()) ? "/login" : "/user/email-verification");
                 return;
             }
 
             if ("GET".equalsIgnoreCase(request.getMethod())) {
-                page = "/WEB-INF/views/board/report.jsp";
+                page = "/WEB-INF/views/board/write.jsp";
             } else {
                 try {
                     boardReportService.doCommand(request, response);
