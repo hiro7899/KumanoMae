@@ -98,3 +98,127 @@
     padding: 0.8rem;
     vertical-align: middle;
 }
+
+/* 관리자 커뮤니티 목록 상태·카테고리 색상 */
+.admin-table .badge.bg-info {
+    background-color: #18b9db !important;
+    color: #12303a !important;
+}
+
+.admin-table .badge.bg-warning {
+    background-color: var(--color-mustard, #e3ac1f) !important;
+    color: var(--color-ink, #332d25) !important;
+}
+
+.admin-table .badge.bg-secondary {
+    background-color: #737d86 !important;
+    color: #fff !important;
+}
+
+.admin-table .badge.bg-success {
+    background-color: #198754 !important;
+    color: #fff !important;
+}
+
+.admin-table .btn-outline-danger,
+.admin-table .btn-outline-success,
+.admin-table .btn-danger {
+    border-width: 1.5px;
+    font-weight: 700;
+}
+
+.admin-table .btn-danger {
+    background-color: #d9364f;
+    border-color: #d9364f;
+}
+
+.admin-table .btn-danger:hover {
+    background-color: #b92d43;
+    border-color: #b92d43;
+}
+
+/* 관리자 사용자 목록 배지·관리 버튼 */
+.member-role-badge,
+.member-status-badge {
+    display: inline-block;
+    padding: .35rem .65rem;
+    border-radius: .45rem;
+    font-size: .82rem;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.member-role-admin {
+    background-color: var(--color-mustard, #e3ac1f);
+    color: var(--color-ink, #332d25);
+}
+
+.member-role-member {
+    background-color: #18b9db;
+    color: #12303a;
+}
+
+.member-status-active {
+    background-color: #198754;
+    color: #fff;
+}
+
+.member-status-stopped {
+    background-color: #737d86;
+    color: #fff;
+}
+
+.member-row-inactive {
+    background-color: #f3f0ea;
+    color: #777;
+}
+
+.member-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    flex-wrap: wrap;
+}
+
+.member-action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .38rem .65rem;
+    border: 1.5px solid currentColor;
+    border-radius: .4rem;
+    background: #fff;
+    font-size: .82rem;
+    font-weight: 700;
+    line-height: 1.1;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.member-grade-button {
+    color: #1769aa;
+}
+
+.member-grade-button:hover {
+    background-color: #e7f3fb;
+    transform: translateY(-1px);
+}
+
+.member-stop-button {
+    color: #d9364f;
+}
+
+.member-stop-button:hover {
+    background-color: #fff0f2;
+    transform: translateY(-1px);
+}
+
+.member-actions-muted {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    color: #737d86;
+    font-size: .82rem;
+    font-weight: 700;
+}

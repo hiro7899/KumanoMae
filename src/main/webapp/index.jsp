@@ -190,8 +190,40 @@
 		</div>
 	</section>
 
-	<%-- ===================== 最新ニュース ===================== --%>
+	<%-- ===================== 주요 소식 바로가기 ===================== --%>
 	<section class="container my-5">
+		<h3 class="section-title-jp"><span class="dash">―</span>主要なお知らせ</h3>
+		<div class="row g-4 feature-links">
+			<div class="col-md-4">
+				<a class="feature-link-card" href="${pageContext.request.contextPath}/community/list">
+					<div class="feature-link-icon"><i class="bi bi-people-fill"></i></div>
+					<div class="feature-link-content"><span class="feature-link-label">COMMUNITY</span><h4>コミュニティ</h4>
+						<p>登山装備のレビューや山の情報をみんなで共有しましょう。</p><span class="feature-link-more">コミュニティを見る <i class="bi bi-arrow-right"></i></span>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-4">
+				<a class="feature-link-card feature-link-card-alert" href="${pageContext.request.contextPath}/board/report">
+					<div class="feature-link-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+					<div class="feature-link-content"><span class="feature-link-label">SIGHTING REPORT</span><h4>目撃情報を報告</h4>
+						<p>クマを見かけたら、地域の安全のために情報を届けてください。</p><span class="feature-link-more">目撃情報を報告する <i class="bi bi-arrow-right"></i></span>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-4">
+				<a class="feature-link-card" href="${pageContext.request.contextPath}/board/news">
+					<div class="feature-link-icon"><i class="bi bi-newspaper"></i></div>
+					<div class="feature-link-content"><span class="feature-link-label">LATEST NEWS</span><h4>ニュース・お知らせ</h4>
+						<c:choose><c:when test="${not empty newsList}"><c:forEach var="news" items="${newsList}" end="0"><p><c:out value="${news.title}" /></p></c:forEach></c:when><c:otherwise><p>最新のニュースと自治体からのお知らせを確認できます。</p></c:otherwise></c:choose>
+						<span class="feature-link-more">ニュースを見る <i class="bi bi-arrow-right"></i></span>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<%-- 기존 뉴스 카드 영역은 주요 소식 카드로 대체 --%>
+	<section class="container my-5 home-news-legacy">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>最新ニュース
 		</h3>

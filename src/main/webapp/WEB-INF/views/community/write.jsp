@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>新規投稿 - KUMANO_MAE</title>
 
-<<<<<<< HEAD
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +15,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/community.css">
-=======
     <!-- Bootstrap 5 CDN & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -29,7 +27,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/community.css">
->>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
 </head>
 <body>
     <%@ include file="/WEB-INF/views/includes/header.jsp"%>
