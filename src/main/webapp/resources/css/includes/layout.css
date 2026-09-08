@@ -146,7 +146,7 @@
     padding: .45rem 0;
     border: 1px solid var(--color-border, #9e9382);
     border-radius: 6px;
-    background-color: var(--color-bg, #ede4d1);
+    background-color: #cdbb9c;
     box-shadow: 0 12px 24px rgba(51, 45, 37, .16);
 }
 

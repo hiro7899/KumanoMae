@@ -54,9 +54,9 @@
 									クマ目撃情報 </a></li>
 							<li><a class="dropdown-item" href="${pageContext.request.contextPath}/board/news">
 									ニュース・お知らせ </a></li>
-							<li><a class="dropdown-item" target="_blank"
+							<li><a class="dropdown-item" target="_blank" rel="noopener noreferrer"
 								href="https://webshop.montbell.jp/goods/list.php?category=379300">
-									関連装備ショッピング <i class="bi bi-box-arrow-up-right ms-1"></i></a></li>
+									関連装備を見る（外部サイト） <i class="bi bi-box-arrow-up-right ms-1"></i></a></li>
 						</ul></li>
 
 				<c:choose>
@@ -69,10 +69,11 @@
 								</li>
 							</c:if>
 
-							<li class="nav-item"><span class="nav-link text-light">
-									${sessionScope.user.userName}さま </span></li>
+							<li class="nav-item d-lg-none"><a class="nav-link text-light user-profile-link"
+								href="${pageContext.request.contextPath}/user/profile">
+									${sessionScope.user.userName}さま </a></li>
 
-							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
+							<li class="nav-item d-lg-none"><a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
 							</li>
 						</c:when>
 
@@ -88,12 +89,19 @@
 				</ul>
 			</div>
 
-			<c:if test="${empty sessionScope.user}">
-				<div class="auth-nav-links d-none d-lg-flex align-items-center">
-					<a class="nav-link auth-login-link" href="${pageContext.request.contextPath}/login">ログイン</a>
-					<a class="nav-link auth-signup-link" href="${pageContext.request.contextPath}/signup">会員登録</a>
-				</div>
-			</c:if>
+			<div class="auth-nav-links d-none d-lg-flex align-items-center">
+				<c:choose>
+					<c:when test="${not empty sessionScope.user}">
+						<a class="nav-link text-light user-profile-link" href="${pageContext.request.contextPath}/user/profile">
+							${sessionScope.user.userName}さま</a>
+						<a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
+					</c:when>
+					<c:otherwise>
+						<a class="nav-link auth-login-link" href="${pageContext.request.contextPath}/login">ログイン</a>
+						<a class="nav-link auth-signup-link" href="${pageContext.request.contextPath}/signup">会員登録</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
 
 		</div>
 	</nav>
