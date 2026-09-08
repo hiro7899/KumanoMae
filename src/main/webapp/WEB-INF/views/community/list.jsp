@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -65,8 +66,10 @@
                     <tr>
                         <th scope="col" class="community-title-column">タイトル</th>
                         <th scope="col">カテゴリ</th>
+                        <th scope="col">投稿者</th>
                         <th scope="col" class="community-number-column">閲覧数</th>
                         <th scope="col" class="community-number-column">いいね</th>
+                        <th scope="col" class="community-number-column">コメント</th>
                         <th scope="col" class="community-date-column">投稿日</th>
                     </tr>
                 </thead>
@@ -85,15 +88,17 @@
                                     <c:otherwise><span class="badge badge-cat-board"><c:out value="${board.category}"/></span></c:otherwise>
                                 </c:choose>
                             </td>
+                            <td><c:out value="${board.writerName}"/></td>
                             <td class="community-number-column"><c:out value="${board.viewCnt}"/></td>
                             <td class="community-number-column"><c:out value="${board.likeCnt}"/></td>
-                            <td class="community-date-column"><time><c:out value="${board.regDate}"/></time></td>
+                            <td class="community-number-column"><c:out value="${board.commentCnt}"/></td>
+                            <td class="community-date-column"><time><c:out value="${fn:substring(fn:replace(board.regDate, 'T', ' '), 0, 16)}"/></time></td>
                         </tr>
                     </c:forEach>
 
                     <c:if test="${empty communityList}">
                         <tr>
-                            <td colspan="5" class="community-table-empty">
+                            <td colspan="7" class="community-table-empty">
                                 <i class="bi bi-chat-square-dots" aria-hidden="true"></i>
                                 <span>まだ投稿がありません。</span>
                             </td>

@@ -56,12 +56,13 @@
                 <h1 class="community-detail-title"><c:out value="${communityBoard.title}"/></h1>
                 <div class="community-detail-meta">
                     <div class="community-author-meta">
-                        <span><i class="bi bi-person-circle" aria-hidden="true"></i> <c:out value="${communityBoard.memberId}"/></span>
+                        <span><i class="bi bi-person-circle" aria-hidden="true"></i> <c:out value="${not empty communityBoard.writerName ? communityBoard.writerName : communityBoard.memberId}"/></span>
                         <span><i class="bi bi-clock" aria-hidden="true"></i> <c:out value="${fn:replace(communityBoard.regDate, 'T', ' ')}"/></span>
                     </div>
                     <div class="community-count-meta">
                         <span><i class="bi bi-eye" aria-hidden="true"></i> <c:out value="${communityBoard.viewCnt}"/></span>
                         <span><i class="bi bi-heart" aria-hidden="true"></i> <span data-like-count><c:out value="${communityBoard.likeCnt}"/></span></span>
+                        <span><i class="bi bi-chat" aria-hidden="true"></i> <c:out value="${communityBoard.commentCnt}"/></span>
                     </div>
                 </div>
             </header>

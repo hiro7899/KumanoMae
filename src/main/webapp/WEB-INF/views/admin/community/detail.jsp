@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="row text-muted small mb-3">
-					<div class="col-md-3"><strong>投稿者 (Member No):</strong> <c:out value="${communityBoard.memberId}"/></div>
+					<div class="col-md-3"><strong>投稿者:</strong> <c:out value="${not empty communityBoard.writerName ? communityBoard.writerName : communityBoard.memberId}"/></div>
 					<div class="col-md-3"><strong>登録日時:</strong> <c:out value="${communityBoard.regDate}"/></div>
 					<div class="col-md-3"><strong>照会数:</strong> <c:out value="${communityBoard.viewCnt}"/></div>
 					<div class="col-md-3"><strong>おすすめ数:</strong> <c:out value="${communityBoard.likeCnt}"/></div>

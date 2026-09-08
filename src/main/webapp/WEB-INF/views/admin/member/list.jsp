@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -142,7 +143,7 @@
 													</c:otherwise>
 												</c:choose>
 											</td>
-											<td>${member.joinDate}</td>
+											<td>${fn:substring(fn:replace(member.joinDate, 'T', ' '), 0, 16)}</td>
 											<td>
 												<c:choose>
 											<c:when test="${member.status eq 'N'}">
