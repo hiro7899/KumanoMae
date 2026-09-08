@@ -14,6 +14,7 @@ import com.jsl.exeption.LoginException;
 import com.jsl.exeption.SignUpException;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
+import com.jsl.service.member.EmailVerifyService;
 import com.jsl.service.member.FindIdService;
 import com.jsl.service.member.ForgotPasswordService;
 import com.jsl.service.member.ResetPasswordFormService;
@@ -22,7 +23,7 @@ import com.jsl.service.signup.SignUpService;
 
 @WebServlet(urlPatterns = {
 	    "/", "/index",
-	    "/login", "/logout", "/signup", "/signup/*",
+	    "/login", "/logout", "/signup", "/signup_complete",
 	    "/find_id", "/find_pw",
 	    "/forgot-password", "/reset-password",
 	    "/verify-email"
@@ -39,6 +40,8 @@ public class RootController extends HttpServlet {
 	private final ForgotPasswordService forgotPasswordService = new ForgotPasswordService();
 	private final ResetPasswordService resetPasswordService = new ResetPasswordService();
 	private final ResetPasswordFormService resetPasswordFormService = new ResetPasswordFormService();
+	
+	private final EmailVerifyService emailVerifyService = new EmailVerifyService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -145,9 +148,9 @@ public class RootController extends HttpServlet {
 		    }
 		    break;
 		    
-        case "/verify-email":
-            page = "/WEB-INF/views/auth/verify_email.jsp";
-            break;
+		case "/verify-email":
+		    emailVerifyService.doCommand(request, response);
+		    return;
 
 		default:
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
