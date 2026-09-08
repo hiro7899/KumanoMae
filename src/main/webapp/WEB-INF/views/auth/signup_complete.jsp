@@ -31,7 +31,7 @@
 	href="${pageContext.request.contextPath}/resources/css/login/signup_complete.css">
 </head>
 
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
 
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
@@ -86,6 +86,7 @@
 					<i class="bi bi-info-circle"></i> メールが届かない場合は、迷惑メールフォルダもご確認ください。
 				</p>
 
+
 				<div class="complete-actions">
 					<a href="${pageContext.request.contextPath}/"
 						class="complete-home-btn"> トップページへ <i
@@ -105,6 +106,5 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 		
 	</script>
-
 </body>
 </html>

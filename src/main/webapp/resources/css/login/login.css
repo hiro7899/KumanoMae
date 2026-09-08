@@ -400,7 +400,6 @@ body {
     font-size: 0.9rem;
     font-weight: 700;
 }
-
 .password-input {
     padding-right: 52px !important;
 }
@@ -411,7 +410,6 @@ body {
     right: 14px !important;
     left: auto !important;
     z-index: 5;
-    transform: translateY(-50%) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -421,19 +419,17 @@ body {
     padding: 0;
     border: 0;
     background: transparent;
-    color: #6b6355;
+    color: var(--color-muted);
     cursor: pointer;
+    transform: translateY(-50%) !important;
 }
 
 .input-wrapper > .password-toggle:hover {
-    color: #b23a2e;
+    color: var(--color-red);
 }
 
 .input-wrapper > .password-toggle i {
     position: static !important;
-    top: auto !important;
-    right: auto !important;
-    left: auto !important;
     transform: none !important;
     color: inherit !important;
     font-size: 1.2rem;
@@ -442,10 +438,10 @@ body {
 .save-id-option {
     display: inline-flex !important;
     align-items: center;
-    justify-content: flex-start;
     gap: 7px;
     width: auto !important;
     margin-top: 12px;
+    cursor: pointer;
 }
 
 .save-id-option input[type="checkbox"] {
@@ -453,16 +449,12 @@ body {
     width: 18px;
     height: 18px;
     margin: 0;
-    accent-color: #c6900f;
+    accent-color: var(--color-mustard-dark);
     cursor: pointer;
 }
 
-.save-id-option label {
-    display: inline-block !important;
-    width: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    color: #332d25;
+.save-id-option span {
+    color: var(--color-ink);
     font-size: 0.9rem;
     font-weight: 700;
     line-height: 18px;
@@ -558,3 +550,4 @@ body {
         height: 42px;
     }
 }
+

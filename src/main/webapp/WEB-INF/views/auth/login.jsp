@@ -37,7 +37,7 @@
 
 </head>
 
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
 
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
@@ -101,7 +101,8 @@
 
 					<!-- 로그인 Form -->
 
-					<form method="post" action="/login">
+					<form id="loginForm" method="post"
+						action="${pageContext.request.contextPath}/login">
 
 						<!-- 아이디 -->
 
@@ -234,7 +235,8 @@
 
 	<!-- 로그인 화면 전용 JS -->
 
-	<script src="/resources/js/login/login.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/login/login.js"></script>
 
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
