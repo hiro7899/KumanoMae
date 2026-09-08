@@ -71,7 +71,7 @@ public class BoardController extends HttpServlet {
             }
 
             if ("GET".equalsIgnoreCase(request.getMethod())) {
-                page = "/WEB-INF/views/board/write.jsp";
+                page = "/WEB-INF/views/board/report.jsp";
             } else {
                 try {
                     boardReportService.doCommand(request, response);
