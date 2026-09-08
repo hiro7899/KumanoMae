@@ -188,6 +188,33 @@
 						</div>
 
 					</form>
+					<c:if test="${param.signup eq 'pending'}">
+						<section class="email-resend-area">
+							<div class="email-resend-title">
+								<i class="bi bi-envelope-exclamation-fill"></i> メール認証を完了してください
+							</div>
+
+							<p>
+								会員登録は完了しました。<br> 認証メールのリンクをクリックするとログインできます。
+							</p>
+
+							<div class="email-resend-row">
+								<input type="email" id="resendEmail" class="form-control"
+									placeholder="登録したメールアドレスを入力">
+
+								<button type="button" id="resendVerificationBtn">
+									認証メールを再送信</button>
+							</div>
+
+							<p id="resendMessage" class="resend-message" aria-live="polite"></p>
+						</section>
+					</c:if>
+
+					<c:if test="${param.verified eq 'true'}">
+						<div class="email-verified-message">
+							<i class="bi bi-check-circle-fill"></i> メール認証が完了しました。ログインしてください。
+						</div>
+					</c:if>
 
 				</div>
 

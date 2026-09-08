@@ -52,7 +52,6 @@ public class SignUpService implements Command {
                         + "<p><a href=\"" + verifyUrl + "\">" + verifyUrl + "</a></p>");
 
             } catch (SQLIntegrityConstraintViolationException e) {
-                // ★ 여기가 오늘 추가된 부분 — 제약조건 위반을 필드별로 구분해서 친절한 메시지로 변환
                 try {
                     conn.rollback();
                 } catch (SQLException rollbackEx) {

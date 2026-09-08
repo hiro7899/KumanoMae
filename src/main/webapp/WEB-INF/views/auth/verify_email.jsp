@@ -2,18 +2,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>メール認証 - クマ出没マップ</title>
+<meta charset="UTF-8">
+<title>メール認証 - クマ出没マップ</title>
 </head>
 <body data-context-path="${pageContext.request.contextPath}">
 
-    <main>
-        <h1>メール認証</h1>
-        <p id="verificationMessage">メール認証を確認しています。</p>
-        <a href="${pageContext.request.contextPath}/signup">会員登録画面へ戻る</a>
-    </main>
+	<main>
+		<h1>メール認証</h1>
+		<p id="verificationMessage">メール認証を確認しています。</p>
+		<a href="${pageContext.request.contextPath}/login"> ログイン画面へ </a>
+	</main>
 
-    <script>
+	<script>
         document.addEventListener("DOMContentLoaded", async function () {
             const contextPath = document.body.dataset.contextPath || "";
             const token = new URLSearchParams(location.search).get("token");
@@ -42,7 +42,12 @@
                     throw new Error(result.message || "メール認証に失敗しました。");
                 }
 
-                message.textContent = "メール認証が完了しました。会員登録画面へ戻ってください。";
+                message.textContent =
+                    "メール認証が完了しました。ログイン画面へ移動します。";
+
+                setTimeout(function () {
+                    location.href = contextPath + "/login?verified=true";
+                }, 1500);
             } catch (error) {
                 message.textContent = error.message;
             }
