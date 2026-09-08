@@ -4,10 +4,9 @@ public class ApiResponse {
 
     private boolean success;
     private String message;
-    private boolean available;
-    private boolean verified; // ★ 추가
-
-    private boolean liked;
+    private Boolean available;
+    private Boolean verified;
+    private Boolean liked;
     private Integer likeCnt;
     
     public static ApiResponse ok() {

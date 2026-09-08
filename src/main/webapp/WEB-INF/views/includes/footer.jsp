@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <footer class="footer-jp pt-5 pb-3">
     <div class="container">
@@ -31,8 +32,16 @@
                 <ul class="list-unstyled small">
                     <li class="mb-2"><a href="${pageContext.request.contextPath}/map">出没マップ</a></li>
                     <li class="mb-2"><a href="${pageContext.request.contextPath}/board/news">目撃情報掲示板</a></li>
-                    <li class="mb-2"><a href="${pageContext.request.contextPath}/login">ログイン</a></li>
-                    <li class="mb-2"><a href="${pageContext.request.contextPath}/signup">会員登録</a></li>
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.user}">
+                            <li class="mb-2"><a href="${pageContext.request.contextPath}/user/profile">マイページ</a></li>
+                            <li class="mb-2"><a href="${pageContext.request.contextPath}/logout">ログアウト</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="mb-2"><a href="${pageContext.request.contextPath}/login">ログイン</a></li>
+                            <li class="mb-2"><a href="${pageContext.request.contextPath}/signup">会員登録</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </div>

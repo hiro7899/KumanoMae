@@ -27,7 +27,6 @@
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/community/community.css">
->>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
 </head>
 <body>
     <%@ include file="/WEB-INF/views/includes/header.jsp"%>

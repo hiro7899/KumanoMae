@@ -21,24 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* -----------------------------------------------
-       2. 地域検索 버튼 (지금은 실제 검색 없음, UI 동작만)
-       ----------------------------------------------- */
-    const areaSearchBtn = document.getElementById("areaSearchBtn");
-    const areaSearchInput = document.getElementById("areaSearchInput");
-
-    if (areaSearchBtn) {
-        areaSearchBtn.addEventListener("click", function () {
-            const keyword = areaSearchInput.value.trim();
-            if (keyword === "") {
-                alert("検索する地域を入力してください。");
-                return;
-            }
-            alert(keyword + " の検索結果を表示します。（今後実装予定）");
-        });
-    }
-
-    /* -----------------------------------------------
-       3. 危険度 체크박스 : 지금은 화면 표시용 상태만 확인
+       2. 危険度 체크박스 : 화면 표시용 상태 확인
           (실제 지도 마커/데이터 연동은 出没マップ 기능 구현 시 추가)
        ----------------------------------------------- */
     const riskCheckboxes = document.querySelectorAll(

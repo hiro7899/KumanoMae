@@ -327,6 +327,22 @@ h1, h2, h3, h4, h5, h6 {
     padding: 20px;
 }
 
+.risk-filter .form-check-input {
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-top: .18rem;
+    border-color: var(--color-border);
+    accent-color: var(--color-ink);
+}
+
+.risk-filter.danger .form-check-input { accent-color: var(--color-red); }
+.risk-filter.warning .form-check-input { accent-color: var(--color-mustard-dark); }
+.risk-filter.caution .form-check-input { accent-color: #d5bd62; }
+
+.risk-filter.danger .form-check-label { color: var(--color-red-dark); }
+.risk-filter.warning .form-check-label,
+.risk-filter.caution .form-check-label { color: var(--color-ink); }
+
 .badge-danger-custom,
 .badge-warning-custom,
 .badge-caution-custom {
@@ -340,6 +356,74 @@ h1, h2, h3, h4, h5, h6 {
 .badge-warning-custom { background-color: var(--color-mustard); color: var(--color-ink); }
 .badge-caution-custom { background-color: #f5e39a; color: var(--color-ink); }
 
+/* ---------------- 주요 소식 바로가기 카드 ---------------- */
+.feature-link-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    height: 100%;
+    padding: 1.35rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: #fdfaf3;
+    color: var(--color-ink);
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.feature-link-card:hover,
+.feature-link-card:focus-visible {
+    color: var(--color-ink);
+    transform: translateY(-4px);
+    border-color: var(--color-mustard-dark);
+    box-shadow: 0 8px 18px rgba(51, 45, 37, 0.16);
+}
+
+.feature-link-card-alert .feature-link-icon { color: var(--color-red); }
+
+.feature-link-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 50%;
+    background: var(--color-bg-soft);
+    color: var(--color-mustard-dark);
+    font-size: 1.2rem;
+}
+
+.feature-link-content { min-width: 0; }
+.feature-link-label {
+    color: var(--color-muted);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+}
+.feature-link-content h4 {
+    margin: .2rem 0 .5rem;
+    font-size: 1.12rem;
+    font-weight: 900;
+}
+.feature-link-content p {
+    min-height: 3.2em;
+    margin-bottom: .85rem;
+    color: var(--color-muted);
+    font-size: .88rem;
+    line-height: 1.6;
+}
+.feature-link-more {
+    color: var(--color-red);
+    font-size: .82rem;
+    font-weight: 700;
+}
+.feature-link-more i { margin-left: .2rem; transition: margin-left .2s ease; }
+.feature-link-card:hover .feature-link-more i { margin-left: .45rem; }
+
+.home-news-legacy { display: none; }
+
+/* ---------------- 최근 목격정보 카드 ---------------- */
 .report-card {
     border: none;
     border-radius: 4px;
