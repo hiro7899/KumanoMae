@@ -66,7 +66,7 @@ public class BoardController extends HttpServlet {
         	try {
                 emailVerificationGuardService.checkVerified(request);
             } catch (EmailNotVerifiedException e) {
-                response.sendRedirect("LOGIN_REQUIRED".equals(e.getCode()) ? "/login" : "/user/email-verification");
+                response.sendRedirect("LOGIN_REQUIRED".equals(e.getCode()) ? "/login" : "/user/profile");
                 return;
             }
 
