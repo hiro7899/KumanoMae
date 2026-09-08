@@ -30,10 +30,9 @@
 
 <!-- 회원가입 CSS -->
 <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/login/signup.css">
-
+	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+	href="${pageContext.request.contextPath}/resources/css/login/signup.css">
 
 </head>
 
@@ -116,13 +115,14 @@
 									placeholder="example@email.com" autocomplete="email" required>
 							</div>
 
-							<button type="button" id="sendVerificationBtn"
-								class="email-auth-btn">重複確認・認証送信</button>
+							<button type="button" id="checkEmailBtn" class="email-auth-btn">重複確認</button>
 
 						</div>
 
 						<p id="emailAuthMessage" class="email-auth-message"
 							aria-live="polite"></p>
+						<p class="email-auth-guide">
+							会員登録後に認証メールを送信します。認証完了後にサービスをご利用いただけます。</p>
 					</div>
 
 					<!-- 인증번호 확인: 발송 후 표시 -->

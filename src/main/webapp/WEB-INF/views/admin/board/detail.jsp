@@ -9,6 +9,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<<<<<<< HEAD
+=======
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+>>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/list.css">
 </head>
 <body>

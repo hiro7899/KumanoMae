@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.exeption.EmailTokenException;
+import com.jsl.exeption.FindIdException;
 import com.jsl.exeption.LoginException;
 import com.jsl.exeption.SignUpException;
 import com.jsl.service.login.LoginService;
@@ -21,9 +22,10 @@ import com.jsl.service.signup.SignUpService;
 
 @WebServlet(urlPatterns = {
         "/", "/index",
-        "/login", "/logout", "/signup",
-        "/forgot-password", "/reset-password",
-        "/verify-email"
+        "/login", "/logout", "/signup", "/signup/complete",
+        "/find_id", "/find_pw",
+        "/reset-password",
+        "/verify-email",
 })
 public class RootController extends HttpServlet {
 
@@ -32,10 +34,12 @@ public class RootController extends HttpServlet {
 	private final LoginService loginService = new LoginService();
 	private final LogoutService logoutService = new LogoutService();
 	private final SignUpService signUpService = new SignUpService();
+	
+	private final FindIdService findIdService = new FindIdService();
 	private final ForgotPasswordService forgotPasswordService = new ForgotPasswordService();
 	private final ResetPasswordService resetPasswordService = new ResetPasswordService();
 	private final ResetPasswordFormService resetPasswordFormService = new ResetPasswordFormService();
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doAction(request, response);
@@ -101,13 +105,18 @@ public class RootController extends HttpServlet {
 		    break;
 			
 		case "/find_id":
-			if ("GET".equalsIgnoreCase(request.getMethod())) {
-				page = "/WEB-INF/views/auth/find_id.jsp";
-			} else {
-				FindIdService.doCommand(request, response);
-				page = "/WEB-INF/views/auth/find_id.jsp";
-			}
-			break;
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        page = "/WEB-INF/views/auth/find_id.jsp";
+		    } else {
+		        try {
+		            findIdService.doCommand(request, response);
+		            page = "/WEB-INF/views/auth/find_id.jsp";
+		        } catch (FindIdException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            page = "/WEB-INF/views/auth/find_id.jsp";
+		        }
+		    }
+		    break;
 			
 		case "/find_pw":
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
@@ -136,10 +145,11 @@ public class RootController extends HttpServlet {
 		    }
 		    break;
 		    
-        case "/verify-email":
-            page = "/WEB-INF/views/auth/verify_email.jsp";
-            break;
+		case "/verify-email":
+		    page = "/WEB-INF/views/auth/verify_email.jsp";
+		    break;
 
+		    
 		default:
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;

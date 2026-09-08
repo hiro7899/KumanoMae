@@ -69,9 +69,15 @@
 								</li>
 							</c:if>
 
+<<<<<<< HEAD
 							<li class="nav-item d-lg-none"><a class="nav-link text-light user-profile-link"
 								href="${pageContext.request.contextPath}/user/profile">
 									${sessionScope.user.userName}さま </a></li>
+=======
+							<li class="nav-item"><a class="nav-link text-light"
+								href="${pageContext.request.contextPath}/mypage">
+									<i class="bi bi-person-circle me-1"></i>${sessionScope.user.userName}さま </a></li>
+>>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 
 							<li class="nav-item d-lg-none"><a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
 							</li>

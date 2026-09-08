@@ -1,4 +1,4 @@
-package com.jsl.controller.community;
+package com.jsl.controller;
 
 import java.io.IOException;
 

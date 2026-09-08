@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
@@ -19,9 +20,9 @@
 	rel="stylesheet">
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/login/find_pw.css">
-<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/login/find_pw.css">
 </head>
 
 <body>
@@ -40,6 +41,22 @@
 						ご登録のIDとメールアドレスを入力してください。<br> パスワード再設定の手続きをご案内します。
 					</p>
 				</div>
+
+				<c:choose>
+					<c:when test="${not empty errorMsg}">
+						<div class="find-result-message error" role="alert">
+							<i class="bi bi-exclamation-circle-fill"></i>
+							<c:out value="${errorMsg}" />
+						</div>
+					</c:when>
+
+					<c:when test="${not empty resultMsg}">
+						<div class="find-result-message success" role="status">
+							<i class="bi bi-check-circle-fill"></i>
+							<c:out value="${resultMsg}" />
+						</div>
+					</c:when>
+				</c:choose>
 
 				<%-- 백엔드 담당자가 /find_pw POST 처리 예정 --%>
 				<form method="post"
