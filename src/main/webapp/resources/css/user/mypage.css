@@ -1,28 +1,217 @@
 @charset "UTF-8";
-.mypage-main { min-height: calc(100vh - 160px); padding: 3rem 0 5rem; background: #ede4d1; color: #332d25; }
-.mypage-container { max-width: 1040px; }
-.mypage-hero, .mypage-card, .mypage-login-card { background: #fdfaf3; border: 2px solid #332d25; box-shadow: 5px 5px 0 rgba(51, 45, 37, .18); }
-.mypage-hero { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.75rem; padding: 1.75rem 2rem; border-top: 5px solid #b23a2e; }
-.mypage-avatar { display: grid; width: 64px; height: 64px; place-items: center; flex: 0 0 64px; border-radius: 50%; background: #b23a2e; color: #fff; font-size: 1.8rem; }
-.mypage-eyebrow, .mypage-label { margin: 0 0 .25rem; color: #b23a2e; font-size: .75rem; font-weight: 900; letter-spacing: .14em; }
-.mypage-hero h1, .mypage-card h2, .mypage-login-card h1 { margin: 0; font-weight: 900; }
-.mypage-hero h1 { margin-bottom: .35rem; font-size: 1.8rem; }
-.email-pending-badge { display: inline-block; padding: .35rem .55rem; border: 1px solid #8c2c22; border-radius: 3px; background: #b23a2e; color: #fff; font-size: .72rem; font-weight: 700; }
-.mypage-card { padding: 1.5rem; }
-.mypage-card h2 { font-size: 1.15rem; }
-.account-list { margin-top: 1.25rem; }
-.account-list > div { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid #cfc4ae; }
-.account-list dt { color: #6b6355; font-weight: 500; }
-.account-list dd { margin: 0; font-weight: 700; text-align: right; }
-.mypage-section-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid #332d25; }
-.mypage-empty { padding: 2.5rem 1rem 1rem; color: #6b6355; text-align: center; }
-.mypage-empty i { display: block; margin-bottom: .75rem; color: #e3ac1f; font-size: 2rem; }
-.btn-mypage-primary, .btn-mypage-outline { border: 2px solid #332d25; border-radius: 4px; font-weight: 700; }
-.btn-mypage-primary { background: #e3ac1f; color: #332d25; }
-.btn-mypage-primary:hover { background: #c6900f; color: #332d25; }
-.btn-mypage-outline { background: transparent; color: #332d25; }
-.btn-mypage-outline:hover { background: #332d25; color: #fff; }
-.mypage-login-card { max-width: 540px; margin: 2rem auto; padding: 3rem 2rem; }
-.mypage-login-card > i { display: block; margin-bottom: 1rem; color: #b23a2e; font-size: 2.5rem; }
-.mypage-login-card p { margin: 1rem 0 1.5rem; color: #6b6355; }
-@media (max-width: 575.98px) { .mypage-main { padding: 1.5rem 0 3rem; } .mypage-hero { align-items: flex-start; padding: 1.25rem; } .mypage-avatar { width: 50px; height: 50px; flex-basis: 50px; font-size: 1.35rem; } .mypage-hero h1 { font-size: 1.4rem; } .mypage-card { padding: 1.2rem; } }
+
+.mypage-main {
+	min-height: calc(100vh - 160px);
+	padding: 3rem 0 5rem;
+	background: #ede4d1;
+	color: #332d25;
+}
+
+.mypage-container {
+	max-width: 1040px;
+}
+
+.mypage-hero, .mypage-card, .mypage-login-card {
+	background: #fdfaf3;
+	border: 2px solid #332d25;
+	border-radius: 12px;
+	box-shadow: 5px 5px 0 rgba(51, 45, 37, .18);
+}
+
+.mypage-hero {
+	display: flex;
+	align-items: center;
+	gap: 1.25rem;
+	margin-bottom: 1.75rem;
+	padding: 1.75rem 2rem;
+	border-top: 5px solid #b23a2e;
+}
+
+.mypage-avatar {
+	display: grid;
+	width: 64px;
+	height: 64px;
+	place-items: center;
+	flex: 0 0 64px;
+	border-radius: 50%;
+	background: #b23a2e;
+	color: #fff;
+	font-size: 1.8rem;
+}
+
+.mypage-eyebrow, .mypage-label {
+	margin: 0 0 .25rem;
+	color: #b23a2e;
+	font-size: .75rem;
+	font-weight: 900;
+	letter-spacing: .14em;
+}
+
+.mypage-hero h1, .mypage-card h2, .mypage-login-card h1 {
+	margin: 0;
+	font-weight: 900;
+}
+
+.mypage-hero h1 {
+	margin-bottom: .35rem;
+	font-size: 1.8rem;
+}
+
+.email-pending-badge {
+	display: inline-block;
+	padding: .35rem .55rem;
+	border: 1px solid #8c2c22;
+	border-radius: 20px;
+	background: #b23a2e;
+	color: #fff;
+	font-size: .72rem;
+	font-weight: 700;
+}
+
+.resend-verification-message {
+	min-height: 1.25rem;
+	margin-top: .6rem;
+	color: #6b6355;
+	font-size: .78rem;
+}
+
+.resend-verification-message.is-error {
+	color: #b23a2e;
+}
+
+.resend-verification-success {
+	padding: .65rem .75rem;
+	border: 1px solid #477a55;
+	border-radius: 8px;
+	background: #e5f2e8;
+	color: #245a35;
+	font-size: .9rem;
+	font-weight: 700;
+	text-align: center;
+}
+
+.mypage-card {
+	padding: 1.5rem;
+}
+
+.mypage-card h2 {
+	font-size: 1.15rem;
+}
+
+.account-list {
+	margin-top: 1.25rem;
+}
+
+.account-list>div {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: .3rem;
+	padding: .8rem 0;
+	border-bottom: 1px solid #cfc4ae;
+}
+
+.account-list dt {
+	flex-shrink: 0;
+	white-space: nowrap;
+	color: #6b6355;
+	font-weight: 500;
+	font-size: .8rem;
+	letter-spacing: .04em;
+}
+
+.account-list dd {
+	width: 100%;
+	margin: 0;
+	font-weight: 700;
+	text-align: left;
+	overflow-wrap: anywhere;
+}
+
+.mypage-section-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 2px solid #332d25;
+}
+
+.mypage-empty {
+	padding: 2.5rem 1rem 1rem;
+	color: #6b6355;
+	text-align: center;
+}
+
+.mypage-empty i {
+	display: block;
+	margin-bottom: .75rem;
+	color: #e3ac1f;
+	font-size: 2rem;
+}
+
+.btn-mypage-primary, .btn-mypage-outline {
+	border: 2px solid #332d25;
+	border-radius: 8px;
+	font-weight: 700;
+}
+
+.btn-mypage-primary {
+	background: #e3ac1f;
+	color: #332d25;
+}
+
+.btn-mypage-primary:hover {
+	background: #c6900f;
+	color: #332d25;
+}
+
+.btn-mypage-outline {
+	background: transparent;
+	color: #332d25;
+}
+
+.btn-mypage-outline:hover {
+	background: #332d25;
+	color: #fff;
+}
+
+.mypage-login-card {
+	max-width: 540px;
+	margin: 2rem auto;
+	padding: 3rem 2rem;
+}
+
+.mypage-login-card>i {
+	display: block;
+	margin-bottom: 1rem;
+	color: #b23a2e;
+	font-size: 2.5rem;
+}
+
+.mypage-login-card p {
+	margin: 1rem 0 1.5rem;
+	color: #6b6355;
+}
+
+@media ( max-width : 575.98px) {
+	.mypage-main {
+		padding: 1.5rem 0 3rem;
+	}
+	.mypage-hero {
+		align-items: flex-start;
+		padding: 1.25rem;
+	}
+	.mypage-avatar {
+		width: 50px;
+		height: 50px;
+		flex-basis: 50px;
+		font-size: 1.35rem;
+	}
+	.mypage-hero h1 {
+		font-size: 1.4rem;
+	}
+	.mypage-card {
+		padding: 1.2rem;
+	}
+}
