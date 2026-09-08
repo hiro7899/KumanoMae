@@ -21,6 +21,8 @@
 
 <!-- 프로젝트 CSS (공통 메인 index.css & 제보페이지 전용 report.css) -->
 <link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">

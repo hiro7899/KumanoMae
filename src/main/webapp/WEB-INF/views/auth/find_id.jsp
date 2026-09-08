@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%--
@@ -56,9 +57,10 @@
 
 <!-- 아이디 찾기 전용 CSS -->
 
-<link rel="stylesheet" href="/resources/css/login/find_id.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/login/find_id.css">
 
 </head>
 
@@ -96,6 +98,22 @@
 					</p>
 
 				</div>
+
+				<c:choose>
+					<c:when test="${not empty errorMsg}">
+						<div class="find-result-message error" role="alert">
+							<i class="bi bi-exclamation-circle-fill"></i>
+							<c:out value="${errorMsg}" />
+						</div>
+					</c:when>
+
+					<c:when test="${not empty resultMsg}">
+						<div class="find-result-message success" role="status">
+							<i class="bi bi-check-circle-fill"></i>
+							<c:out value="${resultMsg}" />
+						</div>
+					</c:when>
+				</c:choose>
 
 
 

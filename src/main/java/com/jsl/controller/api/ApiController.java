@@ -25,7 +25,7 @@ public class ApiController extends HttpServlet {
     private final EmailVerificationSendService emailVerificationSendService = new EmailVerificationSendService();
     private final EmailVerifyService emailVerifyService = new EmailVerifyService();
     private final EmailVerificationStatusService emailVerificationStatusService = new EmailVerificationStatusService();
-    
+
     private final CommunityLikeToggleService communityLikeToggleService = new CommunityLikeToggleService();
 
     @Override
