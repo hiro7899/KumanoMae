@@ -12,47 +12,54 @@ import com.jsl.util.DBManager;
 
 public class CommunityBoardDao {
 
-    public List<CommunityBoardDto> selectList(String category) {
-        StringBuilder sql = new StringBuilder("""
-            SELECT C_BOARD_ID, MEMBER_ID, CATEGORY, TITLE, GEAR_NAME, VIEW_CNT, LIKE_CNT, REG_DATE
-              FROM COMMUNITY_BOARD
-             WHERE STATUS = 'Y'
-            """);
-        if (category != null && !category.isEmpty()) {
-            sql.append(" AND CATEGORY = ?");
-        }
-        sql.append(" ORDER BY REG_DATE DESC");
+	public List<CommunityBoardDto> selectList(String category) {
+	    StringBuilder sql = new StringBuilder("""
+	        SELECT cb.C_BOARD_ID, cb.MEMBER_ID, cb.CATEGORY, cb.TITLE, cb.GEAR_NAME,
+	               cb.VIEW_CNT, cb.LIKE_CNT, cb.REG_DATE,
+	               m.USER_NAME AS WRITER_NAME,
+	               (SELECT COUNT(*) FROM COMMUNITY_COMMENT cc
+	                 WHERE cc.C_BOARD_ID = cb.C_BOARD_ID) AS COMMENT_CNT
+	          FROM COMMUNITY_BOARD cb
+	          JOIN MEMBER m ON m.MEMBER_ID = cb.MEMBER_ID
+	         WHERE cb.STATUS = 'Y'
+	        """);
+	    if (category != null && !category.isEmpty()) {
+	        sql.append(" AND cb.CATEGORY = ?");
+	    }
+	    sql.append(" ORDER BY cb.REG_DATE DESC");
 
-        List<CommunityBoardDto> list = new ArrayList<CommunityBoardDto>();
+	    List<CommunityBoardDto> list = new ArrayList<>();
 
-        try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
-            if (category != null && !category.isEmpty()) {
-                pstmt.setString(1, category);
-            }
+	        if (category != null && !category.isEmpty()) {
+	            pstmt.setString(1, category);
+	        }
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    CommunityBoardDto dto = new CommunityBoardDto();
-                    dto.setCBoardId(rs.getLong("C_BOARD_ID"));
-                    dto.setMemberId(rs.getLong("MEMBER_ID"));
-                    dto.setCategory(rs.getString("CATEGORY"));
-                    dto.setTitle(rs.getString("TITLE"));
-                    dto.setGearName(rs.getString("GEAR_NAME"));
-                    dto.setViewCnt(rs.getInt("VIEW_CNT"));
-                    dto.setLikeCnt(rs.getInt("LIKE_CNT"));
-                    if (rs.getTimestamp("REG_DATE") != null) {
-                        dto.setRegDate(rs.getTimestamp("REG_DATE").toLocalDateTime());
-                    }
-                    list.add(dto);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                CommunityBoardDto dto = new CommunityBoardDto();
+	                dto.setCBoardId(rs.getLong("C_BOARD_ID"));
+	                dto.setMemberId(rs.getLong("MEMBER_ID"));
+	                dto.setCategory(rs.getString("CATEGORY"));
+	                dto.setTitle(rs.getString("TITLE"));
+	                dto.setGearName(rs.getString("GEAR_NAME"));
+	                dto.setViewCnt(rs.getInt("VIEW_CNT"));
+	                dto.setLikeCnt(rs.getInt("LIKE_CNT"));
+	                dto.setWriterName(rs.getString("WRITER_NAME"));
+	                dto.setCommentCnt(rs.getInt("COMMENT_CNT"));
+	                if (rs.getTimestamp("REG_DATE") != null) {
+	                    dto.setRegDate(rs.getTimestamp("REG_DATE").toLocalDateTime());
+	                }
+	                list.add(dto);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
 
     public CommunityBoardDto selectById(Long cBoardId) {
         String sql = """
