@@ -13,6 +13,7 @@ public class MemberDto {
 	private String userGrade;
 	private String status;
 	private LocalDateTime joinDate;
+	private String emailVerifiedYn; // 追加: メール認証済みかどうかを示すフィールド
 	
 	public Long getMemberId() {
 		return memberId;
@@ -67,6 +68,12 @@ public class MemberDto {
 	}
 	public void setJoinDate(LocalDateTime joinDate) {
 		this.joinDate = joinDate;
+	}
+	public String getEmailVerifiedYn() {
+		return emailVerifiedYn;
+	}
+	public void setEmailVerifiedYn(String emailVerifiedYn) {
+		this.emailVerifiedYn = emailVerifiedYn;
 	}
 	
 }

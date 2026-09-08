@@ -9,8 +9,8 @@ public class BoardDto {
 	private String title; //제목
 	private String content; //상세 내용
 	private String riskLevel; //위험도: DANGER/WARNING/CAUTION
-	private int latitude; //위도
-	private int longitude; //경도
+	private double latitude; //위도
+	private double longitude; //경도
 	private String address; //Geocoder 자동 변환 주소
 	private LocalDateTime sightingDate; //목격 일시
 	private String situationTag; //목격 당시 상황 태그
@@ -52,16 +52,16 @@ public class BoardDto {
 	public void setRiskLevel(String riskLevel) {
 		this.riskLevel = riskLevel;
 	}
-	public int getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(int latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public int getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getAddress() {
