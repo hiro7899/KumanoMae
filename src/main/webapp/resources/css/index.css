@@ -150,7 +150,26 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.7;
     margin-top: 18px;
 }
+.hero-jp h1,
+.hero-jp .lead-jp,
+.hero-jp .hero-eyebrow,
+.hero-jp .d-flex {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: fadeUp .7s ease-out forwards;
+}
 
+.hero-jp .hero-eyebrow { animation-delay: .1s; }
+.hero-jp h1           { animation-delay: .22s; }
+.hero-jp .lead-jp     { animation-delay: .38s; }
+.hero-jp .d-flex      { animation-delay: .52s; }
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 /* 경고 다이아몬드 사인 */
 .warning-sign-wrap {
     display: flex;
@@ -165,11 +184,41 @@ h1, h2, h3, h4, h5, h6 {
     height: 220px;
     background-color: var(--color-mustard);
     border: 3.5px solid var(--color-ink);
-    transform: rotate(45deg);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 5px 6px 0 rgba(51, 45, 37, 0.15);
+    transform: rotate(45deg);
+    animation: signReveal .75s cubic-bezier(.2, .8, .2, 1) .25s both;
+}
+
+.warning-sign-wrap {
+    animation: signFloat 3.5s ease-in-out 1.1s infinite;
+}
+
+.warning-sign-post {
+    animation: postReveal .45s ease-out .75s both;
+}
+
+@keyframes signReveal {
+    from {
+        opacity: 0;
+        transform: rotate(45deg) scale(.82);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(45deg) scale(1);
+    }
+}
+
+@keyframes signFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes postReveal {
+    from { opacity: 0; transform: translateX(-50%) scaleY(0); }
+    to { opacity: 1; transform: translateX(-50%) scaleY(1); }
 }
 
 .warning-sign-inner {
