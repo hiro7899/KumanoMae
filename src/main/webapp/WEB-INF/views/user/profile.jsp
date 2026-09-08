@@ -25,7 +25,7 @@
                         <div class="d-flex align-items-center gap-2 flex-wrap">
                             <h1><c:out value="${userName}"/>さま</h1>
                             <c:if test="${emailVerified == false}">
-                                <span class="email-pending-badge">メール認証未完了</span>
+                                <span class="email-pending-badge">メール認証が必要です</span>
                             </c:if>
                         </div>
                         <p class="mb-0">アカウント情報と投稿した内容を確認できます。</p>
@@ -38,13 +38,18 @@
                             <dl class="account-list mb-0">
                                 <div><dt>ID</dt><dd><c:out value="${userId}"/></dd></div>
                                 <div><dt>お名前</dt><dd><c:out value="${userName}"/></dd></div>
-                                <div><dt>メールアドレス</dt><dd><c:out value="${email}"/></dd></div>
+                                <div><dt>メール</dt><dd><c:out value="${email}"/></dd></div>
                                 <div><dt>電話番号</dt><dd><c:choose><c:when test="${not empty phone}"><c:out value="${phone}"/></c:when><c:otherwise>未登録</c:otherwise></c:choose></dd></div>
                                 <div><dt>会員区分</dt><dd><c:choose><c:when test="${userGrade eq 'A'}">管理者</c:when><c:otherwise>一般会員</c:otherwise></c:choose></dd></div>
                                 <div><dt>登録日</dt><dd><c:out value="${joinDate}"/></dd></div>
                             </dl>
                             <c:if test="${emailVerified == false}">
-                                <a href="${pageContext.request.contextPath}/user/email-verification" class="btn btn-mypage-primary w-100 mt-4"><i class="bi bi-envelope-check me-1"></i>メール認証を完了する</a>
+                                <div id="emailVerificationAction" class="mt-4">
+                                    <button type="button" id="resendVerificationButton" class="btn btn-mypage-primary w-100">
+                                        <i class="bi bi-envelope-arrow-up me-1"></i>認証メールを再送信する
+                                    </button>
+                                    <p id="resendVerificationMessage" class="resend-verification-message mb-0" aria-live="polite"></p>
+                                </div>
                             </c:if>
                             <a href="${pageContext.request.contextPath}/user/settings" class="btn btn-mypage-outline w-100 mt-2"><i class="bi bi-pencil-square me-1"></i>修正する</a>
                         </section>
@@ -79,5 +84,44 @@
 </main>
 <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const resendButton = document.getElementById("resendVerificationButton");
+
+    resendButton?.addEventListener("click", async function () {
+        const action = document.getElementById("emailVerificationAction");
+        const message = document.getElementById("resendVerificationMessage");
+
+        resendButton.disabled = true;
+        message.classList.remove("is-error");
+        message.textContent = "認証メールを送信しています。";
+
+        try {
+            const response = await fetch(
+                "${pageContext.request.contextPath}/api/email-verification/resend-self",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" }
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                action.innerHTML = '<p class="resend-verification-success mb-0"><i class="bi bi-check-circle-fill me-1"></i>送信しました</p>';
+            } else {
+                throw new Error(data.message || "メール送信に失敗しました。");
+            }
+        } catch (error) {
+            message.textContent = error.message || "通信エラーが発生しました。しばらくしてから再度お試しください。";
+            message.classList.add("is-error");
+
+            window.setTimeout(function () {
+                resendButton.disabled = false;
+                message.textContent = "";
+                message.classList.remove("is-error");
+            }, 5000);
+        }
+    });
+</script>
 </body>
 </html>
