@@ -22,7 +22,12 @@
                     <div class="mypage-avatar"><i class="bi bi-person-fill"></i></div>
                     <div>
                         <p class="mypage-eyebrow">MY PAGE</p>
-                        <h1><c:out value="${sessionScope.user.userName}"/>さま</h1>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <h1><c:out value="${userName}"/>さま</h1>
+                            <c:if test="${emailVerified == false}">
+                                <span class="email-pending-badge">メール認証未完了</span>
+                            </c:if>
+                        </div>
                         <p class="mb-0">アカウント情報と投稿した内容を確認できます。</p>
                     </div>
                 </section>
@@ -31,10 +36,17 @@
                         <section class="mypage-card account-card">
                             <h2><i class="bi bi-person-vcard me-2"></i>アカウント</h2>
                             <dl class="account-list mb-0">
-                                <div><dt>ID</dt><dd><c:out value="${sessionScope.user.userId}"/></dd></div>
-                                <div><dt>お名前</dt><dd><c:out value="${sessionScope.user.userName}"/></dd></div>
+                                <div><dt>ID</dt><dd><c:out value="${userId}"/></dd></div>
+                                <div><dt>お名前</dt><dd><c:out value="${userName}"/></dd></div>
+                                <div><dt>メールアドレス</dt><dd><c:out value="${email}"/></dd></div>
+                                <div><dt>電話番号</dt><dd><c:choose><c:when test="${not empty phone}"><c:out value="${phone}"/></c:when><c:otherwise>未登録</c:otherwise></c:choose></dd></div>
+                                <div><dt>会員区分</dt><dd><c:choose><c:when test="${userGrade eq 'A'}">管理者</c:when><c:otherwise>一般会員</c:otherwise></c:choose></dd></div>
+                                <div><dt>登録日</dt><dd><c:out value="${joinDate}"/></dd></div>
                             </dl>
-                            <a href="${pageContext.request.contextPath}/find_pw" class="btn btn-mypage-outline w-100 mt-4"><i class="bi bi-key me-1"></i>パスワードを変更する</a>
+                            <c:if test="${emailVerified == false}">
+                                <a href="${pageContext.request.contextPath}/user/email-verification" class="btn btn-mypage-primary w-100 mt-4"><i class="bi bi-envelope-check me-1"></i>メール認証を完了する</a>
+                            </c:if>
+                            <a href="${pageContext.request.contextPath}/user/settings" class="btn btn-mypage-outline w-100 mt-2"><i class="bi bi-pencil-square me-1"></i>修正する</a>
                         </section>
                     </aside>
                     <div class="col-lg-8">
