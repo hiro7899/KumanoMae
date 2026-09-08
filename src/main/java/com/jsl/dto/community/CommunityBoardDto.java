@@ -16,6 +16,9 @@ public class CommunityBoardDto {
 	private LocalDateTime regDate; //등록일
 	private LocalDateTime modDate; //수정일
 	
+	private String writerName; // MEMBER.USER_NAME JOIN 결과
+	private int commentCnt;    // COMMUNITY_COMMENT 건수
+	
 	public Long getCBoardId() {
 		return cBoardId;
 	}
@@ -82,5 +85,22 @@ public class CommunityBoardDto {
 	public void setModDate(LocalDateTime modDate) {
 		this.modDate = modDate;
 	}
-	
+	public Long getcBoardId() {
+		return cBoardId;
+	}
+	public void setcBoardId(Long cBoardId) {
+		this.cBoardId = cBoardId;
+	}
+	public String getWriterName() {
+		return writerName;
+	}
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
+	}
+	public int getCommentCnt() {
+		return commentCnt;
+	}
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
+	}
 }
