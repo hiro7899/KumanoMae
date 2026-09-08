@@ -13,8 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 
 <!-- 프로젝트 공통 CSS & 어드민 CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/list.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/list.css?v=20260907-2">
 </head>
 <body>
 
@@ -53,7 +52,7 @@
         <!-- 상단 타이틀 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold m-0"><span class="dash">―</span>ダッシュボード</h2>
-            <span class="small text-muted">最終更新: 2026-09-02</span>
+            <span class="small text-muted">最終更新: <c:out value="${not empty dashboardUpdatedAt ? dashboardUpdatedAt : '―'}"/></span>
         </div>
 
         <!-- 1. 현황 요약 카드 영역 -->
@@ -62,7 +61,7 @@
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
                         <div class="small text-muted fw-bold">承認待ち通報</div>
-                        <div class="fs-3 fw-bold text-warning">${pendingCount != null ? pendingCount : 3} 件</div>
+                        <div class="fs-3 fw-bold text-warning"><c:out value="${pendingCount != null ? pendingCount : 0}"/> 件</div>
                     </div>
                     <i class="bi bi-hourglass-split fs-1 text-warning"></i>
                 </div>
@@ -71,7 +70,7 @@
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
                         <div class="small text-muted fw-bold">危険継続中</div>
-                        <div class="fs-3 fw-bold text-danger">${activeDangerCount != null ? activeDangerCount : 5} 件</div>
+                        <div class="fs-3 fw-bold text-danger"><c:out value="${activeDangerCount != null ? activeDangerCount : 0}"/> 件</div>
                     </div>
                     <i class="bi bi-exclamation-diamond-fill fs-1 text-danger"></i>
                 </div>
@@ -80,7 +79,7 @@
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
                         <div class="small text-muted fw-bold">総コミュニティ投稿</div>
-                        <div class="fs-3 fw-bold text-dark">${totalCommunityCount != null ? totalCommunityCount : 28} 件</div>
+                        <div class="fs-3 fw-bold text-dark"><c:out value="${totalCommunityCount != null ? totalCommunityCount : 0}"/> 件</div>
                     </div>
                     <i class="bi bi-chat-square-text-fill fs-1 text-secondary"></i>
                 </div>
@@ -89,7 +88,7 @@
                 <div class="stat-card d-flex align-items-center justify-content-between p-3" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
                     <div>
                         <div class="small text-muted fw-bold">総会員数</div>
-                        <div class="fs-3 fw-bold text-primary">${totalMemberCount != null ? totalMemberCount : 14} 名</div>
+                        <div class="fs-3 fw-bold text-primary"><c:out value="${totalMemberCount != null ? totalMemberCount : 0}"/> 名</div>
                     </div>
                     <i class="bi bi-people-fill fs-1 text-primary"></i>
                 </div>

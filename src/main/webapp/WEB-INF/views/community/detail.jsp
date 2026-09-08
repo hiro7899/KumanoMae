@@ -1,188 +1,268 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${board.title}- KUMANO_MAE</title>
+<title><c:out value="${communityBoard.title}"/> - KUMANO_MAE</title>
 
-<!-- Bootstrap 5 CDN & Icons -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-<!-- 일본어 폰트 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-	rel="stylesheet">
-
-<!-- 커스텀 CSS 파일들 -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/main.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/community/community.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/community.css">
 </head>
 <body>
-	<!-- 공통 헤더 INCLUDE -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+    <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-	<main class="container community-detail-container">
-		<nav class="community-breadcrumb" aria-label="breadcrumb">
-			<a href="${pageContext.request.contextPath}/community/list">コミュニティ</a>
-			<i class="bi bi-chevron-right" aria-hidden="true"></i>
-			<span>投稿詳細</span>
-		</nav>
+    <c:set var="loginUser" value="${sessionScope.loginUser}"/>
+    <c:set var="canManageBoard"
+        value="${not empty loginUser and (communityBoard.memberId eq loginUser.memberId or loginUser.role eq 'ADMIN')}"/>
 
-		<div class="community-detail-card">
-			<!-- 게시물 헤더 -->
-			<header class="community-detail-header">
-				<div class="mb-2">
-					<c:choose>
-						<c:when test="${board.category eq 'FREE'}">
-							<span class="badge badge-cat-board">自由掲示板</span>
-						</c:when>
-						<c:when test="${board.category eq 'GEAR'}">
-							<span class="badge badge-cat-gear fs-6">ギア</span>
-						</c:when>
-						<c:when test="${board.category eq 'REVIEW'}">
-							<span class="badge badge-cat-review fs-6">レビュー</span>
-						</c:when>
-						<c:otherwise>
-							<span class="badge badge-cat-board fs-6">${board.category}</span>
-						</c:otherwise>
-					</c:choose>
-				</div>
+    <main class="container community-detail-container">
+        <nav class="community-breadcrumb" aria-label="breadcrumb">
+            <a href="${pageContext.request.contextPath}/community/list">コミュニティ</a>
+            <i class="bi bi-chevron-right" aria-hidden="true"></i>
+            <span>投稿詳細</span>
+        </nav>
 
-				<h1 class="community-detail-title">${board.title}</h1>
+        <article class="community-detail-card">
+            <header class="community-detail-header">
+                <div class="mb-2">
+                    <c:choose>
+                        <c:when test="${communityBoard.category eq 'REVIEW'}"><span class="badge badge-cat-review">レビュー</span></c:when>
+                        <c:when test="${communityBoard.category eq 'GEAR'}"><span class="badge badge-cat-gear">ギア</span></c:when>
+                        <c:when test="${communityBoard.category eq 'FREE'}"><span class="badge badge-cat-board">自由掲示板</span></c:when>
+                        <c:otherwise><span class="badge badge-cat-board"><c:out value="${communityBoard.category}"/></span></c:otherwise>
+                    </c:choose>
+                </div>
 
-				<div class="community-detail-meta">
-					<div class="community-author-meta">
-						<span><i class="bi bi-person-circle"></i>
-							${board.memberId}</span> <span><i class="bi bi-clock"></i> <fmt:formatDate
-								value="${board.regDate}" pattern="yyyy.MM.dd HH:mm" /></span>
-					</div>
-					<div class="community-count-meta">
-						<span><i class="bi bi-eye"></i>
-							${board.viewCnt}</span> <span><i class="bi bi-heart"></i>
-							${board.likeCnt}</span>
-					</div>
-				</div>
-			</header>
+                <h1 class="community-detail-title"><c:out value="${communityBoard.title}"/></h1>
+                <div class="community-detail-meta">
+                    <div class="community-author-meta">
+                        <span><i class="bi bi-person-circle" aria-hidden="true"></i> <c:out value="${communityBoard.memberId}"/></span>
+                        <span><i class="bi bi-clock" aria-hidden="true"></i> <c:out value="${fn:replace(communityBoard.regDate, 'T', ' ')}"/></span>
+                    </div>
+                    <div class="community-count-meta">
+                        <span><i class="bi bi-eye" aria-hidden="true"></i> <c:out value="${communityBoard.viewCnt}"/></span>
+                        <span><i class="bi bi-heart" aria-hidden="true"></i> <span data-like-count><c:out value="${communityBoard.likeCnt}"/></span></span>
+                    </div>
+                </div>
+            </header>
 
-			<!-- 추천 장비 표시 영역 (GEAR 카테고리) -->
-			<c:if test="${not empty board.gearName}">
-				<div class="community-gear-box">
-					<i class="bi bi-bag-check-fill"></i>
-					<div>
-						<strong>おすすめギア:</strong> ${board.gearName}
-					</div>
-				</div>
-			</c:if>
+            <c:if test="${not empty communityBoard.gearName}">
+                <div class="community-gear-box">
+                    <i class="bi bi-bag-check-fill" aria-hidden="true"></i>
+                    <div><strong>おすすめギア:</strong> <c:out value="${communityBoard.gearName}"/></div>
+                </div>
+            </c:if>
 
-			<!-- 게시물 본문 -->
-			<div class="community-detail-content">${board.content}</div>
+            <div class="community-detail-content"><c:out value="${communityBoard.content}"/></div>
 
-			<!-- 첨부파일 목록 -->
-			<c:if test="${not empty fileList}">
-				<div class="community-attachment-box">
-					<div class="community-attachment-title">
-						<i class="bi bi-paperclip"></i> 添付ファイル
-					</div>
-					<ul class="community-attachment-list">
-						<c:forEach var="file" items="${fileList}">
-							<li><a
-								href="${file.filePath}/${file.saveName}"
-								download="${file.originName}"><i class="bi bi-file-earmark-arrow-down"></i> ${file.originName} </a></li>
-						</c:forEach>
-					</ul>
-				</div>
-			</c:if>
+            <c:if test="${not empty fileList}">
+                <c:set var="hasAttachmentFile" value="false"/>
+                <c:forEach var="file" items="${fileList}">
+                    <c:set var="fileName" value="${fn:toLowerCase(file.originName)}"/>
+                    <c:if test="${not (fn:endsWith(fileName, '.jpg') or fn:endsWith(fileName, '.jpeg') or fn:endsWith(fileName, '.png') or fn:endsWith(fileName, '.gif') or fn:endsWith(fileName, '.webp'))}">
+                        <c:set var="hasAttachmentFile" value="true"/>
+                    </c:if>
+                </c:forEach>
 
-			<!-- 버튼 영역 -->
-			<div class="community-detail-actions">
-				<a href="${pageContext.request.contextPath}/community/list" class="btn btn-jp-outline"> <i
-					class="bi bi-arrow-left"></i> 一覧へ戻る
-				</a>
+                <div class="community-image-gallery" aria-label="添付画像">
+                    <c:forEach var="file" items="${fileList}">
+                        <c:set var="fileName" value="${fn:toLowerCase(file.originName)}"/>
+                        <c:if test="${fn:endsWith(fileName, '.jpg') or fn:endsWith(fileName, '.jpeg') or fn:endsWith(fileName, '.png') or fn:endsWith(fileName, '.gif') or fn:endsWith(fileName, '.webp')}">
+                            <%-- 경로 슬래시 중복/누락 처리 및 ContextPath 결합 --%>
+                            <c:set var="rawPath" value="${file.filePath}${fn:endsWith(file.filePath, '/') ? '' : '/'}${file.saveName}"/>
+                            <c:choose>
+                                <c:when test="${fn:startsWith(rawPath, 'http')}">
+                                    <c:set var="imageUrl" value="${rawPath}"/>
+                                </c:when>
+                                <c:when test="${fn:startsWith(rawPath, '/')}">
+                                    <c:set var="imageUrl" value="${pageContext.request.contextPath}${rawPath}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="imageUrl" value="${pageContext.request.contextPath}/${rawPath}"/>
+                                </c:otherwise>
+                            </c:choose>
+                            <a href="${imageUrl}" target="_blank" rel="noopener">
+                                <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}">
+                            </a>
+                        </c:if>
+                    </c:forEach>
+                </div>
 
-				<div class="community-action-group">
-					<!-- 좋아요 버튼 -->
-					<a href="${pageContext.request.contextPath}/community/like?cBoardId=${board.cBoardId}"
-						class="community-like-btn">
-						<i class="bi bi-heart-fill"></i> いいね (${board.likeCnt})
-					</a>
+                <c:if test="${hasAttachmentFile}">
+                <section class="community-attachment-box" aria-labelledby="attachmentTitle">
+                    <h2 id="attachmentTitle" class="community-attachment-title">
+                        <i class="bi bi-paperclip" aria-hidden="true"></i> 添付ファイル
+                    </h2>
+                    <ul class="community-attachment-list">
+                        <c:forEach var="file" items="${fileList}">
+                            <c:set var="fileName" value="${fn:toLowerCase(file.originName)}"/>
+                            <c:if test="${not (fn:endsWith(fileName, '.jpg') or fn:endsWith(fileName, '.jpeg') or fn:endsWith(fileName, '.png') or fn:endsWith(fileName, '.gif') or fn:endsWith(fileName, '.webp'))}">
+                            <c:set var="rawPath" value="${file.filePath}${fn:endsWith(file.filePath, '/') ? '' : '/'}${file.saveName}"/>
+                            <c:choose>
+                                <c:when test="${fn:startsWith(rawPath, 'http')}">
+                                    <c:set var="downloadUrl" value="${rawPath}"/>
+                                </c:when>
+                                <c:when test="${fn:startsWith(rawPath, '/')}">
+                                    <c:set var="downloadUrl" value="${pageContext.request.contextPath}${rawPath}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="downloadUrl" value="${pageContext.request.contextPath}/${rawPath}"/>
+                                </c:otherwise>
+                            </c:choose>
+                            <li>
+                                <a href="${downloadUrl}" download="${fn:escapeXml(file.originName)}">
+                                    <i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i>
+                                    <c:out value="${file.originName}"/>
+                                </a>
+                            </li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                </section>
+                </c:if>
+            </c:if>
 
-					<!-- 작성자 본인 제어 버튼 -->
-					<c:if test="${sessionScope.loginMemberId eq board.memberId}">
-						<a href="${pageContext.request.contextPath}/community/edit?cBoardId=${board.cBoardId}"
-							class="btn btn-jp-mustard">編集</a>
-						<a href="${pageContext.request.contextPath}/community/delete?cBoardId=${board.cBoardId}"
-							class="btn btn-danger" onclick="return confirm('本当に削除しますか？');">削除</a>
-					</c:if>
-				</div>
-			</div>
+            <div class="community-detail-actions">
+                <a href="${pageContext.request.contextPath}/community/list" class="btn btn-jp-outline">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i> 一覧へ戻る
+                </a>
 
-			<!-- 댓글 영역 -->
-			<div class="comment-section">
-				<h2 class="comment-section-title">
-					<i class="bi bi-chat-dots"></i> コメント
-				</h5>
+                <div class="community-action-group">
+                    <button type="button" id="communityLikeButton"
+                        class="community-like-btn${liked ? ' active' : ''}"
+                        data-board-id="${communityBoard.CBoardId}" aria-pressed="${liked}">
+                        <i class="bi ${liked ? 'bi-heart-fill' : 'bi-heart'}" aria-hidden="true"></i>
+                        <span>いいね</span>
+                        <span>(<span data-like-count><c:out value="${communityBoard.likeCnt}"/></span>)</span>
+                    </button>
+                    <span id="likeStatus" class="visually-hidden" role="status" aria-live="polite"></span>
 
-				<!-- 댓글 작성 폼 -->
-				<form action="${pageContext.request.contextPath}/community/comment/write" method="post" class="community-comment-form">
-					<input type="hidden" name="cBoardId" value="${board.cBoardId}">
-					<div class="community-comment-input">
-						<textarea name="content" class="form-control" rows="2"
-							placeholder="コメントを入力してください..." required></textarea>
-						<button type="submit" class="btn btn-jp-mustard fw-bold px-4">登録</button>
-					</div>
-				</form>
+                    <c:if test="${canManageBoard}">
+                        <c:url var="editUrl" value="/community/update">
+                            <c:param name="cBoardId" value="${communityBoard.CBoardId}"/>
+                        </c:url>
+                        <a href="${editUrl}" class="btn btn-jp-mustard">編集</a>
+                        <form action="${pageContext.request.contextPath}/community/delete" method="post" class="community-inline-form"
+                            onsubmit="return confirm('本当に削除しますか？');">
+                            <input type="hidden" name="cBoardId" value="${communityBoard.CBoardId}">
+                            <button type="submit" class="btn btn-danger">削除</button>
+                        </form>
+                    </c:if>
+                </div>
+            </div>
 
-				<!-- 댓글 목록 -->
-				<div class="comment-list">
-					<c:forEach var="comment" items="${commentList}">
-						<div class="comment-item">
-							<div class="d-flex justify-content-between align-items-start">
-								<div class="comment-body">
-									<div class="comment-author-line"><i class="bi bi-person-circle"></i>
-									<strong>${comment.memberId}</strong>
-									<span class="text-muted small"><fmt:formatDate
-											value="${comment.regDate}" pattern="yyyy.MM.dd HH:mm" /></span></div>
-									<p class="comment-content">${comment.content}</p>
-								</div>
-								<c:if test="${sessionScope.loginMemberId eq comment.memberId}">
-									<a
-										href="${pageContext.request.contextPath}/community/comment/delete?cCommentId=${comment.cCommentId}&cBoardId=${board.cBoardId}"
-										class="btn btn-sm btn-link text-danger text-decoration-none p-0 ms-2"
-										onclick="return confirm('コメントを削除しますか？');">削除</a>
-								</c:if>
-							</div>
-						</div>
-					</c:forEach>
+            <section class="comment-section" aria-labelledby="commentTitle">
+                <h2 id="commentTitle" class="comment-section-title">
+                    <i class="bi bi-chat-dots" aria-hidden="true"></i> コメント
+                </h2>
 
-					<c:if test="${empty commentList}">
-						<div class="comment-empty"><i class="bi bi-chat-square"></i> コメントはまだありません。</div>
-					</c:if>
-				</div>
-			</div>
-		</div>
+                <form action="${pageContext.request.contextPath}/community/comment/add" method="post" class="community-comment-form">
+                    <input type="hidden" name="cBoardId" value="${communityBoard.CBoardId}">
+                    <div class="community-comment-input">
+                        <label for="commentContent" class="visually-hidden">コメント内容</label>
+                        <textarea id="commentContent" name="content" class="form-control" rows="2"
+                            placeholder="コメントを入力してください..." required></textarea>
+                        <button type="submit" class="btn btn-jp-mustard fw-bold px-4">登録</button>
+                    </div>
+                </form>
 
-	</main>
+                <div class="comment-list">
+                    <c:forEach var="comment" items="${commentList}">
+                        <article class="comment-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="comment-body">
+                                    <div class="comment-author-line">
+                                        <i class="bi bi-person-circle" aria-hidden="true"></i>
+                                        <strong><c:out value="${comment.memberId}"/></strong>
+                                        <time class="text-muted small"><c:out value="${fn:replace(comment.regDate, 'T', ' ')}"/></time>
+                                    </div>
+                                    <p class="comment-content"><c:out value="${comment.content}"/></p>
+                                </div>
 
-	<!-- 공통 푸터 INCLUDE -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+                                <c:if test="${not empty loginUser and (comment.memberId eq loginUser.memberId or loginUser.role eq 'ADMIN')}">
+                                    <form action="${pageContext.request.contextPath}/community/comment/delete" method="post"
+                                        class="community-inline-form ms-2" onsubmit="return confirm('コメントを削除しますか？');">
+                                        <input type="hidden" name="cCommentId" value="${comment.CCommentId}">
+                                        <button type="submit" class="btn btn-sm btn-link text-danger text-decoration-none p-0">削除</button>
+                                    </form>
+                                </c:if>
+                            </div>
+                        </article>
+                    </c:forEach>
 
-	<!-- Bootstrap 5 JS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+                    <c:if test="${empty commentList}">
+                        <div class="comment-empty"><i class="bi bi-chat-square" aria-hidden="true"></i> コメントはまだありません。</div>
+                    </c:if>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function() {
+        'use strict';
+
+        var likeButton = document.getElementById('communityLikeButton');
+        var likeStatus = document.getElementById('likeStatus');
+
+        if (!likeButton) {
+            return;
+        }
+
+        likeButton.addEventListener('click', function() {
+            if (likeButton.disabled) {
+                return;
+            }
+
+            likeButton.disabled = true;
+
+            fetch('${pageContext.request.contextPath}/api/community/like/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ cBoardId: Number(likeButton.dataset.boardId) })
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+                return response.json();
+            })
+            .then(function(result) {
+                var isLiked = result.liked === true;
+                var icon = likeButton.querySelector('i');
+
+                likeButton.classList.toggle('active', isLiked);
+                likeButton.setAttribute('aria-pressed', String(isLiked));
+                icon.classList.toggle('bi-heart-fill', isLiked);
+                icon.classList.toggle('bi-heart', !isLiked);
+
+                document.querySelectorAll('[data-like-count]').forEach(function(countElement) {
+                    countElement.textContent = result.likeCnt;
+                });
+                likeStatus.textContent = isLiked ? 'いいねしました。' : 'いいねを取り消しました。';
+            })
+            .catch(function() {
+                likeStatus.textContent = 'いいねの更新に失敗しました。';
+                window.alert('いいねを更新できませんでした。しばらくしてからもう一度お試しください。');
+            })
+            .finally(function() {
+                likeButton.disabled = false;
+            });
+        });
+    }());
+    </script>
 </body>
 </html>

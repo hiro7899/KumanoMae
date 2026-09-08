@@ -121,22 +121,25 @@
 						<h6 class="fw-bold mb-3">危険度の凡例</h6>
 
 						<div class="mb-3">
-							<p class="mb-1 fw-bold">
-								<span class="legend-dot danger"></span>危険（DANGER）
+							<p class="mb-1 fw-bold map-legend-title">
+								<span><span class="legend-dot danger"></span>危険（DANGER）</span>
+								<span id="dangerCount" class="map-risk-count danger">0件</span>
 							</p>
 							<small class="text-muted d-block ps-3">姿を目撃・撮影</small>
 						</div>
 
 						<div class="mb-3">
-							<p class="mb-1 fw-bold">
-								<span class="legend-dot warning"></span>警戒（WARNING）
+							<p class="mb-1 fw-bold map-legend-title">
+								<span><span class="legend-dot warning"></span>警戒（WARNING）</span>
+								<span id="warningCount" class="map-risk-count warning">0件</span>
 							</p>
 							<small class="text-muted d-block ps-3">足跡・痕跡を発見</small>
 						</div>
 
 						<div>
-							<p class="mb-1 fw-bold">
-								<span class="legend-dot caution"></span>注意（CAUTION）
+							<p class="mb-1 fw-bold map-legend-title">
+								<span><span class="legend-dot caution"></span>注意（CAUTION）</span>
+								<span id="cautionCount" class="map-risk-count caution">0件</span>
 							</p>
 							<small class="text-muted d-block ps-3">鳴き声・気配を感知</small>
 						</div>
@@ -148,16 +151,16 @@
 			<div class="row g-3 align-items-end">
 				<div class="col-md-4">
 					<label class="form-label fw-bold d-block">危険度</label>
-					<div class="form-check form-check-inline">
+					<div class="form-check form-check-inline risk-filter danger">
 						<input class="form-check-input" type="checkbox" id="riskDanger"
 							checked> <label class="form-check-label" for="riskDanger">危険</label>
 					</div>
-					<div class="form-check form-check-inline">
+					<div class="form-check form-check-inline risk-filter warning">
 						<input class="form-check-input" type="checkbox" id="riskWarning"
 							checked> <label class="form-check-label"
 							for="riskWarning">警戒</label>
 					</div>
-					<div class="form-check form-check-inline">
+					<div class="form-check form-check-inline risk-filter caution">
 						<input class="form-check-input" type="checkbox" id="riskCaution"
 							checked> <label class="form-check-label"
 							for="riskCaution">注意</label>
@@ -166,10 +169,10 @@
 				<div class="col-md-3">
 					<label for="periodSelect" class="form-label fw-bold">期間</label> <select
 						class="form-select" id="periodSelect">
-						<option selected>全期間</option>
-						<option>1週間</option>
-						<option>1ヶ月</option>
-						<option>3ヶ月</option>
+						<option value="all" selected>全期間</option>
+						<option value="7">1週間</option>
+						<option value="30">1ヶ月</option>
+						<option value="90">3ヶ月</option>
 					</select>
 				</div>
 				<div class="col-md-5">
@@ -320,19 +323,18 @@
 		let map;
 		let geocoder;
 		let markerInfoWindow;
+		let allSightings = [];
+		let sightingMarkers = [];
+		const defaultMapCenter = { lat: 43.0621, lng: 141.3544 };
+		const defaultMapZoom = 7;
 
 		// 1. Google Map 초기화 함수 (콜백 함수)
 		function initMap() {
 			// 기본 위치: 홋카이도/일본 중심부 부근
-			const defaultCenter = {
-				lat : 43.0621,
-				lng : 141.3544
-			};
-
 			map = new google.maps.Map(document.getElementById("mapContainer"),
 					{
-						zoom : 7,
-						center : defaultCenter,
+						zoom : defaultMapZoom,
+						center : defaultMapCenter,
 					});
 
 			geocoder = new google.maps.Geocoder();
@@ -340,9 +342,9 @@
 			loadSightingMarkers();
 		}
 
-		// 2. 등록된 목격 정보 마커 표시
+		// 2. 등록된 목격 정보 조회
 		async function loadSightingMarkers() {
-			const contextPath = document.body.dataset.contextPath;
+			const contextPath = document.body.dataset.contextPath || "";
 
 			try {
 				const response = await fetch(contextPath + "/map/markers", {
@@ -353,11 +355,51 @@
 					throw new Error("マーカー情報の取得に失敗しました。");
 				}
 
-				const sightings = await response.json();
+				allSightings = await response.json();
+				applyMapFilters();
+			} catch (error) {
+				console.error(error);
+			}
+		}
+
+		// 3. 선택한 위험도·기간 조건으로 지도 마커를 다시 표시
+		function applyMapFilters() {
+			if (!map) return;
+
+			const checkedRisks = [
+				document.getElementById("riskDanger").checked ? "DANGER" : null,
+				document.getElementById("riskWarning").checked ? "WARNING" : null,
+				document.getElementById("riskCaution").checked ? "CAUTION" : null
+			].filter(Boolean);
+			const periodDays = Number(document.getElementById("periodSelect").value);
+			const cutoff = Number.isFinite(periodDays) && periodDays > 0
+				? new Date(Date.now() - periodDays * 24 * 60 * 60 * 1000)
+				: null;
+
+			const filteredSightings = allSightings.filter(function(sighting) {
+				if (checkedRisks.indexOf(normalizeRisk(sighting.displayRisk)) === -1) {
+					return false;
+				}
+
+				if (!cutoff) return true;
+				const eventDate = new Date(sighting.eventDate || sighting.regDate);
+				return Number.isNaN(eventDate.getTime()) || eventDate >= cutoff;
+			});
+
+			renderSightingMarkers(filteredSightings);
+		}
+
+		function renderSightingMarkers(sightings) {
+			sightingMarkers.forEach(function(marker) {
+				marker.setMap(null);
+			});
+			sightingMarkers = [];
+
 				const bounds = new google.maps.LatLngBounds();
+				const riskCounts = { DANGER: 0, WARNING: 0, CAUTION: 0 };
 				let markerCount = 0;
 
-				sightings.forEach(function(sighting) {
+			sightings.forEach(function(sighting) {
 					const latitude = Number(sighting.latitude);
 					const longitude = Number(sighting.longitude);
 
@@ -365,12 +407,15 @@
 						return;
 					}
 
+					const risk = normalizeRisk(sighting.displayRisk);
+					riskCounts[risk]++;
+
 					const position = { lat: latitude, lng: longitude };
 					const marker = new google.maps.Marker({
 						map: map,
 						position: position,
 						title: sighting.title || "クマ目撃情報",
-						icon: createRiskMarkerIcon(sighting.displayRisk)
+						icon: createRiskMarkerIcon(risk)
 					});
 
 					marker.addListener("click", function() {
@@ -379,18 +424,21 @@
 					});
 
 					bounds.extend(position);
+					sightingMarkers.push(marker);
 					markerCount++;
 				});
 
-				if (markerCount === 1) {
+			if (markerCount === 1) {
 					map.setCenter(bounds.getCenter());
 					map.setZoom(12);
 				} else if (markerCount > 1) {
 					map.fitBounds(bounds, 50);
+				} else {
+					map.setCenter(defaultMapCenter);
+					map.setZoom(defaultMapZoom);
 				}
-			} catch (error) {
-				console.error(error);
-			}
+
+			updateRiskCounts(riskCounts);
 		}
 
 		function createRiskMarkerIcon(displayRisk) {
@@ -412,11 +460,33 @@
 		}
 
 		function createMarkerInfoContent(sighting) {
+			const contextPath = document.body.dataset.contextPath || "";
+			const targetId = Number(sighting.targetId);
+			const detailLink = Number.isInteger(targetId)
+				? '<a href="' + contextPath + '/board/detail?boardId=' + encodeURIComponent(targetId) + '" ' +
+					'style="display:inline-block; margin-top:9px; color:#1f1f1f; font-size:12px; font-weight:700;">' +
+					'詳細を見る <i class="bi bi-arrow-right"></i></a>'
+				: '';
+
 			return '<div style="max-width:240px; padding:4px;">' +
 				'<strong style="display:block; margin-bottom:6px;">' + escapeHtml(sighting.title || "クマ目撃情報") + '</strong>' +
 				'<div style="font-size:12px; color:#6b6355;">危険度: ' + escapeHtml(sighting.displayRisk || "-") + '</div>' +
 				'<div style="font-size:12px; color:#6b6355; margin-top:3px;">' + escapeHtml(sighting.address || "住所情報なし") + '</div>' +
+				detailLink +
 				'</div>';
+		}
+
+		function normalizeRisk(displayRisk) {
+			const risk = String(displayRisk || "").toUpperCase();
+			if (risk === "DANGER") return "DANGER";
+			if (risk === "WARNING") return "WARNING";
+			return "CAUTION";
+		}
+
+		function updateRiskCounts(riskCounts) {
+			document.getElementById("dangerCount").textContent = riskCounts.DANGER + "件";
+			document.getElementById("warningCount").textContent = riskCounts.WARNING + "件";
+			document.getElementById("cautionCount").textContent = riskCounts.CAUTION + "件";
 		}
 
 		function escapeHtml(value) {
@@ -427,9 +497,9 @@
 
 		// 3. 지역 검색 버튼 기능 (Geocoding)
 		function searchArea() {
-			const address = document.getElementById("areaSearchInput").value;
+			const address = document.getElementById("areaSearchInput").value.trim();
+			applyMapFilters();
 			if (!address) {
-				alert("検索する地域を入力してください。");
 				return;
 			}
 
@@ -452,6 +522,11 @@
 						searchArea();
 					}
 				});
+
+		document.querySelectorAll("#riskDanger, #riskWarning, #riskCaution, #periodSelect")
+			.forEach(function(filterInput) {
+				filterInput.addEventListener("change", applyMapFilters);
+			});
 
 		// 4. 로그인 판별 후 제보 페이지 이동
 		function checkLoginAndReport() {

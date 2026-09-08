@@ -49,6 +49,13 @@
 
     <!-- ===================== 메인 콘텐츠 영역 ===================== -->
     <main class="admin-content">
+        <c:if test="${not empty errorMsg}">
+            <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+                <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                <span><c:out value="${errorMsg}"/></span>
+            </div>
+        </c:if>
+
         <!-- 상단 타이틀 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold m-0"><span class="dash">―</span>目撃通報管理</h2>
@@ -111,13 +118,14 @@
                                         <td>${board.boardId}</td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${board.riskLevel eq 'DANGER'}"><span class="badge badge-danger-custom">危険</span></c:when>
-                                                <c:when test="${board.riskLevel eq 'WARNING'}"><span class="badge badge-warning-custom">警戒</span></c:when>
-                                                <c:otherwise><span class="badge badge-caution-custom">注意</span></c:otherwise>
+                                                <c:when test="${board.riskLevel eq 'DANGER'}"><span class="badge bg-danger text-white">危険</span></c:when>
+                                                <c:when test="${board.riskLevel eq 'WARNING'}"><span class="badge bg-warning text-dark">警戒</span></c:when>
+                                                <c:otherwise><span class="badge text-dark" style="background-color: #f5e39a; border: 1px solid #d5bd62;">注意</span></c:otherwise>
                                             </c:choose>
                                         </td>
                                         <td class="text-start">
-                                            <div class="fw-bold">${board.title}</div>
+                                            <a href="${pageContext.request.contextPath}/admin/board/detail?boardId=${board.boardId}"
+                                                class="fw-bold text-decoration-none text-dark"><c:out value="${board.title}"/></a>
                                             <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> ${board.address} (${board.latitude}, ${board.longitude})</small>
                                         </td>
                                         <td>${board.memberId}</td>
@@ -138,8 +146,16 @@
                                         <td>
                                             <div class="d-flex justify-content-center gap-1">
                                                 <c:if test="${board.status eq 'W'}">
-                                                    <a href="${pageContext.request.contextPath}/admin/board/approve?boardId=${board.boardId}" class="btn btn-success btn-sm fw-bold">承認</a>
-                                                    <a href="${pageContext.request.contextPath}/admin/board/reject?boardId=${board.boardId}" class="btn btn-danger btn-sm fw-bold">却下</a>
+                                                    <form action="${pageContext.request.contextPath}/admin/board/approve" method="post" class="d-inline"
+                                                        onsubmit="return confirm('この通報を承認しますか？');">
+                                                        <input type="hidden" name="boardId" value="${board.boardId}">
+                                                        <button type="submit" class="btn btn-success btn-sm fw-bold">承認</button>
+                                                    </form>
+                                                    <form action="${pageContext.request.contextPath}/admin/board/reject" method="post" class="d-inline"
+                                                        onsubmit="return confirm('この通報を却下しますか？');">
+                                                        <input type="hidden" name="boardId" value="${board.boardId}">
+                                                        <button type="submit" class="btn btn-danger btn-sm fw-bold">却下</button>
+                                                    </form>
                                                 </c:if>
                                                 <c:if test="${board.status eq 'Y' and board.clearYn eq 'N'}">
                                                     <button type="button" class="btn btn-outline-dark btn-sm fw-bold" 
@@ -147,48 +163,16 @@
                                                         危険解除
                                                     </button>
                                                 </c:if>
-                                                <a href="${pageContext.request.contextPath}/board/view?boardId=${board.boardId}" class="btn btn-jp-outline btn-sm">詳細</a>
                                             </div>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
-                                <!-- 백엔드 데이터 연결 전 프론트엔드 확인용 샘플 데이터 -->
                                 <tr>
-                                    <td>12</td>
-                                    <td><span class="badge badge-danger-custom">危険</span></td>
-                                    <td class="text-start">
-                                        <div class="fw-bold">札幌近郊の登山道でクマを発見</div>
-                                        <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> 北海道札幌市 (43.06, 141.35)</small>
-                                    </td>
-                                    <td>user01</td>
-                                    <td>2026-08-20 07:30</td>
-                                    <td><span class="badge bg-warning text-dark">承認待ち</span></td>
-                                    <td><span class="badge bg-danger">継続中</span></td>
-                                    <td>
-                                        <div class="d-flex justify-content-center gap-1">
-                                            <a href="${pageContext.request.contextPath}/admin/board/approve?boardId=12" class="btn btn-success btn-sm fw-bold">承認</a>
-                                            <a href="${pageContext.request.contextPath}/admin/board/reject?boardId=12" class="btn btn-danger btn-sm fw-bold">却下</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td><span class="badge badge-warning-custom">警戒</span></td>
-                                    <td class="text-start">
-                                        <div class="fw-bold">登山口付近での足跡目撃</div>
-                                        <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> 北海道旭川市 (43.77, 142.36)</small>
-                                    </td>
-                                    <td>kuma_hunter</td>
-                                    <td>2026-08-19 18:10</td>
-                                    <td><span class="badge bg-success">承認済み</span></td>
-                                    <td><span class="badge bg-danger">継続中</span></td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-dark btn-sm fw-bold" 
-                                                onclick="openClearModal('11', '登山口付近での足跡目撃')">
-                                            危険解除
-                                        </button>
+                                    <td colspan="8" class="text-center text-muted py-5">
+                                        <i class="bi bi-inbox fs-3 d-block mb-2" aria-hidden="true"></i>
+                                        該当する通報はありません。
                                     </td>
                                 </tr>
                             </c:otherwise>
