@@ -1,8 +1,8 @@
-login.js
 document.addEventListener("DOMContentLoaded", function() {
-	const loginForm = document.querySelector("form[action='/login']");
+	const loginForm = document.getElementById("loginForm");
 	const userIdInput = document.getElementById("userId");
 	const passwordInput = document.getElementById("userPw");
+	const saveUserIdCheckbox = document.getElementById("saveUserId");
 
 	document.querySelectorAll(".password-toggle").forEach(function(button) {
 		button.addEventListener("click", function() {
@@ -19,8 +19,15 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	});
 
-	if (!loginForm) {
-		return;
+	if (!loginForm || !saveUserIdCheckbox) {
+	    return;
+	}
+
+	const savedUserId = localStorage.getItem("savedUserId");
+
+	if (savedUserId) {
+	    userIdInput.value = savedUserId;
+	    saveUserIdCheckbox.checked = true;
 	}
 	const resendEmailInput = document.getElementById("resendEmail");
 	const resendVerificationBtn = document.getElementById("resendVerificationBtn");
@@ -80,18 +87,28 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 
-	loginForm.addEventListener("submit", function(event) {
-		if (userIdInput.value.trim() === "") {
-			event.preventDefault();
-			alert("IDまたはメールアドレスを入力してください。");
-			userIdInput.focus();
-			return;
-		}
+	loginForm.addEventListener("submit", function (event) {
+	    const userId = userIdInput.value.trim();
+	    const password = passwordInput.value.trim();
 
-		if (passwordInput.value.trim() === "") {
-			event.preventDefault();
-			alert("パスワードを入力してください。");
-			passwordInput.focus();
-		}
+	    if (userId === "") {
+	        event.preventDefault();
+	        alert("IDまたはメールアドレスを入力してください。");
+	        userIdInput.focus();
+	        return;
+	    }
+
+	    if (password === "") {
+	        event.preventDefault();
+	        alert("パスワードを入力してください。");
+	        passwordInput.focus();
+	        return;
+	    }
+
+	    if (saveUserIdCheckbox.checked) {
+	        localStorage.setItem("savedUserId", userId);
+	    } else {
+	        localStorage.removeItem("savedUserId");
+	    }
 	});
 });
