@@ -1,4 +1,4 @@
-package com.jsl.controller.api;
+package com.jsl.controller;
 
 import java.io.IOException;
 
