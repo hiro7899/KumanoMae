@@ -145,4 +145,30 @@ public class AuthDao {
             return pstmt.executeUpdate();
         }
     }
+    
+    public MemberDto findByNameAndEmail(String userName, String email) {
+        String sql = """
+            SELECT MEMBER_ID, USER_ID, USER_NAME, EMAIL
+              FROM MEMBER
+             WHERE USER_NAME = ? AND EMAIL = ? AND STATUS = 'Y'
+            """;
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userName);
+            pstmt.setString(2, email);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    MemberDto member = new MemberDto();
+                    member.setMemberId(rs.getLong("MEMBER_ID"));
+                    member.setUserId(rs.getString("USER_ID"));
+                    member.setUserName(rs.getString("USER_NAME"));
+                    member.setEmail(rs.getString("EMAIL"));
+                    return member;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

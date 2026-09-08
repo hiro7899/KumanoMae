@@ -55,8 +55,9 @@
 								</a>
 							</li>
 
-							<li class="nav-item"><span class="nav-link text-light">
-									${sessionScope.user.userName}さま </span></li>
+							<li class="nav-item"><a class="nav-link text-light"
+								href="${pageContext.request.contextPath}/mypage">
+									<i class="bi bi-person-circle me-1"></i>${sessionScope.user.userName}さま </a></li>
 
 							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
 							</li>
