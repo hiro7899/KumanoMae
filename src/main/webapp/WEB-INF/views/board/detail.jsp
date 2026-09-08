@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
 <title><c:out value="${not empty board ? board.title : '目撃情報詳細'}"/> | クマ出没マップ</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -13,6 +14,24 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/board/view.css">
+=======
+<title>目撃情報詳細 | クマ出没マップ</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/index.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/board/view.css">
+>>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
 </head>
 <body>
     <%@ include file="/WEB-INF/views/includes/header.jsp"%>

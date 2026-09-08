@@ -4,10 +4,10 @@ public class ApiResponse {
 
     private boolean success;
     private String message;
-    private Boolean available;
-    private Boolean verified; // ★ 추가
+    private boolean available;
+    private boolean verified; // ★ 추가
 
-    private Boolean liked;
+    private boolean liked;
     private Integer likeCnt;
     
     public static ApiResponse ok() {
@@ -39,8 +39,8 @@ public class ApiResponse {
 
     public boolean isSuccess() { return success; }
     public String getMessage() { return message; }
-    public Boolean getAvailable() { return available; }
-    public Boolean getVerified() { return verified; }
+    public boolean getAvailable() { return available; }
+    public boolean getVerified() { return verified; }
     
     public static ApiResponse likeResult(boolean liked, int likeCnt) {
         ApiResponse r = new ApiResponse();
@@ -50,6 +50,6 @@ public class ApiResponse {
         return r;
     }
 
-    public Boolean getLiked() { return liked; }
+    public boolean getLiked() { return liked; }
     public Integer getLikeCnt() { return likeCnt; }
 }

@@ -1,3 +1,4 @@
+login.js
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form[action='/login']");
     const userIdInput = document.getElementById("userId");

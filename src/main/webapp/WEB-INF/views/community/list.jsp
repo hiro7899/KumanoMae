@@ -11,9 +11,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<<<<<<< HEAD
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
+=======
+
+<!-- 커스텀 CSS 파일들 -->
+>>>>>>> branch 'feature/jonguk' of https://github.com/hiro7899/KumanoMae.git
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/community.css">
 </head>
 <body>
