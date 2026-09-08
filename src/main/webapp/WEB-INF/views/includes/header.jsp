@@ -8,7 +8,19 @@
 			class="container header-container d-flex align-items-center justify-content-between">
 
 			<a href="${pageContext.request.contextPath}/" class="navbar-brand header-brand d-flex align-items-center text-decoration-none me-0">
-				<div class="logo-badge me-2">熊</div>
+				<div class="logo-badge me-2" aria-label="熊の前">
+					<svg class="bear-logo" width="25" height="25" viewBox="0 0 40 40" aria-hidden="true">
+						<circle cx="10" cy="11" r="5.5" fill="#332d25" />
+						<circle cx="30" cy="11" r="5.5" fill="#332d25" />
+						<circle cx="20" cy="22" r="14" fill="#332d25" />
+						<ellipse cx="20" cy="27" rx="8" ry="5.8" fill="#fdfaf3" />
+						<circle cx="14.8" cy="20" r="1.65" fill="#fdfaf3" />
+						<circle cx="25.2" cy="20" r="1.65" fill="#fdfaf3" />
+						<path d="M17.2 25.1 Q20 22.8 22.8 25.1 Q20 28.1 17.2 25.1Z" fill="#332d25" />
+						<path d="M20 27.2 V29.6 M20 29.6 Q17.8 31 16.1 29.8 M20 29.6 Q22.2 31 23.9 29.8"
+							fill="none" stroke="#332d25" stroke-width="1.25" stroke-linecap="round" />
+					</svg>
+				</div>
 				<div class="brand-jp">
 					<div class="jp-title">熊の前</div>
 					<div class="jp-sub">KUMA NO MAE</div>
@@ -47,13 +59,15 @@
 									関連装備ショッピング <i class="bi bi-box-arrow-up-right ms-1"></i></a></li>
 						</ul></li>
 
-					<c:choose>
-						<c:when test="${not empty sessionScope.user}">
-							<li class="nav-item">
-								<a class="nav-link text-warning fw-bold" href="${pageContext.request.contextPath}/admin/main">
-									<i class="bi bi-gear-fill me-1"></i>管理者
-								</a>
-							</li>
+				<c:choose>
+					<c:when test="${not empty sessionScope.user}">
+							<c:if test="${sessionScope.user.userGrade eq 'A'}">
+								<li class="nav-item">
+									<a class="nav-link text-warning fw-bold" href="${pageContext.request.contextPath}/admin/main">
+										<i class="bi bi-gear-fill me-1"></i>管理者
+									</a>
+								</li>
+							</c:if>
 
 							<li class="nav-item"><span class="nav-link text-light">
 									${sessionScope.user.userName}さま </span></li>
