@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             reportCards.forEach(function (card) {
                 const shouldShow = selectedRisk === "ALL" || card.dataset.riskCard === selectedRisk;
-                card.classList.toggle("d-none", !shouldShow);
+                card.classList.toggle("risk-filter-hidden", !shouldShow);
 
                 if (shouldShow) {
                     visibleCount += 1;
@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (emptyMessage && reportCards.length > 0) {
                 emptyMessage.classList.toggle("d-none", visibleCount !== 0);
             }
+            if (window.refreshPagination) window.refreshPagination("boardCardGrid");
         });
     });
 

@@ -94,9 +94,9 @@
 				</div>
 
 				<h5 class="fw-bold mb-3"><i class="bi bi-newspaper"></i> 最新の報道・アナウンス一覧</h5>
-				<div class="row g-4" id="newsCardGrid">
+				<div class="row g-4" id="newsCardGrid" data-pagination data-page-size="6">
 					<c:forEach var="news" items="${newsList}" begin="1">
-						<div class="col-md-6 col-lg-4 news-card-column" data-category="${news.sourceType}">
+						<div class="col-md-6 col-lg-4 news-card-column" data-category="${news.sourceType}" data-page-item>
 							<article class="card h-100 report-card">
 								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
 									class="card-img-top" alt="クマ関連ニュース">
@@ -119,6 +119,7 @@
 						</div>
 					</c:forEach>
 				</div>
+				<div class="client-pagination" data-pagination-controls="newsCardGrid" aria-label="ページ移動"></div>
 			</c:when>
 			<c:otherwise>
 				<div class="card card-jp border-0 py-5 text-center">
@@ -154,9 +155,11 @@
 	            ? 'block'
 	            : 'none';
 	    });
+	    if (window.refreshPagination) window.refreshPagination('newsCardGrid');
 	}
 	</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/common/pagination.js"></script>
 </body>
 </html>

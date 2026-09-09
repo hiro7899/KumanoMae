@@ -63,10 +63,16 @@
 		</div>
 
 		<!-- 제보 카드 목록 -->
-		<div class="row g-4">
+		<div class="row g-4" id="boardCardGrid" data-pagination data-page-size="9">
 			<c:forEach var="board" items="${boardList}">
-				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}">
+				<c:if test="${board.clearYn ne 'Y'}">
+				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-page-item>
 					<article class="card h-100 report-card shadow-sm">
+						<c:choose>
+							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
+							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
+							<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+						</c:choose>
 						<div class="card-body d-flex flex-column">
 							<div class="d-flex justify-content-between align-items-center gap-2 mb-2">
 								<c:choose>
@@ -83,7 +89,7 @@
 								<small class="text-muted text-end"><i class="bi bi-clock-fill me-1"></i><c:out value="${board.sightingDate}" /></small>
 							</div>
 
-							<h5 class="card-title text-truncate fw-bold"><c:out value="${board.title}" /></h5>
+			<h5 class="card-title text-truncate fw-bold"><c:out value="${board.title}" /></h5>
 							<p class="mb-2 text-danger small fw-bold">
 								<i class="bi bi-geo-alt-fill me-1"></i><c:out value="${board.address}" />
 							</p>
@@ -101,6 +107,7 @@
 						</div>
 					</article>
 				</div>
+				</c:if>
 			</c:forEach>
 
 			<c:if test="${empty boardList}">
@@ -124,11 +131,13 @@
 				</div>
 			</div>
 		</div>
+		<div class="client-pagination" data-pagination-controls="boardCardGrid" aria-label="ページ移動"></div>
 	</section>
 
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/board/list.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/common/pagination.js"></script>
 </body>
 </html>

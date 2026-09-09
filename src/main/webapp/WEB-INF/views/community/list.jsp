@@ -60,56 +60,48 @@
             </a>
         </div>
 
-        <div class="community-card table-responsive">
-            <table class="table community-table">
-                <thead>
-                    <tr>
-                        <th scope="col" class="community-title-column">タイトル</th>
-                        <th scope="col">カテゴリ</th>
-                        <th scope="col">投稿者</th>
-                        <th scope="col" class="community-number-column">閲覧数</th>
-                        <th scope="col" class="community-number-column">いいね</th>
-                        <th scope="col" class="community-number-column">コメント</th>
-                        <th scope="col" class="community-date-column">投稿日</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="board" items="${communityList}">
-                        <c:url var="detailUrl" value="/community/detail">
-                            <c:param name="cBoardId" value="${board.CBoardId}"/>
-                        </c:url>
-                        <tr>
-                            <td class="community-list-title"><a href="${detailUrl}"><c:out value="${board.title}"/></a></td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${board.category eq 'REVIEW'}"><span class="badge badge-cat-review">レビュー</span></c:when>
-                                    <c:when test="${board.category eq 'GEAR'}"><span class="badge badge-cat-gear">ギア</span></c:when>
-                                    <c:when test="${board.category eq 'FREE'}"><span class="badge badge-cat-board">自由掲示板</span></c:when>
-                                    <c:otherwise><span class="badge badge-cat-board"><c:out value="${board.category}"/></span></c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td><c:out value="${board.writerName}"/></td>
-                            <td class="community-number-column"><c:out value="${board.viewCnt}"/></td>
-                            <td class="community-number-column"><c:out value="${board.likeCnt}"/></td>
-                            <td class="community-number-column"><c:out value="${board.commentCnt}"/></td>
-                            <td class="community-date-column"><time><c:out value="${fn:substring(fn:replace(board.regDate, 'T', ' '), 0, 16)}"/></time></td>
-                        </tr>
-                    </c:forEach>
-
-                    <c:if test="${empty communityList}">
-                        <tr>
-                            <td colspan="7" class="community-table-empty">
-                                <i class="bi bi-chat-square-dots" aria-hidden="true"></i>
-                                <span>まだ投稿がありません。</span>
-                            </td>
-                        </tr>
-                    </c:if>
-                </tbody>
-            </table>
+        <div class="row g-4 community-list-grid" id="communityCardGrid" data-pagination data-page-size="9">
+            <c:forEach var="board" items="${communityList}">
+                <c:url var="detailUrl" value="/community/detail">
+                    <c:param name="cBoardId" value="${board.CBoardId}"/>
+                </c:url>
+                <div class="col-md-6 col-lg-4" data-page-item>
+                    <article class="card h-100 report-card preview-card community-post-card">
+                        <c:choose>
+                            <c:when test="${board.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
+                            <c:when test="${board.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
+                            <c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+                        </c:choose>
+                        <div class="card-body d-flex flex-column">
+                            <c:choose>
+                                <c:when test="${board.category eq 'REVIEW'}"><span class="badge badge-cat-review mb-2 align-self-start">レビュー</span></c:when>
+                                <c:when test="${board.category eq 'GEAR'}"><span class="badge badge-cat-gear mb-2 align-self-start">ギア</span></c:when>
+                                <c:otherwise><span class="badge badge-cat-board mb-2 align-self-start">自由掲示板</span></c:otherwise>
+                            </c:choose>
+                            <h5 class="card-title text-truncate fw-bold"><a class="community-card-title" href="${detailUrl}"><c:out value="${board.title}"/></a></h5>
+                            <p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${board.writerName}"/></p>
+                            <p class="small text-secondary flex-grow-1"><i class="bi bi-eye me-1"></i><c:out value="${board.viewCnt}"/> <span class="ms-2"><i class="bi bi-heart me-1"></i><c:out value="${board.likeCnt}"/></span> <span class="ms-2"><i class="bi bi-chat-square-text me-1"></i><c:out value="${board.commentCnt}"/></span></p>
+                            <div class="d-flex justify-content-between align-items-center text-muted small border-top pt-2">
+                                <time><i class="bi bi-clock me-1"></i><c:out value="${fn:substring(fn:replace(board.regDate, 'T', ' '), 0, 16)}"/></time>
+                                <a href="${detailUrl}" class="btn btn-jp-outline btn-sm fw-bold">投稿を見る</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </c:forEach>
+            <c:if test="${empty communityList}">
+                <div class="col-12">
+                    <div class="card border-0 bg-light py-5 text-center community-table-empty">
+                        <div class="card-body text-muted"><i class="bi bi-chat-square-dots fs-1 d-block mb-3"></i><span>まだ投稿がありません。</span></div>
+                    </div>
+                </div>
+            </c:if>
         </div>
+        <div class="client-pagination" data-pagination-controls="communityCardGrid" aria-label="ページ移動"></div>
     </main>
 
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/common/pagination.js"></script>
 </body>
 </html>

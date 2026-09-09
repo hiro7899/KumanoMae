@@ -331,6 +331,7 @@ h1, h2, h3, h4, h5, h6 {
 .legend-dot.danger  { background-color: var(--color-red); }
 .legend-dot.warning { background-color: var(--color-mustard); }
 .legend-dot.caution { background-color: #f5e39a; }
+.legend-dot.clear { background-color: #9aa0a6; }
 
 .filter-box {
     background-color: #fdfaf3;
@@ -350,10 +351,12 @@ h1, h2, h3, h4, h5, h6 {
 .risk-filter.danger .form-check-input { accent-color: var(--color-red); }
 .risk-filter.warning .form-check-input { accent-color: var(--color-mustard-dark); }
 .risk-filter.caution .form-check-input { accent-color: #d5bd62; }
+.risk-filter.clear .form-check-input { accent-color: #7b838c; }
 
 .risk-filter.danger .form-check-label { color: var(--color-red-dark); }
 .risk-filter.warning .form-check-label,
-.risk-filter.caution .form-check-label { color: var(--color-ink); }
+.risk-filter.caution .form-check-label,
+.risk-filter.clear .form-check-label { color: var(--color-ink); }
 
 .badge-danger-custom,
 .badge-warning-custom,
@@ -910,6 +913,15 @@ h1, h2, h3, h4, h5, h6 {
     height: 100%;
     object-fit: cover;
 }
+
+.preview-card .preview-card-thumb {
+    height: 100%;
+}
+
+.pagination-hidden { display: none !important; }
+.client-pagination { display: flex; justify-content: center; gap: .4rem; margin-top: 1.5rem; }
+.client-page-button { min-width: 2.2rem; padding: .35rem .65rem; border: 1.5px solid var(--color-ink, #332d25); background: transparent; color: var(--color-ink, #332d25); border-radius: .35rem; font-weight: 700; }
+.client-page-button.active, .client-page-button:hover { background: var(--color-mustard, #e3ac1f); }
 
 .preview-card-image-danger { background: #f1d7ce; color: var(--color-red-dark); }
 .preview-card-image-caution { background: #f4e2af; color: #815b00; }

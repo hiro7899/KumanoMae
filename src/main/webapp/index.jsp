@@ -147,6 +147,14 @@
 							</p>
 							<small class="text-muted d-block ps-3">鳴き声・気配を感知</small>
 						</div>
+
+						<div>
+							<p class="mb-1 fw-bold map-legend-title">
+								<span><span class="legend-dot clear"></span>解除（CLEAR）</span>
+								<span id="clearCount" class="map-risk-count clear">0件</span>
+							</p>
+							<small class="text-muted d-block ps-3">危険解除済み</small>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -168,6 +176,10 @@
 						<input class="form-check-input" type="checkbox" id="riskCaution"
 							checked> <label class="form-check-label"
 							for="riskCaution">注意</label>
+					</div>
+					<div class="form-check form-check-inline risk-filter clear">
+						<input class="form-check-input" type="checkbox" id="riskClear" checked>
+						<label class="form-check-label" for="riskClear">解除</label>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -250,10 +262,10 @@
 		</div>
 		<div class="row g-4">
 			<c:forEach var="board" items="${boardList}" end="2">
+				<c:if test="${board.clearYn ne 'Y'}">
 				<div class="col-md-4 col-sm-6">
 					<article class="card h-100 report-card preview-card">
 						<c:choose>
-							<c:when test="${not empty board.thumbnailUrl}"><div class="preview-card-image"><img class="preview-card-thumb" src="${board.thumbnailUrl}" alt="${fn:escapeXml(board.title)}"></div></c:when>
 							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
 							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
 							<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
@@ -265,13 +277,13 @@
 								<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">注意</span></c:otherwise>
 							</c:choose>
 							<h5 class="card-title"><c:out value="${board.title}" /></h5>
-							<c:if test="${not empty board.writerName}"><p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${board.writerName}" /></p></c:if>
 							<p class="mb-2 text-muted small"><i class="bi bi-geo-alt"></i> <c:out value="${board.address}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span></p>
 							<p class="small flex-grow-1"><c:out value="${board.content}" /></p>
 							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}" class="btn btn-jp-outline btn-sm mt-2">詳細を見る <i class="bi bi-arrow-right"></i></a>
 						</div>
 					</article>
 				</div>
+				</c:if>
 			</c:forEach>
 			<c:if test="${empty boardList}"><div class="col-12"><div class="card card-jp border-0 py-4 text-center"><div class="card-body text-muted"><i class="bi bi-geo-alt fs-1 d-block mb-2"></i><p class="fw-bold mb-0">現在表示できる目撃情報はありません。</p></div></div></div></c:if>
 		</div>
@@ -289,7 +301,6 @@
 				<div class="col-md-4 col-sm-6">
 					<article class="card h-100 report-card preview-card">
 						<c:choose>
-							<c:when test="${not empty community.thumbnailUrl}"><div class="preview-card-image"><img class="preview-card-thumb" src="${community.thumbnailUrl}" alt="${fn:escapeXml(community.title)}"></div></c:when>
 							<c:when test="${community.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
 							<c:when test="${community.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
 							<c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
@@ -438,7 +449,8 @@
 			const checkedRisks = [
 				document.getElementById("riskDanger").checked ? "DANGER" : null,
 				document.getElementById("riskWarning").checked ? "WARNING" : null,
-				document.getElementById("riskCaution").checked ? "CAUTION" : null
+				document.getElementById("riskCaution").checked ? "CAUTION" : null,
+				document.getElementById("riskClear").checked ? "CLEAR" : null
 			].filter(Boolean);
 			const periodDays = Number(document.getElementById("periodSelect").value);
 			const cutoff = Number.isFinite(periodDays) && periodDays > 0
@@ -446,7 +458,7 @@
 				: null;
 
 			const filteredSightings = allSightings.filter(function(sighting) {
-				if (checkedRisks.indexOf(normalizeRisk(sighting.displayRisk)) === -1) {
+				if (checkedRisks.indexOf(normalizeRisk(sighting.displayRisk, sighting.clearYn)) === -1) {
 					return false;
 				}
 
@@ -465,7 +477,7 @@
 			sightingMarkers = [];
 
 				const bounds = new google.maps.LatLngBounds();
-				const riskCounts = { DANGER: 0, WARNING: 0, CAUTION: 0 };
+				const riskCounts = { DANGER: 0, WARNING: 0, CAUTION: 0, CLEAR: 0 };
 				let markerCount = 0;
 
 			sightings.forEach(function(sighting) {
@@ -476,7 +488,7 @@
 						return;
 					}
 
-					const risk = normalizeRisk(sighting.displayRisk);
+					const risk = normalizeRisk(sighting.displayRisk, sighting.clearYn);
 					riskCounts[risk]++;
 
 					const position = { lat: latitude, lng: longitude };
@@ -514,7 +526,8 @@
 			const riskColors = {
 				DANGER: "#b23a2e",
 				WARNING: "#e3ac1f",
-				CAUTION: "#f5e39a"
+				CAUTION: "#f5e39a",
+				CLEAR: "#9aa0a6"
 			};
 			const normalizedRisk = String(displayRisk || "").toUpperCase();
 
@@ -531,6 +544,7 @@
 		function createMarkerInfoContent(sighting) {
 			const contextPath = document.body.dataset.contextPath || "";
 			const targetId = Number(sighting.targetId);
+			const riskLabel = normalizeRisk(sighting.displayRisk, sighting.clearYn);
 			const detailLink = Number.isInteger(targetId)
 				? '<a href="' + contextPath + '/board/detail?boardId=' + encodeURIComponent(targetId) + '" ' +
 					'style="display:inline-block; margin-top:9px; color:#1f1f1f; font-size:12px; font-weight:700;">' +
@@ -539,16 +553,18 @@
 
 			return '<div style="max-width:240px; padding:4px;">' +
 				'<strong style="display:block; margin-bottom:6px;">' + escapeHtml(sighting.title || "クマ目撃情報") + '</strong>' +
-				'<div style="font-size:12px; color:#6b6355;">危険度: ' + escapeHtml(sighting.displayRisk || "-") + '</div>' +
+				'<div style="font-size:12px; color:#6b6355;">危険度: ' + escapeHtml(riskLabel) + '</div>' +
 				'<div style="font-size:12px; color:#6b6355; margin-top:3px;">' + escapeHtml(sighting.address || "住所情報なし") + '</div>' +
 				detailLink +
 				'</div>';
 		}
 
-		function normalizeRisk(displayRisk) {
+		function normalizeRisk(displayRisk, clearYn) {
+			if (String(clearYn || "").toUpperCase() === "Y") return "CLEAR";
 			const risk = String(displayRisk || "").toUpperCase();
 			if (risk === "DANGER") return "DANGER";
 			if (risk === "WARNING") return "WARNING";
+			if (risk === "CLEAR") return "CLEAR";
 			return "CAUTION";
 		}
 
@@ -556,6 +572,7 @@
 			document.getElementById("dangerCount").textContent = riskCounts.DANGER + "件";
 			document.getElementById("warningCount").textContent = riskCounts.WARNING + "件";
 			document.getElementById("cautionCount").textContent = riskCounts.CAUTION + "件";
+			document.getElementById("clearCount").textContent = riskCounts.CLEAR + "件";
 		}
 
 		function escapeHtml(value) {
@@ -592,7 +609,7 @@
 					}
 				});
 
-		document.querySelectorAll("#riskDanger, #riskWarning, #riskCaution, #periodSelect")
+		document.querySelectorAll("#riskDanger, #riskWarning, #riskCaution, #riskClear, #periodSelect")
 			.forEach(function(filterInput) {
 				filterInput.addEventListener("change", applyMapFilters);
 			});
