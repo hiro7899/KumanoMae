@@ -1,0 +1,210 @@
+@charset "UTF-8";
+
+.signup-complete-main {
+    min-height: calc(100vh - 180px);
+    padding: 80px 0;
+    background-color: var(--color-bg, #ede4d1);
+}
+
+.signup-complete-card {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 58px 62px;
+    border: 2px solid var(--color-ink, #332d25);
+    background-color: var(--color-white, #fdfaf3);
+    box-shadow: 10px 10px 0 rgba(51, 45, 37, 0.16);
+    text-align: center;
+}
+
+.complete-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background-color: var(--color-mustard, #e3ac1f);
+    color: var(--color-ink, #332d25);
+    font-size: 2.2rem;
+}
+
+.complete-eyebrow {
+    margin-bottom: 10px;
+    color: var(--color-red, #b23a2e);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+.signup-complete-card h1 {
+    margin-bottom: 16px;
+    color: var(--color-ink, #332d25);
+    font-size: 2.3rem;
+    font-weight: 900;
+    line-height: 1.35;
+}
+
+.complete-lead {
+    margin-bottom: 30px;
+    color: var(--color-muted, #6b6355);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.complete-notice {
+    display: flex;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid #d8c8a5;
+    border-left: 5px solid var(--color-mustard, #e3ac1f);
+    background-color: #f7efdc;
+    text-align: left;
+}
+
+.complete-notice > i {
+    color: var(--color-red, #b23a2e);
+    font-size: 1.35rem;
+}
+
+.complete-notice strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--color-ink, #332d25);
+    font-size: 0.9rem;
+}
+
+.complete-notice p {
+    margin: 0;
+    color: var(--color-muted, #6b6355);
+    font-size: 0.75rem;
+    line-height: 1.7;
+}
+.complete-notice .complete-access-note {
+    margin-top: 9px;
+    color: var(--color-red, #b23a2e);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.65;
+}
+
+.complete-access-note i {
+    margin-right: 4px;
+}
+
+.complete-steps {
+    display: grid;
+    gap: 10px;
+    margin: 24px 0 18px;
+    text-align: left;
+}
+
+.complete-step {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #c9baa0;
+}
+
+.complete-step:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.complete-step span {
+    color: var(--color-red, #b23a2e);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.complete-step p {
+    margin: 0;
+    color: var(--color-ink, #332d25);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.complete-help {
+    margin: 0 0 26px;
+    color: var(--color-muted, #6b6355);
+    font-size: 0.72rem;
+}
+
+.complete-help i {
+    margin-right: 4px;
+    color: var(--color-red, #b23a2e);
+}
+
+.complete-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.complete-home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 52px;
+    border: 2px solid var(--color-ink, #332d25);
+    background-color: var(--color-mustard, #e3ac1f);
+    color: var(--color-ink, #332d25);
+    font-size: 0.9rem;
+    font-weight: 900;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.complete-home-btn:hover {
+    background-color: var(--color-mustard-dark, #c6900f);
+    color: var(--color-ink, #332d25);
+    transform: translateY(-2px);
+}
+
+.complete-home-btn i {
+    transition: transform 0.2s ease;
+}
+
+.complete-home-btn:hover i {
+    transform: translateX(4px);
+}
+
+.complete-login-link {
+    color: var(--color-muted, #6b6355);
+    font-size: 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.complete-login-link:hover {
+    color: var(--color-red, #b23a2e);
+}
+
+@media (max-width: 575.98px) {
+    .signup-complete-main {
+        padding: 42px 0;
+    }
+
+    .signup-complete-card {
+        padding: 38px 24px;
+        box-shadow: 5px 5px 0 rgba(51, 45, 37, 0.16);
+    }
+
+    .signup-complete-card h1 {
+        font-size: 1.9rem;
+    }
+
+    .complete-notice {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+}

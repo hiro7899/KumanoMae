@@ -9,8 +9,8 @@ public class BoardDto {
 	private String title; //제목
 	private String content; //상세 내용
 	private String riskLevel; //위험도: DANGER/WARNING/CAUTION
-	private int latitude; //위도
-	private int longitude; //경도
+	private double latitude; //위도
+	private double longitude; //경도
 	private String address; //Geocoder 자동 변환 주소
 	private LocalDateTime sightingDate; //목격 일시
 	private String situationTag; //목격 당시 상황 태그
@@ -21,6 +21,9 @@ public class BoardDto {
 	private String clearMemo; //위험 해제 사유
 	private LocalDateTime regDate; //등록일
 	private LocalDateTime modDate; //수정일
+	
+	private String writerName;   // MEMBER.USER_NAME JOIN 결과
+	private String thumbnailUrl; // 첫 번째 첨부 이미지 웹 경로, 없으면 null
 	
 	public Long getBoardId() {
 		return boardId;
@@ -52,16 +55,16 @@ public class BoardDto {
 	public void setRiskLevel(String riskLevel) {
 		this.riskLevel = riskLevel;
 	}
-	public int getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(int latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public int getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getAddress() {
@@ -123,6 +126,18 @@ public class BoardDto {
 	}
 	public void setModDate(LocalDateTime modDate) {
 		this.modDate = modDate;
+	}
+	public String getWriterName() {
+		return writerName;
+	}
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
+	}
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 	
 }

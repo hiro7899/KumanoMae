@@ -9,16 +9,16 @@ public class CommunityLikeDto {
 	private Long memberId; //추천 회원
 	private LocalDateTime regDate; //추천일
 	
-	public Long getcLikeId() {
+	public Long getCLikeId() {
 		return cLikeId;
 	}
-	public void setcLikeId(Long cLikeId) {
+	public void setCLikeId(Long cLikeId) {
 		this.cLikeId = cLikeId;
 	}
-	public Long getcBoardId() {
+	public Long getCBoardId() {
 		return cBoardId;
 	}
-	public void setcBoardId(Long cBoardId) {
+	public void setCBoardId(Long cBoardId) {
 		this.cBoardId = cBoardId;
 	}
 	public Long getMemberId() {

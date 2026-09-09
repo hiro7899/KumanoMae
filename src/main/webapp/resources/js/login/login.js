@@ -1,57 +1,114 @@
-/* =====================================================
-   login.js
-   - login.jsp 화면 동작만 담당 (실제 로그인 처리/DB 연동 없음)
-   - 지금은 입력값 유효성 검사(빈 값 체크)만 화면에서 확인하고,
-     나중에 백엔드가 연결되면 fetch/폼 전송으로 교체한다.
-   ===================================================== */
+document.addEventListener("DOMContentLoaded", function() {
+	const loginForm = document.getElementById("loginForm");
+	const userIdInput = document.getElementById("userId");
+	const passwordInput = document.getElementById("userPw");
+	const saveUserIdCheckbox = document.getElementById("saveUserId");
 
-document.addEventListener("DOMContentLoaded", function () {
+	document.querySelectorAll(".password-toggle").forEach(function(button) {
+		button.addEventListener("click", function() {
+			const target = document.getElementById(button.dataset.target);
+			const icon = button.querySelector("i");
+			const isHidden = target.type === "password";
 
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const loginBtn = document.getElementById("loginBtn");
+			target.type = isHidden ? "text" : "password";
+			icon.className = isHidden ? "bi bi-eye-slash" : "bi bi-eye";
+			button.setAttribute(
+				"aria-label",
+				isHidden ? "パスワードを隠す" : "パスワードを表示"
+			);
+		});
+	});
 
-    if (!loginBtn) return;
+	if (!loginForm || !saveUserIdCheckbox) {
+	    return;
+	}
 
-    loginBtn.addEventListener("click", function () {
+	const savedUserId = localStorage.getItem("savedUserId");
 
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
+	if (savedUserId) {
+	    userIdInput.value = savedUserId;
+	    saveUserIdCheckbox.checked = true;
+	}
+	const resendEmailInput = document.getElementById("resendEmail");
+	const resendVerificationBtn = document.getElementById("resendVerificationBtn");
+	const resendMessage = document.getElementById("resendMessage");
+	const contextPath = document.body.dataset.contextPath || "";
 
-        // 1. 빈 값 체크
-        if (email === "") {
-            alert("メールアドレスを入力してください。");
-            emailInput.focus();
-            return;
-        }
+	if (resendVerificationBtn) {
+		resendVerificationBtn.addEventListener("click", async function() {
+			const email = resendEmailInput.value.trim();
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (password === "") {
-            alert("パスワードを入力してください。");
-            passwordInput.focus();
-            return;
-        }
+			if (!emailPattern.test(email)) {
+				resendMessage.textContent =
+					"正しいメールアドレスを入力してください。";
+				resendMessage.className = "resend-message error";
+				resendEmailInput.focus();
+				return;
+			}
 
-        // 2. 이메일 형식 간단 체크
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            alert("メールアドレスの形式が正しくありません。");
-            emailInput.focus();
-            return;
-        }
+			resendVerificationBtn.disabled = true;
+			resendMessage.textContent = "認証メールを送信しています。";
+			resendMessage.className = "resend-message";
 
-        // 3. 지금은 백엔드가 없으므로 화면 동작만 안내
-        //    TODO: 백엔드 연동 후 이 부분을 실제 로그인 요청(fetch 등)으로 교체
-        alert("ログイン機能はバックエンド連携後に有効になります。");
-    });
+			try {
+				const response = await fetch(
+					contextPath + "/api/email-verification/send?email="
+					+ encodeURIComponent(email),
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({
+							email: email
+						})
+					}
+				);
 
-    // Enter 키로도 로그인 버튼이 눌리도록 처리
-    [emailInput, passwordInput].forEach(function (input) {
-        if (!input) return;
-        input.addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                loginBtn.click();
-            }
-        });
-    });
+				const result = await response.json();
 
+				if (!response.ok || !result.success) {
+					throw new Error(
+						result.message || "認証メールの送信に失敗しました。"
+					);
+				}
+
+				resendMessage.textContent =
+					"認証メールを再送信しました。受信トレイをご確認ください。";
+				resendMessage.className = "resend-message success";
+			} catch (error) {
+				resendMessage.textContent =
+					error.message || "認証メールの再送信に失敗しました。";
+				resendMessage.className = "resend-message error";
+			} finally {
+				resendVerificationBtn.disabled = false;
+			}
+		});
+	}
+
+	loginForm.addEventListener("submit", function (event) {
+	    const userId = userIdInput.value.trim();
+	    const password = passwordInput.value.trim();
+
+	    if (userId === "") {
+	        event.preventDefault();
+	        alert("IDまたはメールアドレスを入力してください。");
+	        userIdInput.focus();
+	        return;
+	    }
+
+	    if (password === "") {
+	        event.preventDefault();
+	        alert("パスワードを入力してください。");
+	        passwordInput.focus();
+	        return;
+	    }
+
+	    if (saveUserIdCheckbox.checked) {
+	        localStorage.setItem("savedUserId", userId);
+	    } else {
+	        localStorage.removeItem("savedUserId");
+	    }
+	});
 });

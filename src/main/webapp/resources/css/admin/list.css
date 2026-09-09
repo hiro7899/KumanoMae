@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+.admin-brand .logo-badge {
+    width: 44px;
+    height: 44px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 260px;
+    background-color: var(--color-ink, #2b2b2b);
+    color: #fff;
+    flex-shrink: 0;
+    border-right: 3px solid #000;
+}
+
+.admin-content {
+    flex-grow: 1;
+    background-color: var(--color-bg, #fcf8f2);
+    padding: 2rem;
+}
+
+.admin-brand {
+    padding: 1.2rem;
+    border-bottom: 2px solid #000;
+    background-color: #1f1f1f;
+}
+
+.admin-nav-link {
+    color: #d1d1d1;
+    padding: 0.9rem 1.2rem;
+    display: block;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid #3d3d3d;
+    transition: all 0.2s ease-in-out;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link.active {
+    background-color: var(--color-mustard, #e5a93c);
+    color: #000;
+    font-weight: 700;
+}
+
+.stat-card {
+    border: 2.5px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.stat-card .stat-title {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 700;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 0.25rem 0;
+}
+
+.admin-table-card {
+    border: 2.5px solid #000;
+    box-shadow: 5px 5px 0px #000;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.admin-table thead {
+    background-color: var(--color-ink, #2b2b2b);
+    color: #fff;
+}
+
+.admin-table th {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.admin-table td {
+    padding: 0.8rem;
+    vertical-align: middle;
+}
+
+.admin-brand .bear-logo {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+/* 관리자 커뮤니티 목록 상태·카테고리 색상 */
+.admin-table .badge.bg-info {
+    background-color: #18b9db !important;
+    color: #12303a !important;
+}
+
+.admin-table .badge.bg-warning {
+    background-color: var(--color-mustard, #e3ac1f) !important;
+    color: var(--color-ink, #332d25) !important;
+}
+
+.admin-table .badge.bg-secondary {
+    background-color: #737d86 !important;
+    color: #fff !important;
+}
+
+.admin-table .badge.bg-success {
+    background-color: #198754 !important;
+    color: #fff !important;
+}
+
+.admin-table .btn-outline-danger,
+.admin-table .btn-outline-success,
+.admin-table .btn-danger {
+    border-width: 1.5px;
+    font-weight: 700;
+}
+
+.admin-table .btn-danger {
+    background-color: #d9364f;
+    border-color: #d9364f;
+}
+
+.admin-table .btn-danger:hover {
+    background-color: #b92d43;
+    border-color: #b92d43;
+}
+
+/* 관리자 사용자 목록 배지·관리 버튼 */
+.member-role-badge,
+.member-status-badge {
+    display: inline-block;
+    padding: .35rem .65rem;
+    border-radius: .45rem;
+    font-size: .82rem;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.member-role-admin {
+    background-color: var(--color-mustard, #e3ac1f);
+    color: var(--color-ink, #332d25);
+}
+
+.member-role-member {
+    background-color: #18b9db;
+    color: #12303a;
+}
+
+.member-status-active {
+    background-color: #198754;
+    color: #fff;
+}
+
+.member-status-stopped {
+    background-color: #737d86;
+    color: #fff;
+}
+
+.member-row-inactive {
+    background-color: #f3f0ea;
+    color: #777;
+}
+
+.member-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    flex-wrap: wrap;
+}
+
+.member-action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .38rem .65rem;
+    border: 1.5px solid currentColor;
+    border-radius: .4rem;
+    background: #fff;
+    font-size: .82rem;
+    font-weight: 700;
+    line-height: 1.1;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.member-grade-button {
+    color: #1769aa;
+}
+
+.member-grade-button:hover {
+    background-color: #e7f3fb;
+    transform: translateY(-1px);
+}
+
+.member-stop-button {
+    color: #d9364f;
+}
+
+.member-stop-button:hover {
+    background-color: #fff0f2;
+    transform: translateY(-1px);
+}
+
+.member-actions-muted {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    color: #737d86;
+    font-size: .82rem;
+    font-weight: 700;
+}

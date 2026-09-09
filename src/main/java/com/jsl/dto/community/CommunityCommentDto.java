@@ -10,16 +10,16 @@ public class CommunityCommentDto {
 	private String content; //댓글 내용
 	private LocalDateTime regDate; //등록일
 	
-	public Long getcCommentId() {
+	public Long getCCommentId() {
 		return cCommentId;
 	}
-	public void setcCommentId(Long cCommentId) {
+	public void setCCommentId(Long cCommentId) {
 		this.cCommentId = cCommentId;
 	}
-	public Long getcBoardId() {
+	public Long getCBoardId() {
 		return cBoardId;
 	}
-	public void setcBoardId(Long cBoardId) {
+	public void setCBoardId(Long cBoardId) {
 		this.cBoardId = cBoardId;
 	}
 	public Long getMemberId() {

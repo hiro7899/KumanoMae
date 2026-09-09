@@ -1,26 +1,48 @@
-package com.jsl.controller;
+	package com.jsl.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.jsl.service.login.FindPasswordService;
+import com.jsl.exeption.EmailTokenException;
+import com.jsl.exeption.FindIdException;
+import com.jsl.exeption.LoginException;
+import com.jsl.exeption.SignUpException;
+import com.jsl.service.IndexService;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
-import com.jsl.service.login.SignUpService;
+import com.jsl.service.member.FindIdService;
+import com.jsl.service.member.ForgotPasswordService;
+import com.jsl.service.member.ResetPasswordFormService;
+import com.jsl.service.member.ResetPasswordService;
+import com.jsl.service.signup.SignUpService;
 
-@WebServlet(urlPatterns = { "/", "/index", "/login", "/logout", "/signup", "/forgot-password", "/reset-password",
-		"/board/List", "/board/Write", "/board/News"
-
+@WebServlet(urlPatterns = {
+        "/", "/index",
+        "/login", "/logout", "/signup", "/signup/complete",
+        "/find_id", "/find_pw",
+        "/reset-password",
+        "/verify-email",
 })
 public class RootController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	private final LoginService loginService = new LoginService();
+	private final LogoutService logoutService = new LogoutService();
+	private final SignUpService signUpService = new SignUpService();
+	
+	private final FindIdService findIdService = new FindIdService();
+	private final ForgotPasswordService forgotPasswordService = new ForgotPasswordService();
+	private final ResetPasswordService resetPasswordService = new ResetPasswordService();
+	private final ResetPasswordFormService resetPasswordFormService = new ResetPasswordFormService();
+	
+	private final IndexService indexService = new IndexService();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doAction(request, response);
@@ -31,80 +53,107 @@ public class RootController extends HttpServlet {
 		doAction(request, response);
 	}
 
-	protected void doAction(HttpServletRequest request, HttpServletResponse response)
+	private void doAction(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// exact-match 패턴이므로 getServletPath()가 "/login", "/logout" 등을 그대로 반환
-		String action = request.getServletPath();
+		String path = request.getServletPath();
 		String page = null;
 
-		switch (action) {
+		switch (path) {
 
 		case "/":
 		case "/index":
+			indexService.doCommand(request, response);
 			page = "/index.jsp";
 			break;
 
 		case "/login":
-			if ("GET".equalsIgnoreCase(request.getMethod())) {
-				page = "/WEB-INF/views/auth/login.jsp";
-			} else {
-				new LoginService().doCommand(request, response);
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        page = "/WEB-INF/views/auth/login.jsp";
+		    } else {
+		        try {
+		            loginService.doCommand(request, response);
+		            response.sendRedirect(request.getContextPath() + "/");
+		            return;
 
-				HttpSession session = request.getSession(false);
-				if (session != null && session.getAttribute("userId") != null) {
-					response.sendRedirect(request.getContextPath() + "/");
-					return;
-				}
-				// 로그인 실패 시 errorMsg를 request에 담아 폼 재출력
-				page = "/WEB-INF/views/auth/login.jsp";
-			}
-			break;
-
+		        } catch (LoginException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            page = "/WEB-INF/views/auth/login.jsp";
+		        }
+		    }
+		    break;
+		    
 		case "/logout":
-			new LogoutService().doCommand(request, response);
-			response.sendRedirect(request.getContextPath() + "/");
+			logoutService.doCommand(request, response);
+			response.sendRedirect("/");
 			return;
 
 		case "/signup":
-			if ("GET".equalsIgnoreCase(request.getMethod())) {
-				page = "/WEB-INF/views/auth/signup.jsp";
-			} else {
-				new SignUpService().doCommand(request, response);
-				response.sendRedirect(request.getContextPath() + "/login");
-				return;
-			}
-			break;
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        page = "/WEB-INF/views/auth/signup.jsp";
+		    } else {
+		        try {
+		            signUpService.doCommand(request, response);
+		            response.sendRedirect("/signup/complete");
+		            return;
 
+		        } catch (SignUpException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            page = "/WEB-INF/views/auth/signup.jsp";
+		        }
+		    }
+		    break;
+
+		case "/signup/complete":
+		    page = "/WEB-INF/views/auth/signup_complete.jsp"; // "메일을 확인해주세요" + 재발송 버튼
+		    break;
+			
+		case "/find_id":
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        page = "/WEB-INF/views/auth/find_id.jsp";
+		    } else {
+		        try {
+		            findIdService.doCommand(request, response);
+		            page = "/WEB-INF/views/auth/find_id.jsp";
+		        } catch (FindIdException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            page = "/WEB-INF/views/auth/find_id.jsp";
+		        }
+		    }
+		    break;
+			
 		case "/find_pw":
 			if ("GET".equalsIgnoreCase(request.getMethod())) {
 				page = "/WEB-INF/views/auth/find_pw.jsp";
 			} else {
-				new FindPasswordService().doCommand(request, response);
-				page = "/WEB-INF/views/auth/find_pw.jsp"; // 처리 결과 메시지와 함께 재출력
+				forgotPasswordService.doCommand(request, response);
+				page = "/WEB-INF/views/auth/find_pw.jsp";
 			}
 			break;
-		case "/board/List":
-			page = "/WEB-INF/views/board/boardList.jsp";
-			break;
-
-		case "/board/Write":
-			page = "/WEB-INF/views/board/boardWrite.jsp";
-			break;
 			
-		case "/board/News":
-			page = "/WEB-INF/views/board/boardNews.jsp";
-			break;
-//        case "/reset_pw":
-//            if ("GET".equalsIgnoreCase(request.getMethod())) {
-//                page = "/WEB-INF/views/auth/reset_pw.jsp";
-//            } else {
-//                new ResetPasswordService().doCommand(request, response);
-//                response.sendRedirect(request.getContextPath() + "/login");
-//                return;
-//            }
-//            break;
+		case "/reset-password":
+		    if ("GET".equalsIgnoreCase(request.getMethod())) {
+		        resetPasswordFormService.doCommand(request, response);
+		        page = "/WEB-INF/views/auth/reset_password.jsp";
+		    } else {
+		        try {
+		            resetPasswordService.doCommand(request, response);
+		            response.sendRedirect("/login");
+		            return;
+		        } catch (EmailTokenException e) {
+		            request.setAttribute("errorMsg", e.getMessage());
+		            request.setAttribute("token", request.getParameter("token"));
+		            request.setAttribute("tokenValid", true); // 폼은 유지하고 에러 메시지만 표시
+		            page = "/WEB-INF/views/auth/reset_password.jsp";
+		        }
+		    }
+		    break;
+		    
+		case "/verify-email":
+		    page = "/WEB-INF/views/auth/verify_email.jsp";
+		    break;
 
+		    
 		default:
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;

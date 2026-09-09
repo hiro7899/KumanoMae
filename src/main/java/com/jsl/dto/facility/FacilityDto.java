@@ -7,8 +7,8 @@ public class FacilityDto {
 	private Long facilityId;
 	private String facilityType;
 	private String facilityName;
-	private int latitute;
-	private int longitude;
+	private double latitute;
+	private double longitude;
 	private String phone;
 	private String operatingHours;
 	private LocalDateTime regDate;
@@ -31,16 +31,16 @@ public class FacilityDto {
 	public void setFacilityName(String facilityName) {
 		this.facilityName = facilityName;
 	}
-	public int getLatitute() {
+	public double getLatitute() {
 		return latitute;
 	}
-	public void setLatitute(int latitute) {
+	public void setLatitute(double latitute) {
 		this.latitute = latitute;
 	}
-	public int getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getPhone() {
