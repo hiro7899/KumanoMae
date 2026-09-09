@@ -10,20 +10,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const agreeCheckbox = document.getElementById("agree");
 
     const checkUserIdBtn = document.getElementById("checkUserIdBtn");
+    const checkEmailBtn = document.getElementById("checkEmailBtn");
     const userIdCheckMessage = document.getElementById("userIdCheckMessage");
-
-    const sendVerificationBtn = document.getElementById("sendVerificationBtn");
-    const verificationArea = document.getElementById("verificationArea");
-    const verificationCodeInput = document.getElementById("verificationCode");
-    const verifyEmailBtn = document.getElementById("verifyEmailBtn");
     const emailAuthMessage = document.getElementById("emailAuthMessage");
-
     const signupBtn = document.getElementById("signupBtn");
+
     const contextPath = document.body.dataset.contextPath || "";
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     let userIdChecked = false;
-    let emailVerified = false;
+    let emailChecked = false;
 
     if (!form) {
         return;
@@ -40,32 +36,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateSignupButton() {
-        signupBtn.disabled = !(userIdChecked && emailVerified);
+        signupBtn.disabled = !(
+            userIdChecked
+            && emailChecked
+            && agreeCheckbox.checked
+        );
     }
 
-    function resetUserIdCheck() {
+    userIdInput.addEventListener("input", function () {
         userIdChecked = false;
         showUserIdMessage("", "");
         updateSignupButton();
-    }
+    });
 
-    function resetEmailVerification() {
-        emailVerified = false;
-        verificationArea.classList.add("d-none");
-        verificationCodeInput.value = "";
+    emailInput.addEventListener("input", function () {
+        emailChecked = false;
         showEmailMessage("", "");
         updateSignupButton();
-    }
+    });
 
-    userIdInput.addEventListener("input", resetUserIdCheck);
-    emailInput.addEventListener("input", resetEmailVerification);
-
-    /* 전화번호: 숫자만 허용 */
     phoneInput.addEventListener("input", function () {
         phoneInput.value = phoneInput.value.replace(/\D/g, "");
     });
 
-    /* ID 중복 확인 */
+    agreeCheckbox.addEventListener("change", updateSignupButton);
+
     checkUserIdBtn.addEventListener("click", async function () {
         const userId = userIdInput.value.trim();
 
@@ -79,149 +74,100 @@ document.addEventListener("DOMContentLoaded", function () {
         showUserIdMessage("IDを確認しています。", "");
 
         try {
-			const response = await fetch(
-			    contextPath + "/api/signup/check-user-id?userId="
-			    + encodeURIComponent(userId),
-			    {
-			        method: "GET"
-			    }
-			);
-
-			const result = await response.json();
-
-			if (!response.ok || !result.success || !result.available) {
-			    throw new Error(result.message || "すでに使用されているIDです。");
-			}
-
-            userIdChecked = true;
-            showUserIdMessage("使用可能なIDです。", "success");
-            updateSignupButton();
-        } catch (error) {
-            userIdChecked = false;
-            showUserIdMessage(error.message, "error");
-            updateSignupButton();
-        } finally {
-            checkUserIdBtn.disabled = false;
-        }
-    });
-
-    /* 이메일 중복 확인 후 인증번호 발송 */
-    sendVerificationBtn.addEventListener("click", async function () {
-        const email = emailInput.value.trim();
-
-        if (!emailPattern.test(email)) {
-            showEmailMessage("正しいメールアドレスを入力してください。", "error");
-            emailInput.focus();
-            return;
-        }
-
-        sendVerificationBtn.disabled = true;
-        showEmailMessage("メールアドレスを確認しています。", "");
-
-        try {
-			const checkResponse = await fetch(
-			    contextPath + "/api/signup/check-email?email="
-			    + encodeURIComponent(email),
-			    {
-			        method: "GET"
-			    }
-			);
-
-			const checkResult = await checkResponse.json();
-
-			if (!checkResponse.ok || !checkResult.success || !checkResult.available) {
-			    throw new Error(
-			        checkResult.message || "すでに登録されているメールアドレスです。"
-			    );
-			}
-
-            showEmailMessage("認証番号を送信しています。", "");
-
-            const sendResponse = await fetch(
-                contextPath + "/api/email-verification/send",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: email })
-                }
-            );
-
-            const sendResult = await sendResponse.json();
-
-            if (!sendResponse.ok || !sendResult.success) {
-                throw new Error(
-                    sendResult.message || "認証番号の送信に失敗しました。"
-                );
-            }
-
-            verificationArea.classList.remove("d-none");
-            showEmailMessage("認証番号をメールに送信しました。", "success");
-            verificationCodeInput.focus();
-        } catch (error) {
-            showEmailMessage(error.message, "error");
-        } finally {
-            sendVerificationBtn.disabled = false;
-        }
-    });
-
-    /* 이메일 인증번호 확인 */
-    verifyEmailBtn.addEventListener("click", async function () {
-        const email = emailInput.value.trim();
-        const code = verificationCodeInput.value.trim();
-
-        if (!/^\d{6}$/.test(code)) {
-            showEmailMessage("6桁の認証番号を入力してください。", "error");
-            verificationCodeInput.focus();
-            return;
-        }
-
-        verifyEmailBtn.disabled = true;
-
-        try {
             const response = await fetch(
-                contextPath + "/api/email-verification/verify",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        email: email,
-                        code: code
-                    })
-                }
+                contextPath + "/api/signup/check-user-id?userId="
+                + encodeURIComponent(userId),
+                { method: "GET" }
             );
 
             const result = await response.json();
 
-            if (!response.ok || !result.success) {
-                throw new Error(result.message || "認証番号が正しくありません。");
+            if (!response.ok || !result.success || !result.available) {
+                throw new Error(
+                    result.message || "すでに使用されているIDです。"
+                );
             }
 
-            emailVerified = true;
-            emailInput.readOnly = true;
-            verificationCodeInput.readOnly = true;
-            sendVerificationBtn.disabled = true;
-            verifyEmailBtn.disabled = true;
+            userIdChecked = true;
+            showUserIdMessage("使用可能なIDです。", "success");
 
-            showEmailMessage("メール認証が完了しました。", "success");
-            updateSignupButton();
         } catch (error) {
-            showEmailMessage(error.message, "error");
+            userIdChecked = false;
+            showUserIdMessage(
+                error.message || "IDの確認に失敗しました。",
+                "error"
+            );
         } finally {
-            if (!emailVerified) {
-                verifyEmailBtn.disabled = false;
-            }
+            checkUserIdBtn.disabled = false;
+            updateSignupButton();
         }
     });
 
-    /* 비밀번호 보기 / 숨기기 */
+    checkEmailBtn.addEventListener("click", async function () {
+        const email = emailInput.value.trim();
+
+        if (!emailPattern.test(email)) {
+            showEmailMessage(
+                "正しいメールアドレスを入力してください。",
+                "error"
+            );
+            emailInput.focus();
+            return;
+        }
+
+        checkEmailBtn.disabled = true;
+        showEmailMessage("メールアドレスを確認しています。", "");
+
+        try {
+            const response = await fetch(
+                contextPath + "/api/signup/check-email?email="
+                + encodeURIComponent(email),
+                { method: "GET" }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success || !result.available) {
+                throw new Error(
+                    result.message
+                    || "すでに登録されているメールアドレスです。"
+                );
+            }
+
+            emailChecked = true;
+            showEmailMessage(
+                "使用可能なメールアドレスです。会員登録後に認証メールを送信します。",
+                "success"
+            );
+
+        } catch (error) {
+            emailChecked = false;
+            showEmailMessage(
+                error.message || "メールアドレスの確認に失敗しました。",
+                "error"
+            );
+        } finally {
+            checkEmailBtn.disabled = false;
+            updateSignupButton();
+        }
+    });
+
     document.querySelectorAll(".password-toggle").forEach(function (button) {
         button.addEventListener("click", function () {
             const target = document.getElementById(button.dataset.target);
             const icon = button.querySelector("i");
+
+            if (!target || !icon) {
+                return;
+            }
+
             const isHidden = target.type === "password";
 
             target.type = isHidden ? "text" : "password";
-            icon.className = isHidden ? "bi bi-eye-slash" : "bi bi-eye";
+            icon.className = isHidden
+                ? "bi bi-eye-slash"
+                : "bi bi-eye";
+
             button.setAttribute(
                 "aria-label",
                 isHidden ? "パスワードを隠す" : "パスワードを表示"
@@ -230,13 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     form.addEventListener("submit", function (event) {
-        const userId = userIdInput.value.trim();
-        const userName = userNameInput.value.trim();
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
-        const passwordConfirm = passwordConfirmInput.value.trim();
-
-        if (userId === "") {
+        if (!userIdInput.value.trim()) {
             event.preventDefault();
             alert("IDを入力してください。");
             userIdInput.focus();
@@ -249,34 +189,34 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (userName === "") {
+        if (!userNameInput.value.trim()) {
             event.preventDefault();
             alert("お名前を入力してください。");
             userNameInput.focus();
             return;
         }
 
-        if (!emailPattern.test(email)) {
+        if (!emailPattern.test(emailInput.value.trim())) {
             event.preventDefault();
             alert("正しいメールアドレスを入力してください。");
             emailInput.focus();
             return;
         }
 
-        if (!emailVerified) {
+        if (!emailChecked) {
             event.preventDefault();
-            alert("メール認証を完了してください。");
+            alert("メールアドレスの重複確認を完了してください。");
             return;
         }
 
-        if (password.length < 8) {
+        if (passwordInput.value.length < 8) {
             event.preventDefault();
             alert("パスワードは8文字以上で入力してください。");
             passwordInput.focus();
             return;
         }
 
-        if (password !== passwordConfirm) {
+        if (passwordInput.value !== passwordConfirmInput.value) {
             event.preventDefault();
             alert("パスワードが一致しません。");
             passwordConfirmInput.focus();
@@ -286,7 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!agreeCheckbox.checked) {
             event.preventDefault();
             alert("利用規約とプライバシーポリシーに同意してください。");
-            agreeCheckbox.focus();
         }
     });
 });
