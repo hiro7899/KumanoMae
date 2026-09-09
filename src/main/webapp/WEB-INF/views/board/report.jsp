@@ -132,7 +132,7 @@
 				<!-- 5. 현장 사진 첨부 -->
 				<div class="mb-4">
 					<label for="imageFile" class="form-label form-label-jp">現場写真の添付</label>
-					<input class="form-control border-secondary-subtle" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage(this)">
+					<input class="form-control border-secondary-subtle" type="file" id="imageFile" name="photoFile" accept="image/*" onchange="previewImage(this)">
 					<div class="form-text">クマの姿、足跡、現場の状況が分かる写真があれば添付してください。(JPG, PNG)</div>
 					
 					<div id="imagePreviewBox" class="image-preview-container">

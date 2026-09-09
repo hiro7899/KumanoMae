@@ -42,6 +42,57 @@
     background-color: #f5efe3;
 }
 
+.community-card-title {
+    color: var(--color-ink, #332d25);
+    text-decoration: none;
+}
+
+.community-card-title:hover,
+.community-card-title:focus-visible {
+    color: var(--color-red, #b23a2e);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.community-post-card {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.community-post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.14);
+}
+
+/* 목록 가독성 개선: 이미지 아이콘 없이 제목과 행만 은은하게 강조 */
+.community-table tbody td {
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.community-table .community-list-title a {
+    color: var(--color-ink, #332d25);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.community-table .community-list-title a:hover,
+.community-table .community-list-title a:focus-visible {
+    color: var(--color-red, #b23a2e);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.community-table .community-number-column,
+.community-table .community-date-column {
+    color: var(--color-muted, #6b6355);
+    font-size: .88rem;
+}
+
+.community-table tbody tr {
+    transition: background-color .2s ease;
+}
+
 .badge-cat-board {
     background-color: var(--color-bg-soft, #e4d9c1);
     color: var(--color-ink, #332d25);

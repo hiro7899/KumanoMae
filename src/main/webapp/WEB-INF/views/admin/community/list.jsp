@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -28,7 +29,7 @@
 		<!-- ===================== 관리자 사이드바 ===================== -->
 		<aside class="admin-sidebar">
 			<div class="admin-brand d-flex align-items-center">
-				<div class="logo-badge me-2">熊</div>
+				<div class="logo-badge me-2"><img class="bear-logo" src="${pageContext.request.contextPath}/resources/img/brand/kumanomae-paw-seal.png" alt="" aria-hidden="true"></div>
 				<div class="brand-jp">
 					<div class="jp-title text-white">管理システム</div>
 					<div class="jp-sub text-warning" style="font-size: 0.7rem;">KUMANO_MAE
@@ -120,7 +121,8 @@
 								<th>No</th>
 								<th>カテゴリ</th>
 								<th>タイトル</th>
-								<th>投稿者ID</th>
+								<th>投稿者</th>
+								<th>コメント</th>
 								<th>作成日時</th>
 								<th>状態</th>
 								<th>管理</th>
@@ -148,8 +150,9 @@
 												class="text-decoration-none text-dark">
 													<c:out value="${item.title}" />
 											</a></td>
-											<td>${item.memberId}</td>
-											<td>${item.regDate}</td>
+										<td><c:out value="${item.writerName}" /></td>
+										<td><c:out value="${item.commentCnt}" /></td>
+										<td>${fn:substring(fn:replace(item.regDate, 'T', ' '), 0, 16)}</td>
 											<td><c:choose>
 													<c:when test="${item.status eq 'Y'}">
 														<span class="badge bg-success">表示中</span>
@@ -188,7 +191,7 @@
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td colspan="7" class="text-center text-muted py-5">
+									<td colspan="8" class="text-center text-muted py-5">
 										<i class="bi bi-inbox fs-3 d-block mb-2" aria-hidden="true"></i>
 										該当する投稿はありません。
 									</td>
