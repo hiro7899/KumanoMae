@@ -253,6 +253,7 @@
 				<div class="col-md-4 col-sm-6">
 					<article class="card h-100 report-card preview-card">
 						<c:choose>
+							<c:when test="${not empty board.thumbnailUrl}"><div class="preview-card-image"><img class="preview-card-thumb" src="${board.thumbnailUrl}" alt="${fn:escapeXml(board.title)}"></div></c:when>
 							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
 							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
 							<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
@@ -264,6 +265,7 @@
 								<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">注意</span></c:otherwise>
 							</c:choose>
 							<h5 class="card-title"><c:out value="${board.title}" /></h5>
+							<c:if test="${not empty board.writerName}"><p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${board.writerName}" /></p></c:if>
 							<p class="mb-2 text-muted small"><i class="bi bi-geo-alt"></i> <c:out value="${board.address}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span></p>
 							<p class="small flex-grow-1"><c:out value="${board.content}" /></p>
 							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}" class="btn btn-jp-outline btn-sm mt-2">詳細を見る <i class="bi bi-arrow-right"></i></a>
@@ -287,6 +289,7 @@
 				<div class="col-md-4 col-sm-6">
 					<article class="card h-100 report-card preview-card">
 						<c:choose>
+							<c:when test="${not empty community.thumbnailUrl}"><div class="preview-card-image"><img class="preview-card-thumb" src="${community.thumbnailUrl}" alt="${fn:escapeXml(community.title)}"></div></c:when>
 							<c:when test="${community.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
 							<c:when test="${community.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
 							<c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>

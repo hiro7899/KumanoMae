@@ -904,6 +904,13 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2.2rem;
 }
 
+.preview-card-thumb {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .preview-card-image-danger { background: #f1d7ce; color: var(--color-red-dark); }
 .preview-card-image-caution { background: #f4e2af; color: #815b00; }
 .preview-card-image-safe { background: #dce6d5; color: #41623d; }
