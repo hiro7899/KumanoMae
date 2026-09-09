@@ -12,6 +12,7 @@ import com.jsl.exeption.EmailTokenException;
 import com.jsl.exeption.FindIdException;
 import com.jsl.exeption.LoginException;
 import com.jsl.exeption.SignUpException;
+import com.jsl.service.IndexService;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
 import com.jsl.service.member.FindIdService;
@@ -40,6 +41,8 @@ public class RootController extends HttpServlet {
 	private final ResetPasswordService resetPasswordService = new ResetPasswordService();
 	private final ResetPasswordFormService resetPasswordFormService = new ResetPasswordFormService();
 	
+	private final IndexService indexService = new IndexService();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doAction(request, response);
@@ -60,6 +63,7 @@ public class RootController extends HttpServlet {
 
 		case "/":
 		case "/index":
+			indexService.doCommand(request, response);
 			page = "/index.jsp";
 			break;
 

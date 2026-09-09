@@ -209,4 +209,37 @@ public class BoardDao {
             return 0;
         }
     }
+    
+    public List<BoardDto> selectRecentApproved(int limit) {
+        String sql = """
+            SELECT * FROM (
+                SELECT b.BOARD_ID, b.MEMBER_ID, b.TITLE, b.CONTENT, b.RISK_LEVEL, b.LATITUDE, b.LONGITUDE,
+                       b.ADDRESS, b.SIGHTING_DATE, b.SITUATION_TAG, b.VIEW_CNT, b.STATUS, b.CLEAR_YN,
+                       b.CLEAR_DATE, b.CLEAR_MEMO, b.REG_DATE, b.MOD_DATE,
+                       m.USER_NAME AS WRITER_NAME
+                  FROM BOARD b
+                  JOIN MEMBER m ON m.MEMBER_ID = b.MEMBER_ID
+                 WHERE b.STATUS = 'Y'
+                 ORDER BY b.REG_DATE DESC
+            ) WHERE ROWNUM <= ?
+            """;
+
+        List<BoardDto> list = new ArrayList<>();
+
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, limit);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    BoardDto board = mapRow(rs); // 기존 헬퍼 재사용
+                    board.setWriterName(rs.getString("WRITER_NAME"));
+                    list.add(board);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

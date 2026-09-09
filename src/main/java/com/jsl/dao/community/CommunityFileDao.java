@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jsl.dto.community.CommunityFileDto;
+import com.jsl.util.DBManager;
 
 public class CommunityFileDao {
 
@@ -62,5 +63,28 @@ public class CommunityFileDao {
             pstmt.setLong(1, cBoardId);
             return pstmt.executeUpdate();
         }
+    }
+    
+    public String selectFirstFileUrl(Long cBoardId) {
+        String sql = """
+            SELECT FILE_PATH, SAVE_NAME FROM (
+                SELECT FILE_PATH, SAVE_NAME
+                  FROM COMMUNITY_FILE
+                 WHERE C_BOARD_ID = ?
+                 ORDER BY C_FILE_ID ASC
+            ) WHERE ROWNUM = 1
+            """;
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, cBoardId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("FILE_PATH") + "/" + rs.getString("SAVE_NAME");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
