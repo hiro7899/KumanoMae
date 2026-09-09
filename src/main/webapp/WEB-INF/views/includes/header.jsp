@@ -8,18 +8,8 @@
 			class="container header-container d-flex align-items-center justify-content-between">
 
 			<a href="${pageContext.request.contextPath}/" class="navbar-brand header-brand d-flex align-items-center text-decoration-none me-0">
-				<div class="logo-badge me-2" aria-label="熊の前">
-					<svg class="bear-logo" width="25" height="25" viewBox="0 0 40 40" aria-hidden="true">
-						<circle cx="8.5" cy="10.5" r="6" fill="#332d25" />
-						<circle cx="31.5" cy="10.5" r="6" fill="#332d25" />
-						<circle cx="20" cy="22" r="16" fill="#332d25" />
-						<ellipse cx="20" cy="27" rx="9" ry="6.5" fill="#fdfaf3" />
-						<circle cx="14.4" cy="19.6" r="1.8" fill="#fdfaf3" />
-						<circle cx="25.6" cy="19.6" r="1.8" fill="#fdfaf3" />
-						<path d="M17 25.1 Q20 22.6 23 25.1 Q20 28.4 17 25.1Z" fill="#332d25" />
-						<path d="M20 27.2 V29.6 M20 29.6 Q17.8 31 16.1 29.8 M20 29.6 Q22.2 31 23.9 29.8"
-							fill="none" stroke="#332d25" stroke-width="1.25" stroke-linecap="round" />
-					</svg>
+				<div class="logo-badge me-0" aria-label="熊の前">
+					<img class="bear-logo" src="${pageContext.request.contextPath}/resources/img/brand/kumanomae-paw-seal.png" alt="" aria-hidden="true">
 				</div>
 				<div class="brand-jp">
 					<div class="jp-title">熊の前</div>

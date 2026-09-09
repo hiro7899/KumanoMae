@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -24,7 +25,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
+	href="${pageContext.request.contextPath}/resources/css/index.css?v=home-sections-2">
 
 </head>
 
@@ -84,6 +85,9 @@
 				<!-- 경고 다이아몬드 사인 -->
 				<div class="col-md-5 mt-5 mt-md-0">
 					<div class="warning-sign-wrap">
+						<svg class="hero-bear-silhouette" viewBox="0 0 248.662 248.662" aria-hidden="true">
+							<path d="M248.343 175.365c-1.779-5.671-9.99-13.958-8.992-25.03.998-11.068 9.798-36.354 7.514-47.147s-13.737-42.525-43.349-47.324c-29.599-4.797-50.858 3.166-62.211 2.655-11.345-.513-13.409-9.091-25.95-8.98-16.188.15-18.975 6.869-30.42 10.473-8.392 2.645-34.676 2.613-34.676 2.613s-7.52-9.812-9.812-6.217c-2.292 3.597-5.236 12.757-5.236 12.757s-14.068 4.905-15.371 7.528c-1.304 2.623-3.094 6.876-3.094 6.876S1.847 87.486.213 91.083c-1.633 3.595 6.546 12.096 9.161 15.048 2.615 2.951 33.035 3.597 37.856 7.149 4.819 3.557 18.315 6.226 25.852 7.52 14.145 2.435 20.362 30.533 23.957 61.61-4.254 3.603-11.776 6.793-12.183 16.715h46.114s.613-6.624 1.395-14.827c.77-8.203 14.719-39.253 14.719-39.253s10.135 7.851 17.008 8.188c-.646 6.211 2.252 12.819 2.252 12.819s5.936 7.129 11.706 12.771c-10.563 4.356-10.255 12.039-10.255 12.039l39.145.304s3.923-8.171 3.923-14.719c5.246 7.53 15.381 10.472 15.381 10.472l-6.304 12.206h23.92c-.085 0 6.163-18.086 4.383-23.752zM28.482 85.278a3.107 3.107 0 1 1 0-6.216 3.107 3.107 0 0 1 0 6.216z"/>
+						</svg>
 						<div class="warning-sign">
 							<div class="warning-sign-inner">
 								<div class="bear-face">熊</div>
@@ -190,40 +194,8 @@
 		</div>
 	</section>
 
-	<%-- ===================== 주요 소식 바로가기 ===================== --%>
-	<section class="container my-5">
-		<h3 class="section-title-jp"><span class="dash">―</span>主要なお知らせ</h3>
-		<div class="row g-4 feature-links">
-			<div class="col-md-4">
-				<a class="feature-link-card" href="${pageContext.request.contextPath}/community/list">
-					<div class="feature-link-icon"><i class="bi bi-people-fill"></i></div>
-					<div class="feature-link-content"><span class="feature-link-label">COMMUNITY</span><h4>コミュニティ</h4>
-						<p>登山装備のレビューや山の情報をみんなで共有しましょう。</p><span class="feature-link-more">コミュニティを見る <i class="bi bi-arrow-right"></i></span>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-4">
-				<a class="feature-link-card feature-link-card-alert" href="${pageContext.request.contextPath}/board/report">
-					<div class="feature-link-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-					<div class="feature-link-content"><span class="feature-link-label">SIGHTING REPORT</span><h4>目撃情報を報告</h4>
-						<p>クマを見かけたら、地域の安全のために情報を届けてください。</p><span class="feature-link-more">目撃情報を報告する <i class="bi bi-arrow-right"></i></span>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-4">
-				<a class="feature-link-card" href="${pageContext.request.contextPath}/board/news">
-					<div class="feature-link-icon"><i class="bi bi-newspaper"></i></div>
-					<div class="feature-link-content"><span class="feature-link-label">LATEST NEWS</span><h4>ニュース・お知らせ</h4>
-						<c:choose><c:when test="${not empty newsList}"><c:forEach var="news" items="${newsList}" end="0"><p><c:out value="${news.title}" /></p></c:forEach></c:when><c:otherwise><p>最新のニュースと自治体からのお知らせを確認できます。</p></c:otherwise></c:choose>
-						<span class="feature-link-more">ニュースを見る <i class="bi bi-arrow-right"></i></span>
-					</div>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<%-- 기존 뉴스 카드 영역은 주요 소식 카드로 대체 --%>
-	<section class="container my-5 home-news-legacy">
+	<%-- ===================== 뉴스·공지 섹션 ===================== --%>
+	<section class="container my-5 home-news-section">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>最新ニュース
 		</h3>
@@ -270,7 +242,75 @@
 		</div>
 	</section>
 
-	<%-- ===================== 安全に関するご案内 ===================== --%>
+	<%-- ===================== 목격 제보 섹션 ===================== --%>
+	<section class="container my-5 home-preview-section home-report-section">
+		<div class="section-heading-row">
+			<h3 class="section-title-jp mb-0"><span class="dash">―</span>最新の目撃情報</h3>
+			<a href="${pageContext.request.contextPath}/board/list" class="section-more-link">전체 보기 <i class="bi bi-arrow-right"></i></a>
+		</div>
+		<div class="row g-4">
+			<c:forEach var="board" items="${boardList}" end="2">
+				<div class="col-md-4 col-sm-6">
+					<article class="card h-100 report-card preview-card">
+						<c:choose>
+							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
+							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
+							<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+						</c:choose>
+						<div class="card-body d-flex flex-column">
+							<c:choose>
+								<c:when test="${board.riskLevel eq 'DANGER'}"><span class="badge badge-danger-custom mb-2 align-self-start">危険</span></c:when>
+								<c:when test="${board.riskLevel eq 'WARNING'}"><span class="badge badge-warning-custom mb-2 align-self-start">警戒</span></c:when>
+								<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">注意</span></c:otherwise>
+							</c:choose>
+							<h5 class="card-title"><c:out value="${board.title}" /></h5>
+							<p class="mb-2 text-muted small"><i class="bi bi-geo-alt"></i> <c:out value="${board.address}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span></p>
+							<p class="small flex-grow-1"><c:out value="${board.content}" /></p>
+							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}" class="btn btn-jp-outline btn-sm mt-2">詳細を見る <i class="bi bi-arrow-right"></i></a>
+						</div>
+					</article>
+				</div>
+			</c:forEach>
+			<c:if test="${empty boardList}"><div class="col-12"><div class="card card-jp border-0 py-4 text-center"><div class="card-body text-muted"><i class="bi bi-geo-alt fs-1 d-block mb-2"></i><p class="fw-bold mb-0">現在表示できる目撃情報はありません。</p></div></div></div></c:if>
+		</div>
+		<div class="text-center mt-4"><a href="${pageContext.request.contextPath}/board/list" class="btn btn-jp-mustard">目撃情報をすべて見る</a></div>
+	</section>
+
+	<%-- ===================== 커뮤니티 섹션 ===================== --%>
+	<section class="container my-5 home-preview-section home-community-section">
+		<div class="section-heading-row">
+			<h3 class="section-title-jp mb-0"><span class="dash">―</span>コミュニティの最新投稿</h3>
+			<a href="${pageContext.request.contextPath}/community/list" class="section-more-link">전체 보기 <i class="bi bi-arrow-right"></i></a>
+		</div>
+		<div class="row g-4">
+			<c:forEach var="community" items="${communityList}" end="2">
+				<div class="col-md-4 col-sm-6">
+					<article class="card h-100 report-card preview-card">
+						<c:choose>
+							<c:when test="${community.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
+							<c:when test="${community.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
+							<c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+						</c:choose>
+						<div class="card-body d-flex flex-column">
+							<c:choose>
+								<c:when test="${community.category eq 'GEAR'}"><span class="badge badge-caution-custom mb-2 align-self-start">ギア</span></c:when>
+								<c:when test="${community.category eq 'REVIEW'}"><span class="badge badge-warning-custom mb-2 align-self-start">レビュー</span></c:when>
+								<c:otherwise><span class="badge badge-danger-custom mb-2 align-self-start">自由掲示板</span></c:otherwise>
+							</c:choose>
+							<h5 class="card-title"><c:out value="${community.title}" /></h5>
+							<p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${community.writerName}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(community.regDate, 'T', ' '), 0, 16)}</span></p>
+							<p class="small flex-grow-1"><i class="bi bi-heart"></i> ${community.likeCnt} <span class="ms-2"><i class="bi bi-chat-square-text"></i> ${community.commentCnt}</span></p>
+							<a href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}" class="btn btn-jp-outline btn-sm mt-2">投稿を見る <i class="bi bi-arrow-right"></i></a>
+						</div>
+					</article>
+				</div>
+			</c:forEach>
+			<c:if test="${empty communityList}"><div class="col-12"><div class="card card-jp border-0 py-4 text-center"><div class="card-body text-muted"><i class="bi bi-chat-square-dots fs-1 d-block mb-2"></i><p class="fw-bold mb-0">まだコミュニティ投稿がありません。</p></div></div></div></c:if>
+		</div>
+		<div class="text-center mt-4"><a href="${pageContext.request.contextPath}/community/list" class="btn btn-jp-mustard">コミュニティをすべて見る</a></div>
+	</section>
+
+	<%-- ===================== 안전에 관한 안내 ===================== --%>
 	<section class="container my-5">
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>安全に関するご案内
@@ -335,12 +375,6 @@
 			</div>
 		</div>
 	</section>
-
-	<%-- ===================== 제보하기 플로팅 버튼 ===================== --%>
-	<button type="button" class="btn btn-jp-mustard report-float-btn"
-		onclick="checkLoginAndReport()">
-		<i class="bi bi-exclamation-triangle-fill"></i> クマ出没を報告する
-	</button>
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
