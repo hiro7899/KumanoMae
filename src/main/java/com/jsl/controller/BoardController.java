@@ -79,6 +79,7 @@ public class BoardController extends HttpServlet {
                     return;
 
                 } catch (BoardReportException e) {
+                	e.printStackTrace();
                     request.setAttribute("errorMsg", e.getMessage());
                     page = "/WEB-INF/views/board/report.jsp";
 
