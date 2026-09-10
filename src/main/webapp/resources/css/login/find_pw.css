@@ -33,7 +33,7 @@ body {
     padding: 50px 52px;
     background-color: #fdfaf3;
     border: 2px solid #1a1a1a;
-    border-radius: 0;
+    border-radius: 12px;
 }
 
 .findpw-header {
@@ -103,7 +103,7 @@ body {
     padding: 0 15px 0 44px;
     background-color: #fdfaf3;
     border: 1px solid #cfc4ae;
-    border-radius: 0;
+    border-radius: 12px;
     box-shadow: none;
     color: #1a1a1a;
     font-family: inherit;
@@ -125,7 +125,7 @@ body {
     margin-top: 10px;
     background-color: #e3ac1f;
     border: 2px solid #1a1a1a;
-    border-radius: 0;
+    border-radius: 12px;
     color: #1a1a1a;
     font-family: inherit;
     font-size: 14px;
