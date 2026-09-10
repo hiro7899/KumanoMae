@@ -92,9 +92,18 @@
     font-size: 0.9rem;
 }
 
+.admin-table th.community-title-header {
+    font-size: 0.95rem;
+}
+
 .admin-table td {
     padding: 0.8rem;
     vertical-align: middle;
+}
+
+.admin-table td.community-title-cell {
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .admin-brand .bear-logo {

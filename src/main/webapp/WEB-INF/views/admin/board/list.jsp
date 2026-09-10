@@ -129,7 +129,7 @@
                                                 class="fw-bold text-decoration-none text-dark"><c:out value="${board.title}"/></a>
                                             <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> ${board.address} (${board.latitude}, ${board.longitude})</small>
                                         </td>
-                                        <td>${board.memberId}</td>
+                                        <td>${board.writerName}</td>
                                         <td>${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</td>
                                         <td>
                                             <c:choose>
