@@ -424,8 +424,8 @@
 		let markerInfoWindow;
 		let allSightings = [];
 		let sightingMarkers = [];
-		const defaultMapCenter = { lat: 43.0621, lng: 141.3544 };
-		const defaultMapZoom = 7;
+		const defaultMapCenter = { lat: 36.2, lng: 138.25 };
+		const defaultMapZoom = 5.5;
 
 		// 1. Google Map 초기화 함수 (콜백 함수)
 		function initMap() {
@@ -528,15 +528,12 @@
 					markerCount++;
 				});
 
-			if (markerCount === 1) {
-					map.setCenter(bounds.getCenter());
-					map.setZoom(12);
-				} else if (markerCount > 1) {
-					map.fitBounds(bounds, 50);
-				} else {
-					map.setCenter(defaultMapCenter);
-					map.setZoom(defaultMapZoom);
-				}
+			// 마커 위치에 따라 지도를 자동 이동하지 않고 일본 전국 중심을 유지합니다.
+			// 지역 검색을 실행한 경우에는 검색 결과 위치로 이동합니다.
+			if (markerCount === 0) {
+				map.setCenter(defaultMapCenter);
+				map.setZoom(defaultMapZoom);
+			}
 
 			updateRiskCounts(riskCounts);
 		}
