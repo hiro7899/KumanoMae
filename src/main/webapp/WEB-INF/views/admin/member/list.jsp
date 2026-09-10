@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -30,7 +31,7 @@
 		<!-- ===================== 관리자 사이드바 ===================== -->
 		<aside class="admin-sidebar">
 			<div class="admin-brand d-flex align-items-center">
-				<div class="logo-badge me-2">熊</div>
+				<div class="logo-badge me-2"><img class="bear-logo" src="${pageContext.request.contextPath}/resources/img/brand/kumanomae-paw-seal.png" alt="" aria-hidden="true"></div>
 				<div class="brand-jp">
 					<div class="jp-title text-white">管理システム</div>
 					<div class="jp-sub text-warning" style="font-size: 0.7rem;">KUMANO_MAE ADMIN</div>
@@ -142,7 +143,7 @@
 													</c:otherwise>
 												</c:choose>
 											</td>
-											<td>${member.joinDate}</td>
+											<td>${fn:substring(fn:replace(member.joinDate, 'T', ' '), 0, 16)}</td>
 											<td>
 												<c:choose>
 											<c:when test="${member.status eq 'N'}">

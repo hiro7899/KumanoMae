@@ -244,5 +244,23 @@ body {
 .link-sep {
     margin: 0 7px;
 }
+}
+.find-input-message {
+    min-height: 20px;
+    margin: 8px 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
 
+.find-input-message i {
+    margin-right: 4px;
+}
+
+.find-input-message.error {
+    color: #b23a2e;
+}
+
+.find-input-message.success {
+    color: #287340;
 }

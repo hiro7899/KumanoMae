@@ -22,6 +22,9 @@ public class BoardDto {
 	private LocalDateTime regDate; //등록일
 	private LocalDateTime modDate; //수정일
 	
+	private String writerName;   // MEMBER.USER_NAME JOIN 결과
+	private String thumbnailUrl; // 첫 번째 첨부 이미지 웹 경로, 없으면 null
+	
 	public Long getBoardId() {
 		return boardId;
 	}
@@ -123,6 +126,18 @@ public class BoardDto {
 	}
 	public void setModDate(LocalDateTime modDate) {
 		this.modDate = modDate;
+	}
+	public String getWriterName() {
+		return writerName;
+	}
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
+	}
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 	
 }

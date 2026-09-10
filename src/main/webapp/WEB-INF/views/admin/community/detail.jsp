@@ -29,7 +29,7 @@
 		<!-- ===================== 관리자 사이드바 ===================== -->
 		<aside class="admin-sidebar">
 			<div class="admin-brand d-flex align-items-center">
-				<div class="logo-badge me-2">熊</div>
+				<div class="logo-badge me-2"><img class="bear-logo" src="${pageContext.request.contextPath}/resources/img/brand/kumanomae-paw-seal.png" alt="" aria-hidden="true"></div>
 				<div class="brand-jp">
 					<div class="jp-title text-white">管理システム</div>
 					<div class="jp-sub text-warning" style="font-size: 0.7rem;">KUMANO_MAE ADMIN</div>
@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="row text-muted small mb-3">
-					<div class="col-md-3"><strong>投稿者 (Member No):</strong> <c:out value="${communityBoard.memberId}"/></div>
+					<div class="col-md-3"><strong>投稿者:</strong> <c:out value="${not empty communityBoard.writerName ? communityBoard.writerName : communityBoard.memberId}"/></div>
 					<div class="col-md-3"><strong>登録日時:</strong> <c:out value="${communityBoard.regDate}"/></div>
 					<div class="col-md-3"><strong>照会数:</strong> <c:out value="${communityBoard.viewCnt}"/></div>
 					<div class="col-md-3"><strong>おすすめ数:</strong> <c:out value="${communityBoard.likeCnt}"/></div>

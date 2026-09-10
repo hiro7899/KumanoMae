@@ -94,28 +94,10 @@
 					<h1>IDを忘れた方</h1>
 
 					<p>
-						ご登録いただいたメールアドレスと電話番号を入力してください。<br> IDの確認手続きをご案内します。
+						ご登録いただいたメールアドレスを入力してください。<br> IDの確認手続きをご案内します。
 					</p>
 
 				</div>
-
-				<c:choose>
-					<c:when test="${not empty errorMsg}">
-						<div class="find-result-message error" role="alert">
-							<i class="bi bi-exclamation-circle-fill"></i>
-							<c:out value="${errorMsg}" />
-						</div>
-					</c:when>
-
-					<c:when test="${not empty resultMsg}">
-						<div class="find-result-message success" role="status">
-							<i class="bi bi-check-circle-fill"></i>
-							<c:out value="${resultMsg}" />
-						</div>
-					</c:when>
-				</c:choose>
-
-
 
 				<!-- =================================================
                  아이디 찾기 Form
@@ -124,7 +106,9 @@
                  phone : 선택
                  ================================================= -->
 
-				<form method="post" action="/find_id" id="findIdForm">
+				<form method="post"
+					action="${pageContext.request.contextPath}/find_id" id="findIdForm"
+					novalidate>
 
 
 					<!-- =========================
@@ -146,33 +130,22 @@
 
 					</div>
 
+					<p id="findIdClientMessage" class="find-input-message"
+						aria-live="polite"></p>
 
+					<c:if test="${not empty errorMsg}">
+						<p class="find-input-message error" role="alert">
+							<i class="bi bi-exclamation-circle-fill"></i>
+							<c:out value="${errorMsg}" />
+						</p>
+					</c:if>
 
-					<!-- =========================
-                     전화번호
-                     
-                     - 선택 입력
-                     - required 사용하지 않음
-                     ========================= -->
-
-					<div class="form-group">
-
-						<label for="phone"> 電話番号 <span class="optional">
-								（任意） </span>
-						</label>
-
-
-						<div class="input-wrapper">
-
-							<i class="bi bi-telephone"></i> <input type="tel" id="phone"
-								name="phone" class="form-control" placeholder="090-1234-5678"
-								autocomplete="tel">
-
-						</div>
-
-					</div>
-
-
+					<c:if test="${not empty foundUserId}">
+						<p class="find-input-message success" role="status">
+							<i class="bi bi-check-circle-fill"></i> IDは <strong><c:out
+									value="${foundUserId}" /></strong> です。
+						</p>
+					</c:if>
 
 					<!-- =========================
                      확인 버튼
@@ -223,9 +196,8 @@
      아이디/비밀번호 찾기 JS
      ===================================================== -->
 
-	<script src="/resources/js/login/find_id.js">
-		
-	</script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/login/find_id.js"></script>
 
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 

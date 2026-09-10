@@ -3,9 +3,7 @@
 .admin-brand .logo-badge {
     width: 44px;
     height: 44px;
-    background-color: var(--color-red, #c0392b);
-    color: #ffffff;
-    border-radius: 50%;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,6 +95,12 @@
 .admin-table td {
     padding: 0.8rem;
     vertical-align: middle;
+}
+
+.admin-brand .bear-logo {
+    display: block;
+    width: 40px;
+    height: 40px;
 }
 
 /* 관리자 커뮤니티 목록 상태·카테고리 색상 */

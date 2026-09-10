@@ -6,12 +6,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="logo-badge me-2">熊</div>
+                <a href="${pageContext.request.contextPath}/" class="footer-brand d-flex align-items-center mb-3 text-decoration-none">
+                    <div class="logo-badge me-0" aria-label="熊の前">
+                        <img class="bear-logo" src="${pageContext.request.contextPath}/resources/img/brand/kumanomae-paw-seal.png" alt="" aria-hidden="true">
+                    </div>
                     <div class="brand-jp">
                         <div class="jp-title">熊の前</div>
+                        <div class="jp-sub">KUMA NO MAE</div>
                     </div>
-                </div>
+                </a>
                 <p class="small footer-muted">
                     里山に近づく足音を見逃さない。<br>
                     全国のクマ目撃情報をリアルタイムに共有するサービスです。
