@@ -115,7 +115,7 @@
                         <c:choose>
                             <c:when test="${not empty boardList}">
                                 <c:forEach var="board" items="${boardList}">
-                                    <tr>
+                                    <tr class="admin-preview-row" data-preview-kind="board">
                                         <td>${board.boardId}</td>
                                         <td>
                                             <c:choose>
@@ -124,10 +124,19 @@
                                                 <c:otherwise><span class="badge text-dark" style="background-color: #f5e39a; border: 1px solid #d5bd62;">注意</span></c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <td class="text-start">
+                                        <td class="text-start admin-preview-anchor">
                                             <a href="${pageContext.request.contextPath}/admin/board/detail?boardId=${board.boardId}"
                                                 class="fw-bold text-decoration-none text-dark"><c:out value="${board.title}"/></a>
                                             <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> ${board.address} (${board.latitude}, ${board.longitude})</small>
+                                            <div class="admin-preview-source" aria-hidden="true">
+                                                <span class="admin-preview-source-title"><c:out value="${board.title}"/></span>
+                                                <span class="admin-preview-source-writer"><c:out value="${board.writerName}"/></span>
+                                                <span class="admin-preview-source-content"><c:out value="${board.content}"/></span>
+                                                <c:if test="${not empty board.thumbnailUrl}">
+                                                    <c:url var="boardPreviewImageUrl" value="${board.thumbnailUrl}"/>
+                                                    <img class="admin-preview-source-image" src="${boardPreviewImageUrl}" alt="">
+                                                </c:if>
+                                            </div>
                                         </td>
                                         <td>${board.writerName}</td>
                                         <td>${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</td>
@@ -214,6 +223,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<%@ include file="/WEB-INF/views/includes/admin-list-preview.jsp" %>
 <script>
     function openClearModal(boardId, title) {
         document.getElementById('modalBoardId').value = boardId;

@@ -68,9 +68,17 @@
                 <div class="col-md-6 col-lg-4" data-page-item>
                     <article class="card h-100 report-card preview-card community-post-card clickable-card" data-card-href="${detailUrl}">
                         <c:choose>
-                            <c:when test="${board.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
-                            <c:when test="${board.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
-                            <c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+                            <c:when test="${not empty board.thumbnailUrl}">
+                                <c:url var="communityThumbnailUrl" value="${board.thumbnailUrl}"/>
+                                <div class="preview-card-image"><img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像"></div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${board.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
+                                    <c:when test="${board.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
+                                    <c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
                         </c:choose>
                         <div class="card-body d-flex flex-column">
                             <c:choose>

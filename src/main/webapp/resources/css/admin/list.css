@@ -106,6 +106,100 @@
     font-weight: 600;
 }
 
+/* 관리자 목록 제목: 상세 페이지로 이동하는 링크임을 호버로 표시 */
+.admin-table td.admin-preview-anchor > a,
+.admin-table td.community-title-cell > a {
+    transition: color .16s ease, text-decoration-color .16s ease;
+}
+
+.admin-table td.admin-preview-anchor > a:hover,
+.admin-table td.admin-preview-anchor > a:focus-visible,
+.admin-table td.community-title-cell > a:hover,
+.admin-table td.community-title-cell > a:focus-visible {
+    color: #bf3a32 !important;
+    text-decoration: underline !important;
+    text-decoration-color: currentColor;
+    text-underline-offset: .18em;
+}
+
+/* 관리자 목록 행 호버 미리보기 */
+.admin-preview-row {
+    cursor: default;
+}
+
+.admin-preview-anchor {
+    cursor: default;
+}
+
+.admin-preview-anchor > a,
+.community-title-cell > a {
+    cursor: pointer;
+}
+
+.admin-preview-source {
+    display: none;
+}
+
+.admin-list-preview {
+    position: fixed;
+    z-index: 1080;
+    display: none;
+    width: min(320px, calc(100vw - 24px));
+    padding: .8rem;
+    border: 2px solid #292622;
+    border-radius: .55rem;
+    background: #fffdf8;
+    box-shadow: 0 .7rem 1.6rem rgba(25, 22, 17, .24);
+    pointer-events: none;
+}
+
+.admin-list-preview.is-visible {
+    display: block;
+}
+
+.admin-list-preview-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 126px;
+    margin-bottom: .7rem;
+    overflow: hidden;
+    border-radius: .3rem;
+    background: #eee6d4;
+    color: #765619;
+    font-size: 2rem;
+}
+
+.admin-list-preview-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-list-preview-title {
+    margin-bottom: .25rem;
+    color: #24211e;
+    font-size: .98rem;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.admin-list-preview-writer {
+    margin-bottom: .45rem;
+    color: #74706a;
+    font-size: .78rem;
+}
+
+.admin-list-preview-content {
+    display: -webkit-box;
+    overflow: hidden;
+    color: #4e4941;
+    font-size: .82rem;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
 .admin-brand .bear-logo {
     display: block;
     width: 40px;

@@ -272,7 +272,7 @@
 					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:choose>
 							<c:when test="${not empty board.thumbnailUrl}">
-								<c:url var="boardThumbnailUrl" value="${board.thumbnailUrl}"/>
+								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
 								<div class="preview-card-image">
 									<img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像">
 								</div>
@@ -315,7 +315,7 @@
 					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}">
 						<c:choose>
 							<c:when test="${not empty community.thumbnailUrl}">
-								<c:url var="communityThumbnailUrl" value="${community.thumbnailUrl}"/>
+								<c:url var="communityThumbnailUrl" value="${fn:replace(community.thumbnailUrl, '/src/main/webapp', '')}"/>
 								<div class="preview-card-image">
 									<img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像">
 								</div>
