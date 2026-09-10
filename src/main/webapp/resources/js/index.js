@@ -9,6 +9,23 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /* -----------------------------------------------
+       0. 시작 화면 이미지 : 3초 표시 후 메인페이지 노출
+       ----------------------------------------------- */
+    const splashScreen = document.getElementById("splashScreen");
+
+    if (splashScreen) {
+        window.setTimeout(function () {
+            splashScreen.classList.add("is-hiding");
+        }, 3000);
+
+        splashScreen.addEventListener("transitionend", function (event) {
+            if (event.propertyName === "opacity") {
+                splashScreen.remove();
+            }
+        });
+    }
+
+    /* -----------------------------------------------
        1. 상단 경보 배너 닫기 (X 클릭 시 배너 숨김)
        ----------------------------------------------- */
     const alertBanner = document.querySelector(".top-alert");

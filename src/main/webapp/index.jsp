@@ -39,6 +39,12 @@
 <body data-is-login="${isLogin}"
 	data-context-path="${pageContext.request.contextPath}">
 
+	<%-- ===================== 시작 화면 이미지 ===================== --%>
+	<div id="splashScreen" class="splash-screen" aria-label="Kumano Mae 시작 화면">
+		<img src="${pageContext.request.contextPath}/resources/img/brand/kumano-mae-splash.png"
+			alt="Kumano Mae" class="splash-screen-image">
+	</div>
+
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
 		<span>🍂</span> <span>秋の入山特別警戒期間（09月〜11月）— 冬眠前のクマの活動が活発化しています</span> <span
@@ -258,13 +264,12 @@
 	<section class="container my-5 home-preview-section home-report-section">
 		<div class="section-heading-row">
 			<h3 class="section-title-jp mb-0"><span class="dash">―</span>最新の目撃情報</h3>
-			<a href="${pageContext.request.contextPath}/board/list" class="section-more-link">전체 보기 <i class="bi bi-arrow-right"></i></a>
 		</div>
 		<div class="row g-4">
 			<c:forEach var="board" items="${boardList}" end="2">
 				<c:if test="${board.clearYn ne 'Y'}">
 				<div class="col-md-4 col-sm-6">
-					<article class="card h-100 report-card preview-card">
+					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:choose>
 							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
 							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
@@ -279,7 +284,6 @@
 							<h5 class="card-title"><c:out value="${board.title}" /></h5>
 							<p class="mb-2 text-muted small"><i class="bi bi-geo-alt"></i> <c:out value="${board.address}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span></p>
 							<p class="small flex-grow-1"><c:out value="${board.content}" /></p>
-							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}" class="btn btn-jp-outline btn-sm mt-2">詳細を見る <i class="bi bi-arrow-right"></i></a>
 						</div>
 					</article>
 				</div>
@@ -294,12 +298,11 @@
 	<section class="container my-5 home-preview-section home-community-section">
 		<div class="section-heading-row">
 			<h3 class="section-title-jp mb-0"><span class="dash">―</span>コミュニティの最新投稿</h3>
-			<a href="${pageContext.request.contextPath}/community/list" class="section-more-link">전체 보기 <i class="bi bi-arrow-right"></i></a>
 		</div>
 		<div class="row g-4">
 			<c:forEach var="community" items="${communityList}" end="2">
 				<div class="col-md-4 col-sm-6">
-					<article class="card h-100 report-card preview-card">
+					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}">
 						<c:choose>
 							<c:when test="${community.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
 							<c:when test="${community.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
@@ -314,7 +317,6 @@
 							<h5 class="card-title"><c:out value="${community.title}" /></h5>
 							<p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${community.writerName}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(community.regDate, 'T', ' '), 0, 16)}</span></p>
 							<p class="small flex-grow-1"><i class="bi bi-heart"></i> ${community.likeCnt} <span class="ms-2"><i class="bi bi-chat-square-text"></i> ${community.commentCnt}</span></p>
-							<a href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}" class="btn btn-jp-outline btn-sm mt-2">投稿を見る <i class="bi bi-arrow-right"></i></a>
 						</div>
 					</article>
 				</div>
@@ -392,6 +394,23 @@
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			document.querySelectorAll(".clickable-card[data-card-href]").forEach(function (card) {
+				card.setAttribute("tabindex", "0");
+				card.setAttribute("role", "link");
+				card.addEventListener("click", function () {
+					window.location.href = card.dataset.cardHref;
+				});
+				card.addEventListener("keydown", function (event) {
+					if (event.key === "Enter" || event.key === " ") {
+						event.preventDefault();
+						window.location.href = card.dataset.cardHref;
+					}
+				});
+			});
+		});
+	</script>
 
 	<!-- Bootstrap 5 JS -->
 	<script

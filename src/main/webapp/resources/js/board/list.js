@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (emptyMessage && reportCards.length > 0) {
                 emptyMessage.classList.toggle("d-none", visibleCount !== 0);
             }
-            if (window.refreshPagination) window.refreshPagination("boardCardGrid");
+            if (window.refreshBoardPagination) window.refreshBoardPagination();
         });
     });
 
