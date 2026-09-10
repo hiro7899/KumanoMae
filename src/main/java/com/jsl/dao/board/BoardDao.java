@@ -9,23 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jsl.dto.board.BoardDto;
+import com.jsl.sql.board.BoardSql;
 import com.jsl.util.DBManager;
 
 public class BoardDao {
 
     public List<BoardDto> selectAllBoard() {
-        String sql = """
-            SELECT BOARD_ID, MEMBER_ID, TITLE, CONTENT, RISK_LEVEL, LATITUDE, LONGITUDE,
-                   ADDRESS, SIGHTING_DATE, SITUATION_TAG, VIEW_CNT, STATUS, CLEAR_YN,
-                   CLEAR_DATE, CLEAR_MEMO, REG_DATE, MOD_DATE
-              FROM BOARD
-             ORDER BY REG_DATE DESC
-            """;
-
         List<BoardDto> list = new ArrayList<BoardDto>();
 
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_ALL_BOARD);
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
@@ -40,19 +33,10 @@ public class BoardDao {
     }
 
     public List<BoardDto> selectApprovedBoard() {
-        String sql = """
-            SELECT BOARD_ID, MEMBER_ID, TITLE, CONTENT, RISK_LEVEL, LATITUDE, LONGITUDE,
-                   ADDRESS, SIGHTING_DATE, SITUATION_TAG, VIEW_CNT, STATUS, CLEAR_YN,
-                   CLEAR_DATE, CLEAR_MEMO, REG_DATE, MOD_DATE
-              FROM BOARD
-             WHERE STATUS = 'Y'
-             ORDER BY REG_DATE DESC
-            """;
-
         List<BoardDto> boardList = new ArrayList<>();
 
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_APPROVED_BOARD);
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
@@ -111,16 +95,7 @@ public class BoardDao {
      */
     public Long insertReport(Connection conn, BoardDto board) throws SQLException {
 
-        String sql = """
-            INSERT INTO BOARD (
-                BOARD_ID, MEMBER_ID, TITLE, CONTENT, RISK_LEVEL,
-                LATITUDE, LONGITUDE, ADDRESS, SIGHTING_DATE, SITUATION_TAG, STATUS
-            ) VALUES (
-                BOARD_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'W'
-            )
-            """;
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql, new String[] { "BOARD_ID" })) {
+        try (PreparedStatement pstmt = conn.prepareStatement(BoardSql.INSERT_REPORT, new String[] { "BOARD_ID" })) {
 
             pstmt.setLong(1, board.getMemberId());
             pstmt.setString(2, board.getTitle());
@@ -146,9 +121,7 @@ public class BoardDao {
     /** 제보 승인/반려 공통 처리. status는 'Y' 또는 'N' */
     public int updateStatus(Connection conn, Long boardId, String status) throws SQLException {
 
-        String sql = "UPDATE BOARD SET STATUS = ?, MOD_DATE = SYSDATE WHERE BOARD_ID = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(BoardSql.UPDATE_STATUS)) {
             pstmt.setString(1, status);
             pstmt.setLong(2, boardId);
             return pstmt.executeUpdate();
@@ -158,13 +131,7 @@ public class BoardDao {
     /** 위험 해제 처리 */
     public int updateClear(Connection conn, Long boardId, String clearMemo) throws SQLException {
 
-        String sql = """
-            UPDATE BOARD
-               SET CLEAR_YN = 'Y', CLEAR_DATE = SYSDATE, CLEAR_MEMO = ?, MOD_DATE = SYSDATE
-             WHERE BOARD_ID = ?
-            """;
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(BoardSql.UPDATE_CLEAR)) {
             pstmt.setString(1, clearMemo);
             pstmt.setLong(2, boardId);
             return pstmt.executeUpdate();
@@ -174,10 +141,9 @@ public class BoardDao {
     /** 현재 STATUS 조회 - 승인/반려 시 상태 전이 검증용 (예: 이미 승인된 글을 다시 승인 시도 방지) */
     public String findStatus(Connection conn, Long boardId) throws SQLException {
 
-        String sql = "SELECT STATUS FROM BOARD WHERE BOARD_ID = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_STATUS)) {
             pstmt.setLong(1, boardId);
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 return rs.next() ? rs.getString("STATUS") : null;
             }
@@ -185,25 +151,30 @@ public class BoardDao {
     }
     
     public int countByStatus(String status) {
-        String sql = "SELECT COUNT(*) FROM BOARD WHERE STATUS = ?";
+
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.COUNT_BY_STATUS)) {
+
             pstmt.setString(1, status);
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 return rs.next() ? rs.getInt(1) : 0;
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
-
+    
     public int countActiveDanger() {
-        String sql = "SELECT COUNT(*) FROM BOARD WHERE STATUS = 'Y' AND RISK_LEVEL = 'DANGER' AND CLEAR_YN = 'N'";
+
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.COUNT_ACTIVE_DANGER);
              ResultSet rs = pstmt.executeQuery()) {
+
             return rs.next() ? rs.getInt(1) : 0;
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -211,35 +182,26 @@ public class BoardDao {
     }
     
     public List<BoardDto> selectRecentApproved(int limit) {
-        String sql = """
-            SELECT * FROM (
-                SELECT b.BOARD_ID, b.MEMBER_ID, b.TITLE, b.CONTENT, b.RISK_LEVEL, b.LATITUDE, b.LONGITUDE,
-                       b.ADDRESS, b.SIGHTING_DATE, b.SITUATION_TAG, b.VIEW_CNT, b.STATUS, b.CLEAR_YN,
-                       b.CLEAR_DATE, b.CLEAR_MEMO, b.REG_DATE, b.MOD_DATE,
-                       m.USER_NAME AS WRITER_NAME
-                  FROM BOARD b
-                  JOIN MEMBER m ON m.MEMBER_ID = b.MEMBER_ID
-                 WHERE b.STATUS = 'Y'
-                 ORDER BY b.REG_DATE DESC
-            ) WHERE ROWNUM <= ?
-            """;
 
         List<BoardDto> list = new ArrayList<>();
 
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_RECENT_APPROVED)) {
 
             pstmt.setInt(1, limit);
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    BoardDto board = mapRow(rs); // 기존 헬퍼 재사용
+                    BoardDto board = mapRow(rs);
                     board.setWriterName(rs.getString("WRITER_NAME"));
                     list.add(board);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return list;
     }
 }
