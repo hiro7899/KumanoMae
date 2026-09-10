@@ -63,10 +63,17 @@ public class CommunityBoardDao {
 
     public CommunityBoardDto selectById(Long cBoardId) {
         String sql = """
-            SELECT C_BOARD_ID, MEMBER_ID, CATEGORY, TITLE, CONTENT, GEAR_NAME,
-                   VIEW_CNT, LIKE_CNT, STATUS, REG_DATE, MOD_DATE
-              FROM COMMUNITY_BOARD
-             WHERE C_BOARD_ID = ? AND STATUS = 'Y'
+            SELECT cb.C_BOARD_ID, cb.MEMBER_ID, cb.CATEGORY, cb.TITLE, cb.CONTENT, cb.GEAR_NAME,
+			       cb.VIEW_CNT, cb.LIKE_CNT, cb.STATUS, cb.REG_DATE, cb.MOD_DATE,
+			       m.USER_NAME AS WRITER_NAME,
+			       (SELECT COUNT(*)
+			          FROM COMMUNITY_COMMENT cc
+			         WHERE cc.C_BOARD_ID = cb.C_BOARD_ID) AS COMMENT_CNT
+			  FROM COMMUNITY_BOARD cb
+			  JOIN MEMBER m
+			    ON m.MEMBER_ID = cb.MEMBER_ID
+			 WHERE cb.C_BOARD_ID = ?
+			   AND cb.STATUS = 'Y'
             """;
 
         try (Connection conn = DBManager.getConnection();
@@ -290,5 +297,50 @@ public class CommunityBoardDao {
             pstmt.setLong(1, cBoardId);
             return pstmt.executeUpdate();
         }
+    }
+    
+    public List<CommunityBoardDto> selectRecentActive(int limit) {
+        String sql = """
+            SELECT * FROM (
+                SELECT cb.C_BOARD_ID, cb.MEMBER_ID, cb.CATEGORY, cb.TITLE, cb.GEAR_NAME,
+                       cb.VIEW_CNT, cb.LIKE_CNT, cb.REG_DATE,
+                       m.USER_NAME AS WRITER_NAME,
+                       (SELECT COUNT(*) FROM COMMUNITY_COMMENT cc
+                         WHERE cc.C_BOARD_ID = cb.C_BOARD_ID) AS COMMENT_CNT
+                  FROM COMMUNITY_BOARD cb
+                  JOIN MEMBER m ON m.MEMBER_ID = cb.MEMBER_ID
+                 WHERE cb.STATUS = 'Y'
+                 ORDER BY cb.REG_DATE DESC
+            ) WHERE ROWNUM <= ?
+            """;
+
+        List<CommunityBoardDto> list = new ArrayList<>();
+
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, limit);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    CommunityBoardDto dto = new CommunityBoardDto();
+                    dto.setCBoardId(rs.getLong("C_BOARD_ID"));
+                    dto.setMemberId(rs.getLong("MEMBER_ID"));
+                    dto.setCategory(rs.getString("CATEGORY"));
+                    dto.setTitle(rs.getString("TITLE"));
+                    dto.setGearName(rs.getString("GEAR_NAME"));
+                    dto.setViewCnt(rs.getInt("VIEW_CNT"));
+                    dto.setLikeCnt(rs.getInt("LIKE_CNT"));
+                    dto.setWriterName(rs.getString("WRITER_NAME"));
+                    dto.setCommentCnt(rs.getInt("COMMENT_CNT"));
+                    if (rs.getTimestamp("REG_DATE") != null) {
+                        dto.setRegDate(rs.getTimestamp("REG_DATE").toLocalDateTime());
+                    }
+                    list.add(dto);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

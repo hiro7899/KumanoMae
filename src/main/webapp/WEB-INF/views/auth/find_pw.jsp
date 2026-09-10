@@ -42,25 +42,11 @@
 					</p>
 				</div>
 
-				<c:choose>
-					<c:when test="${not empty errorMsg}">
-						<div class="find-result-message error" role="alert">
-							<i class="bi bi-exclamation-circle-fill"></i>
-							<c:out value="${errorMsg}" />
-						</div>
-					</c:when>
-
-					<c:when test="${not empty resultMsg}">
-						<div class="find-result-message success" role="status">
-							<i class="bi bi-check-circle-fill"></i>
-							<c:out value="${resultMsg}" />
-						</div>
-					</c:when>
-				</c:choose>
 
 				<%-- 백엔드 담당자가 /find_pw POST 처리 예정 --%>
 				<form method="post"
-					action="${pageContext.request.contextPath}/find_pw" id="findPwForm">
+					action="${pageContext.request.contextPath}/find_pw" id="findPwForm"
+					novalidate>
 
 					<div class="form-group">
 						<label for="userId">ID</label>
@@ -71,6 +57,16 @@
 						</div>
 					</div>
 
+					<p id="findPwUserIdMessage" class="findpw-input-message"
+						aria-live="polite"></p>
+
+					<c:if test="${errorField eq 'userId'}">
+						<p class="findpw-input-message error" role="alert">
+							<i class="bi bi-exclamation-circle-fill"></i>
+							<c:out value="${errorMsg}" />
+						</p>
+					</c:if>
+
 					<div class="form-group">
 						<label for="email">メールアドレス</label>
 						<div class="input-wrapper">
@@ -79,6 +75,23 @@
 								placeholder="example@email.com" autocomplete="email" required>
 						</div>
 					</div>
+
+					<p id="findPwEmailMessage" class="findpw-input-message"
+						aria-live="polite"></p>
+
+					<c:if test="${errorField eq 'email'}">
+						<p class="findpw-input-message error" role="alert">
+							<i class="bi bi-exclamation-circle-fill"></i>
+							<c:out value="${errorMsg}" />
+						</p>
+					</c:if>
+
+					<c:if test="${not empty resultMsg}">
+						<p class="findpw-input-message success" role="status">
+							<i class="bi bi-check-circle-fill"></i>
+							<c:out value="${resultMsg}" />
+						</p>
+					</c:if>
 
 					<button type="submit" id="findPwBtn" class="findpw-submit-btn">
 						再設定手続きを進める <i class="bi bi-arrow-right"></i>

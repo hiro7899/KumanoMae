@@ -32,12 +32,12 @@
 <!-- 이 화면 전용 CSS -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
-<link rel="stylesheet" 
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/map/map.css">
 
 </head>
 
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
 
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
@@ -161,7 +161,8 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- 이 화면 전용 JS (테스트 데이터, 마커 생성, 필터 로직 등) -->
-	<script src="/resources/js/map/map.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/map/map.js"></script>
 
 	<%--
         ==========================================================

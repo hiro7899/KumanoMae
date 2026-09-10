@@ -177,3 +177,22 @@ body {
         font-size: 24px;
     }
 }
+.findpw-input-message {
+    min-height: 20px;
+    margin: 8px 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.findpw-input-message i {
+    margin-right: 4px;
+}
+
+.findpw-input-message.error {
+    color: #b23a2e;
+}
+
+.findpw-input-message.success {
+    color: #287340;
+}

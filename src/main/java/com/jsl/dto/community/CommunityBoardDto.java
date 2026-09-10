@@ -18,6 +18,7 @@ public class CommunityBoardDto {
 	
 	private String writerName; // MEMBER.USER_NAME JOIN 결과
 	private int commentCnt;    // COMMUNITY_COMMENT 건수
+	private String thumbnailUrl; // 첫 번째 첨부 이미지 웹 경로, 없으면 null
 	
 	public Long getCBoardId() {
 		return cBoardId;
@@ -102,5 +103,11 @@ public class CommunityBoardDto {
 	}
 	public void setCommentCnt(int commentCnt) {
 		this.commentCnt = commentCnt;
+	}
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 }
