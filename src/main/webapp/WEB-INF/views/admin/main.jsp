@@ -54,7 +54,7 @@
         <!-- 상단 타이틀 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold m-0"><span class="dash">―</span>ダッシュボード</h2>
-            <span class="small text-muted">最終更新: <c:out value="${not empty dashboardUpdatedAt ? dashboardUpdatedAt : '―'}"/></span>
+            <span class="fs-6 text-muted">現在時刻: <time id="dashboardCurrentTime"></time></span>
         </div>
 
         <!-- 1. 현황 요약 카드 영역 -->
@@ -97,26 +97,60 @@
             </div>
         </div>
 
-        <!-- 2. 빠른 바로가기 카드 영역 -->
-        <div class="row g-3">
-            <div class="col-md-6">
-                <div class="p-4" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
-                    <h4 class="fw-bold mb-3"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>目撃通報の承認管理</h4>
-                    <p class="text-muted small">ユーザーから届いた最新のクマ出没通報を確認・承認します。</p>
-                    <a href="${pageContext.request.contextPath}/admin/board/list" class="btn btn-dark fw-bold btn-sm">通報一覧へ移動 →</a>
+        <!-- 2. 처리 필요 알림: 해당 항목이 있을 때만 표시 -->
+        <c:if test="${pendingCount gt 0 or activeDangerCount gt 0}">
+            <section class="stat-card p-4" aria-labelledby="actionRequiredTitle">
+                <h4 id="actionRequiredTitle" class="fw-bold fs-3 mb-4">
+                    <i class="bi bi-bell-fill text-danger me-2"></i>対応が必要な項目
+                </h4>
+                <div class="row g-3">
+                    <c:if test="${pendingCount gt 0}">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-between gap-3 p-4 border rounded-3 bg-light">
+                                <div>
+                                    <div class="fw-bold fs-5"><i class="bi bi-hourglass-split text-warning me-2"></i>承認待ち通報</div>
+                                    <p class="text-muted fs-6 mb-0 mt-2">確認・承認が必要な通報が <strong><c:out value="${pendingCount}"/> 件</strong>あります。</p>
+                                </div>
+                                <a href="${pageContext.request.contextPath}/admin/board/list" class="btn btn-dark px-3 py-2 text-nowrap">確認する</a>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${activeDangerCount gt 0}">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-between gap-3 p-4 border rounded-3 bg-light">
+                                <div>
+                                    <div class="fw-bold fs-5"><i class="bi bi-exclamation-diamond-fill text-danger me-2"></i>危険継続中</div>
+                                    <p class="text-muted fs-6 mb-0 mt-2">継続中の危険情報が <strong><c:out value="${activeDangerCount}"/> 件</strong>あります。</p>
+                                </div>
+                                <a href="${pageContext.request.contextPath}/admin/board/list" class="btn btn-dark px-3 py-2 text-nowrap">確認する</a>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="p-4" style="background:#fff; border:2.5px solid #000; border-radius:12px;">
-                    <h4 class="fw-bold mb-3"><i class="bi bi-chat-left-dots-fill text-success me-2"></i>コミュニティ掲示板管理</h4>
-                    <p class="text-muted small">掲示板の不適切な投稿の非表示処理やお知らせの管理を行います。</p>
-                    <a href="${pageContext.request.contextPath}/admin/community/list" class="btn btn-dark fw-bold btn-sm">掲示板一覧へ移動 →</a>
-                </div>
-            </div>
-        </div>
+            </section>
+        </c:if>
     </main>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    (function () {
+        function updateDashboardClock() {
+            var now = new Date();
+            var twoDigits = function (value) { return String(value).padStart(2, "0"); };
+            var formatted = now.getFullYear() + "-"
+                + twoDigits(now.getMonth() + 1) + "-"
+                + twoDigits(now.getDate()) + " "
+                + twoDigits(now.getHours()) + ":"
+                + twoDigits(now.getMinutes()) + ":"
+                + twoDigits(now.getSeconds());
+
+            document.getElementById("dashboardCurrentTime").textContent = formatted;
+        }
+
+        updateDashboardClock();
+        window.setInterval(updateDashboardClock, 1000);
+    }());
+</script>
 </body>
 </html>

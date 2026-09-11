@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -28,22 +29,28 @@
 			<p class="text-muted mb-0">全国の自治体データおよび 住民から寄せられたクマの目撃・出没情報です。</p>
 		</div>
 
-		<!-- 옵션 영역: 위험도 필터 + 지역 검색창 + 제보하기 버튼 -->
+		<!-- 옵션 영역: 위험도·상태 필터 + 지역 검색창 + 제보하기 버튼 -->
 		<div class="card p-3 mb-4 bg-light border-0">
 			<div class="row g-3 align-items-center">
-				<!-- 위험도별 필터 -->
-				<div class="col-lg-5 col-md-6">
-					<div class="d-flex gap-2 flex-wrap align-items-center">
+				<!-- 위험도·상태 필터 -->
+				<div class="col-lg-7 col-md-12">
+					<div class="d-flex gap-2 flex-wrap align-items-center mb-2">
 						<span class="fw-bold small me-1">危険度:</span>
 						<button type="button" class="btn btn-jp-mustard btn-sm" data-risk-filter="ALL" aria-pressed="true">すべて</button>
 						<button type="button" class="btn btn-outline-danger btn-sm fw-bold" data-risk-filter="DANGER" aria-pressed="false">危険 (DANGER)</button>
 						<button type="button" class="btn btn-outline-warning btn-sm text-dark fw-bold" data-risk-filter="WARNING" aria-pressed="false">警戒 (WARNING)</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm fw-bold" data-risk-filter="CAUTION" aria-pressed="false">注意 (CAUTION)</button>
 					</div>
+					<div class="d-flex gap-2 flex-wrap align-items-center">
+						<span class="fw-bold small me-1">状態:</span>
+						<button type="button" class="btn btn-jp-mustard btn-sm" data-clear-filter="ALL" aria-pressed="true">すべて</button>
+						<button type="button" class="btn btn-outline-dark btn-sm fw-bold" data-clear-filter="ACTIVE" aria-pressed="false">継続中</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm fw-bold" data-clear-filter="CLEARED" aria-pressed="false">解決済み</button>
+					</div>
 				</div>
 
 				<!-- 지역/제목 키워드 검색 -->
-				<div class="col-lg-5 col-md-6">
+				<div class="col-lg-3 col-md-8">
 					<form action="${pageContext.request.contextPath}/board/list" method="get" class="d-flex gap-2">
 						<input type="text" name="keyword" class="form-control form-control-sm" placeholder="地域名（例：札幌市、青森県）で検索...">
 						<button type="submit" class="btn btn-jp-mustard btn-sm text-nowrap">
@@ -53,7 +60,7 @@
 				</div>
 
 				<!-- 제보 등록 버튼 -->
-				<div class="col-lg-2 col-md-12 text-lg-end">
+				<div class="col-lg-2 col-md-4 text-lg-end">
 					<a href="${pageContext.request.contextPath}/board/report"
 						class="btn btn-jp-mustard btn-sm fw-bold w-100 w-lg-auto"> 
 						<i class="bi bi-exclamation-triangle-fill me-1"></i>目撃を報告する
@@ -65,9 +72,8 @@
 		<!-- 제보 카드 목록 -->
 		<div class="row g-4" id="boardCardGrid" data-pagination data-page-size="9">
 			<c:forEach var="board" items="${boardList}">
-				<c:if test="${board.clearYn ne 'Y'}">
-				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-page-item>
-					<article class="card h-100 report-card shadow-sm clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
+				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-clear-yn="${board.clearYn}" data-page-item>
+					<article class="card h-100 report-card shadow-sm clickable-card ${board.clearYn eq 'Y' ? 'board-card-resolved' : ''}" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:choose>
 							<c:when test="${not empty board.thumbnailUrl}">
 								<c:url var="boardThumbnailUrl" value="${board.thumbnailUrl}"/>
@@ -75,6 +81,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:choose>
+									<c:when test="${board.clearYn eq 'Y'}"><div class="preview-card-image preview-card-image-resolved"><i class="bi bi-check-circle-fill"></i></div></c:when>
 									<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
 									<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
 									<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
@@ -84,6 +91,9 @@
 						<div class="card-body d-flex flex-column">
 							<div class="d-flex justify-content-between align-items-center gap-2 mb-2">
 								<c:choose>
+									<c:when test="${board.clearYn eq 'Y'}">
+										<span class="badge badge-resolved-custom"><i class="bi bi-check-circle-fill me-1"></i>解決済み</span>
+									</c:when>
 									<c:when test="${board.riskLevel eq 'DANGER'}">
 										<span class="badge badge-danger-custom">危険</span>
 									</c:when>
@@ -94,7 +104,7 @@
 										<span class="badge badge-caution-custom">注意</span>
 									</c:otherwise>
 								</c:choose>
-								<small class="text-muted text-end"><i class="bi bi-clock-fill me-1"></i><c:out value="${board.sightingDate}" /></small>
+								<small class="text-muted text-end"><i class="bi bi-clock-fill me-1"></i><c:out value="${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}" /></small>
 							</div>
 
 			<h5 class="card-title text-truncate fw-bold"><c:out value="${board.title}" /></h5>
@@ -113,7 +123,6 @@
 						</div>
 					</article>
 				</div>
-				</c:if>
 			</c:forEach>
 
 			<c:if test="${empty boardList}">
