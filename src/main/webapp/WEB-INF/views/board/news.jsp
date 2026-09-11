@@ -97,7 +97,7 @@
 				<div class="row g-4" id="newsCardGrid" data-pagination data-page-size="6">
 					<c:forEach var="news" items="${newsList}" begin="1">
 						<div class="col-md-6 col-lg-4 news-card-column" data-category="${news.sourceType}" data-page-item>
-							<article class="card h-100 report-card">
+							<article class="card h-100 report-card clickable-card" data-card-href="${news.sourceUrl}">
 								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
 									class="card-img-top" alt="クマ関連ニュース">
 								<div class="card-body d-flex flex-column">
@@ -112,8 +112,6 @@
 									<h5 class="card-title fw-bold"><c:out value="${news.title}" /></h5>
 									<p class="mb-2 text-muted small"><i class="bi bi-clock-fill"></i> <c:out value="${news.publishedDate}" /></p>
 									<p class="small text-muted flex-grow-1"><c:out value="${news.summary}" /></p>
-									<a href="${news.sourceUrl}" target="_blank" rel="noopener noreferrer"
-										class="btn btn-jp-outline btn-sm mt-3">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
 								</div>
 							</article>
 						</div>
@@ -155,11 +153,19 @@
 	            ? 'block'
 	            : 'none';
 	    });
-	    if (window.refreshPagination) window.refreshPagination('newsCardGrid');
+	    if (window.refreshNewsPagination) window.refreshNewsPagination();
 	}
 	</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/common/pagination.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const grid = document.getElementById('newsCardGrid'), controls = document.querySelector('[data-pagination-controls="newsCardGrid"]'), items = Array.from(grid.querySelectorAll('[data-page-item]'));
+			function render(page) { const visible = items.filter(i => i.style.display !== 'none'); const total = Math.max(1, Math.ceil(visible.length / 6)); page = Math.min(Math.max(page || 1, 1), total); items.forEach(i => i.classList.add('pagination-hidden')); visible.slice((page - 1) * 6, page * 6).forEach(i => i.classList.remove('pagination-hidden')); controls.innerHTML = ''; for (let i = 1; i <= total; i++) { const b = document.createElement('button'); b.type = 'button'; b.className = 'client-page-button' + (i === page ? ' active' : ''); b.textContent = i; b.onclick = () => render(i); controls.appendChild(b); } }
+			window.refreshNewsPagination = () => render(1);
+			render(1);
+			document.querySelectorAll('.clickable-card[data-card-href]').forEach(card => { card.setAttribute('tabindex', '0'); card.onclick = () => window.location.href = card.dataset.cardHref; card.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = card.dataset.cardHref; } }; });
+		});
+	</script>
 </body>
 </html>

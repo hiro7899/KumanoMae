@@ -67,11 +67,19 @@
 			<c:forEach var="board" items="${boardList}">
 				<c:if test="${board.clearYn ne 'Y'}">
 				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-page-item>
-					<article class="card h-100 report-card shadow-sm">
+					<article class="card h-100 report-card shadow-sm clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:choose>
-							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
-							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
-							<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+							<c:when test="${not empty board.thumbnailUrl}">
+								<c:url var="boardThumbnailUrl" value="${board.thumbnailUrl}"/>
+								<div class="preview-card-image"><img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像"></div>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
+									<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
+									<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+								</c:choose>
+							</c:otherwise>
 						</c:choose>
 						<div class="card-body d-flex flex-column">
 							<div class="d-flex justify-content-between align-items-center gap-2 mb-2">
@@ -102,8 +110,6 @@
 								<span><i class="bi bi-eye me-1"></i> ${board.viewCnt}</span>
 							</div>
 
-							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}"
-								class="btn btn-jp-outline btn-sm mt-3 fw-bold">詳細を見る</a>
 						</div>
 					</article>
 				</div>
@@ -138,6 +144,24 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/board/list.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/common/pagination.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const grid = document.getElementById("boardCardGrid");
+			const controls = document.querySelector('[data-pagination-controls="boardCardGrid"]');
+			const items = Array.from(grid.querySelectorAll("[data-page-item]"));
+			function render(page) {
+				const visible = items.filter(item => !item.classList.contains("risk-filter-hidden"));
+				const total = Math.max(1, Math.ceil(visible.length / 9));
+				page = Math.min(Math.max(page || 1, 1), total);
+				items.forEach(item => item.classList.add("pagination-hidden"));
+				visible.slice((page - 1) * 9, page * 9).forEach(item => item.classList.remove("pagination-hidden"));
+				controls.innerHTML = "";
+				for (let i = 1; i <= total; i++) { const b = document.createElement("button"); b.type = "button"; b.className = "client-page-button" + (i === page ? " active" : ""); b.textContent = i; b.onclick = () => render(i); controls.appendChild(b); }
+			}
+			window.refreshBoardPagination = () => render(1);
+			render(1);
+			document.querySelectorAll(".clickable-card[data-card-href]").forEach(card => { card.setAttribute("tabindex", "0"); card.onclick = () => window.location.href = card.dataset.cardHref; card.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); window.location.href = card.dataset.cardHref; } }; });
+		});
+	</script>
 </body>
 </html>

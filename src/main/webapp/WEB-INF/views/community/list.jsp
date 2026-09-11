@@ -66,11 +66,19 @@
                     <c:param name="cBoardId" value="${board.CBoardId}"/>
                 </c:url>
                 <div class="col-md-6 col-lg-4" data-page-item>
-                    <article class="card h-100 report-card preview-card community-post-card">
+                    <article class="card h-100 report-card preview-card community-post-card clickable-card" data-card-href="${detailUrl}">
                         <c:choose>
-                            <c:when test="${board.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
-                            <c:when test="${board.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
-                            <c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+                            <c:when test="${not empty board.thumbnailUrl}">
+                                <c:url var="communityThumbnailUrl" value="${board.thumbnailUrl}"/>
+                                <div class="preview-card-image"><img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像"></div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${board.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
+                                    <c:when test="${board.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
+                                    <c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
                         </c:choose>
                         <div class="card-body d-flex flex-column">
                             <c:choose>
@@ -78,12 +86,11 @@
                                 <c:when test="${board.category eq 'GEAR'}"><span class="badge badge-cat-gear mb-2 align-self-start">ギア</span></c:when>
                                 <c:otherwise><span class="badge badge-cat-board mb-2 align-self-start">自由掲示板</span></c:otherwise>
                             </c:choose>
-                            <h5 class="card-title text-truncate fw-bold"><a class="community-card-title" href="${detailUrl}"><c:out value="${board.title}"/></a></h5>
+                            <h5 class="card-title text-truncate fw-bold community-card-title"><c:out value="${board.title}"/></h5>
                             <p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${board.writerName}"/></p>
                             <p class="small text-secondary flex-grow-1"><i class="bi bi-eye me-1"></i><c:out value="${board.viewCnt}"/> <span class="ms-2"><i class="bi bi-heart me-1"></i><c:out value="${board.likeCnt}"/></span> <span class="ms-2"><i class="bi bi-chat-square-text me-1"></i><c:out value="${board.commentCnt}"/></span></p>
                             <div class="d-flex justify-content-between align-items-center text-muted small border-top pt-2">
                                 <time><i class="bi bi-clock me-1"></i><c:out value="${fn:substring(fn:replace(board.regDate, 'T', ' '), 0, 16)}"/></time>
-                                <a href="${detailUrl}" class="btn btn-jp-outline btn-sm fw-bold">投稿を見る</a>
                             </div>
                         </div>
                     </article>
@@ -102,6 +109,13 @@
 
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/common/pagination.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const grid = document.getElementById("communityCardGrid"), controls = document.querySelector('[data-pagination-controls="communityCardGrid"]'), items = Array.from(grid.querySelectorAll('[data-page-item]'));
+            function render(page) { const total = Math.max(1, Math.ceil(items.length / 9)); page = Math.min(Math.max(page || 1, 1), total); items.forEach(i => i.classList.add('pagination-hidden')); items.slice((page - 1) * 9, page * 9).forEach(i => i.classList.remove('pagination-hidden')); controls.innerHTML = ''; for (let i = 1; i <= total; i++) { const b = document.createElement('button'); b.type = 'button'; b.className = 'client-page-button' + (i === page ? ' active' : ''); b.textContent = i; b.onclick = () => render(i); controls.appendChild(b); } }
+            render(1);
+            document.querySelectorAll('.clickable-card[data-card-href]').forEach(card => { card.setAttribute('tabindex', '0'); card.onclick = () => window.location.href = card.dataset.cardHref; card.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = card.dataset.cardHref; } }; });
+        });
+    </script>
 </body>
 </html>

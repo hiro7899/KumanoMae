@@ -39,6 +39,12 @@
 <body data-is-login="${isLogin}"
 	data-context-path="${pageContext.request.contextPath}">
 
+	<%-- ===================== 시작 화면 이미지 ===================== --%>
+	<div id="splashScreen" class="splash-screen" aria-label="Kumano Mae 시작 화면">
+		<img src="${pageContext.request.contextPath}/resources/img/brand/kumano-mae-splash.png"
+			alt="Kumano Mae" class="splash-screen-image">
+	</div>
+
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
 		<span>🍂</span> <span>秋の入山特別警戒期間（09月〜11月）— 冬眠前のクマの活動が活発化しています</span> <span
@@ -258,17 +264,26 @@
 	<section class="container my-5 home-preview-section home-report-section">
 		<div class="section-heading-row">
 			<h3 class="section-title-jp mb-0"><span class="dash">―</span>最新の目撃情報</h3>
-			<a href="${pageContext.request.contextPath}/board/list" class="section-more-link">전체 보기 <i class="bi bi-arrow-right"></i></a>
 		</div>
 		<div class="row g-4">
 			<c:forEach var="board" items="${boardList}" end="2">
 				<c:if test="${board.clearYn ne 'Y'}">
 				<div class="col-md-4 col-sm-6">
-					<article class="card h-100 report-card preview-card">
+					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:choose>
-							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
-							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
-							<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+							<c:when test="${not empty board.thumbnailUrl}">
+								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
+								<div class="preview-card-image">
+									<img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像">
+								</div>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
+									<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
+									<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+								</c:choose>
+							</c:otherwise>
 						</c:choose>
 						<div class="card-body d-flex flex-column">
 							<c:choose>
@@ -279,7 +294,6 @@
 							<h5 class="card-title"><c:out value="${board.title}" /></h5>
 							<p class="mb-2 text-muted small"><i class="bi bi-geo-alt"></i> <c:out value="${board.address}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span></p>
 							<p class="small flex-grow-1"><c:out value="${board.content}" /></p>
-							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}" class="btn btn-jp-outline btn-sm mt-2">詳細を見る <i class="bi bi-arrow-right"></i></a>
 						</div>
 					</article>
 				</div>
@@ -294,16 +308,25 @@
 	<section class="container my-5 home-preview-section home-community-section">
 		<div class="section-heading-row">
 			<h3 class="section-title-jp mb-0"><span class="dash">―</span>コミュニティの最新投稿</h3>
-			<a href="${pageContext.request.contextPath}/community/list" class="section-more-link">전체 보기 <i class="bi bi-arrow-right"></i></a>
 		</div>
 		<div class="row g-4">
 			<c:forEach var="community" items="${communityList}" end="2">
 				<div class="col-md-4 col-sm-6">
-					<article class="card h-100 report-card preview-card">
+					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}">
 						<c:choose>
-							<c:when test="${community.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
-							<c:when test="${community.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
-							<c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+							<c:when test="${not empty community.thumbnailUrl}">
+								<c:url var="communityThumbnailUrl" value="${fn:replace(community.thumbnailUrl, '/src/main/webapp', '')}"/>
+								<div class="preview-card-image">
+									<img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像">
+								</div>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${community.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
+									<c:when test="${community.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
+									<c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+								</c:choose>
+							</c:otherwise>
 						</c:choose>
 						<div class="card-body d-flex flex-column">
 							<c:choose>
@@ -314,7 +337,6 @@
 							<h5 class="card-title"><c:out value="${community.title}" /></h5>
 							<p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${community.writerName}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(community.regDate, 'T', ' '), 0, 16)}</span></p>
 							<p class="small flex-grow-1"><i class="bi bi-heart"></i> ${community.likeCnt} <span class="ms-2"><i class="bi bi-chat-square-text"></i> ${community.commentCnt}</span></p>
-							<a href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}" class="btn btn-jp-outline btn-sm mt-2">投稿を見る <i class="bi bi-arrow-right"></i></a>
 						</div>
 					</article>
 				</div>
@@ -392,6 +414,23 @@
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			document.querySelectorAll(".clickable-card[data-card-href]").forEach(function (card) {
+				card.setAttribute("tabindex", "0");
+				card.setAttribute("role", "link");
+				card.addEventListener("click", function () {
+					window.location.href = card.dataset.cardHref;
+				});
+				card.addEventListener("keydown", function (event) {
+					if (event.key === "Enter" || event.key === " ") {
+						event.preventDefault();
+						window.location.href = card.dataset.cardHref;
+					}
+				});
+			});
+		});
+	</script>
 
 	<!-- Bootstrap 5 JS -->
 	<script
@@ -405,8 +444,8 @@
 		let markerInfoWindow;
 		let allSightings = [];
 		let sightingMarkers = [];
-		const defaultMapCenter = { lat: 43.0621, lng: 141.3544 };
-		const defaultMapZoom = 7;
+		const defaultMapCenter = { lat: 36.2, lng: 138.25 };
+		const defaultMapZoom = 5.5;
 
 		// 1. Google Map 초기화 함수 (콜백 함수)
 		function initMap() {
@@ -509,15 +548,12 @@
 					markerCount++;
 				});
 
-			if (markerCount === 1) {
-					map.setCenter(bounds.getCenter());
-					map.setZoom(12);
-				} else if (markerCount > 1) {
-					map.fitBounds(bounds, 50);
-				} else {
-					map.setCenter(defaultMapCenter);
-					map.setZoom(defaultMapZoom);
-				}
+			// 마커 위치에 따라 지도를 자동 이동하지 않고 일본 전국 중심을 유지합니다.
+			// 지역 검색을 실행한 경우에는 검색 결과 위치로 이동합니다.
+			if (markerCount === 0) {
+				map.setCenter(defaultMapCenter);
+				map.setZoom(defaultMapZoom);
+			}
 
 			updateRiskCounts(riskCounts);
 		}
@@ -530,14 +566,18 @@
 				CLEAR: "#9aa0a6"
 			};
 			const normalizedRisk = String(displayRisk || "").toUpperCase();
+			const fillColor = riskColors[normalizedRisk] || "#b23a2e";
+			const bearMarkerImages = {
+				DANGER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZbkuMqEEXRGtEdQA/7TrA6TFsE3gfxFkgmT8T6SUFWgvmon9/f3x9jpGD2JAWzJymYPUnB7EkKZk9SMHuSgtmTFMyepGD2JAWzJymYPUnB7EkKxmkN+zyGFDZUlf///OdU7OffuyUpbCCZ44ceAeEctyKFmypNyZ4f/mBXi8zD8y0nhRtijlrs2xG3lz/IaifheZeQws34y+KlPlkkPPd0UrgRF17iN0F4/qmkcBMuvLhvEwnvYRop3IALL+2bIbyPKaRwAy68rG+H8E4uJ4UbkEvahT2ET3JBO1n1GKSwmFzMjhDe0SWksJA7NC9lV1s/BF7G7mY+BiksIpdg/pn1GKSwgAsvwPyzw0PwB+ThzadvfAiMPYICx11dSQoX8uFBTVoQ3ukwUriIPYAOX/UQeDhT5xseghzK1LOHYJwgvN8hpHABOZRpc+VjkMJgLjyQafPoh8DDmD5PfAhuYB7E9AnC++4ihUFceAjT73EPgQcwYzzpIcjwZpynPAQXDm/GecxD4OBmLIT330wKHdxgHNyMhfA3aCaFDjK0Ge+KR/AihQ4ytBnv9g+BA5tr2EMwzu0fwmsyDm3Gs4dgHHsIxrGHYJwnPAT7h3GCRzyE13Qc3IxlD8F4VzwGKXSSoc14CH+DJlLoJEM/3XGuMFyzAsLfoZoUOsnAM4UXw28tUuHaFRD+FlWk0EmGnSkMv9UKwjO6c474GyNk5iwmhR4ccrYw/FYriJzzzYd7ZwrC+apIoYMMOVsYfqsRhGckH/aYqXDWJCl0kAFnC9I1D/qUcGGfWSpnjZJCBxkwJxeuz3mneR70CXuVcGGvGRpmFVLoIAOmROL7HOGelCBN82R6lXJhv6s1zvpBCp1kSEK43/d5hXtTYj25plSsVwUX9rxSx6yeFDr5cNhg4CPc+9GHe3PYk99LFc6X4sK+pVr2d87rSGGQXLhe9vGwKUF8L64pFeuVcRr2LhGk+AzH+h5SGCgWriG3hgfNOevPdSXOep3wYZ8Wrf3e4WxVpLCQOwwPmRPkoxfXlTrpF+PC/T3C8FvKO5yvihQWqT58cAG8hKZemZ4xXX+HwvBbShDOV0UKi1RdANLUIybSM0X2twrDbzlBOF8VKSxSfAmI3891LSJ9U2R/C4bfU4JwtmpSWMSHhz05+Ct+L9e1iPTNcWGfGmfhupggnKuJFBYqDfdU/4NJJ71L+LBnSiQ15w/DeZpJ4QZSkbW85FqZ/iV609KLM3STwsPID1vq2H/B5ZaEe5aTwsO48EfOQdhzS1J4IBf+2DEI+2xNCg9VE+41X/QQDrlwvXmTgtmTFMyepGD2JAWzJymYPUnB7EkKZk9/AYTSSlYgomLuAAAAAElFTkSuQmCC",
+				WARNING: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZbjuQqEEXRmsmdv9SzugOpVtJpRO6DeRvsJI60fsIQFZB81M/v7++PMVIwe5KC2ZMUzJ6kYPYkBbMnKZg9ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBeO0hn0eQwobqsr/f/5zKvbz792SFDaQzPFDj4BwjluRwk2VpmTPD3+wq0Xm4fmWk8INMUct9u2I28sfZLWT8LxLSOFm/GXxUp8sEp57OinciAsv8ZsgPP9UUrgJF17ct4mE9zCNFG7AhZf2zRDexxRSuAEXXta3Q3gnl5PCDcgl7cIewie5oJ2segxSWEwuZkcI7+gSUljIHZqXsqutHwIvY3czH4MUFpFLMP/MegxSWMCFF2D+2eEh+APy8ObTNz4Exh5BgeOuriSFC/nwoCYtCO90GClcxB5Ah696CDycqfMND0EOZerZQzBOEN7vEFK4gBzKtLnyMUhhMBceyLR59EPgYUyfJz4ENzAPYvoE4X13kcIgLjyE6fe4h8ADmDGe9BBkeDPOUx6CC4c34zzmIXBwMxbC+28mhQ5uMA5uxkL4GzSTQgcZ2ox3xSN4kUIHGdqMd/uHwIHNNewhGOf2D+E1GYc249lDMI49BOPYQzDOEx6C/cM4wSMewms6Dm7GsodgvCsegxQ6ydBmPIS/QRMpdJKhn+44VxiuWQHh71BNCp1k4JnCi+G3Fqlw7QoIf4sqUugkw84Uht9qBeEZ3TlH/I0RMnMWk0IPDjlbGH6rFUTO+ebDvTMF4XxVpNBBhpwtDL/VCMIzkg97zFQ4a5IUOsiAswXpmgd9SriwzyyVs0ZJoYMMmJML1+e80zwP+oS9Sriw1wwNswopdJABUyLxfY5wT0qQpnkyvUq5sN/VGmf9IIVOMiQh3O/7vMK9KbGeXFMq1quCC3teqWNWTwqdfDhsMPAR7v3ow7057MnvpQrnS3Fh31It+zvndaQwSC5cL/t42JQgvhfXlIr1yjgNe5cIUnyGY30PKQwUC9eQW8OD5pz157oSZ71O+LBPi9Z+73C2KlJYyB2Gh8wJ8tGL60qd9Itx4f4eYfgt5R3OV0UKi1QfPrgAXkJTr0zPmK6/Q2H4LSUI56sihUWqLgBp6hET6Zki+1uF4becIJyvihQWKb4ExO/nuhaRvimyvwXD7ylBOFs1KSziw8OeHPwVv5frWkT65riwT42zcF1MEM7VRAoLlYZ7qv/BpJPeJXzYMyWSmvOH4TzNpHADqchaXnKtTP8SvWnpxRm6SeFh5Ictdey/4HJLwj3LSeFhXPgj5yDsuSUpPJALf+wYhH22JoWHqgn3mi96CIdcuN68ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBbOnv6McYNQLMsIBAAAAAElFTkSuQmCC",
+				CAUTION: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZNkuMqEIXR2v8S3vZ6DW9cHaYtAn8X8S+QTN6IM0lBVoIZ1M/v7++PMVIwe5KC2ZMUzJ6kYPYkBbMnKZg9ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBeO0hn0eQwobqsr/f/5zKvbz792SFDaQzPFDj4BwjluRwk2VpmTPD3+wq0Xm4fmWk8INMUct9u2I28sfZLWT8LxLSOFm/GXxUp8sEp57OinciAsv8ZsgPP9UUrgJF17ct4mE9zCNFG7AhZf2zRDexxRSuAEXXta3Q3gnl5PCDcgl7cIewie5oJ2segxSWEwuZkcI7+gSUljIHZqXsqutHwIvY3czH4MUFpFLMP/MegxSWMCFF2D+2eEh+APy8ObTNz4Exh5BgeOuriSFC/nwoCYtCO90GClcxB5Ah696CDycqfMND0EOZerZQzBOEN7vEFK4gBzKtLnyMUhhMBceyLR59EPgYUyfJz4ENzAPYvoE4X13kcIgLjyE6fe4h8ADmDGe9BBkeDPOUx6CC4c34zzmIXBwMxbC+28mhQ5uMA5uxkL4GzSTQgcZ2ox3xSN4kUIHGdqMd/uHwIHNNewhGOf2D+E1GYc249lDMI49BOPYQzDOEx6C/cM4wSMewms6Dm7GsodgvCsegxQ6ydBmPIS/QRMpdJKhn+44VxiuWQHh71BNCp1k4JnCi+G3Fqlw7QoIf4sqUugkw84Uht9qBeEZ3TlH/I0RMnMWk0IPDjlbGH6rFUTO+ebDvTMF4XxVpNBBhpwtDL/VCMIzkg97zFQ4a5IUOsiAswXpmgd9SriwzyyVs0ZJoYMMmJML1+e80zwP+oS9Sriw1wwNswopdJABUyLxfY5wT0qQpnkyvUq5sN/VGmf9IIVOMiQh3O/7vMK9KbGeXFMq1quCC3teqWNWTwqdfDhsMPAR7v3ow7057MnvpQrnS3Fh31It+zvndaQwSC5cL/t42JQgvhfXlIr1yjgNe5cIUnyGY30PKQwUC9eQW8OD5pz157oSZ71O+LBPi9Z+73C2KlJYyB2Gh8wJ8tGL60qd9Itx4f4eYfgt5R3OV0UKi1QfPrgAXkJTr0zPmK6/Q2H4LSUI56sihUWqLgBp6hET6Zki+1uF4becIJyvihQWKb4ExO/nuhaRvimyvwXD7ylBOFs1KSziw8OeHPwVv5frWkT65riwT42zcF1MEM7VRAoLlYZ7qv/BpJPeJXzYMyWSmvOH4TzNpHADqchaXnKtTP8SvWnpxRm6SeFh5Ictdey/4HJLwj3LSeFhXPgj5yDsuSUpPJALf+wYhH22JoWHqgn3mi96CIdcuN68ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBbOnvwyTvN/Xsk40AAAAAElFTkSuQmCC",
+				CLEAR: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZNkuMqEIXR2v8S3qhHb5vVYdoi8HcR/wLJ5I04kxRkJZhB/fz+/v4YIwWzJymYPUnB7EkKZk9SMHuSgtmTFMyepGD2JAWzJymYPUnB7EkKZk9SME5r2OcxpLChqvz353+nYj//3i1JYQPJHD/0CAjnuBUp3FRpSvb88Ae7WmQenm85KdwQc9Ri3464vfxBVjsJz7uEFG7GXxYv9cki4bmnk8KNuPASvwnC808lhZtw4cV9m0h4D9NI4QZceGnfDOF9TCGFG3DhZX07hHdyOSncgFzSLuwhfJIL2smqxyCFxeRidoTwji4hhYXcoXkpu9r6IfAydjfzMUhhEbkE88+sxyCFBVx4AeafHR6CPyAPbz5940Ng7BEUOO7qSlK4kA8PatKC8E6HkcJF7AF0+KqHwMOZOt/wEORQpp49BOME4f0OIYULyKFMmysfgxQGc+GBTJtHPwQexvR54kNwA/Mgpk8Q3ncXKQziwkOYfo97CDyAGeNJD0GGN+M85SG4cHgzzmMeAgc3YyG8/2ZS6OAG4+BmLIS/QTMpdJChzXhXPIIXKXSQoc14t38IHNhcwx6CcW7/EF6TcWgznj0E49hDMI49BOM84SHYP4wTPOIhvKbj4GYsewjGu+IxSKGTDG3GQ/gbNJFCJxn66Y5zheGaFRD+DtWk0EkGnim8GH5rkQrXroDwt6gihU4y7Exh+K1WEJ7RnXPE3xghM2cxKfTgkLOF4bdaQeScbz7cO1MQzldFCh1kyNnC8FuNIDwj+bDHTIWzJkmhgww4W5CuedCnhAv7zFI5a5QUOsiAOblwfc47zfOgT9irhAt7zdAwq5BCBxkwJRLf5wj3pARpmifTq5QL+12tcdYPUugkQxLC/b7PK9ybEuvJNaVivSq4sOeVOmb1pNDJh8MGAx/h3o8+3JvDnvxeqnC+FBf2LdWyv3NeRwqD5ML1so+HTQnie3FNqVivjNOwd4kgxWc41veQwkCxcA25NTxozll/ritx1uuED/u0aO33DmerIoWF3GF4yJwgH724rtRJvxgX7u8Rht9S3uF8VaSwSPXhgwvgJTT1yvSM6fo7FIbfUoJwvipSWKTqApCmHjGRnimyv1UYfssJwvmqSGGR4ktA/H6uaxHpmyL7WzD8nhKEs1WTwiI+POzJwV/xe7muRaRvjgv71DgL18UE4VxNpLBQabin+h9MOuldwoc9UyKpOX8YztNMCjeQiqzlJdfK9C/Rm5ZenKGbFB5GfthSx/4LLrck3LOcFB7GhT9yDsKeW5LCA7nwx45B2GdrUniomnCv+aKHcMiF682bFMyepGD2JAWzJymYPUnB7EkKZk9SMHv6C25nyUVj7iuQAAAAAElFTkSuQmCC"
+			};
 
 			return {
-				path: google.maps.SymbolPath.CIRCLE,
-				fillColor: riskColors[normalizedRisk] || "#b23a2e",
-				fillOpacity: 0.95,
-				strokeColor: "#ffffff",
-				strokeWeight: 2,
-				scale: 9
+				url: bearMarkerImages[normalizedRisk] || bearMarkerImages.DANGER,
+				scaledSize: new google.maps.Size(42, 35),
+				anchor: new google.maps.Point(21, 29)
 			};
 		}
 

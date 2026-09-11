@@ -9,6 +9,43 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /* -----------------------------------------------
+       0. 시작 화면 이미지 : 3초 표시 후 메인페이지 노출
+       ----------------------------------------------- */
+    const splashScreen = document.getElementById("splashScreen");
+    const splashStorageKey = "kumanoMaeSplashShownAt";
+    const splashInterval = 10 * 60 * 1000;
+
+    if (splashScreen) {
+        let shouldShowSplash = true;
+
+        try {
+            const lastShownAt = Number(localStorage.getItem(splashStorageKey) || 0);
+            shouldShowSplash = !lastShownAt || Date.now() - lastShownAt >= splashInterval;
+
+            if (shouldShowSplash) {
+                localStorage.setItem(splashStorageKey, String(Date.now()));
+                splashScreen.classList.add("is-visible");
+            }
+        } catch (error) {
+            console.warn("시작 화면 표시 시간 저장에 실패했습니다.", error);
+        }
+
+        if (!shouldShowSplash) {
+            splashScreen.remove();
+        } else {
+            window.setTimeout(function () {
+                splashScreen.classList.add("is-hiding");
+            }, 3000);
+
+            splashScreen.addEventListener("transitionend", function (event) {
+                if (event.propertyName === "opacity") {
+                    splashScreen.remove();
+                }
+            });
+        }
+    }
+
+    /* -----------------------------------------------
        1. 상단 경보 배너 닫기 (X 클릭 시 배너 숨김)
        ----------------------------------------------- */
     const alertBanner = document.querySelector(".top-alert");

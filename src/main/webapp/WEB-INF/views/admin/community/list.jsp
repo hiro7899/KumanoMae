@@ -117,11 +117,12 @@
 					<table
 						class="table table-hover align-middle text-center mb-0 admin-table">
 						<thead>
-							<tr>
+									<tr class="admin-preview-row" data-preview-kind="community">
 								<th>No</th>
 								<th>カテゴリ</th>
-								<th>タイトル</th>
+								<th class="community-title-header">タイトル</th>
 								<th>投稿者</th>
+								<th>閲覧数</th>
 								<th>コメント</th>
 								<th>作成日時</th>
 								<th>状態</th>
@@ -145,13 +146,24 @@
 														<span class="badge bg-secondary">自由</span>
 													</c:otherwise>
 												</c:choose></td>
-											<td class="text-start fw-bold"><a
+											<td class="text-start fw-bold community-title-cell admin-preview-anchor"><a
 												href="${pageContext.request.contextPath}/admin/community/detail?cBoardId=${item.CBoardId}"
 												class="text-decoration-none text-dark">
 													<c:out value="${item.title}" />
-											</a></td>
-										<td><c:out value="${item.writerName}" /></td>
-										<td><c:out value="${item.commentCnt}" /></td>
+											</a>
+												<div class="admin-preview-source" aria-hidden="true">
+													<span class="admin-preview-source-title"><c:out value="${item.title}"/></span>
+													<span class="admin-preview-source-writer"><c:out value="${item.writerName}"/></span>
+													<span class="admin-preview-source-content"><c:out value="${item.content}"/></span>
+													<c:if test="${not empty item.thumbnailUrl}">
+														<c:url var="communityPreviewImageUrl" value="${item.thumbnailUrl}"/>
+														<img class="admin-preview-source-image" src="${communityPreviewImageUrl}" alt="">
+													</c:if>
+												</div>
+											</td>
+						<td><c:out value="${item.writerName}" /></td>
+						<td><c:out value="${item.viewCnt}" /></td>
+						<td><c:out value="${item.commentCnt}" /></td>
 										<td>${fn:substring(fn:replace(item.regDate, 'T', ' '), 0, 16)}</td>
 											<td><c:choose>
 													<c:when test="${item.status eq 'Y'}">
@@ -206,5 +218,6 @@
 	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<%@ include file="/WEB-INF/views/includes/admin-list-preview.jsp" %>
 </body>
 </html>
