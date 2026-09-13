@@ -1007,3 +1007,19 @@
         width: 100%;
     }
 }
+
+.community-image-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 34px 28px;
+}
+
+.community-image-gallery img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+}

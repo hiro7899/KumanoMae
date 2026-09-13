@@ -167,25 +167,31 @@
 		</div>
 		<div class="filter-box mt-4">
 			<div class="row g-3 align-items-end">
-				<div class="col-md-4">
+				<div class="col-md-5">
 					<label class="form-label fw-bold d-block">危険度</label>
+					<div class="risk-filter-group">
+					<div class="form-check form-check-inline risk-filter all">
+						<input class="form-check-input" type="radio" name="riskFilter" id="riskAll"
+							checked> <label class="form-check-label" for="riskAll">すべて</label>
+					</div>
 					<div class="form-check form-check-inline risk-filter danger">
-						<input class="form-check-input" type="checkbox" id="riskDanger"
-							checked> <label class="form-check-label" for="riskDanger">危険</label>
+						<input class="form-check-input" type="radio" name="riskFilter" id="riskDanger">
+						<label class="form-check-label" for="riskDanger">危険</label>
 					</div>
 					<div class="form-check form-check-inline risk-filter warning">
-						<input class="form-check-input" type="checkbox" id="riskWarning"
-							checked> <label class="form-check-label"
+						<input class="form-check-input" type="radio" name="riskFilter" id="riskWarning">
+						<label class="form-check-label"
 							for="riskWarning">警戒</label>
 					</div>
 					<div class="form-check form-check-inline risk-filter caution">
-						<input class="form-check-input" type="checkbox" id="riskCaution"
-							checked> <label class="form-check-label"
+						<input class="form-check-input" type="radio" name="riskFilter" id="riskCaution">
+						<label class="form-check-label"
 							for="riskCaution">注意</label>
 					</div>
 					<div class="form-check form-check-inline risk-filter clear">
-						<input class="form-check-input" type="checkbox" id="riskClear" checked>
+						<input class="form-check-input" type="radio" name="riskFilter" id="riskClear">
 						<label class="form-check-label" for="riskClear">解除</label>
+					</div>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -197,7 +203,7 @@
 						<option value="90">3ヶ月</option>
 					</select>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-4">
 					<label for="areaSearchInput" class="form-label fw-bold">地域検索</label>
 					<div class="input-group">
 						<input type="text" class="form-control" id="areaSearchInput"
@@ -429,6 +435,22 @@
 					}
 				});
 			});
+
+			document.querySelectorAll(".home-community-section .preview-card-thumb").forEach(function (image) {
+				image.addEventListener("error", function () {
+					var imageBox = image.closest(".preview-card-image");
+					if (!imageBox || imageBox.dataset.fallbackApplied === "true") {
+						return;
+					}
+					imageBox.dataset.fallbackApplied = "true";
+					image.remove();
+					imageBox.classList.add("preview-card-image-talk");
+					var fallbackIcon = document.createElement("i");
+					fallbackIcon.className = "bi bi-people-fill";
+					fallbackIcon.setAttribute("aria-hidden", "true");
+					imageBox.appendChild(fallbackIcon);
+				});
+			});
 		});
 	</script>
 
@@ -485,12 +507,15 @@
 		function applyMapFilters() {
 			if (!map) return;
 
-			const checkedRisks = [
-				document.getElementById("riskDanger").checked ? "DANGER" : null,
-				document.getElementById("riskWarning").checked ? "WARNING" : null,
-				document.getElementById("riskCaution").checked ? "CAUTION" : null,
-				document.getElementById("riskClear").checked ? "CLEAR" : null
-			].filter(Boolean);
+			const selectedRisk = document.querySelector("input[name='riskFilter']:checked").id;
+			const checkedRisks = selectedRisk === "riskAll"
+				? ["DANGER", "WARNING", "CAUTION", "CLEAR"]
+				: [{
+					riskDanger: "DANGER",
+					riskWarning: "WARNING",
+					riskCaution: "CAUTION",
+					riskClear: "CLEAR"
+				}[selectedRisk]];
 			const periodDays = Number(document.getElementById("periodSelect").value);
 			const cutoff = Number.isFinite(periodDays) && periodDays > 0
 				? new Date(Date.now() - periodDays * 24 * 60 * 60 * 1000)
@@ -515,9 +540,7 @@
 			});
 			sightingMarkers = [];
 
-				const bounds = new google.maps.LatLngBounds();
 				const riskCounts = { DANGER: 0, WARNING: 0, CAUTION: 0, CLEAR: 0 };
-				let markerCount = 0;
 
 			sightings.forEach(function(sighting) {
 					const latitude = Number(sighting.latitude);
@@ -543,17 +566,8 @@
 						markerInfoWindow.open({ map: map, anchor: marker });
 					});
 
-					bounds.extend(position);
 					sightingMarkers.push(marker);
-					markerCount++;
 				});
-
-			// 마커 위치에 따라 지도를 자동 이동하지 않고 일본 전국 중심을 유지합니다.
-			// 지역 검색을 실행한 경우에는 검색 결과 위치로 이동합니다.
-			if (markerCount === 0) {
-				map.setCenter(defaultMapCenter);
-				map.setZoom(defaultMapZoom);
-			}
 
 			updateRiskCounts(riskCounts);
 		}
@@ -649,7 +663,7 @@
 					}
 				});
 
-		document.querySelectorAll("#riskDanger, #riskWarning, #riskCaution, #riskClear, #periodSelect")
+		document.querySelectorAll("#riskAll, #riskDanger, #riskWarning, #riskCaution, #riskClear, #periodSelect")
 			.forEach(function(filterInput) {
 				filterInput.addEventListener("change", applyMapFilters);
 			});
