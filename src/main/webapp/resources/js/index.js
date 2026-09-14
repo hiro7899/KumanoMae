@@ -57,20 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* -----------------------------------------------
-       2. 危険度 체크박스 : 화면 표시용 상태 확인
-          (실제 지도 마커/데이터 연동은 出没マップ 기능 구현 시 추가)
-       ----------------------------------------------- */
-    const riskCheckboxes = document.querySelectorAll(
-        "#riskDanger, #riskWarning, #riskCaution"
-    );
 
-    riskCheckboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-            console.log(checkbox.id + " : " + checkbox.checked);
-            // TODO: 出没マップ 기능이 연결되면 여기서 마커를 필터링한다.
-        });
-    });
 
     /* -----------------------------------------------
        ※ 4. "目撃情報を報告する" / "クマ出没を報告する" 버튼 처리는
