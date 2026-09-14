@@ -123,7 +123,10 @@
 				<div class="card card-jp">
 					<div class="card-body p-0">
 						<!-- 구글 맵이 출력될 영역 -->
-						<div id="mapContainer" style="height: 480px; width: 100%;"></div>
+						<div class="map-container-wrap">
+							<div id="mapContainer" style="height: 480px; width: 100%;"></div>
+							<div id="mapStatus" class="map-status" role="status" aria-live="polite" hidden></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -528,6 +531,14 @@
 		// 2. 등록된 목격 정보 조회
 		async function loadSightingMarkers() {
 			const contextPath = document.body.dataset.contextPath || "";
+			const mapStatus = document.getElementById("mapStatus");
+
+			if (mapStatus) {
+				mapStatus.hidden = false;
+				mapStatus.className = "map-status is-loading";
+				mapStatus.innerHTML = '<i class="bi bi-arrow-repeat map-status-icon" aria-hidden="true"></i>' +
+					'<span>目撃情報を読み込んでいます...</span>';
+			}
 
 			try {
 				const response = await fetch(contextPath + "/map/markers", {
@@ -542,6 +553,13 @@
 				applyMapFilters();
 			} catch (error) {
 				console.error(error);
+				if (mapStatus) {
+					mapStatus.hidden = false;
+					mapStatus.className = "map-status is-error";
+					mapStatus.innerHTML = '<i class="bi bi-exclamation-triangle" aria-hidden="true"></i>' +
+						'<span>目撃情報を読み込めませんでした。</span>' +
+						'<button type="button" class="btn btn-sm btn-jp-outline" onclick="loadSightingMarkers()">再試行</button>';
+				}
 			}
 		}
 
@@ -612,6 +630,18 @@
 				});
 
 			updateRiskCounts(riskCounts);
+
+			const mapStatus = document.getElementById("mapStatus");
+			if (mapStatus) {
+				if (sightingMarkers.length === 0) {
+					mapStatus.hidden = false;
+					mapStatus.className = "map-status is-empty";
+					mapStatus.innerHTML = '<i class="bi bi-geo-alt" aria-hidden="true"></i>' +
+						'<span>条件に一致する目撃情報はありません。</span>';
+				} else {
+					mapStatus.hidden = true;
+				}
+			}
 		}
 
 		function createRiskMarkerIcon(displayRisk) {

@@ -41,7 +41,7 @@
             </c:if>
 
             <form id="communityWriteForm" action="${pageContext.request.contextPath}/community/write"
-                method="post" enctype="multipart/form-data">
+                method="post" enctype="multipart/form-data" novalidate>
                 <div class="community-form-group">
                     <label class="community-form-label" for="category">カテゴリ <span>*</span></label>
                     <select id="category" name="category" class="form-select" required>
@@ -93,6 +93,7 @@
 
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/resources/js/common/submit-guard.js"></script>
     <script>
     (function() {
         'use strict';
@@ -115,9 +116,50 @@
             return true;
         }
 
+        function clearValidation() {
+            form.querySelectorAll('.is-invalid').forEach(function(element) {
+                element.classList.remove('is-invalid');
+            });
+            form.querySelectorAll('.community-validation-message').forEach(function(message) {
+                message.remove();
+            });
+        }
+
+        function showValidationError(input, message) {
+            input.classList.add('is-invalid');
+            var error = document.createElement('div');
+            error.className = 'invalid-feedback d-block community-validation-message';
+            error.textContent = '⚠️ ' + message;
+            input.after(error);
+        }
+
+        function validateForm() {
+            clearValidation();
+
+            var fields = [
+                { element: document.getElementById('category'), message: 'カテゴリを選択してください。' },
+                { element: document.getElementById('postTitle'), message: 'タイトルを入力してください。' },
+                { element: document.getElementById('postContent'), message: '内容を入力してください。' }
+            ];
+            var firstInvalid = null;
+
+            fields.forEach(function(field) {
+                if (!field.element || field.element.value.trim()) return;
+                showValidationError(field.element, field.message);
+                firstInvalid = firstInvalid || field.element;
+            });
+
+            if (firstInvalid) {
+                firstInvalid.focus();
+                firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            }
+            return true;
+        }
+
         fileInput.addEventListener('change', renderSelectedFiles);
         form.addEventListener('submit', function(event) {
-            if (!renderSelectedFiles()) {
+            if (!validateForm() || !renderSelectedFiles()) {
                 event.preventDefault();
             }
         });

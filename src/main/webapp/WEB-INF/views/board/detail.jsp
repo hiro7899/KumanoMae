@@ -74,7 +74,11 @@
                                         <c:url var="imageUrl" value="${file.filePath}/${file.saveName}"/>
                                         <figure class="report-photo">
                                             <a href="${imageUrl}" target="_blank" rel="noopener">
-                                                <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}">
+                                            <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}"
+                                                onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.hidden=false;">
+                                            <div class="text-muted small text-center py-4" role="status" hidden>
+                                                <i class="bi bi-image me-1" aria-hidden="true"></i> 添付写真を表示できません。
+                                            </div>
                                             </a>
                                             <figcaption><i class="bi bi-image" aria-hidden="true"></i> 添付写真 <c:out value="${status.count}"/>枚目: <c:out value="${file.originName}"/></figcaption>
                                         </figure>
