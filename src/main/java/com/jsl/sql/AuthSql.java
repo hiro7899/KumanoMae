@@ -69,4 +69,10 @@ public class AuthSql {
           FROM MEMBER
          WHERE MEMBER_ID = ?
         """;
+
+	public static final String SELECT_BY_USER_ID = """
+			SELECT MEMBER_ID, USER_ID, USER_NAME, EMAIL, EMAIL_VERIFIED_YN
+			FROM MEMBER
+			WHERE USER_ID = ?
+			""";
 }

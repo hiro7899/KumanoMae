@@ -24,33 +24,95 @@ public class ForgotPasswordService implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        String userId = request.getParameter("userId");
         String email = request.getParameter("email");
-        MemberDto member = authDao.findByEmail(email); // 신규 메서드 - AuthDao에 추가 필요
 
-        // ★ 존재하지 않는 이메일이어도 "발송했습니다"로 동일하게 응답 (이메일 존재 여부로 회원 유무 추측 불가하게)
-        if (member != null) {
-            try (Connection conn = DBManager.getConnection()) {
-                conn.setAutoCommit(false);
-                String token = UUID.randomUUID().toString();
-                emailTokenDao.insertToken(conn, member.getMemberId(), token, "PASSWORD_RESET",
-                        LocalDateTime.now().plusHours(1)); // 비밀번호 재설정은 1시간으로 짧게
-                conn.commit();
-
-                String resetUrl = baseUrl(request) + "/reset-password?token=" + token;
-                EmailUtil.send(email, "【KumanoMae】パスワード再設定のご案内",
-                        "<p>下記リンクからパスワードを再設定してください（1時間有効）。</p>"
-                        + "<p><a href=\"" + resetUrl + "\">" + resetUrl + "</a></p>");
-
-            } catch (SQLException e) {
-                throw new RuntimeException("処理中にエラーが発生しました。", e);
-            }
+        if (userId == null || userId.trim().isEmpty()) {
+            request.setAttribute("errorField", "userId");
+            request.setAttribute("errorMsg", "IDを入力してください。");
+            return;
         }
 
-        request.setAttribute("resultMsg", "入力されたメールアドレス宛に再設定用のリンクを送信しました。");
+        userId = userId.trim();
+
+        MemberDto member = authDao.findByUserId(userId);
+
+        if (member == null) {
+            request.setAttribute("errorField", "userId");
+            request.setAttribute("errorMsg", "登録されていないIDです。");
+            return;
+        }
+
+        if (email == null || email.trim().isEmpty()) {
+            request.setAttribute("errorField", "email");
+            request.setAttribute("errorMsg", "正しいメールアドレスを入力してください。");
+            return;
+        }
+
+        email = email.trim();
+
+        if (!isValidEmail(email)) {
+            request.setAttribute("errorField", "email");
+            request.setAttribute("errorMsg", "正しいメールアドレスを入力してください。");
+            return;
+        }
+
+        if (!email.equalsIgnoreCase(member.getEmail())) {
+            request.setAttribute("errorField", "email");
+            request.setAttribute("errorMsg", "登録されていないメールアドレスです。");
+            return;
+        }
+
+        try (Connection conn = DBManager.getConnection()) {
+
+            conn.setAutoCommit(false);
+
+            String token = UUID.randomUUID().toString();
+
+            emailTokenDao.insertToken(
+                    conn,
+                    member.getMemberId(),
+                    token,
+                    "PASSWORD_RESET",
+                    LocalDateTime.now().plusHours(1)
+            );
+
+            conn.commit();
+
+            String resetUrl = baseUrl(request)
+                    + "/reset-password?token=" + token;
+
+            EmailUtil.send(
+                    email,
+                    "【KumanoMae】パスワード再設定のご案内",
+                    "<p>下記リンクからパスワードを再設定してください（1時間有効）。</p>"
+                    + "<p><a href=\"" + resetUrl + "\">"
+                    + resetUrl
+                    + "</a></p>"
+            );
+
+            request.setAttribute(
+                    "resultMsg",
+                    "入力されたメールアドレス宛に再設定用のリンクを送信しました。"
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException("処理中にエラーが発生しました。", e);
+        }
+    }
+
+    /**
+     * 이메일 형식 확인
+     */
+    private boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
 
     private String baseUrl(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName()
-                + (request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : ":" + request.getServerPort());
+        return request.getScheme() + "://"
+                + request.getServerName()
+                + (request.getServerPort() == 80 || request.getServerPort() == 443
+                        ? ""
+                        : ":" + request.getServerPort());
     }
 }
