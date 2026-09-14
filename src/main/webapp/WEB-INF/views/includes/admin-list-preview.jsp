@@ -29,12 +29,12 @@
 
         function positionPreview(preview, event) {
             var offset = 16;
-            var left = event.clientX + offset;
+            var left = event.clientX - preview.offsetWidth - offset;
             var top = event.clientY + offset;
             var rect = preview.getBoundingClientRect();
 
-            if (left + rect.width > window.innerWidth - 12) {
-                left = Math.max(12, event.clientX - rect.width - offset);
+            if (left < 12) {
+                left = Math.min(window.innerWidth - rect.width - 12, event.clientX + offset);
             }
             if (top + rect.height > window.innerHeight - 12) {
                 top = Math.max(12, window.innerHeight - rect.height - 12);

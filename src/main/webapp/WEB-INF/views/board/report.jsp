@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>目撃情報を報告する - クマ出没マップ</title>
+<title>目撃を投稿 - 熊の前</title>
 
 <!-- Bootstrap 5 CDN & Fonts & Bootstrap Icons -->
 <link

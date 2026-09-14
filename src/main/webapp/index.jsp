@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>クマ出没マップ</title>
+<title>熊の前 - KUMANO_MAE</title>
 
 <!-- Bootstrap 5 CDN & Icons -->
 <link
@@ -541,7 +541,7 @@
 			}
 
 			try {
-				const response = await fetch(contextPath + "/map/markers", {
+				const response = await fetch(contextPath + "/api/map/markers", {
 					headers: { "Accept": "application/json" }
 				});
 
@@ -549,7 +549,10 @@
 					throw new Error("マーカー情報の取得に失敗しました。");
 				}
 
-				allSightings = await response.json();
+				const markerResponse = await response.json();
+				allSightings = Array.isArray(markerResponse.markers)
+					? markerResponse.markers
+					: [];
 				applyMapFilters();
 			} catch (error) {
 				console.error(error);
