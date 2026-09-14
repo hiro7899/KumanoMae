@@ -97,10 +97,14 @@ public class CommunityBoardSql {
 
     // 관리자용 전체 게시글 조회
     public static final String SELECT_ALL_FOR_ADMIN = """
-        SELECT C_BOARD_ID, MEMBER_ID, CATEGORY, TITLE, GEAR_NAME,
-               VIEW_CNT, LIKE_CNT, STATUS, REG_DATE
-          FROM COMMUNITY_BOARD
-        """;
+    	    SELECT cb.C_BOARD_ID, cb.MEMBER_ID, cb.CATEGORY, cb.TITLE, cb.GEAR_NAME,
+    	           cb.VIEW_CNT, cb.LIKE_CNT, cb.STATUS, cb.REG_DATE,
+    	           m.USER_NAME AS WRITER_NAME,
+    	           (SELECT COUNT(*) FROM COMMUNITY_COMMENT cc
+    	             WHERE cc.C_BOARD_ID = cb.C_BOARD_ID) AS COMMENT_CNT
+    	      FROM COMMUNITY_BOARD cb
+    	      JOIN MEMBER m ON m.MEMBER_ID = cb.MEMBER_ID
+    	    """;
 
     // 관리자용 게시글 상세 조회
     public static final String SELECT_BY_ID_FOR_ADMIN = """
