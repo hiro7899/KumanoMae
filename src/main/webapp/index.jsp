@@ -47,7 +47,9 @@
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
-		<span>🍂</span> <span>秋の入山特別警戒期間（09月〜11月）— 冬眠前のクマの活動が活発化しています</span> <span
+		<span id="seasonAlertIcon" aria-hidden="true">🍂</span>
+		<span id="seasonAlertText">秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。</span>
+		<span
 			class="close-x" id="alertClose">&times;</span>
 	</div>
 
@@ -121,7 +123,10 @@
 				<div class="card card-jp">
 					<div class="card-body p-0">
 						<!-- 구글 맵이 출력될 영역 -->
-						<div id="mapContainer" style="height: 480px; width: 100%;"></div>
+						<div class="map-container-wrap">
+							<div id="mapContainer" style="height: 480px; width: 100%;"></div>
+							<div id="mapStatus" class="map-status" role="status" aria-live="polite" hidden></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -362,9 +367,10 @@
 				<div class="card info-card">
 					<div class="card-body">
 						<h5 class="card-title">
-							<i class="bi bi-geo-fill icon-red"></i> 最近の警戒エリア
+							<span id="seasonGuideIcon" class="me-2" aria-hidden="true">🍂</span>
+							<span id="seasonGuideTitle">今月の注意ポイント</span>
 						</h5>
-						<p class="text-muted">北海道、青森県、秋田県で最近クマの目撃情報が増加しています。</p>
+						<p id="seasonGuideText" class="text-muted">冬眠前のクマは餌を求めて活動範囲を広げます。早朝・夕方の入山は特に注意し、食べ物やゴミを屋外に放置しないでください。</p>
 					</div>
 				</div>
 			</div>
@@ -458,6 +464,45 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
+	<script>
+		(function () {
+			const month = new Date().getMonth() + 1;
+			const seasonalAlerts = [
+				{
+					months: [3, 4, 5],
+					icon: "🌸",
+					message: "春の出没注意期間（3月〜5月）— 冬眠明けのクマが活動を始めます。早朝・夕方の単独行動に注意してください。",
+					guideMessage: "冬眠明けのクマは食べ物を探して行動範囲を広げます。山菜採りや散策の前に、出没マップと周辺情報を確認しましょう。"
+				},
+				{
+					months: [6, 7, 8],
+					icon: "🌿",
+					message: "夏の出没注意期間（6月〜8月）— 山や河川敷では周囲に注意し、食べ物を放置しないでください。",
+					guideMessage: "夏は親子グマが行動する時期です。子グマを見かけても近づかず、すぐにその場から離れてください。"
+				},
+				{
+					months: [9, 10, 11],
+					icon: "🍂",
+					message: "秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。入山前に出没情報を確認してください。",
+					guideMessage: "冬眠前のクマは餌を求めて活動範囲を広げます。早朝・夕方の入山は特に注意し、食べ物やゴミを屋外に放置しないでください。"
+				},
+				{
+					months: [12, 1, 2],
+					icon: "❄️",
+					message: "冬季安全確認期間（12月〜2月）— 冬でも出没情報を確認し、山間部では十分注意してください。",
+					guideMessage: "冬眠しない個体や、冬眠前後に活動するクマがいる場合があります。雪山や山間部へ出かける前にも、最新の出没情報を確認しましょう。"
+				}
+			];
+			const currentAlert = seasonalAlerts.find(function (alert) {
+				return alert.months.includes(month);
+			});
+
+			document.getElementById("seasonAlertIcon").textContent = currentAlert.icon;
+			document.getElementById("seasonAlertText").textContent = currentAlert.message;
+			document.getElementById("seasonGuideIcon").textContent = currentAlert.icon;
+			document.getElementById("seasonGuideText").textContent = currentAlert.guideMessage;
+		}());
+	</script>
 
 	<!-- Google Map 및 관련 로직 -->
 	<script>
@@ -486,6 +531,14 @@
 		// 2. 등록된 목격 정보 조회
 		async function loadSightingMarkers() {
 			const contextPath = document.body.dataset.contextPath || "";
+			const mapStatus = document.getElementById("mapStatus");
+
+			if (mapStatus) {
+				mapStatus.hidden = false;
+				mapStatus.className = "map-status is-loading";
+				mapStatus.innerHTML = '<i class="bi bi-arrow-repeat map-status-icon" aria-hidden="true"></i>' +
+					'<span>目撃情報を読み込んでいます...</span>';
+			}
 
 			try {
 				const response = await fetch(contextPath + "/map/markers", {
@@ -500,6 +553,13 @@
 				applyMapFilters();
 			} catch (error) {
 				console.error(error);
+				if (mapStatus) {
+					mapStatus.hidden = false;
+					mapStatus.className = "map-status is-error";
+					mapStatus.innerHTML = '<i class="bi bi-exclamation-triangle" aria-hidden="true"></i>' +
+						'<span>目撃情報を読み込めませんでした。</span>' +
+						'<button type="button" class="btn btn-sm btn-jp-outline" onclick="loadSightingMarkers()">再試行</button>';
+				}
 			}
 		}
 
@@ -570,6 +630,18 @@
 				});
 
 			updateRiskCounts(riskCounts);
+
+			const mapStatus = document.getElementById("mapStatus");
+			if (mapStatus) {
+				if (sightingMarkers.length === 0) {
+					mapStatus.hidden = false;
+					mapStatus.className = "map-status is-empty";
+					mapStatus.innerHTML = '<i class="bi bi-geo-alt" aria-hidden="true"></i>' +
+						'<span>条件に一致する目撃情報はありません。</span>';
+				} else {
+					mapStatus.hidden = true;
+				}
+			}
 		}
 
 		function createRiskMarkerIcon(displayRisk) {
