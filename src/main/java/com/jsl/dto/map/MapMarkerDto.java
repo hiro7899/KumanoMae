@@ -3,17 +3,17 @@ package com.jsl.dto.map;
 import java.time.LocalDateTime;
 
 public class MapMarkerDto {
-
-    private String sourceType;
+    private String sourceType;   // USER / OFFICIAL_NEWS / OFFICIAL_GOV
     private Long targetId;
     private String title;
-    private String displayRisk;
+    private String displayRisk;  // DANGER / WARNING / CAUTION / CLEAR
+    private String clearYn;      // Y / N
     private double latitude;
     private double longitude;
     private String address;
     private LocalDateTime eventDate;
-    private LocalDateTime regDate;
-    	
+    private String riskLevel; // 원본 위험도 (해제 여부와 무관) - null 아님, CLEAR여도 원래 등급 보존
+    
 	public String getSourceType() {
 		return sourceType;
 	}
@@ -37,6 +37,12 @@ public class MapMarkerDto {
 	}
 	public void setDisplayRisk(String displayRisk) {
 		this.displayRisk = displayRisk;
+	}
+	public String getClearYn() {
+		return clearYn;
+	}
+	public void setClearYn(String clearYn) {
+		this.clearYn = clearYn;
 	}
 	public double getLatitude() {
 		return latitude;
@@ -62,10 +68,11 @@ public class MapMarkerDto {
 	public void setEventDate(LocalDateTime eventDate) {
 		this.eventDate = eventDate;
 	}
-	public LocalDateTime getRegDate() {
-		return regDate;
+	public String getRiskLevel() {
+		return riskLevel;
 	}
-	public void setRegDate(LocalDateTime regDate) {
-		this.regDate = regDate;
+	public void setRiskLevel(String riskLevel) {
+		this.riskLevel = riskLevel;
 	}
+    
 }
