@@ -22,10 +22,14 @@ public class JsonResponseUtil {
         write(response, statusCode, ApiResponse.fail(message));
     }
 
-    private static void write(HttpServletResponse response, int statusCode, ApiResponse body) throws IOException {
+    private static void write(HttpServletResponse response, int statusCode, Object body) throws IOException {
         response.setStatus(statusCode);
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(gson.toJson(body));
+    }
+
+    public static void writeJson(HttpServletResponse response, int statusCode, Object body) throws IOException {
+        write(response, statusCode, body);
     }
     
     public static void writeVerified(HttpServletResponse response, boolean verified) throws IOException {
