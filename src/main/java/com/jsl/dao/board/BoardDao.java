@@ -14,23 +14,24 @@ import com.jsl.util.DBManager;
 
 public class BoardDao {
 
-    public List<BoardDto> selectAllBoard() {
-        List<BoardDto> list = new ArrayList<BoardDto>();
+	public List<BoardDto> selectAllBoard() {
 
-        try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_ALL_BOARD);
-             ResultSet rs = pstmt.executeQuery()) {
+	    List<BoardDto> list = new ArrayList<>();
 
-            while (rs.next()) {
-                list.add(mapRow(rs));
-            }
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_ALL_BOARD);
+	         ResultSet rs = pstmt.executeQuery()) {
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
+	        while (rs.next()) {
+	            BoardDto board = mapRow(rs);
+	            board.setWriterName(rs.getString("WRITER_NAME"));
+	            list.add(board);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
 
     public List<BoardDto> selectApprovedBoard() {
         List<BoardDto> boardList = new ArrayList<>();
