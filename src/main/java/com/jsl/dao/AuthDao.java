@@ -183,39 +183,6 @@ public class AuthDao {
         }
     }
 
-    // 이름 + 이메일로 회원 조회
-    public MemberDto findByNameAndEmail(
-            String userName,
-            String email) {
-
-        try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt =
-                conn.prepareStatement(AuthSql.SELECT_BY_NAME_AND_EMAIL)) {
-
-            pstmt.setString(1, userName);
-            pstmt.setString(2, email);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-
-                if (rs.next()) {
-                    MemberDto member = new MemberDto();
-
-                    member.setMemberId(rs.getLong("MEMBER_ID"));
-                    member.setUserId(rs.getString("USER_ID"));
-                    member.setUserName(rs.getString("USER_NAME"));
-                    member.setEmail(rs.getString("EMAIL"));
-
-                    return member;
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     // 회원 ID로 회원 조회
     public MemberDto findById(Long memberId) {
 
@@ -243,6 +210,39 @@ public class AuthDao {
                         );
                     }
 
+                    member.setEmailVerifiedYn(
+                        rs.getString("EMAIL_VERIFIED_YN")
+                    );
+
+                    return member;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    
+ // 회원 ID로 회원 조회
+    public MemberDto findByUserId(String userId) {
+
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt =
+                conn.prepareStatement(AuthSql.SELECT_BY_USER_ID)) {
+
+            pstmt.setString(1, userId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    MemberDto member = new MemberDto();
+
+                    member.setMemberId(rs.getLong("MEMBER_ID"));
+                    member.setUserId(rs.getString("USER_ID"));
+                    member.setUserName(rs.getString("USER_NAME"));
+                    member.setEmail(rs.getString("EMAIL"));
                     member.setEmailVerifiedYn(
                         rs.getString("EMAIL_VERIFIED_YN")
                     );
