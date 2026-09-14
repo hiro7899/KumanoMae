@@ -22,7 +22,8 @@ public class ForgotPasswordService implements Command {
     private final EmailTokenDao emailTokenDao = new EmailTokenDao();
 
     @Override
-    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doCommand(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
 
         String userId = request.getParameter("userId");
         String email = request.getParameter("email");
@@ -77,8 +78,6 @@ public class ForgotPasswordService implements Command {
                     LocalDateTime.now().plusHours(1)
             );
 
-            conn.commit();
-
             String resetUrl = baseUrl(request)
                     + "/reset-password?token=" + token;
 
@@ -91,13 +90,18 @@ public class ForgotPasswordService implements Command {
                     + "</a></p>"
             );
 
+            conn.commit();
+
             request.setAttribute(
                     "resultMsg",
                     "入力されたメールアドレス宛に再設定用のリンクを送信しました。"
             );
 
         } catch (SQLException e) {
-            throw new RuntimeException("処理中にエラーが発生しました。", e);
+            throw new RuntimeException(
+                    "処理中にエラーが発生しました。",
+                    e
+            );
         }
     }
 
@@ -105,13 +109,20 @@ public class ForgotPasswordService implements Command {
      * 이메일 형식 확인
      */
     private boolean isValidEmail(String email) {
-        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+        return email.matches(
+                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
+        );
     }
 
+    /**
+     * 현재 서버의 기본 URL 생성
+     */
     private String baseUrl(HttpServletRequest request) {
-        return request.getScheme() + "://"
+        return request.getScheme()
+                + "://"
                 + request.getServerName()
-                + (request.getServerPort() == 80 || request.getServerPort() == 443
+                + (request.getServerPort() == 80
+                        || request.getServerPort() == 443
                         ? ""
                         : ":" + request.getServerPort());
     }
