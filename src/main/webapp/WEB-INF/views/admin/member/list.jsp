@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ユーザー管理 - KUMANO_MAE ADMIN</title>
+<title>ユーザー管理 - 熊の前 ADMIN</title>
 
 <!-- Bootstrap 5 CDN & Fonts & Bootstrap Icons -->
 <link
