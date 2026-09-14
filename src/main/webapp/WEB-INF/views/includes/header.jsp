@@ -61,7 +61,7 @@
 
 							<li class="nav-item d-lg-none"><a class="nav-link text-light user-profile-link"
 								href="${pageContext.request.contextPath}/user/profile">
-									${sessionScope.user.userName}さま </a></li>
+									${sessionScope.user.userName}様 </a></li>
 
 							<li class="nav-item d-lg-none"><a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
 							</li>
@@ -83,7 +83,7 @@
 				<c:choose>
 					<c:when test="${not empty sessionScope.user}">
 						<a class="nav-link text-light user-profile-link" href="${pageContext.request.contextPath}/user/profile">
-							${sessionScope.user.userName}さま</a>
+							${sessionScope.user.userName}様</a>
 						<a class="nav-link" href="${pageContext.request.contextPath}/logout">ログアウト</a>
 					</c:when>
 					<c:otherwise>

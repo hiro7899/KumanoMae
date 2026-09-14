@@ -27,8 +27,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/report.css">
 
-<!-- Google Maps API 스크립트 (callback=initMap 적용) -->
-<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places" async defer></script>
 </head>
 <body>
 
@@ -248,10 +246,34 @@
 
 		document.addEventListener('DOMContentLoaded', function() {
 			
-			// 현재 시간을 datetime-local 기본값으로 설정
+			// 현재 현지 시간을 datetime-local 형식으로 변환
+			function formatDateTimeLocal(date) {
+				const pad = function(value) { return String(value).padStart(2, '0'); };
+				return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate())
+					+ 'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
+			}
+
+			// 미래 목격 일시 선택을 제한하고 현재 시간을 기본값으로 설정
 			const sightingDateInput = document.getElementById('sightingDate');
-			if (sightingDateInput && !sightingDateInput.value) {
-				sightingDateInput.value = new Date().toISOString().slice(0, 16);
+			if (sightingDateInput) {
+				const setSightingDateLimit = function() {
+					const nowValue = formatDateTimeLocal(new Date());
+					sightingDateInput.max = nowValue;
+					if (!sightingDateInput.value) {
+						sightingDateInput.value = nowValue;
+					}
+				};
+
+				setSightingDateLimit();
+				sightingDateInput.addEventListener('focus', setSightingDateLimit);
+				sightingDateInput.addEventListener('change', function() {
+					const selectedTime = new Date(sightingDateInput.value).getTime();
+
+					if (Number.isFinite(selectedTime) && selectedTime > Date.now()) {
+						sightingDateInput.value = formatDateTimeLocal(new Date());
+						alert('未来の日時は選択できません。');
+					}
+				});
 			}
 
 			// 폼 제출 유효성 검사 (Validation)
@@ -293,6 +315,21 @@
 						}
 					}
 
+					if (isValid && sightingDateInput && sightingDateInput.value) {
+						const selectedTime = new Date(sightingDateInput.value).getTime();
+
+						if (Number.isFinite(selectedTime) && selectedTime > Date.now()) {
+							isValid = false;
+							sightingDateInput.classList.add('is-invalid');
+
+							const errorDiv = document.createElement('div');
+							errorDiv.className = 'invalid-feedback fw-bold mt-1 d-block';
+							errorDiv.innerText = '⚠️ 未来の日時は選択できません。';
+							sightingDateInput.after(errorDiv);
+							sightingDateInput.focus();
+						}
+					}
+
 					if (!isValid) {
 						e.preventDefault();
 					}
@@ -325,5 +362,8 @@
 			}
 		}
 	</script>
+
+	<!-- Google Maps API: initMap 선언 후 로드하여 콜백 실행 순서를 보장 -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places" async defer></script>
 </body>
 </html>

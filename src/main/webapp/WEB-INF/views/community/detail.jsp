@@ -31,9 +31,9 @@
 <body>
     <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-    <c:set var="loginUser" value="${sessionScope.loginUser}"/>
+    <c:set var="loginUser" value="${sessionScope.user}"/>
     <c:set var="canManageBoard"
-        value="${not empty loginUser and (communityBoard.memberId eq loginUser.memberId or loginUser.role eq 'ADMIN')}"/>
+        value="${not empty loginUser and (communityBoard.memberId eq loginUser.memberId or loginUser.userGrade eq 'A')}"/>
 
     <main class="container community-detail-container">
         <nav class="community-breadcrumb" aria-label="breadcrumb">
