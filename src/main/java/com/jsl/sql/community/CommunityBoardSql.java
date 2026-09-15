@@ -97,7 +97,7 @@ public class CommunityBoardSql {
 
     // 관리자용 전체 게시글 조회
     public static final String SELECT_ALL_FOR_ADMIN = """
-    	    SELECT cb.C_BOARD_ID, cb.MEMBER_ID, cb.CATEGORY, cb.TITLE, cb.GEAR_NAME,
+    	    SELECT cb.C_BOARD_ID, cb.MEMBER_ID, cb.CATEGORY, cb.TITLE, cb.CONTENT, cb.GEAR_NAME,
     	           cb.VIEW_CNT, cb.LIKE_CNT, cb.STATUS, cb.REG_DATE,
     	           m.USER_NAME AS WRITER_NAME,
     	           (SELECT COUNT(*) FROM COMMUNITY_COMMENT cc
