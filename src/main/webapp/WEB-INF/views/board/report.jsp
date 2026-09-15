@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>目撃情報を報告する - クマ出没マップ</title>
+<title>目撃を投稿 - 熊の前</title>
 
 <!-- Bootstrap 5 CDN & Fonts & Bootstrap Icons -->
 <link
@@ -193,11 +193,11 @@
 
 		// 1. Google Map 초기화 함수 (콜백으로 자동 호출됨)
 		function initMap() {
-			// 기본 중심점: 삿포로시 중심부 (위도, 경도)
-			const defaultCenter = { lat: 43.0621, lng: 141.3544 };
+			// 기본 중심점: 일본 전국이 보이는 위치 (위도, 경도)
+			const defaultCenter = { lat: 36.2, lng: 138.25 };
 
 			map = new google.maps.Map(document.getElementById("map"), {
-				zoom: 12,
+				zoom: 5.5,
 				center: defaultCenter,
 			});
 
@@ -364,6 +364,7 @@
 	</script>
 
 	<!-- Google Maps API: initMap 선언 후 로드하여 콜백 실행 순서를 보장 -->
+	<script src="/resources/js/common/submit-guard.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places" async defer></script>
 </body>
 </html>

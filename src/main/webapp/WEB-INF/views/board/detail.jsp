@@ -13,21 +13,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/board/view.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/board/view.css">
 </head>
 <body>
     <%@ include file="/WEB-INF/views/includes/header.jsp"%>
@@ -89,7 +74,11 @@
                                         <c:url var="imageUrl" value="${file.filePath}/${file.saveName}"/>
                                         <figure class="report-photo">
                                             <a href="${imageUrl}" target="_blank" rel="noopener">
-                                                <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}">
+                                            <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}"
+                                                onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.hidden=false;">
+                                            <div class="text-muted small text-center py-4" role="status" hidden>
+                                                <i class="bi bi-image me-1" aria-hidden="true"></i> 添付写真を表示できません。
+                                            </div>
                                             </a>
                                             <figcaption><i class="bi bi-image" aria-hidden="true"></i> 添付写真 <c:out value="${status.count}"/>枚目: <c:out value="${file.originName}"/></figcaption>
                                         </figure>

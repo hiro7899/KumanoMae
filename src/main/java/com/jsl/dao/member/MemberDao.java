@@ -51,7 +51,8 @@ public class MemberDao {
 
     public String findStatus(Connection conn, Long memberId) throws SQLException {
 
-        try (PreparedStatement pstmt = conn.prepareStatement(MemberSql.SELECT_STATUS)) {
+        try (PreparedStatement pstmt =
+                conn.prepareStatement(MemberSql.SELECT_STATUS)) {
 
             pstmt.setLong(1, memberId);
 
@@ -63,7 +64,8 @@ public class MemberDao {
 
     public String findGrade(Connection conn, Long memberId) throws SQLException {
 
-        try (PreparedStatement pstmt = conn.prepareStatement(MemberSql.SELECT_GRADE)) {
+        try (PreparedStatement pstmt =
+                conn.prepareStatement(MemberSql.SELECT_GRADE)) {
 
             pstmt.setLong(1, memberId);
 
@@ -78,7 +80,8 @@ public class MemberDao {
             Long memberId,
             String grade) throws SQLException {
 
-        try (PreparedStatement pstmt = conn.prepareStatement(MemberSql.UPDATE_GRADE)) {
+        try (PreparedStatement pstmt =
+                conn.prepareStatement(MemberSql.UPDATE_GRADE)) {
 
             pstmt.setString(1, grade);
             pstmt.setLong(2, memberId);
@@ -93,7 +96,8 @@ public class MemberDao {
             Long memberId,
             String status) throws SQLException {
 
-        try (PreparedStatement pstmt = conn.prepareStatement(MemberSql.UPDATE_STATUS)) {
+        try (PreparedStatement pstmt =
+                conn.prepareStatement(MemberSql.UPDATE_STATUS)) {
 
             pstmt.setString(1, status);
             pstmt.setLong(2, memberId);
@@ -102,10 +106,27 @@ public class MemberDao {
         }
     }
 
+    /**
+     * 이용 정지된 회원의 상태를 이용 중(Y)으로 변경
+     */
+    public int restoreMember(
+            Connection conn,
+            Long memberId) throws SQLException {
+
+        try (PreparedStatement pstmt =
+                conn.prepareStatement(MemberSql.RESTORE_MEMBER)) {
+
+            pstmt.setLong(1, memberId);
+
+            return pstmt.executeUpdate();
+        }
+    }
+
     public int countActive() {
 
         try (Connection conn = DBManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(MemberSql.COUNT_ACTIVE);
+             PreparedStatement pstmt =
+                     conn.prepareStatement(MemberSql.COUNT_ACTIVE);
              ResultSet rs = pstmt.executeQuery()) {
 
             return rs.next() ? rs.getInt(1) : 0;

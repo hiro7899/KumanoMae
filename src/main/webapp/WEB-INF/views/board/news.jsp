@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>最新ニュース - KUMANO_MAE</title>
+<title>最新ニュース - 熊の前</title>
 
 <!-- Bootstrap 5 CDN & Icons -->
 <link

@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>掲示板管理 - KUMANO_MAE ADMIN</title>
+<title>掲示板管理 - 熊の前 ADMIN</title>
 
 <!-- Bootstrap 5 CDN & Fonts & Bootstrap Icons -->
 <link
@@ -218,6 +218,7 @@
 	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/resources/js/common/submit-guard.js"></script>
 	<%@ include file="/WEB-INF/views/includes/admin-list-preview.jsp" %>
 </body>
 </html>

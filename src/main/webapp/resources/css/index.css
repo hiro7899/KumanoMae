@@ -357,6 +357,50 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 1.05rem;
 }
 
+.map-container-wrap {
+	position: relative;
+}
+
+.map-status {
+	position: absolute;
+	top: 1rem;
+	left: 50%;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.55rem;
+	max-width: calc(100% - 2rem);
+	padding: 0.7rem 1rem;
+	border: 1px solid rgba(73, 63, 48, 0.2);
+	border-radius: 0.5rem;
+	background: rgba(253, 250, 243, 0.94);
+	box-shadow: 0 3px 10px rgba(51, 45, 37, 0.14);
+	color: var(--color-text);
+	font-size: 0.95rem;
+	transform: translateX(-50%);
+}
+
+.map-status.is-error {
+	color: #9f2f25;
+}
+
+.map-status-icon {
+	display: inline-block;
+	animation: map-status-spin 1s linear infinite;
+}
+
+@keyframes map-status-spin {
+	to { transform: rotate(360deg); }
+}
+
+@media (max-width: 575.98px) {
+	.map-status {
+		flex-wrap: wrap;
+		text-align: center;
+	}
+}
+
 #mapContainer iframe {
 	border: none !important;
 	outline: none !important;

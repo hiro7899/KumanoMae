@@ -227,52 +227,46 @@ public class CommunityBoardDao {
 	/** 관리자용 - 상태(Y/N) 무관하게 전체 조회 */
 	public List<CommunityBoardDto> selectAllForAdmin(String statusFilter) {
 
-		StringBuilder sql = new StringBuilder(CommunityBoardSql.SELECT_ALL_FOR_ADMIN);
+	    StringBuilder sql = new StringBuilder(CommunityBoardSql.SELECT_ALL_FOR_ADMIN);
 
-		boolean filter = statusFilter != null && !statusFilter.isEmpty() && !"all".equals(statusFilter);
+	    boolean filter = statusFilter != null && !statusFilter.isEmpty() && !"all".equals(statusFilter);
+	    if (filter) {
+	        sql.append(" WHERE cb.STATUS = ?");
+	    }
+	    sql.append(" ORDER BY cb.REG_DATE DESC");
 
-		if (filter) {
-			sql.append(" WHERE STATUS = ?");
-		}
+	    List<CommunityBoardDto> list = new ArrayList<>();
 
-		sql.append(" ORDER BY REG_DATE DESC");
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
-		List<CommunityBoardDto> list = new ArrayList<>();
+	        if (filter) {
+	            pstmt.setString(1, statusFilter);
+	        }
 
-		try (Connection conn = DBManager.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
-
-			if (filter) {
-				pstmt.setString(1, statusFilter);
-			}
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-
-				while (rs.next()) {
-					CommunityBoardDto dto = new CommunityBoardDto();
-
-					dto.setCBoardId(rs.getLong("C_BOARD_ID"));
-					dto.setMemberId(rs.getLong("MEMBER_ID"));
-					dto.setCategory(rs.getString("CATEGORY"));
-					dto.setTitle(rs.getString("TITLE"));
-					dto.setGearName(rs.getString("GEAR_NAME"));
-					dto.setViewCnt(rs.getInt("VIEW_CNT"));
-					dto.setLikeCnt(rs.getInt("LIKE_CNT"));
-					dto.setStatus(rs.getString("STATUS"));
-
-					if (rs.getTimestamp("REG_DATE") != null) {
-						dto.setRegDate(rs.getTimestamp("REG_DATE").toLocalDateTime());
-					}
-
-					list.add(dto);
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                CommunityBoardDto dto = new CommunityBoardDto();
+	                dto.setCBoardId(rs.getLong("C_BOARD_ID"));
+	                dto.setMemberId(rs.getLong("MEMBER_ID"));
+	                dto.setCategory(rs.getString("CATEGORY"));
+	                dto.setTitle(rs.getString("TITLE"));
+	                dto.setGearName(rs.getString("GEAR_NAME"));
+	                dto.setViewCnt(rs.getInt("VIEW_CNT"));
+	                dto.setLikeCnt(rs.getInt("LIKE_CNT"));
+	                dto.setStatus(rs.getString("STATUS"));
+	                dto.setWriterName(rs.getString("WRITER_NAME"));
+	                dto.setCommentCnt(rs.getInt("COMMENT_CNT"));
+	                if (rs.getTimestamp("REG_DATE") != null) {
+	                    dto.setRegDate(rs.getTimestamp("REG_DATE").toLocalDateTime());
+	                }
+	                list.add(dto);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
 	}
 
 	/** 관리자용 - STATUS 무관하게 단건 조회 */

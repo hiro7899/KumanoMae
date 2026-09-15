@@ -3,13 +3,15 @@ package com.jsl.sql.board;
 public class BoardSql {
 
     // 전체 제보 조회
-    public static final String SELECT_ALL_BOARD = """
-        SELECT BOARD_ID, MEMBER_ID, TITLE, CONTENT, RISK_LEVEL, LATITUDE, LONGITUDE,
-               ADDRESS, SIGHTING_DATE, SITUATION_TAG, VIEW_CNT, STATUS, CLEAR_YN,
-               CLEAR_DATE, CLEAR_MEMO, REG_DATE, MOD_DATE
-          FROM BOARD
-         ORDER BY REG_DATE DESC
-        """;
+	public static final String SELECT_ALL_BOARD = """
+		    SELECT b.BOARD_ID, b.MEMBER_ID, b.TITLE, b.CONTENT, b.RISK_LEVEL, b.LATITUDE, b.LONGITUDE,
+		           b.ADDRESS, b.SIGHTING_DATE, b.SITUATION_TAG, b.VIEW_CNT, b.STATUS, b.CLEAR_YN,
+		           b.CLEAR_DATE, b.CLEAR_MEMO, b.REG_DATE, b.MOD_DATE,
+		           m.USER_NAME AS WRITER_NAME
+		      FROM BOARD b
+		      JOIN MEMBER m ON m.MEMBER_ID = b.MEMBER_ID
+		     ORDER BY b.REG_DATE DESC
+		    """;
 
     // 승인된 제보 조회
     public static final String SELECT_APPROVED_BOARD = """
