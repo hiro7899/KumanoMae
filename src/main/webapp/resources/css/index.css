@@ -190,12 +190,11 @@ h1, h2, h3, h4, h5, h6 {
 	animation-delay: .52s;
 }
 
+@
+keyframes fadeUp {to { opacity:1;
+	transform: translateY(0);
+}
 
-@keyframes fadeUp {
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
 }
 /* 경고 다이아몬드 사인 */
 .warning-sign-wrap {
@@ -239,38 +238,42 @@ h1, h2, h3, h4, h5, h6 {
 	animation: postReveal .45s ease-out .75s both;
 }
 
-@keyframes signReveal {
-	from {
-		opacity: 0;
-		transform: rotate(45deg) scale(.82);
-	}
-
-	to {
-		opacity: 1;
-		transform: rotate(45deg) scale(1);
-	}
+@
+keyframes signReveal {from { opacity:0;
+	transform: rotate(45deg) scale(.82);
 }
 
-@keyframes signFloat {
-	0%, 100% {
-		transform: translateY(0);
-	}
-
-	50% {
-		transform: translateY(-7px);
-	}
+to {
+	opacity: 1;
+	transform: rotate(45deg) scale(1);
 }
 
-@keyframes postReveal {
-	from {
-		opacity: 0;
-		transform: translateX(-50%) scaleY(0);
-	}
+}
+@
+keyframes signFloat { 0%, 100% {
+	transform: translateY(0);
+}
 
-	to {
-		opacity: 1;
-		transform: translateX(-50%) scaleY(1);
-	}
+50
+%
+{
+transform
+:
+translateY(
+-7px
+);
+}
+}
+@
+keyframes postReveal {from { opacity:0;
+	transform: translateX(-50%) scaleY(0);
+}
+
+to {
+	opacity: 1;
+	transform: translateX(-50%) scaleY(1);
+}
+
 }
 .warning-sign-inner {
 	transform: rotate(-45deg);
@@ -390,11 +393,13 @@ h1, h2, h3, h4, h5, h6 {
 	animation: map-status-spin 1s linear infinite;
 }
 
-@keyframes map-status-spin {
-	to { transform: rotate(360deg); }
+@
+keyframes map-status-spin {to { transform:rotate(360deg);
+	
 }
 
-@media (max-width: 575.98px) {
+}
+@media ( max-width : 575.98px) {
 	.map-status {
 		flex-wrap: wrap;
 		text-align: center;
@@ -480,9 +485,11 @@ h1, h2, h3, h4, h5, h6 {
 	white-space: nowrap;
 	cursor: pointer;
 	font-size: 1rem;
-	transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+	transition: background-color .15s ease, color .15s ease, border-color
+		.15s ease;
 }
-.risk-filter .form-check-input:focus-visible + .form-check-label {
+
+.risk-filter .form-check-input:focus-visible+.form-check-label {
 	outline: 3px solid rgba(37, 99, 235, .35);
 	outline-offset: 2px;
 }
@@ -497,12 +504,12 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: var(--color-ink);
 }
 
-.risk-filter.all .form-check-input:checked + .form-check-label {
+.risk-filter.all .form-check-input:checked+.form-check-label {
 	color: var(--color-ink);
 	background: var(--color-mustard);
 }
 
-.risk-filter.danger .form-check-input:checked + .form-check-label {
+.risk-filter.danger .form-check-input:checked+.form-check-label {
 	color: #fff;
 	background: var(--color-red);
 }
@@ -512,7 +519,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: var(--color-mustard-dark);
 }
 
-.risk-filter.warning .form-check-input:checked + .form-check-label {
+.risk-filter.warning .form-check-input:checked+.form-check-label {
 	color: var(--color-ink);
 	background: var(--color-mustard);
 }
@@ -522,7 +529,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: #d5bd62;
 }
 
-.risk-filter.caution .form-check-input:checked + .form-check-label {
+.risk-filter.caution .form-check-input:checked+.form-check-label {
 	color: var(--color-ink);
 	background: #d5bd62;
 }
@@ -532,18 +539,19 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: #7b838c;
 }
 
-.risk-filter.clear .form-check-input:checked + .form-check-label {
+.risk-filter.clear .form-check-input:checked+.form-check-label {
 	color: #fff;
 	background: #7b838c;
 }
 
-@media (max-width: 767.98px) {
+@media ( max-width : 767.98px) {
 	.risk-filter-group {
 		flex-wrap: wrap;
 	}
 }
 
-.badge-danger-custom, .badge-warning-custom, .badge-caution-custom, .badge-resolved-custom {
+.badge-danger-custom, .badge-warning-custom, .badge-caution-custom,
+	.badge-resolved-custom {
 	border-radius: 3px;
 	font-weight: 700;
 	padding: .4em .7em;
@@ -940,16 +948,16 @@ h1, h2, h3, h4, h5, h6 {
 	box-shadow: 0 0 0 4px rgba(71, 122, 85, .16);
 }
 
-@keyframes signRevealSplit {
-	from {
-		opacity: 0;
-		transform: scale(.84);
-	}
+@
+keyframes signRevealSplit {from { opacity:0;
+	transform: scale(.84);
+}
 
-	to {
-		opacity: 1;
-		transform: scale(1);
-	}
+to {
+	opacity: 1;
+	transform: scale(1);
+}
+
 }
 @media ( max-width : 991.98px) {
 	.hero-copy-panel, .hero-visual-panel {
@@ -1020,24 +1028,41 @@ h1, h2, h3, h4, h5, h6 {
 	display: block;
 }
 
-@keyframes signFloatSplit { 0%, 100% {
+@
+keyframes signFloatSplit { 0%, 100% {
 	transform: translateX(-28px) translateY(0);
 }
 
-	50% {
-		transform: translateX(-28px) translateY(-7px);
-	}
+50
+%
+{
+transform
+:
+translateX(
+-28px
+)
+translateY(
+-7px
+);
+}
 }
 @media ( max-width : 991.98px) {
 	.hero-visual-panel .warning-sign-wrap {
 		transform: translateX(0);
 	}
-	@keyframes signFloatSplit { 0%, 100% {
+	@
+	keyframes signFloatSplit { 0%, 100% {
 		transform: translateY(0);
 	}
-	50% {
-			transform: translateY(-7px);
-		}
+	50
+	%
+{
+	transform
+	:
+	translateY(
+	-7px
+	);
+}
 
 }
 }
@@ -1405,14 +1430,15 @@ h1, h2, h3, h4, h5, h6 {
 	transition: opacity .7s ease, visibility 0s linear .7s;
 }
 
-@keyframes splashFadeIn {
-	from {
-		opacity: 0;
-	}
+@
+keyframes splashFadeIn {from { opacity:0;
+	
+}
 
-	to {
-		opacity: 1;
-	}
+to {
+	opacity: 1;
+}
+
 }
 @media ( prefers-reduced-motion : reduce) {
 	.splash-screen-image {
@@ -1421,4 +1447,12 @@ h1, h2, h3, h4, h5, h6 {
 	.splash-screen.is-hiding {
 		transition: none;
 	}
+}
+
+.legend-bear {
+	width: 24px;
+	height: 20px;
+	object-fit: contain;
+	vertical-align: -4px;
+	margin-right: 8px;
 }
