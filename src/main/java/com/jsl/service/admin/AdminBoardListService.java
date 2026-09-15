@@ -19,7 +19,11 @@ public class AdminBoardListService implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        List<BoardDto> boardList = boardDao.selectAllBoard();
+        String status = request.getParameter("status");
+        String clearYn = request.getParameter("clearYn");
+        String keyword = request.getParameter("keyword");
+
+        List<BoardDto> boardList = boardDao.selectAllBoard(status, clearYn, keyword);
 
         for (BoardDto board : boardList) {
             board.setThumbnailUrl(boardFileDao.selectFirstFileUrl(board.getBoardId()));
