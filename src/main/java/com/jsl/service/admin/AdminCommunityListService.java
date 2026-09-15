@@ -20,7 +20,10 @@ public class AdminCommunityListService implements Command {
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String status = request.getParameter("status");
-        List<CommunityBoardDto> communityList = communityBoardDao.selectAllForAdmin(status);
+        String category = request.getParameter("category");
+        String keyword = request.getParameter("keyword");
+
+        List<CommunityBoardDto> communityList = communityBoardDao.selectAllForAdmin(status, category, keyword);
 
         for (CommunityBoardDto community : communityList) {
             community.setThumbnailUrl(communityFileDao.selectFirstFileUrl(community.getCBoardId()));

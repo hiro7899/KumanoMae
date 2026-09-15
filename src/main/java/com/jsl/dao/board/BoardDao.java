@@ -15,17 +15,49 @@ import com.jsl.util.DBManager;
 public class BoardDao {
 
 	public List<BoardDto> selectAllBoard() {
+	    return selectAllBoard(null, null, null);
+	}
+
+	public List<BoardDto> selectAllBoard(String status, String clearYn, String keyword) {
+
+	    StringBuilder sql = new StringBuilder(BoardSql.SELECT_ALL_BOARD);
+	    List<String> params = new ArrayList<String>();
+	    boolean whereAdded = false;
+
+	    if (status != null && !status.isEmpty() && !"all".equals(status)) {
+	        sql.append(whereAdded ? " AND" : " WHERE").append(" b.STATUS = ?");
+	        params.add(status);
+	        whereAdded = true;
+	    }
+	    if (clearYn != null && !clearYn.isEmpty() && !"all".equals(clearYn)) {
+	        sql.append(whereAdded ? " AND" : " WHERE").append(" b.CLEAR_YN = ?");
+	        params.add(clearYn);
+	        whereAdded = true;
+	    }
+	    if (keyword != null && !keyword.trim().isEmpty()) {
+	        sql.append(whereAdded ? " AND" : " WHERE").append(" (b.TITLE LIKE ? OR b.ADDRESS LIKE ?)");
+	        String like = "%" + keyword.trim() + "%";
+	        params.add(like);
+	        params.add(like);
+	        whereAdded = true;
+	    }
+	    sql.append(" ORDER BY b.REG_DATE DESC");
 
 	    List<BoardDto> list = new ArrayList<>();
 
 	    try (Connection conn = DBManager.getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_ALL_BOARD);
-	         ResultSet rs = pstmt.executeQuery()) {
+	         PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
-	        while (rs.next()) {
-	            BoardDto board = mapRow(rs);
-	            board.setWriterName(rs.getString("WRITER_NAME"));
-	            list.add(board);
+	        for (int i = 0; i < params.size(); i++) {
+	            pstmt.setString(i + 1, params.get(i));
+	        }
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                BoardDto board = mapRow(rs);
+	                board.setWriterName(rs.getString("WRITER_NAME"));
+	                list.add(board);
+	            }
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

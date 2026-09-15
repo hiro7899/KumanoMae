@@ -226,12 +226,31 @@ public class CommunityBoardDao {
 
 	/** 관리자용 - 상태(Y/N) 무관하게 전체 조회 */
 	public List<CommunityBoardDto> selectAllForAdmin(String statusFilter) {
+	    return selectAllForAdmin(statusFilter, null, null); // 기존 1-파라미터 호출부 호환
+	}
+
+	public List<CommunityBoardDto> selectAllForAdmin(String statusFilter, String category, String keyword) {
 
 	    StringBuilder sql = new StringBuilder(CommunityBoardSql.SELECT_ALL_FOR_ADMIN);
+	    List<String> params = new ArrayList<String>();
+	    boolean whereAdded = false;
 
-	    boolean filter = statusFilter != null && !statusFilter.isEmpty() && !"all".equals(statusFilter);
-	    if (filter) {
-	        sql.append(" WHERE cb.STATUS = ?");
+	    if (statusFilter != null && !statusFilter.isEmpty() && !"all".equals(statusFilter)) {
+	        sql.append(whereAdded ? " AND" : " WHERE").append(" cb.STATUS = ?");
+	        params.add(statusFilter);
+	        whereAdded = true;
+	    }
+	    if (category != null && !category.isEmpty() && !"all".equals(category)) {
+	        sql.append(whereAdded ? " AND" : " WHERE").append(" cb.CATEGORY = ?");
+	        params.add(category);
+	        whereAdded = true;
+	    }
+	    if (keyword != null && !keyword.trim().isEmpty()) {
+	        sql.append(whereAdded ? " AND" : " WHERE").append(" (cb.TITLE LIKE ? OR m.USER_NAME LIKE ?)");
+	        String like = "%" + keyword.trim() + "%";
+	        params.add(like);
+	        params.add(like);
+	        whereAdded = true;
 	    }
 	    sql.append(" ORDER BY cb.REG_DATE DESC");
 
@@ -240,8 +259,8 @@ public class CommunityBoardDao {
 	    try (Connection conn = DBManager.getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
-	        if (filter) {
-	            pstmt.setString(1, statusFilter);
+	        for (int i = 0; i < params.size(); i++) {
+	            pstmt.setString(i + 1, params.get(i));
 	        }
 
 	        try (ResultSet rs = pstmt.executeQuery()) {
@@ -251,6 +270,7 @@ public class CommunityBoardDao {
 	                dto.setMemberId(rs.getLong("MEMBER_ID"));
 	                dto.setCategory(rs.getString("CATEGORY"));
 	                dto.setTitle(rs.getString("TITLE"));
+	                dto.setContent(rs.getString("CONTENT"));   // ★ 추가
 	                dto.setGearName(rs.getString("GEAR_NAME"));
 	                dto.setViewCnt(rs.getInt("VIEW_CNT"));
 	                dto.setLikeCnt(rs.getInt("LIKE_CNT"));
