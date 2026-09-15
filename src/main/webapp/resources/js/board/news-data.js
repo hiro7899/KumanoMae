@@ -1,72 +1,3 @@
-/* =====================================================
-   index.js
-   - index.jsp 화면 동작만 담당 (DB/API/실제 검색 기능 없음)
-   - "報告する" 버튼 클릭 시 로그인 여부 확인 로직은
-     index.jsp의 checkLoginAndReport() 함수(인라인 스크립트)가
-     담당하므로, 여기서는 더 이상 별도 처리하지 않는다.
-   ===================================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    /* -----------------------------------------------
-       0. 시작 화면 이미지 : 3초 표시 후 메인페이지 노출
-       ----------------------------------------------- */
-    const splashScreen = document.getElementById("splashScreen");
-    const splashStorageKey = "kumanoMaeSplashShownAt";
-    const splashInterval = 10 * 60 * 1000;
-
-    if (splashScreen) {
-        let shouldShowSplash = true;
-
-        try {
-            const lastShownAt = Number(localStorage.getItem(splashStorageKey) || 0);
-            shouldShowSplash = !lastShownAt || Date.now() - lastShownAt >= splashInterval;
-
-            if (shouldShowSplash) {
-                localStorage.setItem(splashStorageKey, String(Date.now()));
-                splashScreen.classList.add("is-visible");
-            }
-        } catch (error) {
-            console.warn("시작 화면 표시 시간 저장에 실패했습니다.", error);
-        }
-
-        if (!shouldShowSplash) {
-            splashScreen.remove();
-        } else {
-            window.setTimeout(function () {
-                splashScreen.classList.add("is-hiding");
-            }, 3000);
-
-            splashScreen.addEventListener("transitionend", function (event) {
-                if (event.propertyName === "opacity") {
-                    splashScreen.remove();
-                }
-            });
-        }
-    }
-
-    /* -----------------------------------------------
-       1. 상단 경보 배너 닫기 (X 클릭 시 배너 숨김)
-       ----------------------------------------------- */
-    const alertBanner = document.querySelector(".top-alert");
-    const alertClose = document.getElementById("alertClose");
-
-    if (alertClose) {
-        alertClose.addEventListener("click", function () {
-            alertBanner.style.display = "none";
-        });
-    }
-
-
-
-    /* -----------------------------------------------
-       ※ 4. "目撃情報を報告する" / "クマ出没を報告する" 버튼 처리는
-          index.jsp의 checkLoginAndReport() 함수가 onclick으로
-          직접 담당하므로 여기서는 제거함 (중복 실행 방지)
-       ----------------------------------------------- */
-
-});
-
 window.HARD_CODED_NEWS = [
   {id:1,category:'SIGHTING',source:'HBC北海道放送',date:'2026-09-10',region:'北海道標茶町',title:'道路中央を走るクマをドライバーが目撃　北海道標茶町',summary:'国道272号で体長約1メートルのクマが確認されました。',content:'9月10日朝、北海道標茶町の国道272号で、走行中のトラックの前を体長約1メートルのクマが走る様子が目撃されました。クマはしばらく道路上を移動した後、道路脇の森へ入ったとされています。周辺を通行する際は、早朝・夕方を中心に速度を落とし、クマを見かけても近づかないよう注意が必要です。',images:['https://newsdig.ismcdn.jp/mwimgs/c/2/680mw/img_c23ae0654e2944c96d7acf735fe8135563579.jpg'],sourceUrl:'https://newsdig.tbs.co.jp/articles/hbc/2934118'},
   {id:2,category:'SIGHTING',source:'関西テレビ',date:'2026-09-07',region:'京都府舞鶴市',title:'京都・舞鶴市で緊急銃猟　住宅付近に出没したツキノワグマ',summary:'住宅の軒下で親子とみられるクマが確認され、京都府で初の緊急銃猟が行われました。',content:'9月3日夕方、京都府舞鶴市で住宅の軒下に親子とみられるツキノワグマ2頭がいるとの通報がありました。市と警察は周辺の安全確保を進め、緊急銃猟を決定しました。捕獲後も子グマの目撃情報があり、周辺では警戒と見回りが続けられました。',images:['https://www.ktv.jp/news/wp-content/uploads/sites/2/2026/09/Still0904_00183.jpg','https://www.ktv.jp/news/wp-content/uploads/sites/2/2026/09/Still0904_00184.jpg','https://www.ktv.jp/news/wp-content/uploads/sites/2/2026/09/Still0904_00193.jpg','https://www.ktv.jp/news/wp-content/uploads/sites/2/2026/09/Still0904_00200.jpg'],sourceUrl:'https://www.ktv.jp/news/feature/260904-kuma/'},
@@ -79,5 +10,6 @@ window.HARD_CODED_NEWS = [
   {id:9,category:'SAFETY',source:'テレビ朝日',date:'2026-09-09',region:'北海道滝上町',title:'秋のクマ活動期を前に　ドローンで農地周辺を調査',summary:'農作物被害が続く地域で、ドローンを使った調査と対策が進められています。',content:'北海道滝上町では、デントコーン畑などでの被害を受け、クマの動きを把握するためドローン調査が行われています。秋はクマが餌を求めて行動範囲を広げる時期で、畑の中へ人が入らずに状況を確認する手段として活用されています。地域では捕獲だけでなく、人里へ近づけないための予防策も進められています。',images:['https://img.youtube.com/vi/1gOo2B6OMjc/hqdefault.jpg'],sourceUrl:'https://news.tv-asahi.co.jp/news_society/articles/000532225.html'},
   {id:10,category:'OFFICIAL',source:'秋田県',date:'2026-09-10',region:'秋田県',title:'秋のクマ事故防止強化期間を開始　秋田県',summary:'9月15日から10月31日まで、県が事故防止対策を呼びかけています。',content:'秋田県は9月15日から10月31日までを秋のクマ事故防止強化期間とし、山地だけでなく生活圏での遭遇にも注意を呼びかけています。果樹や農作物が人里にある時期は、クマが近づく可能性があるため、食べ物や生ごみを屋外へ放置しないこと、目撃情報を確認することが重要です。',images:['https://img.youtube.com/vi/maF71T79th0/hqdefault.jpg'],sourceUrl:'https://www.pref.akita.lg.jp/pages/archive/23295'}
 ];
-window.newsEscape=function(value){var node=document.createElement('div');node.textContent=value||'';return node.innerHTML;};
-window.newsImage=function(news){return news.images[0]||'/resources/img/brand/kumano-mae-splash.png';};
+
+window.newsEscape = function (value) { var node = document.createElement('div'); node.textContent = value || ''; return node.innerHTML; };
+window.newsImage = function (news) { return news.images[0] || '/resources/img/brand/kumano-mae-splash.png'; };

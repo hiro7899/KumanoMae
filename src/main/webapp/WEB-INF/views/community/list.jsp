@@ -69,8 +69,8 @@
                     <article class="card h-100 report-card preview-card community-post-card clickable-card" data-card-href="${detailUrl}">
                         <c:choose>
                             <c:when test="${not empty board.thumbnailUrl}">
-                                <c:url var="communityThumbnailUrl" value="${board.thumbnailUrl}"/>
-                                <div class="preview-card-image"><img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像"></div>
+                                <c:url var="communityThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
+                                <div class="preview-card-image"><img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>';"></div>
                             </c:when>
                             <c:otherwise>
                                 <c:choose>
