@@ -257,10 +257,43 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="card card-jp border-0 py-4 text-center">
-					<div class="card-body text-muted">
-						<i class="bi bi-newspaper fs-1 d-block mb-2"></i>
-						<p class="fw-bold mb-0">現在表示できるニュースはありません。</p>
+				<%-- 임시 프론트 뉴스 데이터: 백엔드 newsList가 준비되면 기존 데이터가 우선 표시됩니다. --%>
+				<div class="row g-4">
+					<div class="col-md-4 col-sm-6">
+						<article class="card h-100 report-card">
+							<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600" class="card-img-top" alt="クマ関連ニュース">
+							<div class="card-body d-flex flex-column">
+								<span class="badge badge-warning-custom mb-2 align-self-start">安全対策</span>
+								<h5 class="card-title">福島県、県内全域に秋期のツキノワグマ出没注意報</h5>
+								<p class="mb-2 text-muted small"><i class="bi bi-building"></i> 福島県</p>
+								<p class="small flex-grow-1">9月1日から11月30日まで、山に入る際の事前確認や複数人での行動を呼びかけています。</p>
+								<a href="https://pref.fukushima.lg.jp/sec/16035b/kumatokubetuhaturei.html" target="_blank" rel="noopener noreferrer" class="btn btn-jp-outline btn-sm mt-2">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+							</div>
+						</article>
+					</div>
+					<div class="col-md-4 col-sm-6">
+						<article class="card h-100 report-card">
+							<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600" class="card-img-top" alt="クマ関連ニュース">
+							<div class="card-body d-flex flex-column">
+								<span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span>
+								<h5 class="card-title">北海道標茶町で道路上を走るクマ、ドライバーが目撃</h5>
+								<p class="mb-2 text-muted small"><i class="bi bi-building"></i> HBC北海道放送 <span class="ms-2"><i class="bi bi-clock-fill"></i> 2026-09-10</span></p>
+								<p class="small flex-grow-1">国道272号で体長約1メートルのクマが道路中央を走り、道路脇の森へ移動しました。</p>
+								<a href="https://newsdig.tbs.co.jp/articles/hbc/2934118" target="_blank" rel="noopener noreferrer" class="btn btn-jp-outline btn-sm mt-2">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+							</div>
+						</article>
+					</div>
+					<div class="col-md-4 col-sm-6">
+						<article class="card h-100 report-card">
+							<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600" class="card-img-top" alt="クマ関連ニュース">
+							<div class="card-body d-flex flex-column">
+								<span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span>
+								<h5 class="card-title">札幌市定山渓でヒグマを目撃</h5>
+								<p class="mb-2 text-muted small"><i class="bi bi-building"></i> 札幌市 <span class="ms-2"><i class="bi bi-clock-fill"></i> 2026-09-09</span></p>
+								<p class="small flex-grow-1">定山渓周辺でヒグマの目撃情報があり、市が市民に注意を呼びかけています。</p>
+								<a href="https://www.city.sapporo.jp/kurashi/animal/choju/kuma/syutsubotsu/?gid=43.06395_141.11040_2026-08-07_48" target="_blank" rel="noopener noreferrer" class="btn btn-jp-outline btn-sm mt-2">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+							</div>
+						</article>
 					</div>
 				</div>
 			</c:otherwise>

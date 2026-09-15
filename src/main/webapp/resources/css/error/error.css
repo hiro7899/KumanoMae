@@ -102,7 +102,7 @@ body {
 
 .error-home-link {
     position: absolute;
-    bottom: 4.5%;
+    bottom: 0%;
     left: 50%;
     width: min(30vw, 230px);
     height: min(7vw, 62px);
@@ -216,7 +216,7 @@ body {
     }
 
     .error-home-link {
-        bottom: 4%;
+        bottom: 1.5%;
     }
 
     .error-content {
