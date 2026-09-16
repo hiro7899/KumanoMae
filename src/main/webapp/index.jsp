@@ -228,40 +228,6 @@
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>最新ニュース
 		</h3>
-		<c:choose>
-			<c:when test="${not empty newsList}">
-				<div class="row g-4">
-					<c:forEach var="news" items="${newsList}" end="2">
-						<div class="col-md-4 col-sm-6">
-							<article class="card h-100 report-card clickable-card" data-card-href="/board/news/detail?newsId=${news.newsId}" tabindex="0" role="link">
-								<c:choose>
-									<c:when test="${not empty news.images}"><img src="${news.images[0]}" class="card-img-top news-card-image" alt="<c:out value='${news.title}' /> 뉴스 이미지" onerror="this.onerror=null; this.src='/resources/img/brand/kumano-mae-splash.png';"></c:when>
-									<c:otherwise><img src="/resources/img/brand/kumano-mae-splash.png" class="card-img-top news-card-image" alt="ニュース画像なし"></c:otherwise>
-								</c:choose>
-								<div class="card-body d-flex flex-column">
-									<c:choose>
-										<c:when test="${news.sourceType eq 'SIGHTING'}"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span></c:when>
-										<c:when test="${news.sourceType eq 'SAFETY'}"><span class="badge badge-warning-custom mb-2 align-self-start">安全対策</span></c:when>
-										<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">自治体のお知らせ</span></c:otherwise>
-									</c:choose>
-									<h5 class="card-title"><c:out value="${news.title}" /></h5>
-									<p class="mb-2 text-muted small">
-										<i class="bi bi-building"></i> <c:out value="${news.sourceName}" />
-										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out value="${news.publishedDate}" /></span>
-									</p>
-									<p class="small flex-grow-1"><c:out value="${not empty news.content ? news.content : news.summary}" /></p>
-								</div>
-							</article>
-						</div>
-					</c:forEach>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="card card-jp py-5 text-center">
-					<p class="text-muted mb-0">現在表示できるニュースはありません。</p>
-				</div>
-			</c:otherwise>
-		</c:choose>
 		<div class="text-center mt-4">
 			<a href="${pageContext.request.contextPath}/board/news"
 				class="btn btn-jp-mustard">ニュースをすべて見る</a>
@@ -425,12 +391,27 @@
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<script src="/resources/js/board/news-data.js"></script>
 	<script src="/resources/js/index.js"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
 			var newsSection = document.querySelector('.home-news-section');
 			if (newsSection) {
 				newsSection.innerHTML = '<h3 class="section-title-jp"><span class="dash">―</span>最新ニュース</h3><div class="row g-4">' + HARD_CODED_NEWS.slice(0, 3).map(function (news) { return '<div class="col-md-4 col-sm-6"><article class="card h-100 report-card clickable-card" data-card-href="/board/news/detail?newsId=' + news.id + '" tabindex="0" role="link"><img src="' + newsImage(news) + '" class="card-img-top news-card-image" alt="' + newsEscape(news.title) + '" onerror="this.onerror=null;this.src=\'/resources/img/brand/kumano-mae-splash.png\';"><div class="card-body d-flex flex-column"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span><h5 class="card-title">' + newsEscape(news.title) + '</h5><p class="mb-2 text-muted small"><i class="bi bi-building"></i> ' + newsEscape(news.source) + '<span class="ms-2"><i class="bi bi-clock-fill"></i> ' + news.date + '</span></p><p class="small flex-grow-1">' + newsEscape(news.summary) + '</p></div></article></div>'; }).join('') + '</div><div class="text-center mt-4"><a href="/board/news" class="btn btn-jp-mustard">ニュースをすべて見る</a></div>';
+				HARD_CODED_NEWS.slice(0, 3).forEach(function (news, index) {
+					var badge = newsSection.querySelectorAll(".badge")[index];
+					if (!badge) return;
+
+					var categoryConfig = {
+						SAFETY: { label: "安全対策", className: "badge-warning-custom" },
+						OFFICIAL: { label: "自治体のお知らせ", className: "badge-caution-custom" },
+						SIGHTING: { label: "出没情報", className: "badge-danger-custom" }
+					};
+					var config = categoryConfig[news.category] || categoryConfig.SIGHTING;
+					badge.textContent = config.label;
+					badge.classList.remove("badge-danger-custom", "badge-warning-custom", "badge-caution-custom");
+					badge.classList.add(config.className);
+				});
 			}
 			document.querySelectorAll(".clickable-card[data-card-href]").forEach(function (card) {
 				card.setAttribute("tabindex", "0");
@@ -467,7 +448,6 @@
 	<!-- Bootstrap 5 JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	<script>
 		(function () {
 			const month = new Date().getMonth() + 1;

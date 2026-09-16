@@ -1426,3 +1426,20 @@ h1, h2, h3, h4, h5, h6 {
 #newsCardGrid .report-card {
     cursor: pointer;
 }
+
+.news-detail-gallery {
+    display: grid;
+    gap: 12px;
+}
+
+.news-detail-gallery img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.news-detail-content {
+    white-space: pre-line;
+    line-height: 1.9;
+}
