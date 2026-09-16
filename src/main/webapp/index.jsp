@@ -233,9 +233,11 @@
 				<div class="row g-4">
 					<c:forEach var="news" items="${newsList}" end="2">
 						<div class="col-md-4 col-sm-6">
-							<article class="card h-100 report-card">
-								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-									class="card-img-top" alt="クマ関連ニュース">
+							<article class="card h-100 report-card clickable-card" data-card-href="/board/news/detail?newsId=${news.newsId}" tabindex="0" role="link">
+								<c:choose>
+									<c:when test="${not empty news.images}"><img src="${news.images[0]}" class="card-img-top news-card-image" alt="<c:out value='${news.title}' /> 뉴스 이미지" onerror="this.onerror=null; this.src='/resources/img/brand/kumano-mae-splash.png';"></c:when>
+									<c:otherwise><img src="/resources/img/brand/kumano-mae-splash.png" class="card-img-top news-card-image" alt="ニュース画像なし"></c:otherwise>
+								</c:choose>
 								<div class="card-body d-flex flex-column">
 									<c:choose>
 										<c:when test="${news.sourceType eq 'SIGHTING'}"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span></c:when>
@@ -247,9 +249,7 @@
 										<i class="bi bi-building"></i> <c:out value="${news.sourceName}" />
 										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out value="${news.publishedDate}" /></span>
 									</p>
-									<p class="small flex-grow-1"><c:out value="${news.summary}" /></p>
-									<a href="${news.sourceUrl}" target="_blank" rel="noopener noreferrer"
-										class="btn btn-jp-outline btn-sm mt-2">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+									<p class="small flex-grow-1"><c:out value="${not empty news.content ? news.content : news.summary}" /></p>
 								</div>
 							</article>
 						</div>
@@ -257,11 +257,8 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="card card-jp border-0 py-4 text-center">
-					<div class="card-body text-muted">
-						<i class="bi bi-newspaper fs-1 d-block mb-2"></i>
-						<p class="fw-bold mb-0">現在表示できるニュースはありません。</p>
-					</div>
+				<div class="card card-jp py-5 text-center">
+					<p class="text-muted mb-0">現在表示できるニュースはありません。</p>
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -277,15 +274,16 @@
 			<h3 class="section-title-jp mb-0"><span class="dash">―</span>最新の目撃情報</h3>
 		</div>
 		<div class="row g-4">
-			<c:forEach var="board" items="${boardList}" end="2">
-				<c:if test="${board.clearYn ne 'Y'}">
+			<c:set var="visibleBoardCount" value="0" />
+			<c:forEach var="board" items="${boardList}">
+				<c:if test="${board.clearYn ne 'Y' and visibleBoardCount lt 3}">
 				<div class="col-md-4 col-sm-6">
 					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:choose>
 							<c:when test="${not empty board.thumbnailUrl}">
 								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
 								<div class="preview-card-image">
-									<img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像">
+									<img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>'">
 								</div>
 							</c:when>
 							<c:otherwise>
@@ -308,6 +306,7 @@
 						</div>
 					</article>
 				</div>
+				<c:set var="visibleBoardCount" value="${visibleBoardCount + 1}" />
 				</c:if>
 			</c:forEach>
 			<c:if test="${empty boardList}"><div class="col-12"><div class="card card-jp border-0 py-4 text-center"><div class="card-body text-muted"><i class="bi bi-geo-alt fs-1 d-block mb-2"></i><p class="fw-bold mb-0">現在表示できる目撃情報はありません。</p></div></div></div></c:if>
@@ -328,7 +327,7 @@
 							<c:when test="${not empty community.thumbnailUrl}">
 								<c:url var="communityThumbnailUrl" value="${fn:replace(community.thumbnailUrl, '/src/main/webapp', '')}"/>
 								<div class="preview-card-image">
-									<img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像">
+									<img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>'">
 								</div>
 							</c:when>
 							<c:otherwise>
@@ -426,8 +425,13 @@
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<script src="/resources/js/index.js"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
+			var newsSection = document.querySelector('.home-news-section');
+			if (newsSection) {
+				newsSection.innerHTML = '<h3 class="section-title-jp"><span class="dash">―</span>最新ニュース</h3><div class="row g-4">' + HARD_CODED_NEWS.slice(0, 3).map(function (news) { return '<div class="col-md-4 col-sm-6"><article class="card h-100 report-card clickable-card" data-card-href="/board/news/detail?newsId=' + news.id + '" tabindex="0" role="link"><img src="' + newsImage(news) + '" class="card-img-top news-card-image" alt="' + newsEscape(news.title) + '" onerror="this.onerror=null;this.src=\'/resources/img/brand/kumano-mae-splash.png\';"><div class="card-body d-flex flex-column"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span><h5 class="card-title">' + newsEscape(news.title) + '</h5><p class="mb-2 text-muted small"><i class="bi bi-building"></i> ' + newsEscape(news.source) + '<span class="ms-2"><i class="bi bi-clock-fill"></i> ' + news.date + '</span></p><p class="small flex-grow-1">' + newsEscape(news.summary) + '</p></div></article></div>'; }).join('') + '</div><div class="text-center mt-4"><a href="/board/news" class="btn btn-jp-mustard">ニュースをすべて見る</a></div>';
+			}
 			document.querySelectorAll(".clickable-card[data-card-href]").forEach(function (card) {
 				card.setAttribute("tabindex", "0");
 				card.setAttribute("role", "link");
@@ -470,24 +474,28 @@
 			const seasonalAlerts = [
 				{
 					months: [3, 4, 5],
+					season: "春",
 					icon: "🌸",
 					message: "春の出没注意期間（3月〜5月）— 冬眠明けのクマが活動を始めます。早朝・夕方の単独行動に注意してください。",
 					guideMessage: "冬眠明けのクマは食べ物を探して行動範囲を広げます。山菜採りや散策の前に、出没マップと周辺情報を確認しましょう。"
 				},
 				{
 					months: [6, 7, 8],
+					season: "夏",
 					icon: "🌿",
 					message: "夏の出没注意期間（6月〜8月）— 山や河川敷では周囲に注意し、食べ物を放置しないでください。",
 					guideMessage: "夏は親子グマが行動する時期です。子グマを見かけても近づかず、すぐにその場から離れてください。"
 				},
 				{
 					months: [9, 10, 11],
+					season: "秋",
 					icon: "🍂",
 					message: "秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。入山前に出没情報を確認してください。",
 					guideMessage: "冬眠前のクマは餌を求めて活動範囲を広げます。早朝・夕方の入山は特に注意し、食べ物やゴミを屋外に放置しないでください。"
 				},
 				{
 					months: [12, 1, 2],
+					season: "冬",
 					icon: "❄️",
 					message: "冬季安全確認期間（12月〜2月）— 冬でも出没情報を確認し、山間部では十分注意してください。",
 					guideMessage: "冬眠しない個体や、冬眠前後に活動するクマがいる場合があります。雪山や山間部へ出かける前にも、最新の出没情報を確認しましょう。"
@@ -500,6 +508,7 @@
 			document.getElementById("seasonAlertIcon").textContent = currentAlert.icon;
 			document.getElementById("seasonAlertText").textContent = currentAlert.message;
 			document.getElementById("seasonGuideIcon").textContent = currentAlert.icon;
+			document.getElementById("seasonGuideTitle").textContent = currentAlert.season + "の注意ポイント（" + month + "月）";
 			document.getElementById("seasonGuideText").textContent = currentAlert.guideMessage;
 		}());
 	</script>
