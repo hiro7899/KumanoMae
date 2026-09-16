@@ -97,6 +97,7 @@ public class AuthDao {
                     member.setUserName(rs.getString("USER_NAME"));
                     member.setEmail(rs.getString("EMAIL"));
                     member.setUserGrade(rs.getString("USER_GRADE"));
+                    member.setStatus(rs.getString("STATUS"));
                     member.setEmailVerifiedYn(
                         rs.getString("EMAIL_VERIFIED_YN")
                     );
