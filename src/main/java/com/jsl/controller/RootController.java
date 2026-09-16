@@ -25,7 +25,7 @@ import com.jsl.service.signup.SignUpService;
         "/", "/index",
         "/login", "/logout", "/signup", "/signup/complete",
         "/find_id", "/find_pw",
-        "/reset-password",
+        "/reset-password","/reset-password/complete",
         "/verify-email",
 })
 public class RootController extends HttpServlet {
@@ -138,7 +138,7 @@ public class RootController extends HttpServlet {
 		    } else {
 		        try {
 		            resetPasswordService.doCommand(request, response);
-		            response.sendRedirect("/login");
+		            response.sendRedirect("/WEB-INF/views/auth/reset_password_complete.jsp");
 		            return;
 		        } catch (EmailTokenException e) {
 		            request.setAttribute("errorMsg", e.getMessage());
@@ -148,7 +148,7 @@ public class RootController extends HttpServlet {
 		        }
 		    }
 		    break;
-		    
+
 		case "/verify-email":
 		    page = "/WEB-INF/views/auth/verify_email.jsp";
 		    break;
