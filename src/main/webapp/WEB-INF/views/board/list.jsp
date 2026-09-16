@@ -76,8 +76,8 @@
 					<article class="card h-100 report-card shadow-sm clickable-card ${board.clearYn eq 'Y' ? 'board-card-resolved' : ''}" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:choose>
 							<c:when test="${not empty board.thumbnailUrl}">
-								<c:url var="boardThumbnailUrl" value="${board.thumbnailUrl}"/>
-								<div class="preview-card-image"><img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像"></div>
+								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
+								<div class="preview-card-image"><img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>';"></div>
 							</c:when>
 							<c:otherwise>
 								<c:choose>

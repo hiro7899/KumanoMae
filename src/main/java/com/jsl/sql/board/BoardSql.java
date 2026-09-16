@@ -4,14 +4,13 @@ public class BoardSql {
 
     // 전체 제보 조회
 	public static final String SELECT_ALL_BOARD = """
-		    SELECT b.BOARD_ID, b.MEMBER_ID, b.TITLE, b.CONTENT, b.RISK_LEVEL, b.LATITUDE, b.LONGITUDE,
-		           b.ADDRESS, b.SIGHTING_DATE, b.SITUATION_TAG, b.VIEW_CNT, b.STATUS, b.CLEAR_YN,
-		           b.CLEAR_DATE, b.CLEAR_MEMO, b.REG_DATE, b.MOD_DATE,
-		           m.USER_NAME AS WRITER_NAME
-		      FROM BOARD b
-		      JOIN MEMBER m ON m.MEMBER_ID = b.MEMBER_ID
-		     ORDER BY b.REG_DATE DESC
-		    """;
+	        SELECT b.BOARD_ID, b.MEMBER_ID, b.TITLE, b.CONTENT, b.RISK_LEVEL, b.LATITUDE, b.LONGITUDE,
+	               b.ADDRESS, b.SIGHTING_DATE, b.SITUATION_TAG, b.VIEW_CNT, b.STATUS, b.CLEAR_YN,
+	               b.CLEAR_DATE, b.CLEAR_MEMO, b.REG_DATE, b.MOD_DATE,
+	               m.USER_NAME AS WRITER_NAME
+	          FROM BOARD b
+	          JOIN MEMBER m ON m.MEMBER_ID = b.MEMBER_ID
+	        """;
 
     // 승인된 제보 조회
     public static final String SELECT_APPROVED_BOARD = """

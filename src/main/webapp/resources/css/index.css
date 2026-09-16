@@ -1448,6 +1448,7 @@ to {
 		transition: none;
 	}
 }
+<<<<<<< HEAD
 
 .legend-bear {
 	width: 24px;
@@ -1456,3 +1457,9 @@ to {
 	vertical-align: -4px;
 	margin-right: 8px;
 }
+=======
+.home-news-section .report-card,
+#newsCardGrid .report-card {
+    cursor: pointer;
+}
+>>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
