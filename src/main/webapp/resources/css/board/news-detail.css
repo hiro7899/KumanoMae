@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+body.news-detail-page {
+    background-color: #ede4d1;
+}
+
+.news-detail-page #newsDetail {
+    background-color: #fff;
+    border: 0;
+    box-shadow: none;
+}
+
+/* 뉴스 상세의 여러 이미지를 서로 겹치지 않게 세로로 배치합니다. */
+.news-detail-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.news-detail-gallery img {
+    display: block;
+    width: 100%;
+    max-height: 520px;
+    object-fit: contain;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.news-detail-content {
+    white-space: pre-line;
+    line-height: 1.9;
+}

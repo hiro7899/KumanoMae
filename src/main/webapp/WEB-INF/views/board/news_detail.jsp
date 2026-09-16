@@ -9,8 +9,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="/resources/css/index.css">
 <link rel="stylesheet" href="/resources/css/includes/layout.css">
+<link rel="stylesheet" href="/resources/css/board/news-detail.css">
 </head>
-<body>
+<body class="news-detail-page">
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 <main class="container py-5">
