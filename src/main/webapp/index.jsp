@@ -275,7 +275,6 @@
 										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out
 												value="${news.publishedDate}" /></span>
 									</p>
-<<<<<<< HEAD
 									<p class="small flex-grow-1">
 										<c:out value="${news.summary}" />
 									</p>
@@ -283,9 +282,6 @@
 										rel="noopener noreferrer"
 										class="btn btn-jp-outline btn-sm mt-2">原文を見る <i
 										class="bi bi-box-arrow-up-right"></i></a>
-=======
-									<p class="small flex-grow-1"><c:out value="${not empty news.content ? news.content : news.summary}" /></p>
->>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 								</div>
 							</article>
 						</div>
@@ -313,36 +309,12 @@
 			</h3>
 		</div>
 		<div class="row g-4">
-<<<<<<< HEAD
 			<c:forEach var="board" items="${boardList}" end="2">
 				<c:if test="${board.clearYn ne 'Y'}">
 					<div class="col-md-4 col-sm-6">
 						<article
 							class="card h-100 report-card preview-card clickable-card"
 							data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
-=======
-			<c:set var="visibleBoardCount" value="0" />
-			<c:forEach var="board" items="${boardList}">
-				<c:if test="${board.clearYn ne 'Y' and visibleBoardCount lt 3}">
-				<div class="col-md-4 col-sm-6">
-					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
-						<c:choose>
-							<c:when test="${not empty board.thumbnailUrl}">
-								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
-								<div class="preview-card-image">
-									<img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>'">
-								</div>
-							</c:when>
-							<c:otherwise>
-								<c:choose>
-									<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
-									<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
-									<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
-								</c:choose>
-							</c:otherwise>
-						</c:choose>
-						<div class="card-body d-flex flex-column">
->>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 							<c:choose>
 								<c:when test="${not empty board.thumbnailUrl}">
 									<c:url var="boardThumbnailUrl"
@@ -372,7 +344,6 @@
 									</c:choose>
 								</c:otherwise>
 							</c:choose>
-<<<<<<< HEAD
 							<div class="card-body d-flex flex-column">
 								<c:choose>
 									<c:when test="${board.riskLevel eq 'DANGER'}">
@@ -400,15 +371,6 @@
 							</div>
 						</article>
 					</div>
-=======
-							<h5 class="card-title"><c:out value="${board.title}" /></h5>
-							<p class="mb-2 text-muted small"><i class="bi bi-geo-alt"></i> <c:out value="${board.address}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span></p>
-							<p class="small flex-grow-1"><c:out value="${board.content}" /></p>
-						</div>
-					</article>
-				</div>
-				<c:set var="visibleBoardCount" value="${visibleBoardCount + 1}" />
->>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 				</c:if>
 			</c:forEach>
 			<c:if test="${empty boardList}">
@@ -446,12 +408,8 @@
 								<c:url var="communityThumbnailUrl"
 									value="${fn:replace(community.thumbnailUrl, '/src/main/webapp', '')}" />
 								<div class="preview-card-image">
-<<<<<<< HEAD
 									<img src="${communityThumbnailUrl}" class="preview-card-thumb"
 										alt="コミュニティ投稿画像">
-=======
-									<img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>'">
->>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 								</div>
 							</c:when>
 							<c:otherwise>
@@ -591,7 +549,6 @@
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 	<script src="/resources/js/index.js"></script>
 	<script>
-<<<<<<< HEAD
 		document
 				.addEventListener(
 						"DOMContentLoaded",
@@ -623,26 +580,6 @@
 																	}
 																});
 											});
-=======
-		document.addEventListener("DOMContentLoaded", function () {
-			var newsSection = document.querySelector('.home-news-section');
-			if (newsSection) {
-				newsSection.innerHTML = '<h3 class="section-title-jp"><span class="dash">―</span>最新ニュース</h3><div class="row g-4">' + HARD_CODED_NEWS.slice(0, 3).map(function (news) { return '<div class="col-md-4 col-sm-6"><article class="card h-100 report-card clickable-card" data-card-href="/board/news/detail?newsId=' + news.id + '" tabindex="0" role="link"><img src="' + newsImage(news) + '" class="card-img-top news-card-image" alt="' + newsEscape(news.title) + '" onerror="this.onerror=null;this.src=\'/resources/img/brand/kumano-mae-splash.png\';"><div class="card-body d-flex flex-column"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span><h5 class="card-title">' + newsEscape(news.title) + '</h5><p class="mb-2 text-muted small"><i class="bi bi-building"></i> ' + newsEscape(news.source) + '<span class="ms-2"><i class="bi bi-clock-fill"></i> ' + news.date + '</span></p><p class="small flex-grow-1">' + newsEscape(news.summary) + '</p></div></article></div>'; }).join('') + '</div><div class="text-center mt-4"><a href="/board/news" class="btn btn-jp-mustard">ニュースをすべて見る</a></div>';
-			}
-			document.querySelectorAll(".clickable-card[data-card-href]").forEach(function (card) {
-				card.setAttribute("tabindex", "0");
-				card.setAttribute("role", "link");
-				card.addEventListener("click", function () {
-					window.location.href = card.dataset.cardHref;
-				});
-				card.addEventListener("keydown", function (event) {
-					if (event.key === "Enter" || event.key === " ") {
-						event.preventDefault();
-						window.location.href = card.dataset.cardHref;
-					}
-				});
-			});
->>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 
 							document
 									.querySelectorAll(
@@ -686,7 +623,6 @@
 		(function() {
 			const month = new Date().getMonth() + 1;
 			const seasonalAlerts = [
-<<<<<<< HEAD
 					{
 						months : [ 3, 4, 5 ],
 						icon : "🌸",
@@ -712,38 +648,6 @@
 						guideMessage : "冬眠しない個体や、冬眠前後に活動するクマがいる場合があります。雪山や山間部へ出かける前にも、最新の出没情報を確認しましょう。"
 					} ];
 			const currentAlert = seasonalAlerts.find(function(alert) {
-=======
-				{
-					months: [3, 4, 5],
-					season: "春",
-					icon: "🌸",
-					message: "春の出没注意期間（3月〜5月）— 冬眠明けのクマが活動を始めます。早朝・夕方の単独行動に注意してください。",
-					guideMessage: "冬眠明けのクマは食べ物を探して行動範囲を広げます。山菜採りや散策の前に、出没マップと周辺情報を確認しましょう。"
-				},
-				{
-					months: [6, 7, 8],
-					season: "夏",
-					icon: "🌿",
-					message: "夏の出没注意期間（6月〜8月）— 山や河川敷では周囲に注意し、食べ物を放置しないでください。",
-					guideMessage: "夏は親子グマが行動する時期です。子グマを見かけても近づかず、すぐにその場から離れてください。"
-				},
-				{
-					months: [9, 10, 11],
-					season: "秋",
-					icon: "🍂",
-					message: "秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。入山前に出没情報を確認してください。",
-					guideMessage: "冬眠前のクマは餌を求めて活動範囲を広げます。早朝・夕方の入山は特に注意し、食べ物やゴミを屋外に放置しないでください。"
-				},
-				{
-					months: [12, 1, 2],
-					season: "冬",
-					icon: "❄️",
-					message: "冬季安全確認期間（12月〜2月）— 冬でも出没情報を確認し、山間部では十分注意してください。",
-					guideMessage: "冬眠しない個体や、冬眠前後に活動するクマがいる場合があります。雪山や山間部へ出かける前にも、最新の出没情報を確認しましょう。"
-				}
-			];
-			const currentAlert = seasonalAlerts.find(function (alert) {
->>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 				return alert.months.includes(month);
 			});
 
