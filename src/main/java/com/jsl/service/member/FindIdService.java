@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.dao.AuthDao;
 import com.jsl.dto.member.MemberDto;
-import com.jsl.exeption.FindIdException;
+import com.jsl.exception.FindIdException;
 import com.jsl.service.Command;
 
 public class FindIdService implements Command {

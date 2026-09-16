@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/resources/css/includes/layout.css">
 <link rel="stylesheet" href="/resources/css/index.css">
 <link rel="stylesheet" href="/resources/css/community/community.css">
+<link rel="stylesheet" href="/resources/css/board/preview-card.css">
 </head>
 <body>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
@@ -30,6 +31,7 @@
   <div id="newsPagination" class="client-pagination" aria-label="ニュースページ移動"></div>
 </main>
 <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+<script src="/resources/js/board/news-data.js"></script>
 <script src="/resources/js/index.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -41,6 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function label(category) {
     return category === 'SAFETY' ? '安全対策' : category === 'OFFICIAL' ? '自治体のお知らせ' : '出没情報';
+  }
+
+  function badgeClass(category) {
+    return category === 'SAFETY' ? 'badge-warning-custom' : category === 'OFFICIAL' ? 'badge-caution-custom' : 'badge-danger-custom';
   }
 
   function render() {
@@ -55,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     grid.innerHTML = pageNews.map(function (news) {
       return '<div class="col-md-6 col-lg-4"><article class="card h-100 report-card preview-card community-post-card clickable-card" data-card-href="/board/news/detail?newsId=' + news.id + '" tabindex="0" role="link">'
         + '<div class="preview-card-image"><img src="' + newsImage(news) + '" class="preview-card-thumb" alt="' + newsEscape(news.title) + '" onerror="this.onerror=null;this.src=\'/resources/img/brand/kumano-mae-splash.png\';"></div>'
-        + '<div class="card-body d-flex flex-column"><span class="badge badge-danger-custom mb-2 align-self-start">' + label(news.category) + '</span>'
+        + '<div class="card-body d-flex flex-column"><span class="badge ' + badgeClass(news.category) + ' mb-2 align-self-start">' + label(news.category) + '</span>'
         + '<h5 class="card-title fw-bold">' + newsEscape(news.title) + '</h5>'
         + '<p class="mb-2 text-muted small"><i class="bi bi-building"></i> ' + newsEscape(news.source) + ' <span class="ms-2"><i class="bi bi-clock-fill"></i> ' + news.date + '</span></p>'
         + '<p class="small text-muted flex-grow-1">' + newsEscape(news.summary) + '</p></div></article></div>';
@@ -86,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.filter-btn').forEach(function (button) {
     button.addEventListener('click', function () {
-      document.querySelectorAll('.filter-btn').forEach(function (item) { item.className = 'btn btn-jp-outline btn-sm filter-btn'; });
-      button.className = 'btn btn-jp-mustard btn-sm filter-btn active';
+      document.querySelectorAll('.filter-btn').forEach(function (item) { item.classList.remove('active'); });
+      button.classList.add('active');
       currentCategory = button.dataset.category;
       currentPage = 1;
       render();

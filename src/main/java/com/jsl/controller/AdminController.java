@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.AdminActionException;
-import com.jsl.exeption.MemberManageException;
+import com.jsl.exception.AdminActionException;
+import com.jsl.exception.MemberManageException;
 import com.jsl.service.admin.AdminApproveService;
 import com.jsl.service.admin.AdminBoardListService;
 import com.jsl.service.admin.AdminClearService;

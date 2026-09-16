@@ -17,7 +17,9 @@
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
+      href="${pageContext.request.contextPath}/resources/css/index.css">
+<link rel="stylesheet"
+      href="/resources/css/board/preview-card.css">
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
@@ -109,7 +111,7 @@
 
 			<h5 class="card-title text-truncate fw-bold"><c:out value="${board.title}" /></h5>
 							<p class="mb-2 text-danger small fw-bold">
-								<i class="bi bi-geo-alt-fill me-1"></i><c:out value="${board.address}" />
+								<i class="bi bi-geo-alt-fill me-1"></i><span class="sighting-address"><c:out value="${board.address}" /></span>
 							</p>
 							<p class="small text-secondary flex-grow-1"><c:out value="${board.content}" /></p>
 
@@ -153,6 +155,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/board/list.js"></script>
+	<script src="/resources/js/common/address-format.js"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
 			const grid = document.getElementById("boardCardGrid");

@@ -9,7 +9,7 @@ import com.jsl.dao.community.CommunityBoardDao;
 import com.jsl.dao.community.CommunityFileDao;
 import com.jsl.dto.community.CommunityBoardDto;
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.CommunityException;
+import com.jsl.exception.CommunityException;
 import com.jsl.service.Command;
 
 /** GET /community/update - 수정 폼 채우기용 (작성 완료가 아니라 조회만) */

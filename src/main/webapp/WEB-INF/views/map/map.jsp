@@ -80,10 +80,8 @@
 						<label>期間</label>
 						<div class="date-range">
 							<input type="date" class="form-control" id="startDate"
-								name="startDate" value="2026-08-01"> <span
-								class="date-sep">〜</span> <input type="date"
-								class="form-control" id="endDate" name="endDate"
-								value="2026-08-31">
+								name="startDate"> <span class="date-sep">〜</span> <input
+								type="date" class="form-control" id="endDate" name="endDate">
 						</div>
 					</div>
 
@@ -131,16 +129,13 @@
 				<div class="map-legend">
 					<h6>危険度</h6>
 					<p>
-						<img class="legend-bear" data-risk="DANGER" alt=""> DANGER
+						<span class="legend-dot risk-danger-dot"></span> DANGER
 					</p>
 					<p>
-						<img class="legend-bear" data-risk="WARNING" alt=""> WARNING
+						<span class="legend-dot risk-warning-dot"></span> WARNING
 					</p>
 					<p>
-						<img class="legend-bear" data-risk="CAUTION" alt=""> CAUTION
-					</p>
-					<p>
-						<img class="legend-bear" data-risk="CLEAR" alt=""> CLEAR
+						<span class="legend-dot risk-caution-dot"></span> CAUTION
 					</p>
 
 				</div>

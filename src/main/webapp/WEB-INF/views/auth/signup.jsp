@@ -76,14 +76,12 @@
 							<div class="input-wrapper flex-grow-1">
 								<i class="bi bi-person"></i> <input type="text" id="userId"
 									name="userId" class="form-control" placeholder="IDを入力"
-									autocomplete="username" minlength="4" maxlength="20" required>
+									autocomplete="username" required>
 							</div>
 
 							<button type="button" id="checkUserIdBtn"
 								class="availability-btn">重複確認</button>
 						</div>
-
-						<p class="form-help">4文字以上20文字以内で入力してください。</p>
 
 						<p id="userIdCheckMessage" class="availability-message"
 							aria-live="polite"></p>
