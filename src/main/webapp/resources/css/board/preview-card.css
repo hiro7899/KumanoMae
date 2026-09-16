@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+/* 게시판·커뮤니티 리스트 썸네일이 카드 본문과 겹치지 않도록 고정합니다. */
+.preview-card-image {
+    height: 198px;
+    overflow: hidden;
+}
+
+.preview-card-image .preview-card-thumb {
+    display: block;
+    width: 100%;
+    height: 100% !important;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+/* 注意를 解決済み 회색과 구분하기 위한 게시판 전용 색상입니다. */
+.badge-caution-custom {
+    background-color: #f5e39a;
+    color: #332d25;
+}
+
+[data-risk-filter="CAUTION"].btn-secondary {
+    background-color: #f5e39a;
+    border-color: #b99b3c;
+    color: #332d25;
+}
+
+[data-risk-filter="CAUTION"].btn-outline-secondary {
+    border-color: #b99b3c;
+    color: #66531e;
+}
+
+[data-risk-filter="CAUTION"].btn-secondary:hover,
+[data-risk-filter="CAUTION"].btn-outline-secondary:hover {
+    background-color: #f5e39a;
+    border-color: #b99b3c;
+    color: #332d25;
+}
+
+@media (max-width: 576px) {
+    .preview-card-image {
+        height: 174px;
+    }
+}
