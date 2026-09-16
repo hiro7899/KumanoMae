@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/resources/css/includes/layout.css">
 <link rel="stylesheet" href="/resources/css/index.css">
 <link rel="stylesheet" href="/resources/css/community/community.css">
+<link rel="stylesheet" href="/resources/css/board/preview-card.css">
 </head>
 <body>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
