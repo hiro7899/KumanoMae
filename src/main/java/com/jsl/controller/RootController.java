@@ -138,7 +138,7 @@ public class RootController extends HttpServlet {
 		    } else {
 		        try {
 		            resetPasswordService.doCommand(request, response);
-		            response.sendRedirect("/WEB-INF/views/auth/reset_password_complete.jsp");
+		            response.sendRedirect("/reset-password/complete");
 		            return;
 		        } catch (EmailTokenException e) {
 		            request.setAttribute("errorMsg", e.getMessage());
@@ -147,6 +147,10 @@ public class RootController extends HttpServlet {
 		            page = "/WEB-INF/views/auth/reset_password.jsp";
 		        }
 		    }
+		    break;
+		
+		case "/reset-password/complete":
+		    page = "/WEB-INF/views/auth/reset_password_complete.jsp";
 		    break;
 
 		case "/verify-email":
