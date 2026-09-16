@@ -31,7 +31,8 @@ public class AuthSql {
         SELECT MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL,
                USER_GRADE, EMAIL_VERIFIED_YN
           FROM MEMBER
-         WHERE USER_ID = ? OR EMAIL = ?
+         WHERE (USER_ID = ? OR EMAIL = ?)
+          AND STATUS = 'Y'
         """;
 
     // 이메일 인증 상태 변경

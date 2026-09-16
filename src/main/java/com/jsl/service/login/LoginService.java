@@ -32,6 +32,10 @@ public class LoginService implements Command {
             throw new LoginException("IDまたはパスワードが正しくありません。");
         }
 
+        if (!"Y".equals(member.getStatus())) {
+        	throw new LoginException("このアカウントは現在停止されています。"); 
+        }
+        
         HttpSession oldSession = request.getSession(false);
         if (oldSession != null) {
             oldSession.invalidate();

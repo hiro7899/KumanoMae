@@ -38,11 +38,10 @@ public class MemberSql {
          WHERE STATUS = 'Y'
         """;
 
-	public static final String RESTORE_MEMBER = """
-			public int restoreMember(int memberId) throws SQLException {
-			UPDATE MEMBER
-			   SET STATUS = 'Y'
-			 WHERE MEMBER_ID = ?
-			   AND STATUS = 'N'
-			""";
+    public static final String RESTORE_MEMBER = """
+    	    UPDATE MEMBER
+    	       SET STATUS = 'Y'
+    	     WHERE MEMBER_ID = ?
+    	       AND STATUS = 'N'
+    	    """;
 }
