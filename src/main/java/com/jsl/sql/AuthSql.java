@@ -28,7 +28,7 @@ public class AuthSql {
 
     // 로그인
     public static final String LOGIN = """
-        SELECT MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL,
+        SELECT MEMBER_ID, USER_ID, USER_PW, USER_NAME, EMAIL, STATUS,
                USER_GRADE, EMAIL_VERIFIED_YN
           FROM MEMBER
          WHERE USER_ID = ? OR EMAIL = ?
