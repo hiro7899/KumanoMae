@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jsl.dao.AuthDao;
 import com.jsl.dao.EmailTokenDao;
 import com.jsl.dto.EmailTokenDto;
-import com.jsl.exeption.EmailTokenException;
+import com.jsl.exception.EmailTokenException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 import com.jsl.util.PasswordUtil;

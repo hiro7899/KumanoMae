@@ -237,4 +237,35 @@ public class BoardDao {
 
         return list;
     }
+    
+    public BoardDto selectById(Long boardId) {
+
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_BY_ID)) {
+
+            pstmt.setLong(1, boardId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() ? mapRow(rs) : null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int increaseViewCnt(Long boardId) {
+
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.UPDATE_VIEW_CNT)) {
+
+            pstmt.setLong(1, boardId);
+            return pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

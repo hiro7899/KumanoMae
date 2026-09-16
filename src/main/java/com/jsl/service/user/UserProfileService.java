@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.jsl.dao.AuthDao;
 import com.jsl.dto.member.LoginUserDto;
 import com.jsl.dto.member.MemberDto;
-import com.jsl.exeption.EmailNotVerifiedException;
+import com.jsl.exception.EmailNotVerifiedException;
 import com.jsl.service.Command;
 
 public class UserProfileService implements Command {

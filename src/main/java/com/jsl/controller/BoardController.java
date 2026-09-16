@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jsl.exeption.BoardReportException;
-import com.jsl.exeption.EmailNotVerifiedException;
+import com.jsl.exception.BoardReportException;
+import com.jsl.exception.EmailNotVerifiedException;
 import com.jsl.service.board.BoardListService;
 import com.jsl.service.board.BoardReportService;
 import com.jsl.service.member.EmailVerificationGuardService;

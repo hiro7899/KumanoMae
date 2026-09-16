@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 import com.jsl.dao.AuthDao;
 import com.jsl.dto.member.LoginUserDto;
 import com.jsl.dto.member.MemberDto;
-import com.jsl.exeption.EmailNotVerifiedException;
+import com.jsl.exception.EmailNotVerifiedException;
 
 /**
  * Command 인터페이스(doCommand 시그니처)를 따르지 않는 이유:
