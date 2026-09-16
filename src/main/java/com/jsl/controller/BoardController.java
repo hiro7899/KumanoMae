@@ -107,6 +107,10 @@ public class BoardController extends HttpServlet {
             page = "/WEB-INF/views/board/news.jsp";
             break;
 
+        case "/news/detail":
+            page = "/WEB-INF/views/board/news_detail.jsp";
+            break;
+
         default:
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
