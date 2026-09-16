@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
   function render() {
     var filtered = HARD_CODED_NEWS.filter(function (news) {
       return currentCategory === 'all' || news.category === currentCategory;
+    }).sort(function (a, b) {
+      return new Date(b.date) - new Date(a.date);
     });
     var totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
     currentPage = Math.min(currentPage, totalPages);
