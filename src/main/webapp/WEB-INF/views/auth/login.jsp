@@ -80,6 +80,12 @@
 				<!-- 오른쪽 로그인 폼 -->
 
 				<div class="login-card">
+				
+				<c:if test="${param.verified eq 'true'}">
+						<div class="email-verified-message">
+							<i class="bi bi-check-circle-fill"></i> メール認証が完了しました。ログインしてください。
+						</div>
+					</c:if>
 
 					<div class="login-card-header">
 
@@ -211,11 +217,7 @@
 						</section>
 					</c:if>
 
-					<c:if test="${param.verified eq 'true'}">
-						<div class="email-verified-message">
-							<i class="bi bi-check-circle-fill"></i> メール認証が完了しました。ログインしてください。
-						</div>
-					</c:if>
+					
 
 				</div>
 
