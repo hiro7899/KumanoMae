@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jsl.exeption.CommunityException;
+import com.jsl.exception.CommunityException;
 import com.jsl.service.community.CommunityCommentAddService;
 import com.jsl.service.community.CommunityCommentDeleteService;
 import com.jsl.service.community.CommunityDeleteService;

@@ -15,7 +15,7 @@ import com.jsl.dao.community.CommunityBoardDao;
 import com.jsl.dao.community.CommunityFileDao;
 import com.jsl.dto.community.CommunityFileDto;
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.AdminActionException;
+import com.jsl.exception.AdminActionException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 import com.jsl.util.UploadPathUtil;

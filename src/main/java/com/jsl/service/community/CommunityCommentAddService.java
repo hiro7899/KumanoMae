@@ -12,7 +12,7 @@ import com.jsl.dao.community.CommunityBoardDao;
 import com.jsl.dao.community.CommunityCommentDao;
 import com.jsl.dto.community.CommunityCommentDto;
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.CommunityException;
+import com.jsl.exception.CommunityException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 

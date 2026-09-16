@@ -22,4 +22,12 @@ public class BoardFileSql {
           )
          WHERE ROWNUM = 1
         """;
+    
+ // 제보 첨부파일 전체 조회 (상세 화면용)
+    public static final String SELECT_FILES_BY_BOARD_ID = """
+        SELECT FILE_ID, BOARD_ID, ORIGIN_NAME, SAVE_NAME, FILE_PATH, FILE_SIZE
+          FROM BOARD_FILE
+         WHERE BOARD_ID = ?
+         ORDER BY FILE_ID ASC
+        """;
 }

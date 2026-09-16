@@ -244,6 +244,7 @@
 								<img
 									src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
 									class="card-img-top" alt="クマ関連ニュース">
+
 								<div class="card-body d-flex flex-column">
 									<c:choose>
 										<c:when test="${news.sourceType eq 'SIGHTING'}">
@@ -281,11 +282,8 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="card card-jp border-0 py-4 text-center">
-					<div class="card-body text-muted">
-						<i class="bi bi-newspaper fs-1 d-block mb-2"></i>
-						<p class="fw-bold mb-0">現在表示できるニュースはありません。</p>
-					</div>
+				<div class="card card-jp py-5 text-center">
+					<p class="text-muted mb-0">現在表示できるニュースはありません。</p>
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -542,12 +540,14 @@
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-	
+
 
 	<!-- Bootstrap 5 JS -->
+	
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 
 	<!-- Google Map 및 관련 로직 -->
 	<script async

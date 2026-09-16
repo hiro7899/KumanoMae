@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jsl.dao.AuthDao;
 import com.jsl.dao.EmailTokenDao;
 import com.jsl.dto.member.MemberDto;
-import com.jsl.exeption.SignUpException;
+import com.jsl.exception.SignUpException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 import com.jsl.util.EmailUtil;

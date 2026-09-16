@@ -55,7 +55,7 @@
                                 <section class="sighting-summary" aria-label="目撃情報の概要">
                                     <div class="summary-item">
                                         <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
-                                        <div><span>目撃場所</span><strong><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong></div>
+                                        <div><span>目撃場所</span><strong class="sighting-address"><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong></div>
                                     </div>
                                     <div class="summary-item">
                                         <i class="bi bi-clock-fill" aria-hidden="true"></i>
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="map-preview" aria-hidden="true"><div class="map-grid"></div><div class="map-pin"><i class="bi bi-exclamation-lg"></i></div><span class="map-label">目撃地点</span></div>
                                 <div class="location-card-body">
-                                    <strong><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong>
+                                    <strong class="sighting-address"><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong>
                                     <p>緯度 <c:out value="${board.latitude}"/> / 経度 <c:out value="${board.longitude}"/></p>
                                     <a href="${pageContext.request.contextPath}/map" class="btn btn-jp-outline btn-sm w-100"><i class="bi bi-map" aria-hidden="true"></i> 地図で確認する</a>
                                 </div>
@@ -123,5 +123,6 @@
 
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/resources/js/common/address-format.js"></script>
 </body>
 </html>

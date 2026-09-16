@@ -1,9 +1,10 @@
 /* =====================================================
    index.js
    - index.jsp 화면 동작만 담당 (DB/API/실제 검색 기능 없음)
+   - 뉴스 데이터는 resources/js/board/news-data.js에서 관리한다.
    - "報告する" 버튼 클릭 시 로그인 여부 확인 로직은
-	 index.jsp의 checkLoginAndReport() 함수(인라인 스크립트)가
-	 담당하므로, 여기서는 더 이상 별도 처리하지 않는다.
+   index.jsp의 checkLoginAndReport() 함수(인라인 스크립트)가
+   담당하므로, 여기서는 더 이상 별도 처리하지 않는다.
    ===================================================== */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const alertBanner = document.querySelector(".top-alert");
 	const alertClose = document.getElementById("alertClose");
 
-	if (alertClose) {
+		if (alertClose) {
 		alertClose.addEventListener("click", function() {
 			alertBanner.style.display = "none";
 		});

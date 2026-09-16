@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.jsl.dto.board.BoardFileDto;
 import com.jsl.sql.board.BoardFileSql;
@@ -45,5 +47,35 @@ public class BoardFileDao {
         }
 
         return null;
+    }
+    
+    // 제보 첨부파일 전체 조회 (상세 화면용)
+    public List<BoardFileDto> selectFilesByBoardId(Long boardId) {
+
+        List<BoardFileDto> list = new ArrayList<BoardFileDto>();
+
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(BoardFileSql.SELECT_FILES_BY_BOARD_ID)) {
+
+            pstmt.setLong(1, boardId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    BoardFileDto dto = new BoardFileDto();
+                    dto.setFileId(rs.getLong("FILE_ID"));
+                    dto.setBoardId(rs.getLong("BOARD_ID"));
+                    dto.setOriginName(rs.getString("ORIGIN_NAME"));
+                    dto.setSaveName(rs.getString("SAVE_NAME"));
+                    dto.setFilePath(rs.getString("FILE_PATH"));
+                    dto.setFileSize(rs.getInt("FILE_SIZE"));
+                    list.add(dto);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }
