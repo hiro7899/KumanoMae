@@ -47,7 +47,7 @@
                                     <h1><c:out value="${board.title}"/></h1>
                                     <div class="post-meta">
                                         <span><i class="bi bi-person-circle" aria-hidden="true"></i> 投稿者 #<c:out value="${board.memberId}"/></span>
-                                        <span><i class="bi bi-calendar3" aria-hidden="true"></i> <c:out value="${board.sightingDate}"/></span>
+                                        <span><i class="bi bi-calendar3" aria-hidden="true"></i> <time class="js-format-datetime"><c:out value="${board.sightingDate}"/></time></span>
                                         <span><i class="bi bi-eye" aria-hidden="true"></i> <c:out value="${board.viewCnt}"/></span>
                                     </div>
                                 </header>
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="summary-item">
                                         <i class="bi bi-clock-fill" aria-hidden="true"></i>
-                                        <div><span>目撃日時</span><strong><c:out value="${board.sightingDate}"/></strong></div>
+                                        <div><span>目撃日時</span><strong class="js-format-datetime"><c:out value="${board.sightingDate}"/></strong></div>
                                     </div>
                                     <div class="summary-item">
                                         <i class="bi bi-signpost-split-fill" aria-hidden="true"></i>
@@ -101,7 +101,12 @@
                                         <c:otherwise><span class="status-live">確認待ち</span></c:otherwise>
                                     </c:choose>
                                 </div>
-                                <div class="map-preview" aria-hidden="true"><div class="map-grid"></div><div class="map-pin"><i class="bi bi-exclamation-lg"></i></div><span class="map-label">目撃地点</span></div>
+                                <div id="boardDetailMap"
+                                     class="board-detail-map"
+                                     data-latitude="<c:out value='${board.latitude}'/>"
+                                     data-longitude="<c:out value='${board.longitude}'/>">
+                                    <p class="board-detail-map-message">地図を読み込んでいます。</p>
+                                </div>
                                 <div class="location-card-body">
                                     <strong class="sighting-address"><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong>
                                     <p>緯度 <c:out value="${board.latitude}"/> / 経度 <c:out value="${board.longitude}"/></p>
@@ -124,5 +129,7 @@
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/resources/js/common/address-format.js"></script>
+    <script src="/resources/js/board/detail.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initBoardDetailMap" async defer></script>
 </body>
 </html>

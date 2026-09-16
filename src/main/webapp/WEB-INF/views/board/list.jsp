@@ -17,7 +17,9 @@
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
+      href="${pageContext.request.contextPath}/resources/css/index.css">
+<link rel="stylesheet"
+      href="/resources/css/board/preview-card.css">
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
