@@ -235,6 +235,8 @@
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>最新ニュース
 		</h3>
+<<<<<<< HEAD
+=======
 		<c:choose>
 			<c:when test="${not empty newsList}">
 				<div class="row g-4">
@@ -294,6 +296,7 @@
 				</div>
 			</c:otherwise>
 		</c:choose>
+>>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 		<div class="text-center mt-4">
 			<a href="${pageContext.request.contextPath}/board/news"
 				class="btn btn-jp-mustard">ニュースをすべて見る</a>
@@ -547,8 +550,43 @@
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<script src="/resources/js/board/news-data.js"></script>
 	<script src="/resources/js/index.js"></script>
 	<script>
+<<<<<<< HEAD
+		document.addEventListener("DOMContentLoaded", function () {
+			var newsSection = document.querySelector('.home-news-section');
+			if (newsSection) {
+				newsSection.innerHTML = '<h3 class="section-title-jp"><span class="dash">―</span>最新ニュース</h3><div class="row g-4">' + HARD_CODED_NEWS.slice(0, 3).map(function (news) { return '<div class="col-md-4 col-sm-6"><article class="card h-100 report-card clickable-card" data-card-href="/board/news/detail?newsId=' + news.id + '" tabindex="0" role="link"><img src="' + newsImage(news) + '" class="card-img-top news-card-image" alt="' + newsEscape(news.title) + '" onerror="this.onerror=null;this.src=\'/resources/img/brand/kumano-mae-splash.png\';"><div class="card-body d-flex flex-column"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span><h5 class="card-title">' + newsEscape(news.title) + '</h5><p class="mb-2 text-muted small"><i class="bi bi-building"></i> ' + newsEscape(news.source) + '<span class="ms-2"><i class="bi bi-clock-fill"></i> ' + news.date + '</span></p><p class="small flex-grow-1">' + newsEscape(news.summary) + '</p></div></article></div>'; }).join('') + '</div><div class="text-center mt-4"><a href="/board/news" class="btn btn-jp-mustard">ニュースをすべて見る</a></div>';
+				HARD_CODED_NEWS.slice(0, 3).forEach(function (news, index) {
+					var badge = newsSection.querySelectorAll(".badge")[index];
+					if (!badge) return;
+
+					var categoryConfig = {
+						SAFETY: { label: "安全対策", className: "badge-warning-custom" },
+						OFFICIAL: { label: "自治体のお知らせ", className: "badge-caution-custom" },
+						SIGHTING: { label: "出没情報", className: "badge-danger-custom" }
+					};
+					var config = categoryConfig[news.category] || categoryConfig.SIGHTING;
+					badge.textContent = config.label;
+					badge.classList.remove("badge-danger-custom", "badge-warning-custom", "badge-caution-custom");
+					badge.classList.add(config.className);
+				});
+			}
+			document.querySelectorAll(".clickable-card[data-card-href]").forEach(function (card) {
+				card.setAttribute("tabindex", "0");
+				card.setAttribute("role", "link");
+				card.addEventListener("click", function () {
+					window.location.href = card.dataset.cardHref;
+				});
+				card.addEventListener("keydown", function (event) {
+					if (event.key === "Enter" || event.key === " ") {
+						event.preventDefault();
+						window.location.href = card.dataset.cardHref;
+					}
+				});
+			});
+=======
 		document
 				.addEventListener(
 						"DOMContentLoaded",
@@ -580,6 +618,7 @@
 																	}
 																});
 											});
+>>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 
 							document
 									.querySelectorAll(
@@ -618,7 +657,6 @@
 	<!-- Bootstrap 5 JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	<script>
 		(function() {
 			const month = new Date().getMonth() + 1;
