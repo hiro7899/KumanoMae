@@ -60,13 +60,21 @@ async function fetchMarkers() {
 	const contextPath = document.body.dataset.contextPath || "";
 
 	try {
-		const response = await fetch(contextPath + "/map/markers");
+		const response = await fetch(contextPath + "/api/map/markers", {
+			headers: {
+				"Accept": "application/json"
+			}
+		});
 
 		if (!response.ok) {
 			throw new Error("マーカー情報の取得に失敗しました。");
 		}
 
-		const markersFromServer = await response.json();
+		const markerResponse = await response.json();
+
+		const markersFromServer = Array.isArray(markerResponse.markers)
+			? markerResponse.markers
+			: [];
 
 		bearSightings = markersFromServer
 			.filter(function(item) {
@@ -80,8 +88,10 @@ async function fetchMarkers() {
 					lng: Number(item.longitude),
 					area: item.address || item.title || "住所情報なし",
 					region: "全国",
-					date: item.eventDate
-						? String(item.eventDate).substring(0, 10)
+					date: item.eventDate && item.eventDate.date
+						? item.eventDate.date.year + "-"
+						+ String(item.eventDate.date.month).padStart(2, "0") + "-"
+						+ String(item.eventDate.date.day).padStart(2, "0")
 						: "",
 					risk: RISK_NAME_MAP[item.displayRisk] || "低",
 					content: item.title || "目撃情報"
@@ -267,7 +277,18 @@ function renderRecentList(sightingList) {
 			'<p class="bear-item-meta">' + formatDateJP(sighting.date) + '</p>' +
 			'<p class="bear-item-content">' + sighting.content + '</p>' +
 			'</div>' +
-			'<button type="button" class="bear-item-btn">詳細を見る</button>';
+			'<button type="button" class="bear-item-btn" data-board-id="' + sighting.id + '">詳細を見る</button>';
+
+		const detailButton = li.querySelector(".bear-item-btn");
+
+		detailButton.addEventListener("click", function() {
+			const contextPath = document.body.dataset.contextPath || "";
+			const boardId = detailButton.dataset.boardId;
+
+			location.href = contextPath
+				+ "/board/detail?boardId="
+				+ encodeURIComponent(boardId);
+		});
 
 		recentList.appendChild(li);
 	});
@@ -279,6 +300,45 @@ function renderRecentList(sightingList) {
    - 실제 검색 API 호출이 아니라, 테스트 데이터를 화면에서만
 	 걸러서 다시 그리는 화면 동작이다.
    ----------------------------------------------------- */
+
+function toDateInputValue(date) {
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, "0");
+	const day = String(date.getDate()).padStart(2, "0");
+
+	return year + "-" + month + "-" + day;
+}
+
+function setDefaultDateRange() {
+	const startDateInput = document.getElementById("startDate");
+	const endDateInput = document.getElementById("endDate");
+
+	if (!startDateInput || !endDateInput) {
+		return;
+	}
+
+	const today = new Date();
+	const firstDayOfMonth = new Date(
+		today.getFullYear(),
+		today.getMonth(),
+		1
+	);
+
+	const todayValue = toDateInputValue(today);
+	const firstDayValue = toDateInputValue(firstDayOfMonth);
+
+	// 기본값: 이번 달 1일 ~ 오늘
+	startDateInput.value = firstDayValue;
+	endDateInput.value = todayValue;
+
+	// 오늘 이후 날짜 선택 금지
+	startDateInput.max = todayValue;
+	endDateInput.max = todayValue;
+
+	// 종료일은 시작일보다 이전으로 선택 불가
+	endDateInput.min = firstDayValue;
+}
+
 function filterSightings() {
 	const areaSelect = document.getElementById("areaSelect");
 	const startDateInput = document.getElementById("startDate");
@@ -337,8 +397,7 @@ function resetFilters() {
 	const endDateInput = document.getElementById("endDate");
 
 	if (areaSelect) areaSelect.value = "全国";
-	if (startDateInput) startDateInput.value = "2026-08-01";
-	if (endDateInput) endDateInput.value = "2026-08-31";
+	setDefaultDateRange();
 
 	Object.keys(RISK_CHECKBOX_MAP).forEach(function(checkboxId) {
 		const checkbox = document.getElementById(checkboxId);
@@ -354,6 +413,8 @@ function resetFilters() {
 	 DOMContentLoaded 시점에 연결해도 안전하다.
    ----------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", function() {
+	setDefaultDateRange();
+
 	const searchBtn = document.getElementById("searchBtn");
 	const resetBtn = document.getElementById("resetFilterBtn");
 

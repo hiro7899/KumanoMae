@@ -80,10 +80,8 @@
 						<label>期間</label>
 						<div class="date-range">
 							<input type="date" class="form-control" id="startDate"
-								name="startDate" value="2026-08-01"> <span
-								class="date-sep">〜</span> <input type="date"
-								class="form-control" id="endDate" name="endDate"
-								value="2026-08-31">
+								name="startDate"> <span class="date-sep">〜</span> <input
+								type="date" class="form-control" id="endDate" name="endDate">
 						</div>
 					</div>
 
