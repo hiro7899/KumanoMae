@@ -131,13 +131,16 @@
 				<div class="map-legend">
 					<h6>危険度</h6>
 					<p>
-						<span class="legend-dot risk-danger-dot"></span> DANGER
+						<img class="legend-bear" data-risk="DANGER" alt=""> DANGER
 					</p>
 					<p>
-						<span class="legend-dot risk-warning-dot"></span> WARNING
+						<img class="legend-bear" data-risk="WARNING" alt=""> WARNING
 					</p>
 					<p>
-						<span class="legend-dot risk-caution-dot"></span> CAUTION
+						<img class="legend-bear" data-risk="CAUTION" alt=""> CAUTION
+					</p>
+					<p>
+						<img class="legend-bear" data-risk="CLEAR" alt=""> CLEAR
 					</p>
 
 				</div>

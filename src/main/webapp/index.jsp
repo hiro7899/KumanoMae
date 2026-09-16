@@ -40,16 +40,17 @@
 	data-context-path="${pageContext.request.contextPath}">
 
 	<%-- ===================== 시작 화면 이미지 ===================== --%>
-	<div id="splashScreen" class="splash-screen" aria-label="Kumano Mae 시작 화면">
-		<img src="${pageContext.request.contextPath}/resources/img/brand/kumano-mae-splash.png"
+	<div id="splashScreen" class="splash-screen"
+		aria-label="Kumano Mae 시작 화면">
+		<img
+			src="${pageContext.request.contextPath}/resources/img/brand/kumano-mae-splash.png"
 			alt="Kumano Mae" class="splash-screen-image">
 	</div>
 
 	<%-- ===================== 상단 경보 배너 ===================== --%>
 	<div class="top-alert">
-		<span id="seasonAlertIcon" aria-hidden="true">🍂</span>
-		<span id="seasonAlertText">秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。</span>
-		<span
+		<span id="seasonAlertIcon" aria-hidden="true">🍂</span> <span
+			id="seasonAlertText">秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。</span> <span
 			class="close-x" id="alertClose">&times;</span>
 	</div>
 
@@ -93,8 +94,10 @@
 				<!-- 경고 다이아몬드 사인 -->
 				<div class="col-md-5 mt-5 mt-md-0">
 					<div class="warning-sign-wrap">
-						<svg class="hero-bear-silhouette" viewBox="0 0 248.662 248.662" aria-hidden="true">
-							<path d="M248.343 175.365c-1.779-5.671-9.99-13.958-8.992-25.03.998-11.068 9.798-36.354 7.514-47.147s-13.737-42.525-43.349-47.324c-29.599-4.797-50.858 3.166-62.211 2.655-11.345-.513-13.409-9.091-25.95-8.98-16.188.15-18.975 6.869-30.42 10.473-8.392 2.645-34.676 2.613-34.676 2.613s-7.52-9.812-9.812-6.217c-2.292 3.597-5.236 12.757-5.236 12.757s-14.068 4.905-15.371 7.528c-1.304 2.623-3.094 6.876-3.094 6.876S1.847 87.486.213 91.083c-1.633 3.595 6.546 12.096 9.161 15.048 2.615 2.951 33.035 3.597 37.856 7.149 4.819 3.557 18.315 6.226 25.852 7.52 14.145 2.435 20.362 30.533 23.957 61.61-4.254 3.603-11.776 6.793-12.183 16.715h46.114s.613-6.624 1.395-14.827c.77-8.203 14.719-39.253 14.719-39.253s10.135 7.851 17.008 8.188c-.646 6.211 2.252 12.819 2.252 12.819s5.936 7.129 11.706 12.771c-10.563 4.356-10.255 12.039-10.255 12.039l39.145.304s3.923-8.171 3.923-14.719c5.246 7.53 15.381 10.472 15.381 10.472l-6.304 12.206h23.92c-.085 0 6.163-18.086 4.383-23.752zM28.482 85.278a3.107 3.107 0 1 1 0-6.216 3.107 3.107 0 0 1 0 6.216z"/>
+						<svg class="hero-bear-silhouette" viewBox="0 0 248.662 248.662"
+							aria-hidden="true">
+							<path
+								d="M248.343 175.365c-1.779-5.671-9.99-13.958-8.992-25.03.998-11.068 9.798-36.354 7.514-47.147s-13.737-42.525-43.349-47.324c-29.599-4.797-50.858 3.166-62.211 2.655-11.345-.513-13.409-9.091-25.95-8.98-16.188.15-18.975 6.869-30.42 10.473-8.392 2.645-34.676 2.613-34.676 2.613s-7.52-9.812-9.812-6.217c-2.292 3.597-5.236 12.757-5.236 12.757s-14.068 4.905-15.371 7.528c-1.304 2.623-3.094 6.876-3.094 6.876S1.847 87.486.213 91.083c-1.633 3.595 6.546 12.096 9.161 15.048 2.615 2.951 33.035 3.597 37.856 7.149 4.819 3.557 18.315 6.226 25.852 7.52 14.145 2.435 20.362 30.533 23.957 61.61-4.254 3.603-11.776 6.793-12.183 16.715h46.114s.613-6.624 1.395-14.827c.77-8.203 14.719-39.253 14.719-39.253s10.135 7.851 17.008 8.188c-.646 6.211 2.252 12.819 2.252 12.819s5.936 7.129 11.706 12.771c-10.563 4.356-10.255 12.039-10.255 12.039l39.145.304s3.923-8.171 3.923-14.719c5.246 7.53 15.381 10.472 15.381 10.472l-6.304 12.206h23.92c-.085 0 6.163-18.086 4.383-23.752zM28.482 85.278a3.107 3.107 0 1 1 0-6.216 3.107 3.107 0 0 1 0 6.216z" />
 						</svg>
 						<div class="warning-sign">
 							<div class="warning-sign-inner">
@@ -125,7 +128,8 @@
 						<!-- 구글 맵이 출력될 영역 -->
 						<div class="map-container-wrap">
 							<div id="mapContainer" style="height: 480px; width: 100%;"></div>
-							<div id="mapStatus" class="map-status" role="status" aria-live="polite" hidden></div>
+							<div id="mapStatus" class="map-status" role="status"
+								aria-live="polite" hidden></div>
 						</div>
 					</div>
 				</div>
@@ -137,7 +141,7 @@
 
 						<div class="mb-3">
 							<p class="mb-1 fw-bold map-legend-title">
-								<span><span class="legend-dot danger"></span>危険（DANGER）</span>
+								<span><img class="legend-bear" data-risk="DANGER" alt="">危険（DANGER）</span>
 								<span id="dangerCount" class="map-risk-count danger">0件</span>
 							</p>
 							<small class="text-muted d-block ps-3">姿を目撃・撮影</small>
@@ -145,7 +149,7 @@
 
 						<div class="mb-3">
 							<p class="mb-1 fw-bold map-legend-title">
-								<span><span class="legend-dot warning"></span>警戒（WARNING）</span>
+								<span><img class="legend-bear" data-risk="WARNING" alt="">警戒（WARNING）</span>
 								<span id="warningCount" class="map-risk-count warning">0件</span>
 							</p>
 							<small class="text-muted d-block ps-3">足跡・痕跡を発見</small>
@@ -153,7 +157,7 @@
 
 						<div>
 							<p class="mb-1 fw-bold map-legend-title">
-								<span><span class="legend-dot caution"></span>注意（CAUTION）</span>
+								<span><img class="legend-bear" data-risk="CAUTION" alt="">注意（CAUTION）</span>
 								<span id="cautionCount" class="map-risk-count caution">0件</span>
 							</p>
 							<small class="text-muted d-block ps-3">鳴き声・気配を感知</small>
@@ -161,7 +165,7 @@
 
 						<div>
 							<p class="mb-1 fw-bold map-legend-title">
-								<span><span class="legend-dot clear"></span>解除（CLEAR）</span>
+								<span><img class="legend-bear" data-risk="CLEAR" alt="">解除（CLEAR）</span>
 								<span id="clearCount" class="map-risk-count clear">0件</span>
 							</p>
 							<small class="text-muted d-block ps-3">危険解除済み</small>
@@ -175,28 +179,31 @@
 				<div class="col-md-5">
 					<label class="form-label fw-bold d-block">危険度</label>
 					<div class="risk-filter-group">
-					<div class="form-check form-check-inline risk-filter all">
-						<input class="form-check-input" type="radio" name="riskFilter" id="riskAll"
-							checked> <label class="form-check-label" for="riskAll">すべて</label>
-					</div>
-					<div class="form-check form-check-inline risk-filter danger">
-						<input class="form-check-input" type="radio" name="riskFilter" id="riskDanger">
-						<label class="form-check-label" for="riskDanger">危険</label>
-					</div>
-					<div class="form-check form-check-inline risk-filter warning">
-						<input class="form-check-input" type="radio" name="riskFilter" id="riskWarning">
-						<label class="form-check-label"
-							for="riskWarning">警戒</label>
-					</div>
-					<div class="form-check form-check-inline risk-filter caution">
-						<input class="form-check-input" type="radio" name="riskFilter" id="riskCaution">
-						<label class="form-check-label"
-							for="riskCaution">注意</label>
-					</div>
-					<div class="form-check form-check-inline risk-filter clear">
-						<input class="form-check-input" type="radio" name="riskFilter" id="riskClear">
-						<label class="form-check-label" for="riskClear">解除</label>
-					</div>
+						<div class="form-check form-check-inline risk-filter all">
+							<input class="form-check-input" type="radio" name="riskFilter"
+								id="riskAll" checked> <label class="form-check-label"
+								for="riskAll">すべて</label>
+						</div>
+						<div class="form-check form-check-inline risk-filter danger">
+							<input class="form-check-input" type="radio" name="riskFilter"
+								id="riskDanger"> <label class="form-check-label"
+								for="riskDanger">危険</label>
+						</div>
+						<div class="form-check form-check-inline risk-filter warning">
+							<input class="form-check-input" type="radio" name="riskFilter"
+								id="riskWarning"> <label class="form-check-label"
+								for="riskWarning">警戒</label>
+						</div>
+						<div class="form-check form-check-inline risk-filter caution">
+							<input class="form-check-input" type="radio" name="riskFilter"
+								id="riskCaution"> <label class="form-check-label"
+								for="riskCaution">注意</label>
+						</div>
+						<div class="form-check form-check-inline risk-filter clear">
+							<input class="form-check-input" type="radio" name="riskFilter"
+								id="riskClear"> <label class="form-check-label"
+								for="riskClear">解除</label>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -233,23 +240,48 @@
 				<div class="row g-4">
 					<c:forEach var="news" items="${newsList}" end="2">
 						<div class="col-md-4 col-sm-6">
+<<<<<<< HEAD
 							<article class="card h-100 report-card">
-								<img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
+								<img
+									src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
 									class="card-img-top" alt="クマ関連ニュース">
+=======
+							<article class="card h-100 report-card clickable-card" data-card-href="/board/news/detail?newsId=${news.newsId}" tabindex="0" role="link">
+								<c:choose>
+									<c:when test="${not empty news.images}"><img src="${news.images[0]}" class="card-img-top news-card-image" alt="<c:out value='${news.title}' /> 뉴스 이미지" onerror="this.onerror=null; this.src='/resources/img/brand/kumano-mae-splash.png';"></c:when>
+									<c:otherwise><img src="/resources/img/brand/kumano-mae-splash.png" class="card-img-top news-card-image" alt="ニュース画像なし"></c:otherwise>
+								</c:choose>
+>>>>>>> branch 'develop' of https://github.com/hiro7899/KumanoMae.git
 								<div class="card-body d-flex flex-column">
 									<c:choose>
-										<c:when test="${news.sourceType eq 'SIGHTING'}"><span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span></c:when>
-										<c:when test="${news.sourceType eq 'SAFETY'}"><span class="badge badge-warning-custom mb-2 align-self-start">安全対策</span></c:when>
-										<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">自治体のお知らせ</span></c:otherwise>
+										<c:when test="${news.sourceType eq 'SIGHTING'}">
+											<span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span>
+										</c:when>
+										<c:when test="${news.sourceType eq 'SAFETY'}">
+											<span
+												class="badge badge-warning-custom mb-2 align-self-start">安全対策</span>
+										</c:when>
+										<c:otherwise>
+											<span
+												class="badge badge-caution-custom mb-2 align-self-start">自治体のお知らせ</span>
+										</c:otherwise>
 									</c:choose>
-									<h5 class="card-title"><c:out value="${news.title}" /></h5>
+									<h5 class="card-title">
+										<c:out value="${news.title}" />
+									</h5>
 									<p class="mb-2 text-muted small">
-										<i class="bi bi-building"></i> <c:out value="${news.sourceName}" />
-										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out value="${news.publishedDate}" /></span>
+										<i class="bi bi-building"></i>
+										<c:out value="${news.sourceName}" />
+										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out
+												value="${news.publishedDate}" /></span>
 									</p>
-									<p class="small flex-grow-1"><c:out value="${news.summary}" /></p>
-									<a href="${news.sourceUrl}" target="_blank" rel="noopener noreferrer"
-										class="btn btn-jp-outline btn-sm mt-2">原文を見る <i class="bi bi-box-arrow-up-right"></i></a>
+									<p class="small flex-grow-1">
+										<c:out value="${news.summary}" />
+									</p>
+									<a href="${news.sourceUrl}" target="_blank"
+										rel="noopener noreferrer"
+										class="btn btn-jp-outline btn-sm mt-2">原文を見る <i
+										class="bi bi-box-arrow-up-right"></i></a>
 								</div>
 							</article>
 						</div>
@@ -257,11 +289,8 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="card card-jp border-0 py-4 text-center">
-					<div class="card-body text-muted">
-						<i class="bi bi-newspaper fs-1 d-block mb-2"></i>
-						<p class="fw-bold mb-0">現在表示できるニュースはありません。</p>
-					</div>
+				<div class="card card-jp py-5 text-center">
+					<p class="text-muted mb-0">現在表示できるニュースはありません。</p>
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -272,89 +301,182 @@
 	</section>
 
 	<%-- ===================== 목격 제보 섹션 ===================== --%>
-	<section class="container my-5 home-preview-section home-report-section">
+	<section
+		class="container my-5 home-preview-section home-report-section">
 		<div class="section-heading-row">
-			<h3 class="section-title-jp mb-0"><span class="dash">―</span>最新の目撃情報</h3>
+			<h3 class="section-title-jp mb-0">
+				<span class="dash">―</span>最新の目撃情報
+			</h3>
 		</div>
 		<div class="row g-4">
 			<c:forEach var="board" items="${boardList}" end="2">
 				<c:if test="${board.clearYn ne 'Y'}">
-				<div class="col-md-4 col-sm-6">
-					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
-						<c:choose>
-							<c:when test="${not empty board.thumbnailUrl}">
-								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
-								<div class="preview-card-image">
-									<img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像">
-								</div>
-							</c:when>
-							<c:otherwise>
-								<c:choose>
-									<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
-									<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
-									<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
-								</c:choose>
-							</c:otherwise>
-						</c:choose>
-						<div class="card-body d-flex flex-column">
+					<div class="col-md-4 col-sm-6">
+						<article
+							class="card h-100 report-card preview-card clickable-card"
+							data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 							<c:choose>
-								<c:when test="${board.riskLevel eq 'DANGER'}"><span class="badge badge-danger-custom mb-2 align-self-start">危険</span></c:when>
-								<c:when test="${board.riskLevel eq 'WARNING'}"><span class="badge badge-warning-custom mb-2 align-self-start">警戒</span></c:when>
-								<c:otherwise><span class="badge badge-caution-custom mb-2 align-self-start">注意</span></c:otherwise>
+								<c:when test="${not empty board.thumbnailUrl}">
+									<c:url var="boardThumbnailUrl"
+										value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}" />
+									<div class="preview-card-image">
+										<img src="${boardThumbnailUrl}" class="preview-card-thumb"
+											alt="目撃情報画像">
+									</div>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${board.riskLevel eq 'DANGER'}">
+											<div class="preview-card-image preview-card-image-danger">
+												<i class="bi bi-exclamation-triangle-fill"></i>
+											</div>
+										</c:when>
+										<c:when test="${board.riskLevel eq 'WARNING'}">
+											<div class="preview-card-image preview-card-image-caution">
+												<i class="bi bi-signpost-split-fill"></i>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="preview-card-image preview-card-image-safe">
+												<i class="bi bi-shield-check"></i>
+											</div>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
 							</c:choose>
-							<h5 class="card-title"><c:out value="${board.title}" /></h5>
-							<p class="mb-2 text-muted small"><i class="bi bi-geo-alt"></i> <c:out value="${board.address}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span></p>
-							<p class="small flex-grow-1"><c:out value="${board.content}" /></p>
-						</div>
-					</article>
-				</div>
+							<div class="card-body d-flex flex-column">
+								<c:choose>
+									<c:when test="${board.riskLevel eq 'DANGER'}">
+										<span class="badge badge-danger-custom mb-2 align-self-start">危険</span>
+									</c:when>
+									<c:when test="${board.riskLevel eq 'WARNING'}">
+										<span class="badge badge-warning-custom mb-2 align-self-start">警戒</span>
+									</c:when>
+									<c:otherwise>
+										<span class="badge badge-caution-custom mb-2 align-self-start">注意</span>
+									</c:otherwise>
+								</c:choose>
+								<h5 class="card-title">
+									<c:out value="${board.title}" />
+								</h5>
+								<p class="mb-2 text-muted small">
+									<i class="bi bi-geo-alt"></i>
+									<c:out value="${board.address}" />
+									<span class="ms-2"><i class="bi bi-clock"></i>
+										${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</span>
+								</p>
+								<p class="small flex-grow-1">
+									<c:out value="${board.content}" />
+								</p>
+							</div>
+						</article>
+					</div>
 				</c:if>
 			</c:forEach>
-			<c:if test="${empty boardList}"><div class="col-12"><div class="card card-jp border-0 py-4 text-center"><div class="card-body text-muted"><i class="bi bi-geo-alt fs-1 d-block mb-2"></i><p class="fw-bold mb-0">現在表示できる目撃情報はありません。</p></div></div></div></c:if>
+			<c:if test="${empty boardList}">
+				<div class="col-12">
+					<div class="card card-jp border-0 py-4 text-center">
+						<div class="card-body text-muted">
+							<i class="bi bi-geo-alt fs-1 d-block mb-2"></i>
+							<p class="fw-bold mb-0">現在表示できる目撃情報はありません。</p>
+						</div>
+					</div>
+				</div>
+			</c:if>
 		</div>
-		<div class="text-center mt-4"><a href="${pageContext.request.contextPath}/board/list" class="btn btn-jp-mustard">目撃情報をすべて見る</a></div>
+		<div class="text-center mt-4">
+			<a href="${pageContext.request.contextPath}/board/list"
+				class="btn btn-jp-mustard">目撃情報をすべて見る</a>
+		</div>
 	</section>
 
 	<%-- ===================== 커뮤니티 섹션 ===================== --%>
-	<section class="container my-5 home-preview-section home-community-section">
+	<section
+		class="container my-5 home-preview-section home-community-section">
 		<div class="section-heading-row">
-			<h3 class="section-title-jp mb-0"><span class="dash">―</span>コミュニティの最新投稿</h3>
+			<h3 class="section-title-jp mb-0">
+				<span class="dash">―</span>コミュニティの最新投稿
+			</h3>
 		</div>
 		<div class="row g-4">
 			<c:forEach var="community" items="${communityList}" end="2">
 				<div class="col-md-4 col-sm-6">
-					<article class="card h-100 report-card preview-card clickable-card" data-card-href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}">
+					<article class="card h-100 report-card preview-card clickable-card"
+						data-card-href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}">
 						<c:choose>
 							<c:when test="${not empty community.thumbnailUrl}">
-								<c:url var="communityThumbnailUrl" value="${fn:replace(community.thumbnailUrl, '/src/main/webapp', '')}"/>
+								<c:url var="communityThumbnailUrl"
+									value="${fn:replace(community.thumbnailUrl, '/src/main/webapp', '')}" />
 								<div class="preview-card-image">
-									<img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像">
+									<img src="${communityThumbnailUrl}" class="preview-card-thumb"
+										alt="コミュニティ投稿画像">
 								</div>
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="${community.category eq 'GEAR'}"><div class="preview-card-image preview-card-image-gear"><i class="bi bi-backpack-fill"></i></div></c:when>
-									<c:when test="${community.category eq 'REVIEW'}"><div class="preview-card-image preview-card-image-trail"><i class="bi bi-map-fill"></i></div></c:when>
-									<c:otherwise><div class="preview-card-image preview-card-image-talk"><i class="bi bi-people-fill"></i></div></c:otherwise>
+									<c:when test="${community.category eq 'GEAR'}">
+										<div class="preview-card-image preview-card-image-gear">
+											<i class="bi bi-backpack-fill"></i>
+										</div>
+									</c:when>
+									<c:when test="${community.category eq 'REVIEW'}">
+										<div class="preview-card-image preview-card-image-trail">
+											<i class="bi bi-map-fill"></i>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="preview-card-image preview-card-image-talk">
+											<i class="bi bi-people-fill"></i>
+										</div>
+									</c:otherwise>
 								</c:choose>
 							</c:otherwise>
 						</c:choose>
 						<div class="card-body d-flex flex-column">
 							<c:choose>
-								<c:when test="${community.category eq 'GEAR'}"><span class="badge badge-caution-custom mb-2 align-self-start">ギア</span></c:when>
-								<c:when test="${community.category eq 'REVIEW'}"><span class="badge badge-warning-custom mb-2 align-self-start">レビュー</span></c:when>
-								<c:otherwise><span class="badge badge-danger-custom mb-2 align-self-start">自由掲示板</span></c:otherwise>
+								<c:when test="${community.category eq 'GEAR'}">
+									<span class="badge badge-caution-custom mb-2 align-self-start">ギア</span>
+								</c:when>
+								<c:when test="${community.category eq 'REVIEW'}">
+									<span class="badge badge-warning-custom mb-2 align-self-start">レビュー</span>
+								</c:when>
+								<c:otherwise>
+									<span class="badge badge-danger-custom mb-2 align-self-start">自由掲示板</span>
+								</c:otherwise>
 							</c:choose>
-							<h5 class="card-title"><c:out value="${community.title}" /></h5>
-							<p class="mb-2 text-muted small"><i class="bi bi-person-circle"></i> <c:out value="${community.writerName}" /> <span class="ms-2"><i class="bi bi-clock"></i> ${fn:substring(fn:replace(community.regDate, 'T', ' '), 0, 16)}</span></p>
-							<p class="small flex-grow-1"><i class="bi bi-heart"></i> ${community.likeCnt} <span class="ms-2"><i class="bi bi-chat-square-text"></i> ${community.commentCnt}</span></p>
+							<h5 class="card-title">
+								<c:out value="${community.title}" />
+							</h5>
+							<p class="mb-2 text-muted small">
+								<i class="bi bi-person-circle"></i>
+								<c:out value="${community.writerName}" />
+								<span class="ms-2"><i class="bi bi-clock"></i>
+									${fn:substring(fn:replace(community.regDate, 'T', ' '), 0, 16)}</span>
+							</p>
+							<p class="small flex-grow-1">
+								<i class="bi bi-heart"></i> ${community.likeCnt} <span
+									class="ms-2"><i class="bi bi-chat-square-text"></i>
+									${community.commentCnt}</span>
+							</p>
 						</div>
 					</article>
 				</div>
 			</c:forEach>
-			<c:if test="${empty communityList}"><div class="col-12"><div class="card card-jp border-0 py-4 text-center"><div class="card-body text-muted"><i class="bi bi-chat-square-dots fs-1 d-block mb-2"></i><p class="fw-bold mb-0">まだコミュニティ投稿がありません。</p></div></div></div></c:if>
+			<c:if test="${empty communityList}">
+				<div class="col-12">
+					<div class="card card-jp border-0 py-4 text-center">
+						<div class="card-body text-muted">
+							<i class="bi bi-chat-square-dots fs-1 d-block mb-2"></i>
+							<p class="fw-bold mb-0">まだコミュニティ投稿がありません。</p>
+						</div>
+					</div>
+				</div>
+			</c:if>
 		</div>
-		<div class="text-center mt-4"><a href="${pageContext.request.contextPath}/community/list" class="btn btn-jp-mustard">コミュニティをすべて見る</a></div>
+		<div class="text-center mt-4">
+			<a href="${pageContext.request.contextPath}/community/list"
+				class="btn btn-jp-mustard">コミュニティをすべて見る</a>
+		</div>
 	</section>
 
 	<%-- ===================== 안전에 관한 안내 ===================== --%>
@@ -411,11 +533,10 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="d-grid gap-2">
-							<a href="tel:110" class="btn btn-danger fw-bold">
-								<i class="bi bi-telephone-fill me-2"></i>緊急の危険：警察 110
-							</a>
-							<a href="tel:119" class="btn btn-jp-outline fw-bold">
-								<i class="bi bi-heart-pulse-fill me-2"></i>けが人：消防・救急 119
+							<a href="tel:110" class="btn btn-danger fw-bold"> <i
+								class="bi bi-telephone-fill me-2"></i>緊急の危険：警察 110
+							</a> <a href="tel:119" class="btn btn-jp-outline fw-bold"> <i
+								class="bi bi-heart-pulse-fill me-2"></i>けが人：消防・救急 119
 							</a>
 						</div>
 					</div>
@@ -426,38 +547,72 @@
 
 	<%-- ===================== Footer ===================== --%>
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<script src="/resources/js/index.js"></script>
 	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			document.querySelectorAll(".clickable-card[data-card-href]").forEach(function (card) {
-				card.setAttribute("tabindex", "0");
-				card.setAttribute("role", "link");
-				card.addEventListener("click", function () {
-					window.location.href = card.dataset.cardHref;
-				});
-				card.addEventListener("keydown", function (event) {
-					if (event.key === "Enter" || event.key === " ") {
-						event.preventDefault();
-						window.location.href = card.dataset.cardHref;
-					}
-				});
-			});
+		document
+				.addEventListener(
+						"DOMContentLoaded",
+						function() {
+							document
+									.querySelectorAll(
+											".clickable-card[data-card-href]")
+									.forEach(
+											function(card) {
+												card.setAttribute("tabindex",
+														"0");
+												card.setAttribute("role",
+														"link");
+												card
+														.addEventListener(
+																"click",
+																function() {
+																	window.location.href = card.dataset.cardHref;
+																});
+												card
+														.addEventListener(
+																"keydown",
+																function(event) {
+																	if (event.key === "Enter"
+																			|| event.key === " ") {
+																		event
+																				.preventDefault();
+																		window.location.href = card.dataset.cardHref;
+																	}
+																});
+											});
 
-			document.querySelectorAll(".home-community-section .preview-card-thumb").forEach(function (image) {
-				image.addEventListener("error", function () {
-					var imageBox = image.closest(".preview-card-image");
-					if (!imageBox || imageBox.dataset.fallbackApplied === "true") {
-						return;
-					}
-					imageBox.dataset.fallbackApplied = "true";
-					image.remove();
-					imageBox.classList.add("preview-card-image-talk");
-					var fallbackIcon = document.createElement("i");
-					fallbackIcon.className = "bi bi-people-fill";
-					fallbackIcon.setAttribute("aria-hidden", "true");
-					imageBox.appendChild(fallbackIcon);
-				});
-			});
-		});
+							document
+									.querySelectorAll(
+											".home-community-section .preview-card-thumb")
+									.forEach(
+											function(image) {
+												image
+														.addEventListener(
+																"error",
+																function() {
+																	var imageBox = image
+																			.closest(".preview-card-image");
+																	if (!imageBox
+																			|| imageBox.dataset.fallbackApplied === "true") {
+																		return;
+																	}
+																	imageBox.dataset.fallbackApplied = "true";
+																	image
+																			.remove();
+																	imageBox.classList
+																			.add("preview-card-image-talk");
+																	var fallbackIcon = document
+																			.createElement("i");
+																	fallbackIcon.className = "bi bi-people-fill";
+																	fallbackIcon
+																			.setAttribute(
+																					"aria-hidden",
+																					"true");
+																	imageBox
+																			.appendChild(fallbackIcon);
+																});
+											});
+						});
 	</script>
 
 	<!-- Bootstrap 5 JS -->
@@ -465,41 +620,41 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	<script>
-		(function () {
+		(function() {
 			const month = new Date().getMonth() + 1;
 			const seasonalAlerts = [
-				{
-					months: [3, 4, 5],
-					icon: "🌸",
-					message: "春の出没注意期間（3月〜5月）— 冬眠明けのクマが活動を始めます。早朝・夕方の単独行動に注意してください。",
-					guideMessage: "冬眠明けのクマは食べ物を探して行動範囲を広げます。山菜採りや散策の前に、出没マップと周辺情報を確認しましょう。"
-				},
-				{
-					months: [6, 7, 8],
-					icon: "🌿",
-					message: "夏の出没注意期間（6月〜8月）— 山や河川敷では周囲に注意し、食べ物を放置しないでください。",
-					guideMessage: "夏は親子グマが行動する時期です。子グマを見かけても近づかず、すぐにその場から離れてください。"
-				},
-				{
-					months: [9, 10, 11],
-					icon: "🍂",
-					message: "秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。入山前に出没情報を確認してください。",
-					guideMessage: "冬眠前のクマは餌を求めて活動範囲を広げます。早朝・夕方の入山は特に注意し、食べ物やゴミを屋外に放置しないでください。"
-				},
-				{
-					months: [12, 1, 2],
-					icon: "❄️",
-					message: "冬季安全確認期間（12月〜2月）— 冬でも出没情報を確認し、山間部では十分注意してください。",
-					guideMessage: "冬眠しない個体や、冬眠前後に活動するクマがいる場合があります。雪山や山間部へ出かける前にも、最新の出没情報を確認しましょう。"
-				}
-			];
-			const currentAlert = seasonalAlerts.find(function (alert) {
+					{
+						months : [ 3, 4, 5 ],
+						icon : "🌸",
+						message : "春の出没注意期間（3月〜5月）— 冬眠明けのクマが活動を始めます。早朝・夕方の単独行動に注意してください。",
+						guideMessage : "冬眠明けのクマは食べ物を探して行動範囲を広げます。山菜採りや散策の前に、出没マップと周辺情報を確認しましょう。"
+					},
+					{
+						months : [ 6, 7, 8 ],
+						icon : "🌿",
+						message : "夏の出没注意期間（6月〜8月）— 山や河川敷では周囲に注意し、食べ物を放置しないでください。",
+						guideMessage : "夏は親子グマが行動する時期です。子グマを見かけても近づかず、すぐにその場から離れてください。"
+					},
+					{
+						months : [ 9, 10, 11 ],
+						icon : "🍂",
+						message : "秋の入山特別警戒期間（9月〜11月）— 冬眠前のクマの活動が活発化しています。入山前に出没情報を確認してください。",
+						guideMessage : "冬眠前のクマは餌を求めて活動範囲を広げます。早朝・夕方の入山は特に注意し、食べ物やゴミを屋外に放置しないでください。"
+					},
+					{
+						months : [ 12, 1, 2 ],
+						icon : "❄️",
+						message : "冬季安全確認期間（12月〜2月）— 冬でも出没情報を確認し、山間部では十分注意してください。",
+						guideMessage : "冬眠しない個体や、冬眠前後に活動するクマがいる場合があります。雪山や山間部へ出かける前にも、最新の出没情報を確認しましょう。"
+					} ];
+			const currentAlert = seasonalAlerts.find(function(alert) {
 				return alert.months.includes(month);
 			});
 
 			document.getElementById("seasonAlertIcon").textContent = currentAlert.icon;
 			document.getElementById("seasonAlertText").textContent = currentAlert.message;
 			document.getElementById("seasonGuideIcon").textContent = currentAlert.icon;
+			document.getElementById("seasonGuideTitle").textContent = currentAlert.season + "の注意ポイント（" + month + "月）";
 			document.getElementById("seasonGuideText").textContent = currentAlert.guideMessage;
 		}());
 	</script>
@@ -511,7 +666,10 @@
 		let markerInfoWindow;
 		let allSightings = [];
 		let sightingMarkers = [];
-		const defaultMapCenter = { lat: 36.2, lng: 138.25 };
+		const defaultMapCenter = {
+			lat : 36.2,
+			lng : 138.25
+		};
 		const defaultMapZoom = 5.5;
 
 		// 1. Google Map 초기화 함수 (콜백 함수)
@@ -525,6 +683,8 @@
 
 			geocoder = new google.maps.Geocoder();
 			markerInfoWindow = new google.maps.InfoWindow();
+
+			renderLegendBearIcons();
 			loadSightingMarkers();
 		}
 
@@ -536,63 +696,72 @@
 			if (mapStatus) {
 				mapStatus.hidden = false;
 				mapStatus.className = "map-status is-loading";
-				mapStatus.innerHTML = '<i class="bi bi-arrow-repeat map-status-icon" aria-hidden="true"></i>' +
-					'<span>目撃情報を読み込んでいます...</span>';
+				mapStatus.innerHTML = '<i class="bi bi-arrow-repeat map-status-icon" aria-hidden="true"></i>'
+						+ '<span>目撃情報を読み込んでいます...</span>';
 			}
 
 			try {
-				const response = await fetch(contextPath + "/api/map/markers", {
-					headers: { "Accept": "application/json" }
+				const response = await
+				fetch(contextPath + "/api/map/markers", {
+					headers : {
+						"Accept" : "application/json"
+					}
 				});
 
 				if (!response.ok) {
 					throw new Error("マーカー情報の取得に失敗しました。");
 				}
 
-				const markerResponse = await response.json();
-				allSightings = Array.isArray(markerResponse.markers)
-					? markerResponse.markers
-					: [];
+				const markerResponse = await
+				response.json();
+				allSightings = Array.isArray(markerResponse.markers) ? markerResponse.markers
+						: [];
 				applyMapFilters();
 			} catch (error) {
 				console.error(error);
 				if (mapStatus) {
 					mapStatus.hidden = false;
 					mapStatus.className = "map-status is-error";
-					mapStatus.innerHTML = '<i class="bi bi-exclamation-triangle" aria-hidden="true"></i>' +
-						'<span>目撃情報を読み込めませんでした。</span>' +
-						'<button type="button" class="btn btn-sm btn-jp-outline" onclick="loadSightingMarkers()">再試行</button>';
+					mapStatus.innerHTML = '<i class="bi bi-exclamation-triangle" aria-hidden="true"></i>'
+							+ '<span>目撃情報を読み込めませんでした。</span>'
+							+ '<button type="button" class="btn btn-sm btn-jp-outline" onclick="loadSightingMarkers()">再試行</button>';
 				}
 			}
 		}
 
 		// 3. 선택한 위험도·기간 조건으로 지도 마커를 다시 표시
 		function applyMapFilters() {
-			if (!map) return;
+			if (!map)
+				return;
 
-			const selectedRisk = document.querySelector("input[name='riskFilter']:checked").id;
-			const checkedRisks = selectedRisk === "riskAll"
-				? ["DANGER", "WARNING", "CAUTION", "CLEAR"]
-				: [{
-					riskDanger: "DANGER",
-					riskWarning: "WARNING",
-					riskCaution: "CAUTION",
-					riskClear: "CLEAR"
-				}[selectedRisk]];
+			const selectedRisk = document
+					.querySelector("input[name='riskFilter']:checked").id;
+			const checkedRisks = selectedRisk === "riskAll" ? [ "DANGER",
+					"WARNING", "CAUTION", "CLEAR" ] : [ {
+				riskDanger : "DANGER",
+				riskWarning : "WARNING",
+				riskCaution : "CAUTION",
+				riskClear : "CLEAR"
+			}[selectedRisk] ];
 			const periodDays = Number(document.getElementById("periodSelect").value);
-			const cutoff = Number.isFinite(periodDays) && periodDays > 0
-				? new Date(Date.now() - periodDays * 24 * 60 * 60 * 1000)
-				: null;
+			const cutoff = Number.isFinite(periodDays) && periodDays > 0 ? new Date(
+					Date.now() - periodDays * 24 * 60 * 60 * 1000)
+					: null;
 
-			const filteredSightings = allSightings.filter(function(sighting) {
-				if (checkedRisks.indexOf(normalizeRisk(sighting.displayRisk, sighting.clearYn)) === -1) {
-					return false;
-				}
+			const filteredSightings = allSightings
+					.filter(function(sighting) {
+						if (checkedRisks.indexOf(normalizeRisk(
+								sighting.displayRisk, sighting.clearYn)) === -1) {
+							return false;
+						}
 
-				if (!cutoff) return true;
-				const eventDate = new Date(sighting.eventDate || sighting.regDate);
-				return Number.isNaN(eventDate.getTime()) || eventDate >= cutoff;
-			});
+						if (!cutoff)
+							return true;
+						const eventDate = new Date(sighting.eventDate
+								|| sighting.regDate);
+						return Number.isNaN(eventDate.getTime())
+								|| eventDate >= cutoff;
+					});
 
 			renderSightingMarkers(filteredSightings);
 		}
@@ -603,34 +772,47 @@
 			});
 			sightingMarkers = [];
 
-				const riskCounts = { DANGER: 0, WARNING: 0, CAUTION: 0, CLEAR: 0 };
+			const riskCounts = {
+				DANGER : 0,
+				WARNING : 0,
+				CAUTION : 0,
+				CLEAR : 0
+			};
 
 			sightings.forEach(function(sighting) {
-					const latitude = Number(sighting.latitude);
-					const longitude = Number(sighting.longitude);
+				const latitude = Number(sighting.latitude);
+				const longitude = Number(sighting.longitude);
 
-					if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-						return;
-					}
+				if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+					return;
+				}
 
-					const risk = normalizeRisk(sighting.displayRisk, sighting.clearYn);
-					riskCounts[risk]++;
+				const risk = normalizeRisk(sighting.displayRisk,
+						sighting.clearYn);
+				riskCounts[risk]++;
 
-					const position = { lat: latitude, lng: longitude };
-					const marker = new google.maps.Marker({
-						map: map,
-						position: position,
-						title: sighting.title || "クマ目撃情報",
-						icon: createRiskMarkerIcon(risk)
-					});
-
-					marker.addListener("click", function() {
-						markerInfoWindow.setContent(createMarkerInfoContent(sighting));
-						markerInfoWindow.open({ map: map, anchor: marker });
-					});
-
-					sightingMarkers.push(marker);
+				const position = {
+					lat : latitude,
+					lng : longitude
+				};
+				const marker = new google.maps.Marker({
+					map : map,
+					position : position,
+					title : sighting.title || "クマ目撃情報",
+					icon : createRiskMarkerIcon(risk)
 				});
+
+				marker.addListener("click", function() {
+					markerInfoWindow
+							.setContent(createMarkerInfoContent(sighting));
+					markerInfoWindow.open({
+						map : map,
+						anchor : marker
+					});
+				});
+
+				sightingMarkers.push(marker);
+			});
 
 			updateRiskCounts(riskCounts);
 
@@ -639,8 +821,8 @@
 				if (sightingMarkers.length === 0) {
 					mapStatus.hidden = false;
 					mapStatus.className = "map-status is-empty";
-					mapStatus.innerHTML = '<i class="bi bi-geo-alt" aria-hidden="true"></i>' +
-						'<span>条件に一致する目撃情報はありません。</span>';
+					mapStatus.innerHTML = '<i class="bi bi-geo-alt" aria-hidden="true"></i>'
+							+ '<span>条件に一致する目撃情報はありません。</span>';
 				} else {
 					mapStatus.hidden = true;
 				}
@@ -649,59 +831,82 @@
 
 		function createRiskMarkerIcon(displayRisk) {
 			const riskColors = {
-				DANGER: "#b23a2e",
-				WARNING: "#e3ac1f",
-				CAUTION: "#f5e39a",
-				CLEAR: "#9aa0a6"
+				DANGER : "#b23a2e",
+				WARNING : "#e3ac1f",
+				CAUTION : "#f5e39a",
+				CLEAR : "#9aa0a6"
 			};
 			const normalizedRisk = String(displayRisk || "").toUpperCase();
 			const fillColor = riskColors[normalizedRisk] || "#b23a2e";
 			const bearMarkerImages = {
-				DANGER: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZbkuMqEEXRGtEdQA/7TrA6TFsE3gfxFkgmT8T6SUFWgvmon9/f3x9jpGD2JAWzJymYPUnB7EkKZk9SMHuSgtmTFMyepGD2JAWzJymYPUnB7EkKxmkN+zyGFDZUlf///OdU7OffuyUpbCCZ44ceAeEctyKFmypNyZ4f/mBXi8zD8y0nhRtijlrs2xG3lz/IaifheZeQws34y+KlPlkkPPd0UrgRF17iN0F4/qmkcBMuvLhvEwnvYRop3IALL+2bIbyPKaRwAy68rG+H8E4uJ4UbkEvahT2ET3JBO1n1GKSwmFzMjhDe0SWksJA7NC9lV1s/BF7G7mY+BiksIpdg/pn1GKSwgAsvwPyzw0PwB+ThzadvfAiMPYICx11dSQoX8uFBTVoQ3ukwUriIPYAOX/UQeDhT5xseghzK1LOHYJwgvN8hpHABOZRpc+VjkMJgLjyQafPoh8DDmD5PfAhuYB7E9AnC++4ihUFceAjT73EPgQcwYzzpIcjwZpynPAQXDm/GecxD4OBmLIT330wKHdxgHNyMhfA3aCaFDjK0Ge+KR/AihQ4ytBnv9g+BA5tr2EMwzu0fwmsyDm3Gs4dgHHsIxrGHYJwnPAT7h3GCRzyE13Qc3IxlD8F4VzwGKXSSoc14CH+DJlLoJEM/3XGuMFyzAsLfoZoUOsnAM4UXw28tUuHaFRD+FlWk0EmGnSkMv9UKwjO6c474GyNk5iwmhR4ccrYw/FYriJzzzYd7ZwrC+apIoYMMOVsYfqsRhGckH/aYqXDWJCl0kAFnC9I1D/qUcGGfWSpnjZJCBxkwJxeuz3mneR70CXuVcGGvGRpmFVLoIAOmROL7HOGelCBN82R6lXJhv6s1zvpBCp1kSEK43/d5hXtTYj25plSsVwUX9rxSx6yeFDr5cNhg4CPc+9GHe3PYk99LFc6X4sK+pVr2d87rSGGQXLhe9vGwKUF8L64pFeuVcRr2LhGk+AzH+h5SGCgWriG3hgfNOevPdSXOep3wYZ8Wrf3e4WxVpLCQOwwPmRPkoxfXlTrpF+PC/T3C8FvKO5yvihQWqT58cAG8hKZemZ4xXX+HwvBbShDOV0UKi1RdANLUIybSM0X2twrDbzlBOF8VKSxSfAmI3891LSJ9U2R/C4bfU4JwtmpSWMSHhz05+Ct+L9e1iPTNcWGfGmfhupggnKuJFBYqDfdU/4NJJ71L+LBnSiQ15w/DeZpJ4QZSkbW85FqZ/iV609KLM3STwsPID1vq2H/B5ZaEe5aTwsO48EfOQdhzS1J4IBf+2DEI+2xNCg9VE+41X/QQDrlwvXmTgtmTFMyepGD2JAWzJymYPUnB7EkKZk9/AYTSSlYgomLuAAAAAElFTkSuQmCC",
-				WARNING: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZbjuQqEEXRmsmdv9SzugOpVtJpRO6DeRvsJI60fsIQFZB81M/v7++PMVIwe5KC2ZMUzJ6kYPYkBbMnKZg9ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBeO0hn0eQwobqsr/f/5zKvbz792SFDaQzPFDj4BwjluRwk2VpmTPD3+wq0Xm4fmWk8INMUct9u2I28sfZLWT8LxLSOFm/GXxUp8sEp57OinciAsv8ZsgPP9UUrgJF17ct4mE9zCNFG7AhZf2zRDexxRSuAEXXta3Q3gnl5PCDcgl7cIewie5oJ2segxSWEwuZkcI7+gSUljIHZqXsqutHwIvY3czH4MUFpFLMP/MegxSWMCFF2D+2eEh+APy8ObTNz4Exh5BgeOuriSFC/nwoCYtCO90GClcxB5Ah696CDycqfMND0EOZerZQzBOEN7vEFK4gBzKtLnyMUhhMBceyLR59EPgYUyfJz4ENzAPYvoE4X13kcIgLjyE6fe4h8ADmDGe9BBkeDPOUx6CC4c34zzmIXBwMxbC+28mhQ5uMA5uxkL4GzSTQgcZ2ox3xSN4kUIHGdqMd/uHwIHNNewhGOf2D+E1GYc249lDMI49BOPYQzDOEx6C/cM4wSMewms6Dm7GsodgvCsegxQ6ydBmPIS/QRMpdJKhn+44VxiuWQHh71BNCp1k4JnCi+G3Fqlw7QoIf4sqUugkw84Uht9qBeEZ3TlH/I0RMnMWk0IPDjlbGH6rFUTO+ebDvTMF4XxVpNBBhpwtDL/VCMIzkg97zFQ4a5IUOsiAswXpmgd9SriwzyyVs0ZJoYMMmJML1+e80zwP+oS9Sriw1wwNswopdJABUyLxfY5wT0qQpnkyvUq5sN/VGmf9IIVOMiQh3O/7vMK9KbGeXFMq1quCC3teqWNWTwqdfDhsMPAR7v3ow7057MnvpQrnS3Fh31It+zvndaQwSC5cL/t42JQgvhfXlIr1yjgNe5cIUnyGY30PKQwUC9eQW8OD5pz157oSZ71O+LBPi9Z+73C2KlJYyB2Gh8wJ8tGL60qd9Itx4f4eYfgt5R3OV0UKi1QfPrgAXkJTr0zPmK6/Q2H4LSUI56sihUWqLgBp6hET6Zki+1uF4becIJyvihQWKb4ExO/nuhaRvimyvwXD7ylBOFs1KSziw8OeHPwVv5frWkT65riwT42zcF1MEM7VRAoLlYZ7qv/BpJPeJXzYMyWSmvOH4TzNpHADqchaXnKtTP8SvWnpxRm6SeFh5Ictdey/4HJLwj3LSeFhXPgj5yDsuSUpPJALf+wYhH22JoWHqgn3mi96CIdcuN68ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBbOnv6McYNQLMsIBAAAAAElFTkSuQmCC",
-				CAUTION: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZNkuMqEIXR2v8S3vZ6DW9cHaYtAn8X8S+QTN6IM0lBVoIZ1M/v7++PMVIwe5KC2ZMUzJ6kYPYkBbMnKZg9ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBeO0hn0eQwobqsr/f/5zKvbz792SFDaQzPFDj4BwjluRwk2VpmTPD3+wq0Xm4fmWk8INMUct9u2I28sfZLWT8LxLSOFm/GXxUp8sEp57OinciAsv8ZsgPP9UUrgJF17ct4mE9zCNFG7AhZf2zRDexxRSuAEXXta3Q3gnl5PCDcgl7cIewie5oJ2segxSWEwuZkcI7+gSUljIHZqXsqutHwIvY3czH4MUFpFLMP/MegxSWMCFF2D+2eEh+APy8ObTNz4Exh5BgeOuriSFC/nwoCYtCO90GClcxB5Ah696CDycqfMND0EOZerZQzBOEN7vEFK4gBzKtLnyMUhhMBceyLR59EPgYUyfJz4ENzAPYvoE4X13kcIgLjyE6fe4h8ADmDGe9BBkeDPOUx6CC4c34zzmIXBwMxbC+28mhQ5uMA5uxkL4GzSTQgcZ2ox3xSN4kUIHGdqMd/uHwIHNNewhGOf2D+E1GYc249lDMI49BOPYQzDOEx6C/cM4wSMewms6Dm7GsodgvCsegxQ6ydBmPIS/QRMpdJKhn+44VxiuWQHh71BNCp1k4JnCi+G3Fqlw7QoIf4sqUugkw84Uht9qBeEZ3TlH/I0RMnMWk0IPDjlbGH6rFUTO+ebDvTMF4XxVpNBBhpwtDL/VCMIzkg97zFQ4a5IUOsiAswXpmgd9SriwzyyVs0ZJoYMMmJML1+e80zwP+oS9Sriw1wwNswopdJABUyLxfY5wT0qQpnkyvUq5sN/VGmf9IIVOMiQh3O/7vMK9KbGeXFMq1quCC3teqWNWTwqdfDhsMPAR7v3ow7057MnvpQrnS3Fh31It+zvndaQwSC5cL/t42JQgvhfXlIr1yjgNe5cIUnyGY30PKQwUC9eQW8OD5pz157oSZ71O+LBPi9Z+73C2KlJYyB2Gh8wJ8tGL60qd9Itx4f4eYfgt5R3OV0UKi1QfPrgAXkJTr0zPmK6/Q2H4LSUI56sihUWqLgBp6hET6Zki+1uF4becIJyvihQWKb4ExO/nuhaRvimyvwXD7ylBOFs1KSziw8OeHPwVv5frWkT65riwT42zcF1MEM7VRAoLlYZ7qv/BpJPeJXzYMyWSmvOH4TzNpHADqchaXnKtTP8SvWnpxRm6SeFh5Ictdey/4HJLwj3LSeFhXPgj5yDsuSUpPJALf+wYhH22JoWHqgn3mi96CIdcuN68ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBbOnvwyTvN/Xsk40AAAAAElFTkSuQmCC",
-				CLEAR: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZNkuMqEIXR2v8S3qhHb5vVYdoi8HcR/wLJ5I04kxRkJZhB/fz+/v4YIwWzJymYPUnB7EkKZk9SMHuSgtmTFMyepGD2JAWzJymYPUnB7EkKZk9SME5r2OcxpLChqvz353+nYj//3i1JYQPJHD/0CAjnuBUp3FRpSvb88Ae7WmQenm85KdwQc9Ri3464vfxBVjsJz7uEFG7GXxYv9cki4bmnk8KNuPASvwnC808lhZtw4cV9m0h4D9NI4QZceGnfDOF9TCGFG3DhZX07hHdyOSncgFzSLuwhfJIL2smqxyCFxeRidoTwji4hhYXcoXkpu9r6IfAydjfzMUhhEbkE88+sxyCFBVx4AeafHR6CPyAPbz5940Ng7BEUOO7qSlK4kA8PatKC8E6HkcJF7AF0+KqHwMOZOt/wEORQpp49BOME4f0OIYULyKFMmysfgxQGc+GBTJtHPwQexvR54kNwA/Mgpk8Q3ncXKQziwkOYfo97CDyAGeNJD0GGN+M85SG4cHgzzmMeAgc3YyG8/2ZS6OAG4+BmLIS/QTMpdJChzXhXPIIXKXSQoc14t38IHNhcwx6CcW7/EF6TcWgznj0E49hDMI49BOM84SHYP4wTPOIhvKbj4GYsewjGu+IxSKGTDG3GQ/gbNJFCJxn66Y5zheGaFRD+DtWk0EkGnim8GH5rkQrXroDwt6gihU4y7Exh+K1WEJ7RnXPE3xghM2cxKfTgkLOF4bdaQeScbz7cO1MQzldFCh1kyNnC8FuNIDwj+bDHTIWzJkmhgww4W5CuedCnhAv7zFI5a5QUOsiAOblwfc47zfOgT9irhAt7zdAwq5BCBxkwJRLf5wj3pARpmifTq5QL+12tcdYPUugkQxLC/b7PK9ybEuvJNaVivSq4sOeVOmb1pNDJh8MGAx/h3o8+3JvDnvxeqnC+FBf2LdWyv3NeRwqD5ML1so+HTQnie3FNqVivjNOwd4kgxWc41veQwkCxcA25NTxozll/ritx1uuED/u0aO33DmerIoWF3GF4yJwgH724rtRJvxgX7u8Rht9S3uF8VaSwSPXhgwvgJTT1yvSM6fo7FIbfUoJwvipSWKTqApCmHjGRnimyv1UYfssJwvmqSGGR4ktA/H6uaxHpmyL7WzD8nhKEs1WTwiI+POzJwV/xe7muRaRvjgv71DgL18UE4VxNpLBQabin+h9MOuldwoc9UyKpOX8YztNMCjeQiqzlJdfK9C/Rm5ZenKGbFB5GfthSx/4LLrck3LOcFB7GhT9yDsKeW5LCA7nwx45B2GdrUniomnCv+aKHcMiF682bFMyepGD2JAWzJymYPUnB7EkKZk9SMHv6C25nyUVj7iuQAAAAAElFTkSuQmCC"
+				DANGER : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZbkuMqEEXRGtEdQA/7TrA6TFsE3gfxFkgmT8T6SUFWgvmon9/f3x9jpGD2JAWzJymYPUnB7EkKZk9SMHuSgtmTFMyepGD2JAWzJymYPUnB7EkKxmkN+zyGFDZUlf///OdU7OffuyUpbCCZ44ceAeEctyKFmypNyZ4f/mBXi8zD8y0nhRtijlrs2xG3lz/IaifheZeQws34y+KlPlkkPPd0UrgRF17iN0F4/qmkcBMuvLhvEwnvYRop3IALL+2bIbyPKaRwAy68rG+H8E4uJ4UbkEvahT2ET3JBO1n1GKSwmFzMjhDe0SWksJA7NC9lV1s/BF7G7mY+BiksIpdg/pn1GKSwgAsvwPyzw0PwB+ThzadvfAiMPYICx11dSQoX8uFBTVoQ3ukwUriIPYAOX/UQeDhT5xseghzK1LOHYJwgvN8hpHABOZRpc+VjkMJgLjyQafPoh8DDmD5PfAhuYB7E9AnC++4ihUFceAjT73EPgQcwYzzpIcjwZpynPAQXDm/GecxD4OBmLIT330wKHdxgHNyMhfA3aCaFDjK0Ge+KR/AihQ4ytBnv9g+BA5tr2EMwzu0fwmsyDm3Gs4dgHHsIxrGHYJwnPAT7h3GCRzyE13Qc3IxlD8F4VzwGKXSSoc14CH+DJlLoJEM/3XGuMFyzAsLfoZoUOsnAM4UXw28tUuHaFRD+FlWk0EmGnSkMv9UKwjO6c474GyNk5iwmhR4ccrYw/FYriJzzzYd7ZwrC+apIoYMMOVsYfqsRhGckH/aYqXDWJCl0kAFnC9I1D/qUcGGfWSpnjZJCBxkwJxeuz3mneR70CXuVcGGvGRpmFVLoIAOmROL7HOGelCBN82R6lXJhv6s1zvpBCp1kSEK43/d5hXtTYj25plSsVwUX9rxSx6yeFDr5cNhg4CPc+9GHe3PYk99LFc6X4sK+pVr2d87rSGGQXLhe9vGwKUF8L64pFeuVcRr2LhGk+AzH+h5SGCgWriG3hgfNOevPdSXOep3wYZ8Wrf3e4WxVpLCQOwwPmRPkoxfXlTrpF+PC/T3C8FvKO5yvihQWqT58cAG8hKZemZ4xXX+HwvBbShDOV0UKi1RdANLUIybSM0X2twrDbzlBOF8VKSxSfAmI3891LSJ9U2R/C4bfU4JwtmpSWMSHhz05+Ct+L9e1iPTNcWGfGmfhupggnKuJFBYqDfdU/4NJJ71L+LBnSiQ15w/DeZpJ4QZSkbW85FqZ/iV609KLM3STwsPID1vq2H/B5ZaEe5aTwsO48EfOQdhzS1J4IBf+2DEI+2xNCg9VE+41X/QQDrlwvXmTgtmTFMyepGD2JAWzJymYPUnB7EkKZk9/AYTSSlYgomLuAAAAAElFTkSuQmCC",
+				WARNING : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZbjuQqEEXRmsmdv9SzugOpVtJpRO6DeRvsJI60fsIQFZB81M/v7++PMVIwe5KC2ZMUzJ6kYPYkBbMnKZg9ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBeO0hn0eQwobqsr/f/5zKvbz792SFDaQzPFDj4BwjluRwk2VpmTPD3+wq0Xm4fmWk8INMUct9u2I28sfZLWT8LxLSOFm/GXxUp8sEp57OinciAsv8ZsgPP9UUrgJF17ct4mE9zCNFG7AhZf2zRDexxRSuAEXXta3Q3gnl5PCDcgl7cIewie5oJ2segxSWEwuZkcI7+gSUljIHZqXsqutHwIvY3czH4MUFpFLMP/MegxSWMCFF2D+2eEh+APy8ObTNz4Exh5BgeOuriSFC/nwoCYtCO90GClcxB5Ah696CDycqfMND0EOZerZQzBOEN7vEFK4gBzKtLnyMUhhMBceyLR59EPgYUyfJz4ENzAPYvoE4X13kcIgLjyE6fe4h8ADmDGe9BBkeDPOUx6CC4c34zzmIXBwMxbC+28mhQ5uMA5uxkL4GzSTQgcZ2ox3xSN4kUIHGdqMd/uHwIHNNewhGOf2D+E1GYc249lDMI49BOPYQzDOEx6C/cM4wSMewms6Dm7GsodgvCsegxQ6ydBmPIS/QRMpdJKhn+44VxiuWQHh71BNCp1k4JnCi+G3Fqlw7QoIf4sqUugkw84Uht9qBeEZ3TlH/I0RMnMWk0IPDjlbGH6rFUTO+ebDvTMF4XxVpNBBhpwtDL/VCMIzkg97zFQ4a5IUOsiAswXpmgd9SriwzyyVs0ZJoYMMmJML1+e80zwP+oS9Sriw1wwNswopdJABUyLxfY5wT0qQpnkyvUq5sN/VGmf9IIVOMiQh3O/7vMK9KbGeXFMq1quCC3teqWNWTwqdfDhsMPAR7v3ow7057MnvpQrnS3Fh31It+zvndaQwSC5cL/t42JQgvhfXlIr1yjgNe5cIUnyGY30PKQwUC9eQW8OD5pz157oSZ71O+LBPi9Z+73C2KlJYyB2Gh8wJ8tGL60qd9Itx4f4eYfgt5R3OV0UKi1QfPrgAXkJTr0zPmK6/Q2H4LSUI56sihUWqLgBp6hET6Zki+1uF4becIJyvihQWKb4ExO/nuhaRvimyvwXD7ylBOFs1KSziw8OeHPwVv5frWkT65riwT42zcF1MEM7VRAoLlYZ7qv/BpJPeJXzYMyWSmvOH4TzNpHADqchaXnKtTP8SvWnpxRm6SeFh5Ictdey/4HJLwj3LSeFhXPgj5yDsuSUpPJALf+wYhH22JoWHqgn3mi96CIdcuN68ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBbOnv6McYNQLMsIBAAAAAElFTkSuQmCC",
+				CAUTION : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZNkuMqEIXR2v8S3vZ6DW9cHaYtAn8X8S+QTN6IM0lBVoIZ1M/v7++PMVIwe5KC2ZMUzJ6kYPYkBbMnKZg9ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBeO0hn0eQwobqsr/f/5zKvbz792SFDaQzPFDj4BwjluRwk2VpmTPD3+wq0Xm4fmWk8INMUct9u2I28sfZLWT8LxLSOFm/GXxUp8sEp57OinciAsv8ZsgPP9UUrgJF17ct4mE9zCNFG7AhZf2zRDexxRSuAEXXta3Q3gnl5PCDcgl7cIewie5oJ2segxSWEwuZkcI7+gSUljIHZqXsqutHwIvY3czH4MUFpFLMP/MegxSWMCFF2D+2eEh+APy8ObTNz4Exh5BgeOuriSFC/nwoCYtCO90GClcxB5Ah696CDycqfMND0EOZerZQzBOEN7vEFK4gBzKtLnyMUhhMBceyLR59EPgYUyfJz4ENzAPYvoE4X13kcIgLjyE6fe4h8ADmDGe9BBkeDPOUx6CC4c34zzmIXBwMxbC+28mhQ5uMA5uxkL4GzSTQgcZ2ox3xSN4kUIHGdqMd/uHwIHNNewhGOf2D+E1GYc249lDMI49BOPYQzDOEx6C/cM4wSMewms6Dm7GsodgvCsegxQ6ydBmPIS/QRMpdJKhn+44VxiuWQHh71BNCp1k4JnCi+G3Fqlw7QoIf4sqUugkw84Uht9qBeEZ3TlH/I0RMnMWk0IPDjlbGH6rFUTO+ebDvTMF4XxVpNBBhpwtDL/VCMIzkg97zFQ4a5IUOsiAswXpmgd9SriwzyyVs0ZJoYMMmJML1+e80zwP+oS9Sriw1wwNswopdJABUyLxfY5wT0qQpnkyvUq5sN/VGmf9IIVOMiQh3O/7vMK9KbGeXFMq1quCC3teqWNWTwqdfDhsMPAR7v3ow7057MnvpQrnS3Fh31It+zvndaQwSC5cL/t42JQgvhfXlIr1yjgNe5cIUnyGY30PKQwUC9eQW8OD5pz157oSZ71O+LBPi9Z+73C2KlJYyB2Gh8wJ8tGL60qd9Itx4f4eYfgt5R3OV0UKi1QfPrgAXkJTr0zPmK6/Q2H4LSUI56sihUWqLgBp6hET6Zki+1uF4becIJyvihQWKb4ExO/nuhaRvimyvwXD7ylBOFs1KSziw8OeHPwVv5frWkT65riwT42zcF1MEM7VRAoLlYZ7qv/BpJPeJXzYMyWSmvOH4TzNpHADqchaXnKtTP8SvWnpxRm6SeFh5Ictdey/4HJLwj3LSeFhXPgj5yDsuSUpPJALf+wYhH22JoWHqgn3mi96CIdcuN68ScHsSQpmT1Iwe5KC2ZMUzJ6kYPYkBbOnvwyTvN/Xsk40AAAAAElFTkSuQmCC",
+				CLEAR : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABaCAYAAAB0bo6/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP3SURBVHhe7dZNkuMqEIXR2v8S3qhHb5vVYdoi8HcR/wLJ5I04kxRkJZhB/fz+/v4YIwWzJymYPUnB7EkKZk9SMHuSgtmTFMyepGD2JAWzJymYPUnB7EkKZk9SME5r2OcxpLChqvz353+nYj//3i1JYQPJHD/0CAjnuBUp3FRpSvb88Ae7WmQenm85KdwQc9Ri3464vfxBVjsJz7uEFG7GXxYv9cki4bmnk8KNuPASvwnC808lhZtw4cV9m0h4D9NI4QZceGnfDOF9TCGFG3DhZX07hHdyOSncgFzSLuwhfJIL2smqxyCFxeRidoTwji4hhYXcoXkpu9r6IfAydjfzMUhhEbkE88+sxyCFBVx4AeafHR6CPyAPbz5940Ng7BEUOO7qSlK4kA8PatKC8E6HkcJF7AF0+KqHwMOZOt/wEORQpp49BOME4f0OIYULyKFMmysfgxQGc+GBTJtHPwQexvR54kNwA/Mgpk8Q3ncXKQziwkOYfo97CDyAGeNJD0GGN+M85SG4cHgzzmMeAgc3YyG8/2ZS6OAG4+BmLIS/QTMpdJChzXhXPIIXKXSQoc14t38IHNhcwx6CcW7/EF6TcWgznj0E49hDMI49BOM84SHYP4wTPOIhvKbj4GYsewjGu+IxSKGTDG3GQ/gbNJFCJxn66Y5zheGaFRD+DtWk0EkGnim8GH5rkQrXroDwt6gihU4y7Exh+K1WEJ7RnXPE3xghM2cxKfTgkLOF4bdaQeScbz7cO1MQzldFCh1kyNnC8FuNIDwj+bDHTIWzJkmhgww4W5CuedCnhAv7zFI5a5QUOsiAOblwfc47zfOgT9irhAt7zdAwq5BCBxkwJRLf5wj3pARpmifTq5QL+12tcdYPUugkQxLC/b7PK9ybEuvJNaVivSq4sOeVOmb1pNDJh8MGAx/h3o8+3JvDnvxeqnC+FBf2LdWyv3NeRwqD5ML1so+HTQnie3FNqVivjNOwd4kgxWc41veQwkCxcA25NTxozll/ritx1uuED/u0aO33DmerIoWF3GF4yJwgH724rtRJvxgX7u8Rht9S3uF8VaSwSPXhgwvgJTT1yvSM6fo7FIbfUoJwvipSWKTqApCmHjGRnimyv1UYfssJwvmqSGGR4ktA/H6uaxHpmyL7WzD8nhKEs1WTwiI+POzJwV/xe7muRaRvjgv71DgL18UE4VxNpLBQabin+h9MOuldwoc9UyKpOX8YztNMCjeQiqzlJdfK9C/Rm5ZenKGbFB5GfthSx/4LLrck3LOcFB7GhT9yDsKeW5LCA7nwx45B2GdrUniomnCv+aKHcMiF682bFMyepGD2JAWzJymYPUnB7EkKZk9SMHv6C25nyUVj7iuQAAAAAElFTkSuQmCC"
 			};
 
 			return {
-				url: bearMarkerImages[normalizedRisk] || bearMarkerImages.DANGER,
-				scaledSize: new google.maps.Size(42, 35),
-				anchor: new google.maps.Point(21, 29)
+				url : bearMarkerImages[normalizedRisk]
+						|| bearMarkerImages.DANGER,
+				scaledSize : new google.maps.Size(42, 35),
+				anchor : new google.maps.Point(21, 29)
 			};
 		}
 
 		function createMarkerInfoContent(sighting) {
 			const contextPath = document.body.dataset.contextPath || "";
 			const targetId = Number(sighting.targetId);
-			const riskLabel = normalizeRisk(sighting.displayRisk, sighting.clearYn);
-			const detailLink = Number.isInteger(targetId)
-				? '<a href="' + contextPath + '/board/detail?boardId=' + encodeURIComponent(targetId) + '" ' +
-					'style="display:inline-block; margin-top:9px; color:#1f1f1f; font-size:12px; font-weight:700;">' +
-					'詳細を見る <i class="bi bi-arrow-right"></i></a>'
-				: '';
+			const riskLabel = normalizeRisk(sighting.displayRisk,
+					sighting.clearYn);
+			const detailLink = Number.isInteger(targetId) ? '<a href="'
+					+ contextPath
+					+ '/board/detail?boardId='
+					+ encodeURIComponent(targetId)
+					+ '" '
+					+ 'style="display:inline-block; margin-top:9px; color:#1f1f1f; font-size:12px; font-weight:700;">'
+					+ '詳細を見る <i class="bi bi-arrow-right"></i></a>'
+					: '';
 
-			return '<div style="max-width:240px; padding:4px;">' +
-				'<strong style="display:block; margin-bottom:6px;">' + escapeHtml(sighting.title || "クマ目撃情報") + '</strong>' +
-				'<div style="font-size:12px; color:#6b6355;">危険度: ' + escapeHtml(riskLabel) + '</div>' +
-				'<div style="font-size:12px; color:#6b6355; margin-top:3px;">' + escapeHtml(sighting.address || "住所情報なし") + '</div>' +
-				detailLink +
-				'</div>';
+			return '<div style="max-width:240px; padding:4px;">'
+					+ '<strong style="display:block; margin-bottom:6px;">'
+					+ escapeHtml(sighting.title || "クマ目撃情報")
+					+ '</strong>'
+					+ '<div style="font-size:12px; color:#6b6355;">危険度: '
+					+ escapeHtml(riskLabel)
+					+ '</div>'
+					+ '<div style="font-size:12px; color:#6b6355; margin-top:3px;">'
+					+ escapeHtml(sighting.address || "住所情報なし") + '</div>'
+					+ detailLink + '</div>';
+		}
+
+		function renderLegendBearIcons() {
+			document.querySelectorAll(".legend-bear").forEach(function(image) {
+				image.src = createRiskMarkerIcon(image.dataset.risk).url;
+			});
 		}
 
 		function normalizeRisk(displayRisk, clearYn) {
-			if (String(clearYn || "").toUpperCase() === "Y") return "CLEAR";
+			if (String(clearYn || "").toUpperCase() === "Y")
+				return "CLEAR";
 			const risk = String(displayRisk || "").toUpperCase();
-			if (risk === "DANGER") return "DANGER";
-			if (risk === "WARNING") return "WARNING";
-			if (risk === "CLEAR") return "CLEAR";
+			if (risk === "DANGER")
+				return "DANGER";
+			if (risk === "WARNING")
+				return "WARNING";
+			if (risk === "CLEAR")
+				return "CLEAR";
 			return "CAUTION";
 		}
 
 		function updateRiskCounts(riskCounts) {
-			document.getElementById("dangerCount").textContent = riskCounts.DANGER + "件";
-			document.getElementById("warningCount").textContent = riskCounts.WARNING + "件";
-			document.getElementById("cautionCount").textContent = riskCounts.CAUTION + "件";
-			document.getElementById("clearCount").textContent = riskCounts.CLEAR + "件";
+			document.getElementById("dangerCount").textContent = riskCounts.DANGER
+					+ "件";
+			document.getElementById("warningCount").textContent = riskCounts.WARNING
+					+ "件";
+			document.getElementById("cautionCount").textContent = riskCounts.CAUTION
+					+ "件";
+			document.getElementById("clearCount").textContent = riskCounts.CLEAR
+					+ "件";
 		}
 
 		function escapeHtml(value) {
@@ -712,7 +917,8 @@
 
 		// 3. 지역 검색 버튼 기능 (Geocoding)
 		function searchArea() {
-			const address = document.getElementById("areaSearchInput").value.trim();
+			const address = document.getElementById("areaSearchInput").value
+					.trim();
 			applyMapFilters();
 			if (!address) {
 				return;
@@ -738,10 +944,12 @@
 					}
 				});
 
-		document.querySelectorAll("#riskAll, #riskDanger, #riskWarning, #riskCaution, #riskClear, #periodSelect")
-			.forEach(function(filterInput) {
-				filterInput.addEventListener("change", applyMapFilters);
-			});
+		document
+				.querySelectorAll(
+						"#riskAll, #riskDanger, #riskWarning, #riskCaution, #riskClear, #periodSelect")
+				.forEach(function(filterInput) {
+					filterInput.addEventListener("change", applyMapFilters);
+				});
 
 		// 4. 로그인 판별 후 제보 페이지 이동
 		function checkLoginAndReport() {
@@ -757,6 +965,6 @@
 		}
 	</script>
 	<script async
-        src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
+		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
 </body>
 </html>
