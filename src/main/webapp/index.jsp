@@ -144,7 +144,7 @@
 								<span><img class="legend-bear" data-risk="DANGER" alt="">危険（DANGER）</span>
 								<span id="dangerCount" class="map-risk-count danger">0件</span>
 							</p>
-							<small class="text-muted d-block ps-3">姿を目撃・撮影</small>
+							<small class="text-muted d-block map-legend-description">姿を目撃・撮影</small>
 						</div>
 
 						<div class="mb-3">
@@ -152,7 +152,7 @@
 								<span><img class="legend-bear" data-risk="WARNING" alt="">警戒（WARNING）</span>
 								<span id="warningCount" class="map-risk-count warning">0件</span>
 							</p>
-							<small class="text-muted d-block ps-3">足跡・痕跡を発見</small>
+							<small class="text-muted d-block map-legend-description">足跡・痕跡を発見</small>
 						</div>
 
 						<div>
@@ -160,7 +160,7 @@
 								<span><img class="legend-bear" data-risk="CAUTION" alt="">注意（CAUTION）</span>
 								<span id="cautionCount" class="map-risk-count caution">0件</span>
 							</p>
-							<small class="text-muted d-block ps-3">鳴き声・気配を感知</small>
+							<small class="text-muted d-block map-legend-description">鳴き声・気配を感知</small>
 						</div>
 
 						<div>
@@ -168,7 +168,7 @@
 								<span><img class="legend-bear" data-risk="CLEAR" alt="">解除（CLEAR）</span>
 								<span id="clearCount" class="map-risk-count clear">0件</span>
 							</p>
-							<small class="text-muted d-block ps-3">危険解除済み</small>
+							<small class="text-muted d-block map-legend-description">危険解除済み</small>
 						</div>
 					</div>
 				</div>

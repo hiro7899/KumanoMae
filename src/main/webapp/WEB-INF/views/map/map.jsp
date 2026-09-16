@@ -98,6 +98,7 @@
 							<input type="checkbox" class="btn-check" id="riskCaution" checked>
 							<label class="btn risk-btn risk-caution" for="riskCaution">CAUTION</label>
 
+
 						</div>
 					</div>
 
@@ -128,16 +129,22 @@
 				<!-- 지도 범례 -->
 				<div class="map-legend">
 					<h6>危険度</h6>
+
 					<p>
-						<span class="legend-dot risk-danger-dot"></span> DANGER
-					</p>
-					<p>
-						<span class="legend-dot risk-warning-dot"></span> WARNING
-					</p>
-					<p>
-						<span class="legend-dot risk-caution-dot"></span> CAUTION
+						<img class="legend-bear" data-risk="DANGER" alt=""> DANGER
 					</p>
 
+					<p>
+						<img class="legend-bear" data-risk="WARNING" alt=""> WARNING
+					</p>
+
+					<p>
+						<img class="legend-bear" data-risk="CAUTION" alt=""> CAUTION
+					</p>
+
+					<p>
+						<img class="legend-bear" data-risk="CLEAR" alt=""> CLEAR
+					</p>
 				</div>
 
 			</div>

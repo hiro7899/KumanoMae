@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('form[method="post"]').forEach(function (form) {
         form.addEventListener("submit", function (event) {
+            if (event.defaultPrevented) {
+                return;
+            }
+
             if (form.dataset.submitting === "true") {
                 event.preventDefault();
                 return;
