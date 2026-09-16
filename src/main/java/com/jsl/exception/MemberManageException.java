@@ -1,4 +1,4 @@
-package com.jsl.exeption;
+package com.jsl.exception;
 
 public class MemberManageException extends RuntimeException {
 

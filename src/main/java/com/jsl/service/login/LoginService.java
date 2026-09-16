@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import com.jsl.dao.AuthDao;
 import com.jsl.dto.member.LoginUserDto;
 import com.jsl.dto.member.MemberDto;
-import com.jsl.exeption.LoginException;
+import com.jsl.exception.LoginException;
 import com.jsl.service.Command;
 import com.jsl.util.PasswordUtil;
 

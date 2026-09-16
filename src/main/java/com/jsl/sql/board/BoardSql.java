@@ -87,4 +87,18 @@ public class BoardSql {
         )
         WHERE ROWNUM <= ?
         """;
+    
+    // 제보 단건 조회 (상세 화면용)
+    public static final String SELECT_BY_ID = """
+        SELECT BOARD_ID, MEMBER_ID, TITLE, CONTENT, RISK_LEVEL, LATITUDE, LONGITUDE,
+               ADDRESS, SIGHTING_DATE, SITUATION_TAG, VIEW_CNT, STATUS, CLEAR_YN,
+               CLEAR_DATE, CLEAR_MEMO, REG_DATE, MOD_DATE
+          FROM BOARD
+         WHERE BOARD_ID = ?
+        """;
+
+    // 조회수 증가
+    public static final String UPDATE_VIEW_CNT = """
+        UPDATE BOARD SET VIEW_CNT = VIEW_CNT + 1 WHERE BOARD_ID = ?
+        """;
 }
