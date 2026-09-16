@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.AdminActionException;
+import com.jsl.exception.AdminActionException;
 
 public class AdminServiceSupport {
 

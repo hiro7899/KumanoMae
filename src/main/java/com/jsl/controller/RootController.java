@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jsl.exeption.EmailTokenException;
-import com.jsl.exeption.FindIdException;
-import com.jsl.exeption.LoginException;
-import com.jsl.exeption.SignUpException;
+import com.jsl.exception.EmailTokenException;
+import com.jsl.exception.FindIdException;
+import com.jsl.exception.LoginException;
+import com.jsl.exception.SignUpException;
 import com.jsl.service.IndexService;
 import com.jsl.service.login.LoginService;
 import com.jsl.service.login.LogoutService;
@@ -25,7 +25,7 @@ import com.jsl.service.signup.SignUpService;
         "/", "/index",
         "/login", "/logout", "/signup", "/signup/complete",
         "/find_id", "/find_pw",
-        "/reset-password",
+        "/reset-password","/reset-password/complete",
         "/verify-email",
 })
 public class RootController extends HttpServlet {
@@ -138,7 +138,7 @@ public class RootController extends HttpServlet {
 		    } else {
 		        try {
 		            resetPasswordService.doCommand(request, response);
-		            response.sendRedirect("/login");
+		            response.sendRedirect("/WEB-INF/views/auth/reset_password_complete.jsp");
 		            return;
 		        } catch (EmailTokenException e) {
 		            request.setAttribute("errorMsg", e.getMessage());
@@ -148,7 +148,7 @@ public class RootController extends HttpServlet {
 		        }
 		    }
 		    break;
-		    
+
 		case "/verify-email":
 		    page = "/WEB-INF/views/auth/verify_email.jsp";
 		    break;

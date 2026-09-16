@@ -26,7 +26,7 @@ import com.jsl.dao.board.BoardFileDao;
 import com.jsl.dto.board.BoardDto;
 import com.jsl.dto.board.BoardFileDto;
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.BoardReportException;
+import com.jsl.exception.BoardReportException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 import com.jsl.util.UploadPathUtil;

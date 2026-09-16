@@ -14,7 +14,7 @@ import com.jsl.dao.community.CommunityFileDao;
 import com.jsl.dao.community.CommunityLikeDao;
 import com.jsl.dto.community.CommunityBoardDto;
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.CommunityException;
+import com.jsl.exception.CommunityException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 

@@ -1,4 +1,4 @@
-package com.jsl.exeption;
+package com.jsl.exception;
 
 public class CommunityException extends RuntimeException {
     private static final long serialVersionUID = 1L;
