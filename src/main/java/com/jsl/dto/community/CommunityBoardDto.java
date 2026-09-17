@@ -1,6 +1,7 @@
 package com.jsl.dto.community;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CommunityBoardDto {
 	
@@ -19,6 +20,8 @@ public class CommunityBoardDto {
 	private String writerName; // MEMBER.USER_NAME JOIN 결과
 	private int commentCnt;    // COMMUNITY_COMMENT 건수
 	private String thumbnailUrl; // 첫 번째 첨부 이미지 웹 경로, 없으면 null
+	
+	private List<CommunityFileDto> fileList;
 	
 	public Long getCBoardId() {
 		return cBoardId;
@@ -109,5 +112,11 @@ public class CommunityBoardDto {
 	}
 	public void setThumbnailUrl(String thumbnailUrl) {
 		this.thumbnailUrl = thumbnailUrl;
+	}
+	public List<CommunityFileDto> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<CommunityFileDto> fileList) {
+		this.fileList = fileList;
 	}
 }

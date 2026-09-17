@@ -101,4 +101,14 @@ public class BoardSql {
     public static final String UPDATE_VIEW_CNT = """
         UPDATE BOARD SET VIEW_CNT = VIEW_CNT + 1 WHERE BOARD_ID = ?
         """;
+    
+    //마이페이지 본인 게시글
+    public static final String SELECT_BY_MEMBER_ID = """
+    	    SELECT BOARD_ID, MEMBER_ID, TITLE, CONTENT, RISK_LEVEL, LATITUDE, LONGITUDE,
+    	           ADDRESS, SIGHTING_DATE, SITUATION_TAG, VIEW_CNT, STATUS, CLEAR_YN,
+    	           CLEAR_DATE, CLEAR_MEMO, REG_DATE, MOD_DATE
+    	      FROM BOARD
+    	     WHERE MEMBER_ID = ?
+    	     ORDER BY REG_DATE DESC
+    	    """;
 }
