@@ -542,6 +542,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	<!-- Google Map 및 관련 로직 -->
 	<script async
-		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places&language=ja&region=JP"></script>
 </body>
 </html>
