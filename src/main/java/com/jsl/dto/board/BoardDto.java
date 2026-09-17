@@ -1,6 +1,7 @@
 package com.jsl.dto.board;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class BoardDto {
 
@@ -24,6 +25,8 @@ public class BoardDto {
 	
 	private String writerName;   // MEMBER.USER_NAME JOIN 결과
 	private String thumbnailUrl; // 첫 번째 첨부 이미지 웹 경로, 없으면 null
+	
+	private List<BoardFileDto> fileList;
 	
 	public Long getBoardId() {
 		return boardId;
@@ -139,5 +142,10 @@ public class BoardDto {
 	public void setThumbnailUrl(String thumbnailUrl) {
 		this.thumbnailUrl = thumbnailUrl;
 	}
-	
+	public List<BoardFileDto> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<BoardFileDto> fileList) {
+		this.fileList = fileList;
+	}
 }

@@ -381,4 +381,38 @@ public class CommunityBoardDao {
 
 		return list;
 	}
+	
+	public List<CommunityBoardDto> selectByMemberId(Long memberId) {
+
+	    List<CommunityBoardDto> list = new ArrayList<>();
+
+	    try (Connection conn = DBManager.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(CommunityBoardSql.SELECT_BY_MEMBER_ID)) {
+
+	        pstmt.setLong(1, memberId);
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                CommunityBoardDto dto = new CommunityBoardDto();
+	                dto.setCBoardId(rs.getLong("C_BOARD_ID"));
+	                dto.setMemberId(rs.getLong("MEMBER_ID"));
+	                dto.setCategory(rs.getString("CATEGORY"));
+	                dto.setTitle(rs.getString("TITLE"));
+	                dto.setContent(rs.getString("CONTENT"));
+	                dto.setGearName(rs.getString("GEAR_NAME"));
+	                dto.setViewCnt(rs.getInt("VIEW_CNT"));
+	                dto.setLikeCnt(rs.getInt("LIKE_CNT"));
+	                dto.setStatus(rs.getString("STATUS"));
+	                dto.setCommentCnt(rs.getInt("COMMENT_CNT"));
+	                if (rs.getTimestamp("REG_DATE") != null) {
+	                    dto.setRegDate(rs.getTimestamp("REG_DATE").toLocalDateTime());
+	                }
+	                list.add(dto);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
 }

@@ -136,4 +136,15 @@ public class CommunityBoardSql {
              ORDER BY cb.REG_DATE DESC
         ) WHERE ROWNUM <= ?
         """;
+
+    // 마이페이지용 본인 글
+    public static final String SELECT_BY_MEMBER_ID = """
+        SELECT cb.C_BOARD_ID, cb.MEMBER_ID, cb.CATEGORY, cb.TITLE, cb.CONTENT, cb.GEAR_NAME,
+               cb.VIEW_CNT, cb.LIKE_CNT, cb.STATUS, cb.REG_DATE,
+               (SELECT COUNT(*) FROM COMMUNITY_COMMENT cc
+                 WHERE cc.C_BOARD_ID = cb.C_BOARD_ID) AS COMMENT_CNT
+          FROM COMMUNITY_BOARD cb
+         WHERE cb.MEMBER_ID = ?
+         ORDER BY cb.REG_DATE DESC
+        """;
 }

@@ -268,4 +268,24 @@ public class BoardDao {
             return 0;
         }
     }
+    
+    public List<BoardDto> selectByMemberId(Long memberId) {
+
+        List<BoardDto> list = new ArrayList<BoardDto>();
+
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(BoardSql.SELECT_BY_MEMBER_ID)) {
+
+            pstmt.setLong(1, memberId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
