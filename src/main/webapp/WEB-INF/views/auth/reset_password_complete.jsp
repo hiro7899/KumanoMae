@@ -40,7 +40,7 @@
                 <p class="reset-complete-eyebrow">― ACCOUNT RECOVERY</p>
 
                 <h1 id="completeTitle">
-                    パスワードを<br>再設定しました
+                    パスワードを<br>再設定成功！
                 </h1>
 
                 <p class="reset-complete-message">
