@@ -25,7 +25,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css?v=home-sections-2">
+	href="${pageContext.request.contextPath}/resources/css/index.css?v=home-sections-3">
 
 </head>
 
@@ -235,58 +235,7 @@
 		<h3 class="section-title-jp">
 			<span class="dash">―</span>最新ニュース
 		</h3>
-		<c:choose>
-			<c:when test="${not empty newsList}">
-				<div class="row g-4">
-					<c:forEach var="news" items="${newsList}" end="2">
-						<div class="col-md-4 col-sm-6">
-							<article class="card h-100 report-card">
-								<img
-									src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600"
-									class="card-img-top" alt="クマ関連ニュース">
-
-								<div class="card-body d-flex flex-column">
-									<c:choose>
-										<c:when test="${news.sourceType eq 'SIGHTING'}">
-											<span class="badge badge-danger-custom mb-2 align-self-start">出没情報</span>
-										</c:when>
-										<c:when test="${news.sourceType eq 'SAFETY'}">
-											<span
-												class="badge badge-warning-custom mb-2 align-self-start">安全対策</span>
-										</c:when>
-										<c:otherwise>
-											<span
-												class="badge badge-caution-custom mb-2 align-self-start">自治体のお知らせ</span>
-										</c:otherwise>
-									</c:choose>
-									<h5 class="card-title">
-										<c:out value="${news.title}" />
-									</h5>
-									<p class="mb-2 text-muted small">
-										<i class="bi bi-building"></i>
-										<c:out value="${news.sourceName}" />
-										<span class="ms-2"><i class="bi bi-clock-fill"></i> <c:out
-												value="${news.publishedDate}" /></span>
-									</p>
-									<p class="small flex-grow-1">
-										<c:out value="${news.summary}" />
-									</p>
-									<a href="${news.sourceUrl}" target="_blank"
-										rel="noopener noreferrer"
-										class="btn btn-jp-outline btn-sm mt-2">原文を見る <i
-										class="bi bi-box-arrow-up-right"></i></a>
-								</div>
-							</article>
-						</div>
-					</c:forEach>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="card card-jp py-5 text-center">
-					<p class="text-muted mb-0">現在表示できるニュースはありません。</p>
-				</div>
-			</c:otherwise>
-		</c:choose>
+		<div id="homeNewsCardGrid" class="row g-4"></div>
 		<div class="text-center mt-4">
 			<a href="${pageContext.request.contextPath}/board/news"
 				class="btn btn-jp-mustard">ニュースをすべて見る</a>
@@ -308,14 +257,18 @@
 						<article
 							class="card h-100 report-card preview-card clickable-card"
 							data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
+							<c:set var="boardFallbackClass" value="preview-card-image-safe" />
+							<c:if test="${board.riskLevel eq 'DANGER'}"><c:set var="boardFallbackClass" value="preview-card-image-danger" /></c:if>
+							<c:if test="${board.riskLevel eq 'WARNING'}"><c:set var="boardFallbackClass" value="preview-card-image-caution" /></c:if>
 							<c:choose>
 								<c:when test="${not empty board.thumbnailUrl}">
 									<c:url var="boardThumbnailUrl"
 										value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}" />
-									<div class="preview-card-image">
-										<img src="${boardThumbnailUrl}" class="preview-card-thumb"
-											alt="目撃情報画像">
-									</div>
+								<div class="preview-card-image" data-fallback-class="${boardFallbackClass}">
+									<img src="${boardThumbnailUrl}" class="preview-card-thumb"
+										alt="目撃情報画像"
+										onerror="this.onerror=null;var box=this.closest('.preview-card-image');this.remove();box.classList.add('preview-card-image-fallback', box.dataset.fallbackClass);box.innerHTML='<i class=&quot;bi bi-image-alt&quot;></i>';">
+								</div>
 								</c:when>
 								<c:otherwise>
 									<c:choose>
@@ -396,13 +349,17 @@
 				<div class="col-md-4 col-sm-6">
 					<article class="card h-100 report-card preview-card clickable-card"
 						data-card-href="${pageContext.request.contextPath}/community/detail?cBoardId=${community.cBoardId}">
+						<c:set var="communityFallbackClass" value="preview-card-image-talk" />
+						<c:if test="${community.category eq 'GEAR'}"><c:set var="communityFallbackClass" value="preview-card-image-gear" /></c:if>
+						<c:if test="${community.category eq 'REVIEW'}"><c:set var="communityFallbackClass" value="preview-card-image-trail" /></c:if>
 						<c:choose>
 							<c:when test="${not empty community.thumbnailUrl}">
 								<c:url var="communityThumbnailUrl"
 									value="${fn:replace(community.thumbnailUrl, '/src/main/webapp', '')}" />
-								<div class="preview-card-image">
+								<div class="preview-card-image" data-fallback-class="${communityFallbackClass}">
 									<img src="${communityThumbnailUrl}" class="preview-card-thumb"
-										alt="コミュニティ投稿画像">
+										alt="コミュニティ投稿画像"
+										onerror="this.onerror=null;var box=this.closest('.preview-card-image');this.remove();box.classList.add('preview-card-image-fallback', box.dataset.fallbackClass);box.innerHTML='<i class=&quot;bi bi-image-alt&quot;></i>';">
 								</div>
 							</c:when>
 							<c:otherwise>
@@ -547,10 +504,44 @@
 	<script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="/resources/js/board/news-data.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var grid = document.getElementById('homeNewsCardGrid');
+	var latestNews = HARD_CODED_NEWS.slice().sort(function (a, b) {
+		return new Date(b.date) - new Date(a.date);
+	}).slice(0, 3);
+
+	function label(category) {
+		return category === 'SAFETY' ? '安全対策' : category === 'OFFICIAL' ? '自治体のお知らせ' : '出没情報';
+	}
+
+	function badgeClass(category) {
+		return category === 'SAFETY' ? 'badge-warning-custom' : category === 'OFFICIAL' ? 'badge-caution-custom' : 'badge-danger-custom';
+	}
+
+	grid.innerHTML = latestNews.map(function (news) {
+		return '<div class="col-md-4 col-sm-6"><article class="card h-100 report-card preview-card clickable-card" data-card-href="/board/news/detail?newsId=' + news.id + '" tabindex="0" role="link">'
+			+ '<div class="preview-card-image"><img src="' + newsImage(news) + '" class="preview-card-thumb" alt="' + newsEscape(news.title) + '" onerror="this.onerror=null;this.src=\'/resources/img/brand/kumano-mae-splash.png\';"></div>'
+			+ '<div class="card-body d-flex flex-column"><span class="badge ' + badgeClass(news.category) + ' mb-2 align-self-start">' + label(news.category) + '</span>'
+			+ '<h5 class="card-title">' + newsEscape(news.title) + '</h5>'
+			+ '<p class="mb-2 text-muted small"><i class="bi bi-building"></i> ' + newsEscape(news.source) + ' <span class="ms-2"><i class="bi bi-clock-fill"></i> ' + news.date + '</span></p>'
+			+ '<p class="small flex-grow-1">' + newsEscape(news.summary) + '</p></div></article></div>';
+	}).join('');
+
+	grid.querySelectorAll('.clickable-card').forEach(function (card) {
+		card.addEventListener('click', function () { location.href = card.dataset.cardHref; });
+		card.addEventListener('keydown', function (event) {
+			if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); location.href = card.dataset.cardHref; }
+		});
+	});
+});
+</script>
 
 	<!-- Google Map 및 관련 로직 -->
 	<script async
-		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places&language=ja&region=JP"></script>
 </body>
 </html>

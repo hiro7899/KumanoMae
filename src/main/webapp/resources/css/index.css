@@ -1240,12 +1240,55 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .preview-card-image {
-	height: 132px;
+	height: 198px;
 	display: grid;
 	place-items: center;
+	overflow: hidden;
 	border-bottom: 1px solid var(--color-border);
+	background: #eadbd2;
 	color: var(--color-ink);
 	font-size: 2.2rem;
+	gap: 8px;
+}
+
+.preview-card-image-danger > i,
+.preview-card-image-caution > i,
+.preview-card-image-safe > i,
+.preview-card-image-resolved > i,
+.preview-card-image-gear > i,
+.preview-card-image-trail > i,
+.preview-card-image-talk > i,
+.preview-card-image-fallback > i {
+	width: 68px;
+	height: 68px;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.65);
+	font-size: 2rem;
+}
+
+.preview-card-image-danger::after,
+.preview-card-image-caution::after,
+.preview-card-image-safe::after,
+.preview-card-image-resolved::after,
+.preview-card-image-gear::after,
+.preview-card-image-trail::after,
+.preview-card-image-talk::after,
+.preview-card-image-fallback::after {
+	content: "画像なし";
+	font-size: 0.8rem;
+	font-weight: 700;
+	opacity: 0.7;
+}
+
+.home-news-section .preview-card-image .preview-card-thumb,
+.home-preview-section .preview-card-image .preview-card-thumb {
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	object-fit: cover;
 }
 
 .preview-card-thumb {
@@ -1375,7 +1418,7 @@ h1, h2, h3, h4, h5, h6 {
 		gap: 8px;
 	}
 	.preview-card-image {
-		height: 116px;
+		height: 174px;
 	}
 }
 
