@@ -67,10 +67,13 @@
                 </c:url>
                 <div class="col-md-6 col-lg-4" data-page-item>
                     <article class="card h-100 report-card preview-card community-post-card clickable-card" data-card-href="${detailUrl}">
+                        <c:set var="communityFallbackClass" value="preview-card-image-talk" />
+                        <c:if test="${board.category eq 'GEAR'}"><c:set var="communityFallbackClass" value="preview-card-image-gear" /></c:if>
+                        <c:if test="${board.category eq 'REVIEW'}"><c:set var="communityFallbackClass" value="preview-card-image-trail" /></c:if>
                         <c:choose>
                             <c:when test="${not empty board.thumbnailUrl}">
                                 <c:url var="communityThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
-                                <div class="preview-card-image"><img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>';"></div>
+                                <div class="preview-card-image" data-fallback-class="${communityFallbackClass}"><img src="${communityThumbnailUrl}" class="preview-card-thumb" alt="コミュニティ投稿画像" onerror="this.onerror=null;var box=this.closest('.preview-card-image');this.remove();box.classList.add('preview-card-image-fallback', box.dataset.fallbackClass);box.innerHTML='<i class=&quot;bi bi-image-alt&quot;></i>';"></div>
                             </c:when>
                             <c:otherwise>
                                 <c:choose>

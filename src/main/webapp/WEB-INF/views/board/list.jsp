@@ -76,10 +76,13 @@
 			<c:forEach var="board" items="${boardList}">
 				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-clear-yn="${board.clearYn}" data-page-item>
 					<article class="card h-100 report-card shadow-sm clickable-card ${board.clearYn eq 'Y' ? 'board-card-resolved' : ''}" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
+						<c:set var="boardFallbackClass" value="preview-card-image-safe" />
+						<c:if test="${board.riskLevel eq 'DANGER'}"><c:set var="boardFallbackClass" value="preview-card-image-danger" /></c:if>
+						<c:if test="${board.riskLevel eq 'WARNING'}"><c:set var="boardFallbackClass" value="preview-card-image-caution" /></c:if>
 						<c:choose>
 							<c:when test="${not empty board.thumbnailUrl}">
 								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
-								<div class="preview-card-image"><img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像" onerror="this.onerror=null;this.closest('.preview-card-image').innerHTML='<i class=\'bi bi-image-alt\'></i>';"></div>
+								<div class="preview-card-image" data-fallback-class="${boardFallbackClass}"><img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像" onerror="this.onerror=null;var box=this.closest('.preview-card-image');this.remove();box.classList.add('preview-card-image-fallback', box.dataset.fallbackClass);box.innerHTML='<i class=&quot;bi bi-image-alt&quot;></i>';"></div>
 							</c:when>
 							<c:otherwise>
 								<c:choose>
