@@ -74,7 +74,7 @@
 		<!-- 제보 카드 목록 -->
 		<div class="row g-4" id="boardCardGrid" data-pagination data-page-size="9">
 			<c:forEach var="board" items="${boardList}">
-				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-clear-yn="${board.clearYn}" data-page-item>
+				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-clear-yn="${board.clearYn}" data-sighting-date="${board.sightingDate}" data-page-item>
 					<article class="card h-100 report-card shadow-sm clickable-card ${board.clearYn eq 'Y' ? 'board-card-resolved' : ''}" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
 						<c:set var="boardFallbackClass" value="preview-card-image-safe" />
 						<c:if test="${board.riskLevel eq 'DANGER'}"><c:set var="boardFallbackClass" value="preview-card-image-danger" /></c:if>

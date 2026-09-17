@@ -108,9 +108,13 @@
 
 					<div class="row g-2">
 						<div class="col-md-6">
-							<input type="text"
-								class="form-control form-control-sm border-secondary-subtle bg-light"
-								id="address" name="address" placeholder="自動変換住所" readonly>
+							<div class="input-group input-group-sm">
+								<input type="text"
+									class="form-control border-secondary-subtle"
+									id="address" name="address" placeholder="住所を入力してください">
+								<button type="button" id="addressSearchBtn" class="btn btn-outline-dark">住所を検索</button>
+							</div>
+							<div id="addressSearchStatus" class="form-text" aria-live="polite"></div>
 						</div>
 						<div class="col-md-3">
 							<input type="text"
@@ -244,7 +248,56 @@
 			});
 		}
 
+		// 주소 검색 결과를 지도와 좌표 입력값에 반영
+		function searchAddress() {
+			const addressInput = document.getElementById("address");
+			const statusElement = document.getElementById("addressSearchStatus");
+			const address = addressInput.value.trim();
+
+			if (!address) {
+				statusElement.textContent = "住所を入力してください。";
+				return;
+			}
+
+			if (!geocoder || !map) {
+				statusElement.textContent = "地図の読み込み中です。しばらくしてからお試しください。";
+				return;
+			}
+
+			statusElement.textContent = "住所を検索しています...";
+			geocoder.geocode({ address: address, region: "JP" }, function(results, status) {
+				if (status !== "OK" || !results[0]) {
+					statusElement.textContent = "住所が見つかりません。別の表記でお試しください。";
+					return;
+				}
+
+				const location = results[0].geometry.location;
+				const lat = location.lat();
+				const lng = location.lng();
+
+				map.setCenter(location);
+				map.setZoom(15);
+				if (marker) {
+					marker.setPosition(location);
+				} else {
+					marker = new google.maps.Marker({ position: location, map: map });
+				}
+
+				document.getElementById("latitude").value = lat.toFixed(6);
+				document.getElementById("longitude").value = lng.toFixed(6);
+				addressInput.value = results[0].formatted_address;
+				statusElement.textContent = "位置を設定しました。";
+			});
+		}
+
 		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('addressSearchBtn').addEventListener('click', searchAddress);
+			document.getElementById('address').addEventListener('keydown', function(event) {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					searchAddress();
+				}
+			});
 			
 			// 현재 현지 시간을 datetime-local 형식으로 변환
 			function formatDateTimeLocal(date) {
