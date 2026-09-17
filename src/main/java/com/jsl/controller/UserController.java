@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.jsl.dto.member.LoginUserDto;
+import com.jsl.service.user.UserPostsService;
 import com.jsl.service.user.UserProfileService;
 
 @WebServlet("/user/*")
@@ -18,6 +19,7 @@ public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final UserProfileService userProfileService = new UserProfileService();
+    private final UserPostsService userPostsService = new UserPostsService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +44,7 @@ public class UserController extends HttpServlet {
             return;
         }
 
-        String path = request.getPathInfo(); // ★ getServletPath() 대신
+        String path = request.getPathInfo();
         if (path == null) {
             path = "/profile";
         }
@@ -53,13 +55,14 @@ public class UserController extends HttpServlet {
 
         case "/profile":
         	userProfileService.doCommand(request, response);
+        	userPostsService.doCommand(request, response);
             page = "/WEB-INF/views/user/profile.jsp";
             break;
 
         case "/settings":
             page = "/WEB-INF/views/user/settings.jsp";
             break;
-
+        
         default:
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
