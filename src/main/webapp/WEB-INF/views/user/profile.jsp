@@ -60,14 +60,51 @@
                                 <div><p class="mypage-label">MY REPORTS</p><h2>私の目撃報告</h2></div>
                                 <a href="${pageContext.request.contextPath}/board/report" class="btn btn-mypage-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>報告する</a>
                             </div>
-                            <div class="mypage-empty"><i class="bi bi-exclamation-triangle"></i><p class="mb-0">目撃報告の履歴は、ここに表示されます。</p></div>
+                            <c:choose>
+                                <c:when test="${not empty myReportList}">
+                                    <ul class="mypage-mini-list">
+                                        <c:forEach var="report" items="${myReportList}">
+                                            <li class="mypage-mini-item">
+                                                <a href="${pageContext.request.contextPath}/board/detail?boardId=${report.boardId}">
+                                                    <c:choose>
+                                                        <c:when test="${report.riskLevel eq 'DANGER'}"><span class="badge badge-danger-custom">危険</span></c:when>
+                                                        <c:when test="${report.riskLevel eq 'WARNING'}"><span class="badge badge-warning-custom">警戒</span></c:when>
+                                                        <c:otherwise><span class="badge badge-caution-custom">注意</span></c:otherwise>
+                                                    </c:choose>
+                                                    <span class="mypage-mini-title"><c:out value="${report.title}"/></span>
+                                                    <span class="mypage-mini-date"><c:out value="${report.sightingDate}"/></span>
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="mypage-empty"><i class="bi bi-exclamation-triangle"></i><p class="mb-0">目撃報告の履歴は、ここに表示されます。</p></div>
+                                </c:otherwise>
+                            </c:choose>
                         </section>
                         <section class="mypage-card">
                             <div class="mypage-section-head">
                                 <div><p class="mypage-label">MY COMMUNITY</p><h2>私のコミュニティ投稿</h2></div>
                                 <a href="${pageContext.request.contextPath}/community/write" class="btn btn-mypage-primary btn-sm"><i class="bi bi-pencil-square me-1"></i>投稿する</a>
                             </div>
-                            <div class="mypage-empty"><i class="bi bi-chat-square-text"></i><p class="mb-0">投稿したコミュニティ記事は、ここに表示されます。</p></div>
+                            <c:choose>
+                                <c:when test="${not empty myCommunityList}">
+                                    <ul class="mypage-mini-list">
+                                        <c:forEach var="post" items="${myCommunityList}">
+                                            <li class="mypage-mini-item">
+                                                <a href="${pageContext.request.contextPath}/community/detail?postId=${post.postId}">
+                                                    <span class="mypage-mini-title"><c:out value="${post.title}"/></span>
+                                                    <span class="mypage-mini-date"><c:out value="${post.regDate}"/></span>
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="mypage-empty"><i class="bi bi-chat-square-text"></i><p class="mb-0">投稿したコミュニティ記事は、ここに表示されます。</p></div>
+                                </c:otherwise>
+                            </c:choose>
                         </section>
                     </div>
                 </div>
@@ -104,17 +141,21 @@
                 }
             );
 
+            // 서버는 success / message 형태의 JSON을 내려줌
             const data = await response.json();
 
             if (data.success) {
                 action.innerHTML = '<p class="resend-verification-success mb-0"><i class="bi bi-check-circle-fill me-1"></i>送信しました</p>';
+                // 버튼 자체가 사라지므로 재클릭은 자연히 불가능 (최소 5초 요건 충족)
             } else {
+                // 서버가 내려준 메시지를 그대로 표시 (예: 이미 인증됨, 세션 만료 등)
                 throw new Error(data.message || "メール送信に失敗しました。");
             }
         } catch (error) {
             message.textContent = error.message || "通信エラーが発生しました。しばらくしてから再度お試しください。";
             message.classList.add("is-error");
 
+            // 실패 시 연타 방지: 최소 5초간 버튼 비활성화 유지
             window.setTimeout(function () {
                 resendButton.disabled = false;
                 message.textContent = "";
