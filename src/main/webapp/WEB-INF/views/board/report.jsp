@@ -365,6 +365,6 @@
 
 	<!-- Google Maps API: initMap 선언 후 로드하여 콜백 실행 순서를 보장 -->
 	<script src="/resources/js/common/submit-guard.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places&language=ja&region=JP" async defer></script>
 </body>
 </html>
