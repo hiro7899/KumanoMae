@@ -192,7 +192,7 @@
                                     <p class="comment-content"><c:out value="${comment.content}"/></p>
                                 </div>
 
-                                <c:if test="${not empty loginUser and (comment.memberId eq loginUser.memberId or loginUser.role eq 'ADMIN')}">
+                                <c:if test="${not empty loginUser and (comment.memberId eq loginUser.memberId or loginUser.userGrade eq 'A')}">
                                     <form action="${pageContext.request.contextPath}/community/comment/delete" method="post"
                                         class="community-inline-form ms-2" onsubmit="return confirm('コメントを削除しますか？');">
                                         <input type="hidden" name="cCommentId" value="${comment.CCommentId}">
