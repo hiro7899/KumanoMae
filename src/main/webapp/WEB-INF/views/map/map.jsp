@@ -98,6 +98,9 @@
 							<input type="checkbox" class="btn-check" id="riskCaution" checked>
 							<label class="btn risk-btn risk-caution" for="riskCaution">CAUTION</label>
 
+							<input type="checkbox" class="btn-check" id="riskClear" checked>
+							<label class="btn risk-btn risk-clear" for="riskClear">CLEAR</label>
+
 
 						</div>
 					</div>
@@ -178,8 +181,8 @@
         ==========================================================
     --%>
 	<script async
-    src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places&language=ja&region=JP"></script>
-		
+		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places&language=ja&region=JP"></script>
+
 
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 

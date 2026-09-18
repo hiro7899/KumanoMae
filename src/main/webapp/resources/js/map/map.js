@@ -33,6 +33,7 @@ const RISK_CHECKBOX_MAP = {
 	riskDanger: "高",
 	riskWarning: "中",
 	riskCaution: "低",
+	riskClear: "解除"
 };
 
 /* -----------------------------------------------------
@@ -408,7 +409,6 @@ function filterSightings() {
 			return RISK_CHECKBOX_MAP[checkboxId];
 		});
 
-	checkedRisks.push("解除");
 
 	return bearSightings.filter(function(sighting) {
 		// 지역 필터
