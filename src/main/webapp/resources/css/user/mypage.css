@@ -150,49 +150,76 @@
 	font-size: 2rem;
 }
 
-.mypage-mini-list {
-	list-style: none;
+.mypage-post-list {
+	list-style: none !important;
+	list-style-type: none !important;
 	margin: 1.25rem 0 0;
-	padding: 0;
+	padding: 0 !important;
 }
 
-.mypage-mini-item+.mypage-mini-item {
-	margin-top: 2px;
-}
-
-.mypage-mini-item a {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	padding: .8rem .4rem;
+.mypage-post-item {
+	padding: 1.1rem 0;
 	border-bottom: 1px solid #cfc4ae;
-	color: #332d25;
-	text-decoration: none;
-	transition: background-color .15s ease;
 }
 
-.mypage-mini-item:last-child a {
+.mypage-post-item:last-child {
 	border-bottom: none;
+	padding-bottom: 0;
 }
 
-.mypage-mini-item a:hover {
-	background-color: #f3ecdd;
+.mypage-post-badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: .5rem;
 }
 
-.mypage-mini-title {
-	flex: 1;
-	min-width: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	font-weight: 700;
-	font-size: .92rem;
+.mypage-post-title {
+	margin: 0 0 .3rem;
+	font-size: 1rem;
+	font-weight: 800;
+	color: #332d25;
 }
 
-.mypage-mini-date {
-	flex-shrink: 0;
+.mypage-post-date {
+	margin: 0 0 .5rem;
 	color: #6b6355;
 	font-size: .76rem;
+}
+
+.mypage-post-content {
+	margin: 0 0 .6rem;
+	color: #332d25;
+	font-size: .88rem;
+	line-height: 1.7;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.mypage-post-images {
+	display: flex !important;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: .6rem;
+}
+
+.mypage-post-images img {
+	width: 84px !important;
+	height: 84px !important;
+	max-width: 84px !important;
+	min-width: 0 !important;
+	flex: 0 0 84px !important;
+	object-fit: cover !important;
+	border: 1px solid #cfc4ae;
+	border-radius: 6px;
+	display: block;
+}
+
+.mypage-post-meta {
+	display: flex;
+	gap: 14px;
+	color: #6b6355;
+	font-size: .78rem;
 }
 
 .btn-mypage-primary, .btn-mypage-outline {
