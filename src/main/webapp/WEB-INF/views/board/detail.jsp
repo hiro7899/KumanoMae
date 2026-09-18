@@ -38,9 +38,10 @@
                                 <header class="detail-header">
                                     <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                                         <c:choose>
+                                            <c:when test="${board.clearYn eq 'Y'}"><span class="risk-badge bg-secondary text-white"><i class="bi bi-check-circle-fill" aria-hidden="true"></i> 解除</span></c:when>
                                             <c:when test="${board.riskLevel eq 'DANGER'}"><span class="risk-badge risk-danger"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> 危険</span></c:when>
                                             <c:when test="${board.riskLevel eq 'WARNING'}"><span class="risk-badge bg-warning text-dark"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> 警戒</span></c:when>
-                                            <c:otherwise><span class="risk-badge bg-secondary text-white"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i> 注意</span></c:otherwise>
+                                            <c:otherwise><span class="risk-badge badge-caution-custom"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i> 注意</span></c:otherwise>
                                         </c:choose>
                                         <span class="post-number">REPORT NO. <c:out value="${board.boardId}"/></span>
                                     </div>
@@ -80,7 +81,7 @@
                                                 <i class="bi bi-image me-1" aria-hidden="true"></i> 添付写真を表示できません。
                                             </div>
                                             </a>
-                                            <figcaption><i class="bi bi-image" aria-hidden="true"></i> 添付写真 <c:out value="${status.count}"/>枚目: <c:out value="${file.originName}"/></figcaption>
+                                            <figcaption><i class="bi bi-image" aria-hidden="true"></i> 添付写真 <c:out value="${status.count}"/>枚目</figcaption>
                                         </figure>
                                     </c:forEach>
 
