@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?v=home-sections-3">
 <!-- 마이페이지와 같은 카드/버튼 스타일을 그대로 사용 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/user/mypage.css">
 <!-- 이 페이지의 폼 입력 요소 전용 스타일만 추가 -->

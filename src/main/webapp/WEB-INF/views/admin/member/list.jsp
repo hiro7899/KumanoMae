@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ユーザー管理 - KUMANO_MAE ADMIN</title>
+<title>ユーザー管理 - 熊の前 ADMIN</title>
 
 <!-- Bootstrap 5 CDN & Fonts & Bootstrap Icons -->
 <link
@@ -157,8 +157,14 @@
 											<td>
 												<div class="member-actions">
 													<c:choose>
-														<c:when test="${member.status eq 'N'}">
-															<span class="member-actions-muted"><i class="bi bi-slash-circle" aria-hidden="true"></i> 停止中</span>
+									<c:when test="${member.status eq 'N'}">
+										<form action="/admin/member/restore" method="post"
+											onsubmit="return confirm('このユーザーの利用停止を解除しますか？');">
+											<input type="hidden" name="memberId" value="${member.memberId}">
+											<button type="submit" class="member-action-button">
+												<i class="bi bi-person-check" aria-hidden="true"></i> 利用停止解除
+											</button>
+										</form>
 														</c:when>
 														<c:otherwise>
 															<button type="button" class="member-action-button member-grade-button"

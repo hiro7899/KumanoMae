@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>目撃通報管理 - KUMANO_MAE ADMIN</title>
+<title>目撃通報管理 - 熊の前 ADMIN</title>
 
 <!-- Bootstrap 5 CDN & Fonts & Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -60,7 +60,7 @@
         <!-- 상단 타이틀 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold m-0"><span class="dash">―</span>目撃通報管理</h2>
-            <span class="badge bg-dark px-3 py-2">全 ${not empty boardList ? boardList.size() : 0} 件</span>
+            <span id="adminBoardCount" class="badge bg-dark px-3 py-2">全 ${not empty boardList ? boardList.size() : 0} 件</span>
         </div>
 
         <!-- 1. 검색 및 필터 영역 -->
@@ -115,7 +115,8 @@
                         <c:choose>
                             <c:when test="${not empty boardList}">
                                 <c:forEach var="board" items="${boardList}">
-                                    <tr>
+                                    <c:if test="${board.boardId ge 18 and board.boardId ne 25}">
+                                    <tr class="admin-preview-row" data-preview-kind="board">
                                         <td>${board.boardId}</td>
                                         <td>
                                             <c:choose>
@@ -124,12 +125,21 @@
                                                 <c:otherwise><span class="badge text-dark" style="background-color: #f5e39a; border: 1px solid #d5bd62;">注意</span></c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <td class="text-start">
+                                        <td class="text-start admin-preview-anchor">
                                             <a href="${pageContext.request.contextPath}/admin/board/detail?boardId=${board.boardId}"
                                                 class="fw-bold text-decoration-none text-dark"><c:out value="${board.title}"/></a>
                                             <small class="text-muted"><i class="bi bi-geo-alt-fill"></i> ${board.address} (${board.latitude}, ${board.longitude})</small>
+                                            <div class="admin-preview-source" aria-hidden="true">
+                                                <span class="admin-preview-source-title"><c:out value="${board.title}"/></span>
+                                                <span class="admin-preview-source-writer"><c:out value="${board.writerName}"/></span>
+                                                <span class="admin-preview-source-content"><c:out value="${board.content}"/></span>
+                                                <c:if test="${not empty board.thumbnailUrl}">
+                                                    <c:url var="boardPreviewImageUrl" value="${board.thumbnailUrl}"/>
+                                                    <img class="admin-preview-source-image" src="${boardPreviewImageUrl}" alt="">
+                                                </c:if>
+                                            </div>
                                         </td>
-                                        <td>${board.memberId}</td>
+                                        <td>${board.writerName}</td>
                                         <td>${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}</td>
                                         <td>
                                             <c:choose>
@@ -167,6 +177,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    </c:if>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
@@ -214,7 +225,14 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/resources/js/common/submit-guard.js"></script>
+<%@ include file="/WEB-INF/views/includes/admin-list-preview.jsp" %>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var visibleRows = document.querySelectorAll('.admin-table tbody .admin-preview-row').length;
+        document.getElementById('adminBoardCount').textContent = '全 ' + visibleRows + ' 件';
+    });
+
     function openClearModal(boardId, title) {
         document.getElementById('modalBoardId').value = boardId;
         document.getElementById('modalBoardTitle').innerText = "対象: " + title;

@@ -8,7 +8,7 @@ import com.jsl.dao.community.CommunityBoardDao;
 import com.jsl.dao.community.CommunityCommentDao;
 import com.jsl.dao.community.CommunityFileDao;
 import com.jsl.dto.community.CommunityBoardDto;
-import com.jsl.exeption.AdminActionException;
+import com.jsl.exception.AdminActionException;
 import com.jsl.service.Command;
 
 public class AdminCommunityDetailService implements Command {

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>目撃情報を報告する - クマ出没マップ</title>
+<title>目撃を投稿 - 熊の前</title>
 
 <!-- Bootstrap 5 CDN & Fonts & Bootstrap Icons -->
 <link
@@ -27,8 +27,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/report.css">
 
-<!-- Google Maps API 스크립트 (callback=initMap 적용) -->
-<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places" async defer></script>
 </head>
 <body>
 
@@ -110,9 +108,13 @@
 
 					<div class="row g-2">
 						<div class="col-md-6">
-							<input type="text"
-								class="form-control form-control-sm border-secondary-subtle bg-light"
-								id="address" name="address" placeholder="自動変換住所" readonly>
+							<div class="input-group input-group-sm">
+								<input type="text"
+									class="form-control border-secondary-subtle"
+									id="address" name="address" placeholder="住所を入力してください">
+								<button type="button" id="addressSearchBtn" class="btn btn-outline-dark">住所を検索</button>
+							</div>
+							<div id="addressSearchStatus" class="form-text" aria-live="polite"></div>
 						</div>
 						<div class="col-md-3">
 							<input type="text"
@@ -195,11 +197,11 @@
 
 		// 1. Google Map 초기화 함수 (콜백으로 자동 호출됨)
 		function initMap() {
-			// 기본 중심점: 삿포로시 중심부 (위도, 경도)
-			const defaultCenter = { lat: 43.0621, lng: 141.3544 };
+			// 기본 중심점: 일본 전국이 보이는 위치 (위도, 경도)
+			const defaultCenter = { lat: 36.2, lng: 138.25 };
 
 			map = new google.maps.Map(document.getElementById("map"), {
-				zoom: 12,
+				zoom: 5.5,
 				center: defaultCenter,
 			});
 
@@ -246,12 +248,85 @@
 			});
 		}
 
+		// 주소 검색 결과를 지도와 좌표 입력값에 반영
+		function searchAddress() {
+			const addressInput = document.getElementById("address");
+			const statusElement = document.getElementById("addressSearchStatus");
+			const address = addressInput.value.trim();
+
+			if (!address) {
+				statusElement.textContent = "住所を入力してください。";
+				return;
+			}
+
+			if (!geocoder || !map) {
+				statusElement.textContent = "地図の読み込み中です。しばらくしてからお試しください。";
+				return;
+			}
+
+			statusElement.textContent = "住所を検索しています...";
+			geocoder.geocode({ address: address, region: "JP" }, function(results, status) {
+				if (status !== "OK" || !results[0]) {
+					statusElement.textContent = "住所が見つかりません。別の表記でお試しください。";
+					return;
+				}
+
+				const location = results[0].geometry.location;
+				const lat = location.lat();
+				const lng = location.lng();
+
+				map.setCenter(location);
+				map.setZoom(15);
+				if (marker) {
+					marker.setPosition(location);
+				} else {
+					marker = new google.maps.Marker({ position: location, map: map });
+				}
+
+				document.getElementById("latitude").value = lat.toFixed(6);
+				document.getElementById("longitude").value = lng.toFixed(6);
+				addressInput.value = results[0].formatted_address;
+				statusElement.textContent = "位置を設定しました。";
+			});
+		}
+
 		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('addressSearchBtn').addEventListener('click', searchAddress);
+			document.getElementById('address').addEventListener('keydown', function(event) {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					searchAddress();
+				}
+			});
 			
-			// 현재 시간을 datetime-local 기본값으로 설정
+			// 현재 현지 시간을 datetime-local 형식으로 변환
+			function formatDateTimeLocal(date) {
+				const pad = function(value) { return String(value).padStart(2, '0'); };
+				return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate())
+					+ 'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
+			}
+
+			// 미래 목격 일시 선택을 제한하고 현재 시간을 기본값으로 설정
 			const sightingDateInput = document.getElementById('sightingDate');
-			if (sightingDateInput && !sightingDateInput.value) {
-				sightingDateInput.value = new Date().toISOString().slice(0, 16);
+			if (sightingDateInput) {
+				const setSightingDateLimit = function() {
+					const nowValue = formatDateTimeLocal(new Date());
+					sightingDateInput.max = nowValue;
+					if (!sightingDateInput.value) {
+						sightingDateInput.value = nowValue;
+					}
+				};
+
+				setSightingDateLimit();
+				sightingDateInput.addEventListener('focus', setSightingDateLimit);
+				sightingDateInput.addEventListener('change', function() {
+					const selectedTime = new Date(sightingDateInput.value).getTime();
+
+					if (Number.isFinite(selectedTime) && selectedTime > Date.now()) {
+						sightingDateInput.value = formatDateTimeLocal(new Date());
+						alert('未来の日時は選択できません。');
+					}
+				});
 			}
 
 			// 폼 제출 유효성 검사 (Validation)
@@ -293,6 +368,21 @@
 						}
 					}
 
+					if (isValid && sightingDateInput && sightingDateInput.value) {
+						const selectedTime = new Date(sightingDateInput.value).getTime();
+
+						if (Number.isFinite(selectedTime) && selectedTime > Date.now()) {
+							isValid = false;
+							sightingDateInput.classList.add('is-invalid');
+
+							const errorDiv = document.createElement('div');
+							errorDiv.className = 'invalid-feedback fw-bold mt-1 d-block';
+							errorDiv.innerText = '⚠️ 未来の日時は選択できません。';
+							sightingDateInput.after(errorDiv);
+							sightingDateInput.focus();
+						}
+					}
+
 					if (!isValid) {
 						e.preventDefault();
 					}
@@ -325,5 +415,9 @@
 			}
 		}
 	</script>
+
+	<!-- Google Maps API: initMap 선언 후 로드하여 콜백 실행 순서를 보장 -->
+	<script src="/resources/js/common/submit-guard.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places&language=ja&region=JP" async defer></script>
 </body>
 </html>

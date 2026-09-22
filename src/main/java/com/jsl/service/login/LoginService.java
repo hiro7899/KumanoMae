@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import com.jsl.dao.AuthDao;
 import com.jsl.dto.member.LoginUserDto;
 import com.jsl.dto.member.MemberDto;
-import com.jsl.exeption.LoginException;
+import com.jsl.exception.LoginException;
 import com.jsl.service.Command;
 import com.jsl.util.PasswordUtil;
 
@@ -32,6 +32,10 @@ public class LoginService implements Command {
             throw new LoginException("IDまたはパスワードが正しくありません。");
         }
 
+        if (!"Y".equals(member.getStatus())) {
+        	throw new LoginException("このアカウントは現在停止されています。"); 
+        }
+        
         HttpSession oldSession = request.getSession(false);
         if (oldSession != null) {
             oldSession.invalidate();

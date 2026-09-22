@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jsl.exeption.BoardReportException;
-import com.jsl.exeption.EmailNotVerifiedException;
+import com.jsl.exception.BoardException;
+import com.jsl.exception.BoardReportException;
+import com.jsl.exception.EmailNotVerifiedException;
+import com.jsl.service.board.BoardDetailService;
 import com.jsl.service.board.BoardListService;
 import com.jsl.service.board.BoardReportService;
 import com.jsl.service.member.EmailVerificationGuardService;
@@ -26,6 +28,8 @@ public class BoardController extends HttpServlet {
 
     private final BoardListService boardListService = new BoardListService();
     private final BoardReportService boardReportService = new BoardReportService();
+    private final BoardDetailService boardDetailService = new BoardDetailService();
+    
     private final EmailVerificationGuardService emailVerificationGuardService = new EmailVerificationGuardService();
 
     public BoardController() {
@@ -59,7 +63,13 @@ public class BoardController extends HttpServlet {
             break;
 
         case "/detail":
-            page = "/WEB-INF/views/board/detail.jsp";
+            try {
+                boardDetailService.doCommand(request, response);
+                page = "/WEB-INF/views/board/detail.jsp";
+            } catch (BoardException e) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
             break;
 
         case "/report":
@@ -79,6 +89,7 @@ public class BoardController extends HttpServlet {
                     return;
 
                 } catch (BoardReportException e) {
+                	e.printStackTrace();
                     request.setAttribute("errorMsg", e.getMessage());
                     page = "/WEB-INF/views/board/report.jsp";
 
@@ -94,6 +105,10 @@ public class BoardController extends HttpServlet {
 
         case "/news":
             page = "/WEB-INF/views/board/news.jsp";
+            break;
+
+        case "/news/detail":
+            page = "/WEB-INF/views/board/news_detail.jsp";
             break;
 
         default:

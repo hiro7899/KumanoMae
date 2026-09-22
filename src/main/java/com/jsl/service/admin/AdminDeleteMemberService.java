@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.jsl.dao.admin.AdminLogDao;
 import com.jsl.dao.member.MemberDao;
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.AdminActionException;
+import com.jsl.exception.AdminActionException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 

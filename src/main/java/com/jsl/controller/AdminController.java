@@ -9,55 +9,92 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.AdminActionException;
-import com.jsl.service.admin.*;
+import com.jsl.exception.AdminActionException;
+import com.jsl.exception.MemberManageException;
+import com.jsl.service.admin.AdminApproveService;
+import com.jsl.service.admin.AdminBoardListService;
+import com.jsl.service.admin.AdminClearService;
+import com.jsl.service.admin.AdminCommunityCommentDeleteService;
+import com.jsl.service.admin.AdminCommunityDeleteService;
+import com.jsl.service.admin.AdminCommunityDetailService;
+import com.jsl.service.admin.AdminCommunityHideService;
+import com.jsl.service.admin.AdminCommunityListService;
+import com.jsl.service.admin.AdminCommunityShowService;
+import com.jsl.service.admin.AdminDeleteMemberService;
+import com.jsl.service.admin.AdminMainService;
+import com.jsl.service.admin.AdminMemberListService;
+import com.jsl.service.admin.AdminRejectService;
+import com.jsl.service.admin.AdminUpdateGradeService;
+import com.jsl.service.member.AdminRestoreMemberService;
 
 @WebServlet("/admin/*")
 public class AdminController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private final AdminMainService adminMainService = new AdminMainService();
+    private final AdminMainService adminMainService =
+            new AdminMainService();
 
     // Board
-    private final AdminBoardListService adminBoardListService = new AdminBoardListService();
-    private final AdminApproveService adminApproveService = new AdminApproveService();
-    private final AdminRejectService adminRejectService = new AdminRejectService();
-    private final AdminClearService adminClearService = new AdminClearService();
+    private final AdminBoardListService adminBoardListService =
+            new AdminBoardListService();
+    private final AdminApproveService adminApproveService =
+            new AdminApproveService();
+    private final AdminRejectService adminRejectService =
+            new AdminRejectService();
+    private final AdminClearService adminClearService =
+            new AdminClearService();
 
     // Member
-    private final AdminMemberListService adminMemberListService = new AdminMemberListService();
-    private final AdminUpdateGradeService adminUpdateGradeService = new AdminUpdateGradeService();
-    private final AdminDeleteMemberService adminDeleteMemberService = new AdminDeleteMemberService();
+    private final AdminMemberListService adminMemberListService =
+            new AdminMemberListService();
+    private final AdminUpdateGradeService adminUpdateGradeService =
+            new AdminUpdateGradeService();
+    private final AdminDeleteMemberService adminDeleteMemberService =
+            new AdminDeleteMemberService();
+    private final AdminRestoreMemberService adminRestoreMemberService =
+            new AdminRestoreMemberService();
 
     // Community
-    private final AdminCommunityListService adminCommunityListService = new AdminCommunityListService();
-    private final AdminCommunityDetailService adminCommunityDetailService = new AdminCommunityDetailService();
-    private final AdminCommunityHideService adminCommunityHideService = new AdminCommunityHideService();
-    private final AdminCommunityShowService adminCommunityShowService = new AdminCommunityShowService();
-    private final AdminCommunityDeleteService adminCommunityDeleteService = new AdminCommunityDeleteService();
+    private final AdminCommunityListService adminCommunityListService =
+            new AdminCommunityListService();
+    private final AdminCommunityDetailService adminCommunityDetailService =
+            new AdminCommunityDetailService();
+    private final AdminCommunityHideService adminCommunityHideService =
+            new AdminCommunityHideService();
+    private final AdminCommunityShowService adminCommunityShowService =
+            new AdminCommunityShowService();
+    private final AdminCommunityDeleteService adminCommunityDeleteService =
+            new AdminCommunityDeleteService();
     private final AdminCommunityCommentDeleteService adminCommunityCommentDeleteService =
             new AdminCommunityCommentDeleteService();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response)
             throws ServletException, IOException {
 
         doAction(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response)
             throws ServletException, IOException {
 
         doAction(request, response);
     }
 
-    private void doAction(HttpServletRequest request, HttpServletResponse response)
+    private void doAction(
+            HttpServletRequest request,
+            HttpServletResponse response)
             throws ServletException, IOException {
 
         // 로그인 여부 확인
-        LoginUserDto user = (LoginUserDto) request.getSession().getAttribute("user");
+        LoginUserDto user =
+                (LoginUserDto) request.getSession().getAttribute("user");
 
         if (user == null) {
             response.sendRedirect("/login");
@@ -106,6 +143,11 @@ public class AdminController extends HttpServlet {
 
                 case "/member/delete":
                     adminDeleteMemberService.doCommand(request, response);
+                    response.sendRedirect("/admin/member/list");
+                    return;
+
+                case "/member/restore":
+                    adminRestoreMemberService.doCommand(request, response);
                     response.sendRedirect("/admin/member/list");
                     return;
 
@@ -164,17 +206,21 @@ public class AdminController extends HttpServlet {
 
                 case "/community/comment/delete":
 
-                    adminCommunityCommentDeleteService.doCommand(request, response);
+                    adminCommunityCommentDeleteService
+                            .doCommand(request, response);
 
                     Long redirectId =
                             (Long) request.getAttribute("redirectCBoardId");
 
                     if (redirectId != null) {
                         response.sendRedirect(
-                                "/admin/community/detail?cBoardId=" + redirectId
+                                "/admin/community/detail?cBoardId="
+                                        + redirectId
                         );
                     } else {
-                        response.sendRedirect("/admin/community/list");
+                        response.sendRedirect(
+                                "/admin/community/list"
+                        );
                     }
 
                     return;
@@ -184,7 +230,9 @@ public class AdminController extends HttpServlet {
                  * 404
                  * ========================= */
                 default:
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    response.sendError(
+                            HttpServletResponse.SC_NOT_FOUND
+                    );
                     return;
             }
 
@@ -193,27 +241,48 @@ public class AdminController extends HttpServlet {
             request.setAttribute("errorMsg", e.getMessage());
 
             if (path.startsWith("/community")) {
-                adminCommunityListService.doCommand(request, response);
+
+                adminCommunityListService.doCommand(
+                        request, response
+                );
+
                 page = "/WEB-INF/views/admin/community/list.jsp";
 
             } else if (path.startsWith("/board")) {
 
-                adminBoardListService.doCommand(request, response);
+                adminBoardListService.doCommand(
+                        request, response
+                );
+
                 page = "/WEB-INF/views/admin/board/list.jsp";
 
             } else if (path.startsWith("/member")) {
 
-                adminMemberListService.doCommand(request, response);
+                adminMemberListService.doCommand(
+                        request, response
+                );
+
                 page = "/WEB-INF/views/admin/member/list.jsp";
 
             } else {
 
                 page = "/WEB-INF/views/admin/main.jsp";
             }
+
+        } catch (MemberManageException e) {
+
+            request.setAttribute("errorMsg", e.getMessage());
+
+            adminMemberListService.doCommand(
+                    request, response
+            );
+
+            page = "/WEB-INF/views/admin/member/list.jsp";
         }
 
         if (page != null) {
-            request.getRequestDispatcher(page).forward(request, response);
+            request.getRequestDispatcher(page)
+                    .forward(request, response);
         }
     }
 }

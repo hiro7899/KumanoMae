@@ -13,21 +13,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/board/view.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/board/view.css">
 </head>
 <body>
     <%@ include file="/WEB-INF/views/includes/header.jsp"%>
@@ -53,16 +38,17 @@
                                 <header class="detail-header">
                                     <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                                         <c:choose>
+                                            <c:when test="${board.clearYn eq 'Y'}"><span class="risk-badge bg-secondary text-white"><i class="bi bi-check-circle-fill" aria-hidden="true"></i> 解除</span></c:when>
                                             <c:when test="${board.riskLevel eq 'DANGER'}"><span class="risk-badge risk-danger"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> 危険</span></c:when>
                                             <c:when test="${board.riskLevel eq 'WARNING'}"><span class="risk-badge bg-warning text-dark"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> 警戒</span></c:when>
-                                            <c:otherwise><span class="risk-badge bg-secondary text-white"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i> 注意</span></c:otherwise>
+                                            <c:otherwise><span class="risk-badge badge-caution-custom"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i> 注意</span></c:otherwise>
                                         </c:choose>
                                         <span class="post-number">REPORT NO. <c:out value="${board.boardId}"/></span>
                                     </div>
                                     <h1><c:out value="${board.title}"/></h1>
                                     <div class="post-meta">
                                         <span><i class="bi bi-person-circle" aria-hidden="true"></i> 投稿者 #<c:out value="${board.memberId}"/></span>
-                                        <span><i class="bi bi-calendar3" aria-hidden="true"></i> <c:out value="${board.sightingDate}"/></span>
+                                        <span><i class="bi bi-calendar3" aria-hidden="true"></i> <time class="js-format-datetime"><c:out value="${board.sightingDate}"/></time></span>
                                         <span><i class="bi bi-eye" aria-hidden="true"></i> <c:out value="${board.viewCnt}"/></span>
                                     </div>
                                 </header>
@@ -70,11 +56,11 @@
                                 <section class="sighting-summary" aria-label="目撃情報の概要">
                                     <div class="summary-item">
                                         <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
-                                        <div><span>目撃場所</span><strong><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong></div>
+                                        <div><span>目撃場所</span><strong class="sighting-address"><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong></div>
                                     </div>
                                     <div class="summary-item">
                                         <i class="bi bi-clock-fill" aria-hidden="true"></i>
-                                        <div><span>目撃日時</span><strong><c:out value="${board.sightingDate}"/></strong></div>
+                                        <div><span>目撃日時</span><strong class="js-format-datetime"><c:out value="${board.sightingDate}"/></strong></div>
                                     </div>
                                     <div class="summary-item">
                                         <i class="bi bi-signpost-split-fill" aria-hidden="true"></i>
@@ -89,9 +75,13 @@
                                         <c:url var="imageUrl" value="${file.filePath}/${file.saveName}"/>
                                         <figure class="report-photo">
                                             <a href="${imageUrl}" target="_blank" rel="noopener">
-                                                <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}">
+                                            <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}"
+                                                onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.hidden=false;">
+                                            <div class="text-muted small text-center py-4" role="status" hidden>
+                                                <i class="bi bi-image me-1" aria-hidden="true"></i> 添付写真を表示できません。
+                                            </div>
                                             </a>
-                                            <figcaption><i class="bi bi-image" aria-hidden="true"></i> 添付写真 <c:out value="${status.count}"/>枚目: <c:out value="${file.originName}"/></figcaption>
+                                            <figcaption><i class="bi bi-image" aria-hidden="true"></i> 添付写真 <c:out value="${status.count}"/>枚目</figcaption>
                                         </figure>
                                     </c:forEach>
 
@@ -112,9 +102,14 @@
                                         <c:otherwise><span class="status-live">確認待ち</span></c:otherwise>
                                     </c:choose>
                                 </div>
-                                <div class="map-preview" aria-hidden="true"><div class="map-grid"></div><div class="map-pin"><i class="bi bi-exclamation-lg"></i></div><span class="map-label">目撃地点</span></div>
+                                <div id="boardDetailMap"
+                                     class="board-detail-map"
+                                     data-latitude="<c:out value='${board.latitude}'/>"
+                                     data-longitude="<c:out value='${board.longitude}'/>">
+                                    <p class="board-detail-map-message">地図を読み込んでいます。</p>
+                                </div>
                                 <div class="location-card-body">
-                                    <strong><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong>
+                                    <strong class="sighting-address"><c:out value="${not empty board.address ? board.address : '住所情報なし'}"/></strong>
                                     <p>緯度 <c:out value="${board.latitude}"/> / 経度 <c:out value="${board.longitude}"/></p>
                                     <a href="${pageContext.request.contextPath}/map" class="btn btn-jp-outline btn-sm w-100"><i class="bi bi-map" aria-hidden="true"></i> 地図で確認する</a>
                                 </div>
@@ -134,5 +129,8 @@
 
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/resources/js/common/address-format.js"></script>
+    <script src="/resources/js/board/detail.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initBoardDetailMap" async defer></script>
 </body>
 </html>

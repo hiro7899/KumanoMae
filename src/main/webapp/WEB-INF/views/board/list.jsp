@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>目撃情報一覧 - KUMANO_MAE</title>
+<title>目撃情報一覧 - 熊の前</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -16,7 +17,9 @@
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
+      href="${pageContext.request.contextPath}/resources/css/index.css">
+<link rel="stylesheet"
+      href="/resources/css/board/preview-card.css">
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
@@ -28,22 +31,28 @@
 			<p class="text-muted mb-0">全国の自治体データおよび 住民から寄せられたクマの目撃・出没情報です。</p>
 		</div>
 
-		<!-- 옵션 영역: 위험도 필터 + 지역 검색창 + 제보하기 버튼 -->
+		<!-- 옵션 영역: 위험도·상태 필터 + 지역 검색창 + 제보하기 버튼 -->
 		<div class="card p-3 mb-4 bg-light border-0">
 			<div class="row g-3 align-items-center">
-				<!-- 위험도별 필터 -->
-				<div class="col-lg-5 col-md-6">
-					<div class="d-flex gap-2 flex-wrap align-items-center">
+				<!-- 위험도·상태 필터 -->
+				<div class="col-lg-7 col-md-12">
+					<div class="d-flex gap-2 flex-wrap align-items-center mb-2">
 						<span class="fw-bold small me-1">危険度:</span>
 						<button type="button" class="btn btn-jp-mustard btn-sm" data-risk-filter="ALL" aria-pressed="true">すべて</button>
 						<button type="button" class="btn btn-outline-danger btn-sm fw-bold" data-risk-filter="DANGER" aria-pressed="false">危険 (DANGER)</button>
 						<button type="button" class="btn btn-outline-warning btn-sm text-dark fw-bold" data-risk-filter="WARNING" aria-pressed="false">警戒 (WARNING)</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm fw-bold" data-risk-filter="CAUTION" aria-pressed="false">注意 (CAUTION)</button>
 					</div>
+					<div class="d-flex gap-2 flex-wrap align-items-center">
+						<span class="fw-bold small me-1">状態:</span>
+						<button type="button" class="btn btn-jp-mustard btn-sm" data-clear-filter="ALL" aria-pressed="true">すべて</button>
+						<button type="button" class="btn btn-outline-dark btn-sm fw-bold" data-clear-filter="ACTIVE" aria-pressed="false">継続中</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm fw-bold" data-clear-filter="CLEARED" aria-pressed="false">解決済み</button>
+					</div>
 				</div>
 
 				<!-- 지역/제목 키워드 검색 -->
-				<div class="col-lg-5 col-md-6">
+				<div class="col-lg-3 col-md-8">
 					<form action="${pageContext.request.contextPath}/board/list" method="get" class="d-flex gap-2">
 						<input type="text" name="keyword" class="form-control form-control-sm" placeholder="地域名（例：札幌市、青森県）で検索...">
 						<button type="submit" class="btn btn-jp-mustard btn-sm text-nowrap">
@@ -53,7 +62,7 @@
 				</div>
 
 				<!-- 제보 등록 버튼 -->
-				<div class="col-lg-2 col-md-12 text-lg-end">
+				<div class="col-lg-2 col-md-4 text-lg-end">
 					<a href="${pageContext.request.contextPath}/board/report"
 						class="btn btn-jp-mustard btn-sm fw-bold w-100 w-lg-auto"> 
 						<i class="bi bi-exclamation-triangle-fill me-1"></i>目撃を報告する
@@ -65,17 +74,31 @@
 		<!-- 제보 카드 목록 -->
 		<div class="row g-4" id="boardCardGrid" data-pagination data-page-size="9">
 			<c:forEach var="board" items="${boardList}">
-				<c:if test="${board.clearYn ne 'Y'}">
-				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-page-item>
-					<article class="card h-100 report-card shadow-sm">
+				<div class="col-md-6 col-lg-4" data-risk-card="${board.riskLevel}" data-clear-yn="${board.clearYn}" data-sighting-date="${board.sightingDate}" data-page-item>
+					<article class="card h-100 report-card shadow-sm clickable-card ${board.clearYn eq 'Y' ? 'board-card-resolved' : ''}" data-card-href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}">
+						<c:set var="boardFallbackClass" value="preview-card-image-safe" />
+						<c:if test="${board.riskLevel eq 'DANGER'}"><c:set var="boardFallbackClass" value="preview-card-image-danger" /></c:if>
+						<c:if test="${board.riskLevel eq 'WARNING'}"><c:set var="boardFallbackClass" value="preview-card-image-caution" /></c:if>
 						<c:choose>
-							<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
-							<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
-							<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+							<c:when test="${not empty board.thumbnailUrl}">
+								<c:url var="boardThumbnailUrl" value="${fn:replace(board.thumbnailUrl, '/src/main/webapp', '')}"/>
+								<div class="preview-card-image" data-fallback-class="${boardFallbackClass}"><img src="${boardThumbnailUrl}" class="preview-card-thumb" alt="目撃情報画像" onerror="this.onerror=null;var box=this.closest('.preview-card-image');this.remove();box.classList.add('preview-card-image-fallback', box.dataset.fallbackClass);box.innerHTML='<i class=&quot;bi bi-image-alt&quot;></i>';"></div>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${board.clearYn eq 'Y'}"><div class="preview-card-image preview-card-image-resolved"><i class="bi bi-check-circle-fill"></i></div></c:when>
+									<c:when test="${board.riskLevel eq 'DANGER'}"><div class="preview-card-image preview-card-image-danger"><i class="bi bi-exclamation-triangle-fill"></i></div></c:when>
+									<c:when test="${board.riskLevel eq 'WARNING'}"><div class="preview-card-image preview-card-image-caution"><i class="bi bi-signpost-split-fill"></i></div></c:when>
+									<c:otherwise><div class="preview-card-image preview-card-image-safe"><i class="bi bi-shield-check"></i></div></c:otherwise>
+								</c:choose>
+							</c:otherwise>
 						</c:choose>
 						<div class="card-body d-flex flex-column">
 							<div class="d-flex justify-content-between align-items-center gap-2 mb-2">
 								<c:choose>
+									<c:when test="${board.clearYn eq 'Y'}">
+										<span class="badge badge-resolved-custom"><i class="bi bi-check-circle-fill me-1"></i>解決済み</span>
+									</c:when>
 									<c:when test="${board.riskLevel eq 'DANGER'}">
 										<span class="badge badge-danger-custom">危険</span>
 									</c:when>
@@ -86,12 +109,12 @@
 										<span class="badge badge-caution-custom">注意</span>
 									</c:otherwise>
 								</c:choose>
-								<small class="text-muted text-end"><i class="bi bi-clock-fill me-1"></i><c:out value="${board.sightingDate}" /></small>
+								<small class="text-muted text-end"><i class="bi bi-clock-fill me-1"></i><c:out value="${fn:substring(fn:replace(board.sightingDate, 'T', ' '), 0, 16)}" /></small>
 							</div>
 
 			<h5 class="card-title text-truncate fw-bold"><c:out value="${board.title}" /></h5>
 							<p class="mb-2 text-danger small fw-bold">
-								<i class="bi bi-geo-alt-fill me-1"></i><c:out value="${board.address}" />
+								<i class="bi bi-geo-alt-fill me-1"></i><span class="sighting-address"><c:out value="${board.address}" /></span>
 							</p>
 							<p class="small text-secondary flex-grow-1"><c:out value="${board.content}" /></p>
 
@@ -102,12 +125,9 @@
 								<span><i class="bi bi-eye me-1"></i> ${board.viewCnt}</span>
 							</div>
 
-							<a href="${pageContext.request.contextPath}/board/detail?boardId=${board.boardId}"
-								class="btn btn-jp-outline btn-sm mt-3 fw-bold">詳細を見る</a>
 						</div>
 					</article>
 				</div>
-				</c:if>
 			</c:forEach>
 
 			<c:if test="${empty boardList}">
@@ -138,6 +158,25 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/board/list.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/common/pagination.js"></script>
+	<script src="/resources/js/common/address-format.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const grid = document.getElementById("boardCardGrid");
+			const controls = document.querySelector('[data-pagination-controls="boardCardGrid"]');
+			const items = Array.from(grid.querySelectorAll("[data-page-item]"));
+			function render(page) {
+				const visible = items.filter(item => !item.classList.contains("risk-filter-hidden"));
+				const total = Math.max(1, Math.ceil(visible.length / 9));
+				page = Math.min(Math.max(page || 1, 1), total);
+				items.forEach(item => item.classList.add("pagination-hidden"));
+				visible.slice((page - 1) * 9, page * 9).forEach(item => item.classList.remove("pagination-hidden"));
+				controls.innerHTML = "";
+				for (let i = 1; i <= total; i++) { const b = document.createElement("button"); b.type = "button"; b.className = "client-page-button" + (i === page ? " active" : ""); b.textContent = i; b.onclick = () => render(i); controls.appendChild(b); }
+			}
+			window.refreshBoardPagination = () => render(1);
+			render(1);
+			document.querySelectorAll(".clickable-card[data-card-href]").forEach(card => { card.setAttribute("tabindex", "0"); card.onclick = () => window.location.href = card.dataset.cardHref; card.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); window.location.href = card.dataset.cardHref; } }; });
+		});
+	</script>
 </body>
 </html>

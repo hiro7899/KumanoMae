@@ -15,25 +15,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/community.css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-	rel="stylesheet">
-
-<!-- 커스텀 CSS 파일들 -->
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/includes/layout.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/community/community.css">
 </head>
 <body>
     <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-    <c:set var="loginUser" value="${sessionScope.loginUser}"/>
+    <c:set var="loginUser" value="${sessionScope.user}"/>
     <c:set var="canManageBoard"
-        value="${not empty loginUser and (communityBoard.memberId eq loginUser.memberId or loginUser.role eq 'ADMIN')}"/>
+        value="${not empty loginUser and (communityBoard.memberId eq loginUser.memberId or loginUser.userGrade eq 'A')}"/>
 
     <main class="container community-detail-container">
         <nav class="community-breadcrumb" aria-label="breadcrumb">
@@ -103,7 +91,11 @@
                                 </c:otherwise>
                             </c:choose>
                             <a href="${imageUrl}" target="_blank" rel="noopener">
-                                <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}">
+                                <img src="${imageUrl}" alt="${fn:escapeXml(file.originName)}"
+                                    onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.hidden=false;">
+                                <div class="text-muted small text-center py-4" role="status" hidden>
+                                    <i class="bi bi-image me-1" aria-hidden="true"></i> 添付画像を表示できません。
+                                </div>
                             </a>
                         </c:if>
                     </c:forEach>
@@ -200,7 +192,7 @@
                                     <p class="comment-content"><c:out value="${comment.content}"/></p>
                                 </div>
 
-                                <c:if test="${not empty loginUser and (comment.memberId eq loginUser.memberId or loginUser.role eq 'ADMIN')}">
+                                <c:if test="${not empty loginUser and (comment.memberId eq loginUser.memberId or loginUser.userGrade eq 'A')}">
                                     <form action="${pageContext.request.contextPath}/community/comment/delete" method="post"
                                         class="community-inline-form ms-2" onsubmit="return confirm('コメントを削除しますか？');">
                                         <input type="hidden" name="cCommentId" value="${comment.CCommentId}">
@@ -221,6 +213,7 @@
 
     <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/resources/js/common/submit-guard.js"></script>
     <script>
     (function() {
         'use strict';

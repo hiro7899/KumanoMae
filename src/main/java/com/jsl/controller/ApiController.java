@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsl.service.community.CommunityLikeToggleService;
+import com.jsl.service.map.MapService;
 import com.jsl.service.member.EmailVerificationResendSelfService;
 import com.jsl.service.member.EmailVerificationSendService;
 import com.jsl.service.member.EmailVerificationStatusService;
@@ -30,6 +31,7 @@ public class ApiController extends HttpServlet {
     private final EmailVerificationResendSelfService emailVerificationResendSelfService = new EmailVerificationResendSelfService();
     
     private final CommunityLikeToggleService communityLikeToggleService = new CommunityLikeToggleService();
+    private final MapService mapService = new MapService();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -76,6 +78,9 @@ public class ApiController extends HttpServlet {
                 case "/email-verification/resend-self":
                     emailVerificationResendSelfService.doCommand(request, response);
                     break;    
+                case "/map/markers":
+                    JsonResponseUtil.writeJson(response, 200, mapService.getMarkers(request.getParameter("period")));
+                    break;
                 
                 default:
                     JsonResponseUtil.writeError(response, 404, "存在しないAPIです。");

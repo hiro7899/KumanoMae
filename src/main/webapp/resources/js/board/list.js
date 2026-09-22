@@ -1,36 +1,69 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const filterButtons = document.querySelectorAll("[data-risk-filter]");
+    const riskFilterButtons = document.querySelectorAll("[data-risk-filter]");
+    const clearFilterButtons = document.querySelectorAll("[data-clear-filter]");
     const reportCards = document.querySelectorAll("[data-risk-card]");
     const emptyMessage = document.getElementById("riskFilterEmpty");
+    let selectedRisk = "ALL";
+    let selectedClear = "ALL";
 
-    filterButtons.forEach(function (button) {
+    // 목격 일시 기준 최신순으로 카드 순서를 정렬합니다.
+    Array.from(reportCards)
+        .sort(function (a, b) {
+            const dateA = Date.parse(a.dataset.sightingDate || "") || 0;
+            const dateB = Date.parse(b.dataset.sightingDate || "") || 0;
+            return dateB - dateA;
+        })
+        .forEach(function (card) {
+            card.parentElement.appendChild(card);
+        });
+
+    riskFilterButtons.forEach(function (button) {
         button.addEventListener("click", function () {
-            const selectedRisk = button.dataset.riskFilter;
-            let visibleCount = 0;
-
-            reportCards.forEach(function (card) {
-                const shouldShow = selectedRisk === "ALL" || card.dataset.riskCard === selectedRisk;
-                card.classList.toggle("risk-filter-hidden", !shouldShow);
-
-                if (shouldShow) {
-                    visibleCount += 1;
-                }
-            });
-
-            filterButtons.forEach(function (filterButton) {
-                const isSelected = filterButton === button;
-                updateFilterButtonStyle(filterButton, isSelected);
-                filterButton.setAttribute("aria-pressed", String(isSelected));
-            });
-
-            if (emptyMessage && reportCards.length > 0) {
-                emptyMessage.classList.toggle("d-none", visibleCount !== 0);
-            }
-            if (window.refreshPagination) window.refreshPagination("boardCardGrid");
+            selectedRisk = button.dataset.riskFilter;
+            updateFilterButtons(riskFilterButtons, button, updateRiskFilterButtonStyle);
+            applyFilters();
         });
     });
 
-    function updateFilterButtonStyle(button, isSelected) {
+    clearFilterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            selectedClear = button.dataset.clearFilter;
+            updateFilterButtons(clearFilterButtons, button, updateClearFilterButtonStyle);
+            applyFilters();
+        });
+    });
+
+    function applyFilters() {
+        let visibleCount = 0;
+
+        reportCards.forEach(function (card) {
+            const riskMatches = selectedRisk === "ALL" || card.dataset.riskCard === selectedRisk;
+            const clearMatches = selectedClear === "ALL"
+                || (selectedClear === "ACTIVE" && card.dataset.clearYn !== "Y")
+                || (selectedClear === "CLEARED" && card.dataset.clearYn === "Y");
+            const shouldShow = riskMatches && clearMatches;
+            card.classList.toggle("risk-filter-hidden", !shouldShow);
+
+            if (shouldShow) {
+                visibleCount += 1;
+            }
+        });
+
+        if (emptyMessage && reportCards.length > 0) {
+            emptyMessage.classList.toggle("d-none", visibleCount !== 0);
+        }
+        if (window.refreshBoardPagination) window.refreshBoardPagination();
+    }
+
+    function updateFilterButtons(buttons, selectedButton, updateStyle) {
+        buttons.forEach(function (button) {
+            const isSelected = button === selectedButton;
+            updateStyle(button, isSelected);
+            button.setAttribute("aria-pressed", String(isSelected));
+        });
+    }
+
+    function updateRiskFilterButtonStyle(button, isSelected) {
         const risk = button.dataset.riskFilter;
         const buttonStyles = {
             ALL: { active: "btn-jp-mustard", inactive: "btn-outline-secondary" },
@@ -43,4 +76,19 @@ document.addEventListener("DOMContentLoaded", function () {
         button.classList.remove(style.active, style.inactive, "active");
         button.classList.add(isSelected ? style.active : style.inactive);
     }
+
+    function updateClearFilterButtonStyle(button, isSelected) {
+        const state = button.dataset.clearFilter;
+        const buttonStyles = {
+            ALL: { active: "btn-jp-mustard", inactive: "btn-outline-secondary" },
+            ACTIVE: { active: "btn-dark", inactive: "btn-outline-dark" },
+            CLEARED: { active: "btn-secondary", inactive: "btn-outline-secondary" }
+        };
+        const style = buttonStyles[state];
+
+        button.classList.remove(style.active, style.inactive, "active");
+        button.classList.add(isSelected ? style.active : style.inactive);
+    }
+
+    applyFilters();
 });

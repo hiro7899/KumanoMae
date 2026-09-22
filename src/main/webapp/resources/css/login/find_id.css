@@ -53,7 +53,7 @@ body {
     padding: 50px 52px;
     background-color: #fdfaf3;
     border: 2px solid #1a1a1a;
-    border-radius: 0;
+    border-radius: 12px;
     box-shadow: none;
 }
 
@@ -133,7 +133,7 @@ body {
     height: 50px;
     padding: 0 15px 0 44px;
     border: 1px solid #cfc4ae;
-    border-radius: 0;
+    border-radius: 12px;
     background-color: #fdfaf3;
     font-family: "Noto Sans JP", sans-serif;
     font-size: 14px;
@@ -163,7 +163,7 @@ body {
     gap: 10px;
     margin-top: 10px;
     border: 2px solid #1a1a1a;
-    border-radius: 0;
+    border-radius: 12px;
     background-color: #e3ac1f;
     color: #1a1a1a;
     font-family: "Noto Sans JP", sans-serif;

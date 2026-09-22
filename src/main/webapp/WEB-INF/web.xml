@@ -5,15 +5,6 @@
 	id="WebApp_ID" version="4.0">
 	<display-name>KumanoMae</display-name>
 	
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-	</welcome-file-list>
-	
 	<resource-ref>
 	    <res-ref-name>jdbc/kumanomae</res-ref-name>
 	    <res-type>javax.sql.DataSource</res-type>
@@ -50,7 +41,7 @@
 		<url-pattern>*.jpg</url-pattern>
 	</servlet-mapping>
 
-	<!-- error pages
+	
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/error/404.jsp</location>
@@ -58,5 +49,9 @@
 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/error/500.jsp</location>
-	</error-page> -->
+	</error-page> 
+	
+	<welcome-file-list>
+	    <welcome-file>index</welcome-file>
+	</welcome-file-list>
 </web-app>

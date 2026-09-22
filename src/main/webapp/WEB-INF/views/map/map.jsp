@@ -80,10 +80,8 @@
 						<label>期間</label>
 						<div class="date-range">
 							<input type="date" class="form-control" id="startDate"
-								name="startDate" value="2026-08-01"> <span
-								class="date-sep">〜</span> <input type="date"
-								class="form-control" id="endDate" name="endDate"
-								value="2026-08-31">
+								name="startDate"> <span class="date-sep">〜</span> <input
+								type="date" class="form-control" id="endDate" name="endDate">
 						</div>
 					</div>
 
@@ -99,6 +97,10 @@
 
 							<input type="checkbox" class="btn-check" id="riskCaution" checked>
 							<label class="btn risk-btn risk-caution" for="riskCaution">CAUTION</label>
+
+							<input type="checkbox" class="btn-check" id="riskClear" checked>
+							<label class="btn risk-btn risk-clear" for="riskClear">CLEAR</label>
+
 
 						</div>
 					</div>
@@ -130,16 +132,22 @@
 				<!-- 지도 범례 -->
 				<div class="map-legend">
 					<h6>危険度</h6>
+
 					<p>
-						<span class="legend-dot risk-danger-dot"></span> DANGER
-					</p>
-					<p>
-						<span class="legend-dot risk-warning-dot"></span> WARNING
-					</p>
-					<p>
-						<span class="legend-dot risk-caution-dot"></span> CAUTION
+						<img class="legend-bear" data-risk="DANGER" alt=""> DANGER
 					</p>
 
+					<p>
+						<img class="legend-bear" data-risk="WARNING" alt=""> WARNING
+					</p>
+
+					<p>
+						<img class="legend-bear" data-risk="CAUTION" alt=""> CAUTION
+					</p>
+
+					<p>
+						<img class="legend-bear" data-risk="CLEAR" alt=""> CLEAR
+					</p>
 				</div>
 
 			</div>
@@ -172,11 +180,9 @@
           이 스크립트가 async/defer로 늦게 로드되어 콜백을 호출해도 문제없다.
         ==========================================================
     --%>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=places"
-		async defer>
-		
-	</script>
+	<script async
+		src="https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=places&language=ja&region=JP"></script>
+
 
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 

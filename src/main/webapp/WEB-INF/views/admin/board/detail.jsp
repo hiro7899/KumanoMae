@@ -96,7 +96,11 @@
                                             <c:url var="imageUrl" value="${file.filePath}/${file.saveName}"/>
                                             <div class="col-md-4">
                                                 <a href="${imageUrl}" target="_blank" rel="noopener" class="d-block border rounded overflow-hidden bg-light">
-                                                    <img src="${imageUrl}" alt="<c:out value='${file.originName}'/>" class="img-fluid w-100" style="height: 180px; object-fit: cover;">
+                                                <img src="${imageUrl}" alt="<c:out value='${file.originName}'/>" class="img-fluid w-100" style="height: 180px; object-fit: cover;"
+                                                    onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.hidden=false;">
+                                                <div class="text-muted small text-center py-4" role="status" hidden>
+                                                    <i class="bi bi-image me-1" aria-hidden="true"></i> 添付写真を表示できません。
+                                                </div>
                                                 </a>
                                                 <p class="small text-muted text-truncate mt-1 mb-0"><c:out value="${file.originName}"/></p>
                                             </div>
@@ -153,5 +157,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/resources/js/common/submit-guard.js"></script>
 </body>
 </html>

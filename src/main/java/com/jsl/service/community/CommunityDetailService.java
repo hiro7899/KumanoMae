@@ -14,7 +14,7 @@ import com.jsl.dao.community.CommunityFileDao;
 import com.jsl.dao.community.CommunityLikeDao;
 import com.jsl.dto.community.CommunityBoardDto;
 import com.jsl.dto.member.LoginUserDto;
-import com.jsl.exeption.CommunityException;
+import com.jsl.exception.CommunityException;
 import com.jsl.service.Command;
 import com.jsl.util.DBManager;
 
@@ -30,9 +30,19 @@ public class CommunityDetailService implements Command {
 
         Long cBoardId = parseId(request);
 
-        CommunityBoardDto dto = communityBoardDao.selectById(cBoardId);
+        CommunityBoardDto dto = communityBoardDao.selectByIdForAdmin(cBoardId);
         if (dto == null) {
             throw new CommunityException("存在しない投稿です。");
+        }
+
+        HttpSession session = request.getSession(false);
+        LoginUserDto loginUser = (session != null) ? (LoginUserDto) session.getAttribute("user") : null;
+
+        boolean isAdmin = loginUser != null && "A".equals(loginUser.getUserGrade());
+        boolean isOwner = loginUser != null && loginUser.getMemberId().equals(dto.getMemberId()); // ★ 추가
+
+        if (!"Y".equals(dto.getStatus()) && !isAdmin && !isOwner) {
+            throw new CommunityException("公開されていない投稿です。");
         }
 
         communityBoardDao.increaseViewCnt(cBoardId);
@@ -40,9 +50,6 @@ public class CommunityDetailService implements Command {
         request.setAttribute("communityBoard", dto);
         request.setAttribute("fileList", communityFileDao.selectFilesByBoardId(cBoardId));
         request.setAttribute("commentList", communityCommentDao.selectByBoardId(cBoardId));
-
-        HttpSession session = request.getSession(false);
-        LoginUserDto loginUser = (session != null) ? (LoginUserDto) session.getAttribute("user") : null;
 
         if (loginUser != null) {
             try (Connection conn = DBManager.getConnection()) {
