@@ -6,6 +6,17 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedRisk = "ALL";
     let selectedClear = "ALL";
 
+    // 목격 일시 기준 최신순으로 카드 순서를 정렬합니다.
+    Array.from(reportCards)
+        .sort(function (a, b) {
+            const dateA = Date.parse(a.dataset.sightingDate || "") || 0;
+            const dateB = Date.parse(b.dataset.sightingDate || "") || 0;
+            return dateB - dateA;
+        })
+        .forEach(function (card) {
+            card.parentElement.appendChild(card);
+        });
+
     riskFilterButtons.forEach(function (button) {
         button.addEventListener("click", function () {
             selectedRisk = button.dataset.riskFilter;

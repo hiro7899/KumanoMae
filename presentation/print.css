@@ -1,0 +1,12 @@
+@page { size: 297mm 167.1mm; margin: 0; }
+html body #deck .slide {
+  width: 1280px !important;
+  height: 720px !important;
+  padding: 46px 56px 44px !important;
+  zoom: .8769 !important;
+}
+html body #deck .cover { padding-top: 39px !important; }
+html body #deck .slide h2 { font-size: 38px; }
+html body #deck .closing h2 { font-size: 51px; }
+html body #deck .slide[data-title="地図検索"] { padding: 26px 40px 34px !important; }
+html body #deck .slide[data-title="地図検索"] h2 { font-size: 30px; }

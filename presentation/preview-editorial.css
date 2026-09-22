@@ -1,0 +1,42 @@
+/* Separate visual proposal. Original presentation styles remain unchanged. */
+:root { --paper:#f2ead9; --card:#fffdf7; --line:#daceb9; }
+body { background:#242820; }
+.toolbar { border-color:#494f40; }
+.slide { border-radius:16px; background:radial-gradient(ellipse at 100% 0%,#e8d8b180,transparent 60%),var(--paper); box-shadow:0 20px 60px #0004; }
+.slide:before { height:5px; background:linear-gradient(90deg,var(--red) 0 7%,var(--yellow) 7% 26%,transparent 26%); }
+.eyebrow { font-size:12px; letter-spacing:3px; margin-bottom:17px; display:flex; align-items:center; gap:12px; }
+.eyebrow:before { content:""; width:20px; height:2px; background:var(--red); flex-shrink:0; }
+h2 { letter-spacing:-1px; font-weight:700; }
+.card { border:1px solid #d4c6ae; box-shadow:0 5px 14px #45342009; border-radius:16px; }
+.card.accent { background:#f9edc8; border-color:#d5b665; }
+.card-no { color:#8a5c31; letter-spacing:2.3px; }
+.card h3 { font-weight:700; }
+.slide p { color:#000; }
+.bottom-line { border-color:#d0c1a7; font-weight:500; }
+.ribbon { border-left:3px solid var(--yellow); background:#e9dfc9; border-radius:0 10px 10px 0; }
+.flow article,.entity,.table-wrap { border-color:#d4c6ae; border-radius:12px; }
+.flow i { color:#b39d78; }
+.tech-icon { border:0; background:#f4e6bb; border-radius:16px; }
+.risk { border-radius:5px; }
+.cover-meta { border-color:#c9b99d; }
+.seal { border:1px solid #ad882b; box-shadow:9px 12px 0 #cdb67545; }
+.orbit { border-color:#beab87; }
+.art-label { border:1px solid #b4a080; border-radius:12px; box-shadow:0 4px 12px #392c1910; }
+.team-grid { gap:18px; margin-top:10px; }
+.team-grid .card { padding:22px 20px; border-top:3px solid #d8c6a3; }
+.team-grid .card.accent { border-top-color:var(--yellow); }
+.team-grid .card-no { font-size:10px; margin-bottom:16px; }
+.team-grid .member-number { color:#b6a382; font-size:20px; top:16px; }
+.team-grid .card.accent .member-number { color:#9c6926; }
+.team-grid .member-photo { height:175px; margin-bottom:17px; }
+.team-grid .member-photo img { border-radius:14px; outline:1px solid #c8b99e; outline-offset:-1px; box-shadow:0 3px 12px #332d2512; }
+.team-grid h3 { font-size:21px; margin:8px 0 12px; }
+.team-grid .team-role { border:0; background:#ede5d4; padding:4px 12px; font-size:12px; }
+.team-grid .accent .team-role { background:#efdca3; }
+.team-grid p { font-size:16px; }
+.member-duties { border-color:#dfd4c0; font-size:13px; line-height:1.9; }
+.slide[data-title="地図検索"] .map-capture img { border-radius:10px; box-shadow:0 4px 16px #332d2510; }
+.slide[data-title="地図検索"] .stack .card { border-top:2px solid #d5b976; }
+pre,.card>code { background:#eee5d2; }
+.source { color:#6a604f; }
+.controls .progress { background:#414537; }

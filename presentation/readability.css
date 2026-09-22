@@ -1,0 +1,21 @@
+/* Use a clearer Japanese sans-serif for explanatory text, without bold emphasis. */
+.slide p,
+.slide li,
+.slide td,
+.slide .member-duties,
+.slide .team-role,
+.slide .source,
+.slide .cover-meta,
+.slide .mock-list small,
+.slide .ribbon,
+.slide .speaker-notes {
+  font-family: "Meiryo", "メイリオ", "Noto Sans JP", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.slide p,
+.slide li,
+.slide .member-duties,
+.slide .source,
+.slide .mock-list small { color: #20201d; }
+#video-placeholder p { color: #f4ecd9; }
