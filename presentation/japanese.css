@@ -28,6 +28,11 @@ h2 { font-size: 35px; }
 .flow h3 { font-size: 22px; }
 .speaker-notes { line-height: 1.65; }
 .slide p { color: #000; }
+.controls #previous, .controls #next { width: 48px; flex: 0 0 48px; }
+.controls #page-label { width: 70px; flex: 0 0 70px; text-align: center; font-variant-numeric: tabular-nums; }
+.controls #slide-title { width: 235px; flex: 0 0 235px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.closing .repository-link { margin-top: 22px; font-size: 16px; }
+.repository-link a { color: #754619; text-underline-offset: 4px; }
 .youtube-box iframe { width: 100%; height: 360px; border: 0; background: #000; }
 .youtube-link { color: #f4d371; font-size: 14px; padding: 10px 16px; }
 .slide[data-title="地図検索"] { padding: 26px 40px 34px; }
