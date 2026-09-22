@@ -41,7 +41,7 @@ async function fullscreen() {
 document.getElementById('previous').addEventListener('click', () => showPage(page - 1));
 document.getElementById('next').addEventListener('click', () => showPage(page + 1));
 document.getElementById('overview').addEventListener('click', overviewToggle);
-document.getElementById('notes-toggle').addEventListener('click', toggleNotes);
+document.getElementById('notes-toggle')?.addEventListener('click', toggleNotes);
 document.getElementById('fullscreen').addEventListener('click', fullscreen);
 document.getElementById('print').addEventListener('click', () => window.print());
 document.addEventListener('keydown', event => {
@@ -51,7 +51,7 @@ document.addEventListener('keydown', event => {
   if(event.key === 'Home') { event.preventDefault(); showPage(0); }
   if(event.key === 'End') { event.preventDefault(); showPage(slides.length - 1); }
   if(event.key.toLowerCase() === 'o') overviewToggle();
-  if(event.key.toLowerCase() === 'n') toggleNotes();
+  if(event.key.toLowerCase() === 'n' && document.getElementById('notes-toggle')) toggleNotes();
   if(event.key.toLowerCase() === 'f') fullscreen();
 });
 slides.forEach((slide,index) => slide.addEventListener('click', event => {

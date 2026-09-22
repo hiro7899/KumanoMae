@@ -1,164 +1,128 @@
-# 🚀 KumanoMae 팀 프로젝트 개발 가이드
+# 熊の前（KUMA NO MAE）
 
-프로젝트의 원활한 진행과 효율적인 협업을 위한 개발 가이드라인입니다.  
-처음 시작할 때 아래 규칙을 꼭 숙지하고 작업을 진행해 주세요!
+クマの出没情報を共有し、地域の安全を支えるマップサービス。
 
----
+日本の地域住民や訪問者が、クマの出没場所・日時・危険度を地図で確認し、目撃情報を投稿できるWebアプリケーションです。情報の閲覧から通報、コミュニティでの交流、管理者による情報管理までをつなぎます。
 
-# 📁 1. 폴더 & 패키지 구조 규칙
+## 発表資料
 
-정해진 구조에 맞춰 적절한 위치에 파일 및 클래스를 생성해 주세요.
+**[プロジェクト発表資料を見る](https://hiro7899.github.io/KumanoMae)**
 
-## 🔹 JSP (화면) 파일 위치
-`src/main/webapp/WEB-INF/views/`
-- **auth/**: 로그인, 회원가입 관련
-- **board/**: 게시판 관련
-- **includes/**: `header.jsp`, `footer.jsp` 등 공통 레이아웃
-- **admin/**: 관리자 페이지
-- **user/**: 사용자 페이지 (마이페이지 등)
-- **error/**: 404, 500 등 에러 페이지
+上記はHTML形式の発表資料です。Java・Servletで動作するWebアプリケーション本体とは異なります。
 
-> ⚠️ **주의:** `WEB-INF` 내부의 JSP 파일은 보안 구역이므로 브라우저 주소창에 직접 URL을 입력하여 접근할 수 없습니다. 반드시 **Controller(서블릿)**를 거쳐서 이동해야 합니다.
+- 開発期間：2026年9月1日 ～ 9月23日
+- チーム名：熊の前
+- 発表者：ジョン・グァノ
 
-## 🔹 Java 클래스 위치
-`src/main/java/com/jsl/`
-- **controller/**: 서블릿 객체 (URL 요청 수신 및 화면 이동 안내)
-- **service/**: 화면(Controller)과 DB(DAO) 사이에서 **실제 비즈니스 로직(검증, 계산, 조건 처리)을 담당하는 클래스**
-- **dao/**: DB 접근 객체 (Data Access Object, SQL 실행)
-- **dto/**: 데이터 전달 객체 (Data Transfer Object, DB-Java간 데이터 전달)
-- **util/**: `DBManager`, `EncodingFilter` 등 공통 유틸리티
+## 主な機能
 
-### 💡 역할 구분 (왜 Service를 쓰나요?)
-- **Controller (서블릿):** 요청을 받고, 어느 화면(JSP)으로 이동할지 **길 안내만 담당**
-- **Service:** 실제 **머리 쓰는 일** (아이디 중복 검사, 가입 자격 확인, 데이터 가공 및 계산 등)
-- **DAO:** DB에서 **데이터를 빼오거나 넣는 일만 담당**
+### 出没マップ
 
----
+- Google Maps上で出没情報を表示
+- クマのアイコンと凡例で危険度を可視化
+- 地域・期間・危険度による絞り込み
+- 検索結果に応じたマーカーと出没情報一覧の更新
 
-# 🔄 2. 이클립스 GUI Git 작업 순서
+| 区分 | 表示 | 内容 |
+| --- | --- | --- |
+| DANGER | 危険 | クマの目撃など、危険度の高い情報 |
+| WARNING | 警戒 | 足跡・痕跡などの情報 |
+| CAUTION | 注意 | 鳴き声・気配などの注意情報 |
+| CLEAR | 解除 | 危険が解除された状態 |
 
-터미널 명령어 대신 **이클립스 Git GUI**를 사용한 표준 작업 절차입니다.
+### 目撃情報・コミュニティ
 
-## 📥 [매일 시작 전] 최신 코드 가져오기 (Pull)
-1. `Git Repositories` 뷰 ➔ `Branches` ➔ `Local` ➔ `develop` 우클릭 ➔ **Checkout**
-2. 프로젝트 우클릭 ➔ **Team** ➔ **Pull** 클릭 (`develop` 최신화)
-3. `Local` ➔ `본인 브랜치(feature/이름)` 우클릭 ➔ **Checkout**
-4. 본인 브랜치 우클릭 ➔ **Merge...** ➔ `develop` 선택 후 **Merge** 클릭
+- 目撃情報の一覧・詳細表示と通報
+- 位置情報・画像を含む情報共有
+- コミュニティ投稿の作成・編集・削除
+- コメントの作成・削除、いいねの切り替え
 
-## 📤 [개발 완료 후] 내 코드 올리기 (Commit & Push)
-1. 하단 **`Git Staging`** 탭 이동
-2. Unstaged Changes의 변경된 파일 선택 ➔ **`+`** 눌러 Staged Changes로 이동
-3. Commit Message 작성 (아래 커밋 메시지 작성 규칙 참고)
-4. **`[Commit and Push...]`** 클릭 후 완료
+### 会員・マイページ
 
-## 🔀 [GitHub] PR (Pull Request) 보내기
-1. GitHub 웹 접속 ➔ **`Compare & pull request`** 클릭
-2. **브랜치 방향 확인:**  
-   `base: develop` ⬅️ `compare: feature/본인이름`
-3. 작업 내용 요약 작성 후 **`Create pull request`** 클릭
+- 新規登録、ログイン、ログアウト
+- ID・メールアドレスの重複確認
+- メール認証とアカウント復旧
+- パスワード再設定
+- プロフィール・設定画面
 
----
+### 管理者
 
-# 💬 3. Git 커밋 메시지 작성 규칙
+- 目撃情報の承認・却下・危険解除
+- 会員管理
+- コミュニティ投稿の表示・非表示・削除、コメント管理
+- 管理操作の履歴保存
 
-커밋 메시지는 **`타입: 설명`** 형태로 작성합니다. (첫 글자 대문자)
+## 開発メンバー
 
-### 📌 자주 쓰는 커밋 타입 요약
+| メンバー | 役割 | 担当 |
+| --- | --- | --- |
+| ジョン・グァノ | チームリーダー／バックエンド | チーム管理、データベース設計、バックエンド全体 |
+| キム・スリム | フロントエンド | 会員管理・地図の設計と実装 |
+| パク・ジョンウク | フロントエンド | トップページ・マイページの設計と実装 |
+| キム・ビョンギュ | フロントエンド | 掲示板・管理者ページの設計と実装 |
 
-| 타입 | 의미 | 작성 예시 |
-| :--- | :--- | :--- |
-| **`Feat`** | 새로운 기능 구현 | `Feat: 회원가입 아이디 중복체크 기능 구현` |
-| **`Fix`** | 버그 및 오류 수정 | `Fix: 로그인 시 세션 생성 안 되는 오류 수정` |
-| **`Style`** | UI 디자인, CSS, 코드 포맷팅 | `Style: 헤더 네비게이션 바 CSS 디자인 수정` |
-| **`Refactor`** | 코드 개선 (기능 변경 없음) | `Refactor: DBManager 자원 반납 로직 공통화` |
-| **`Chore`** | 기타 세팅, 폴더/파일 추가 | `Chore: board 패키지 생성 및 .gitkeep 추가` |
+## 技術構成
 
----
+| 分野 | 使用技術 |
+| --- | --- |
+| フロントエンド | HTML、CSS、JavaScript、Bootstrap、JSP、JSTL |
+| バックエンド | Java 17、Servlet、JDBC |
+| データベース | Oracle、JNDI DataSource |
+| 地図 | Google Maps JavaScript API |
+| ライブラリ | Gson、JavaMail、BCrypt |
+| 開発環境 | Eclipse、Apache Tomcat 9、Git、GitHub |
 
-# ⚠️ 4. 필독 주의사항
+## アプリケーション構成
 
-1. **Pull & Push 기준:**
-   - **Pull 받을 때:** 무조건 `develop` 브랜치에서 받기!
-   - **Push 할 때:** 무조건 `내 개인 브랜치(feature/이름)`로 올리기!
-2. **JSP 접근 규칙:**
-   - `WEB-INF` 내부 JSP는 브라우저 주소창 직접 접속 금지 (서블릿 타고 이동)
-3. **인코딩 설정:**
-   - `EncodingFilter`가 세팅되어 있으므로 서블릿마다 `request.setCharacterEncoding("UTF-8")`을 별도로 작성하지 않아도 됩니다.
-4. **에러 발생 시:**
-   - 이클립스 콘솔창에 빨간 줄(Exception)이 뜨면, **가장 위쪽에 찍힌 첫 번째 에러 메시지**를 복사해서 팀장에게 문의해 주세요.
+Servlet MVCを基本とし、リクエストの処理、業務ロジック、データアクセス、画面表示を分離しています。
 
-## 📐 네이밍 규칙 (Naming Conventions)
+```text
+ブラウザー → Controller → Service → DAO / SQL → Oracle
+                  ↓
+             JSP または JSON
+                  ↓
+              画面の表示・更新
+```
 
-코드의 일관성과 가독성을 위해 표기법 가이드 및 명명 규칙을 엄격히 준수합니다.
+- **Controller**：URLに応じた処理の振り分けと画面遷移
+- **Service**：入力検証、権限確認、各機能の業務処理
+- **DAO / SQL**：JDBCを利用したデータの取得・保存
+- **DTO**：各層の間でのデータの受け渡し
+- **JSP / JavaScript / CSS**：画面構成、操作、表示スタイル
 
-### 🔤 표기법 요약 (Case Styles)
+## ディレクトリ構成
 
-| 표기법 | 명명 형태 | 설명 및 예시 | 주요 사용처 |
-| :--- | :--- | :--- | :--- |
-| **camelCase** | 소문자 시작 + 단어 조합 대문자 | `userId`, `boardList`, `submitBtn` | Java 변수/메서드, JS 변수/함수, HTML ID |
-| **PascalCase** | 대문자 시작 + 단어 조합 대문자 | `BoardController`, `UserDAO` | Java 클래스/인터페이스/컨트롤러 |
-| **kebab-case** | 전체 소문자 + 하이픈(`-`) 연결 | `board-list`, `danger-marker` | HTML Class, URL Path, CSS 스타일 |
-| **SNAKE_CASE** | 전체 대문자 + 언더바(`_`) 연결 | `BOARD_NO`, `MAX_FILE_SIZE` | DB 테이블/컬럼(대문자), Java 상수 |
----
+```text
+KumanoMae/
+├── index.html                 # 発表資料の入口
+├── presentation/              # 発表用CSS・JavaScript・画像
+└── src/main/
+    ├── java/com/jsl/
+    │   ├── controller/
+    │   ├── service/
+    │   ├── dao/
+    │   ├── dto/
+    │   ├── sql/
+    │   └── util/
+    └── webapp/
+        ├── index.jsp          # アプリケーションのトップ画面
+        ├── WEB-INF/views/     # JSP画面
+        └── resources/         # アプリ用CSS・JavaScript・画像
+```
 
-### 1. Java (Backend)
-- **컨트롤러명 (Controller)**: `PascalCase` (`[도메인]Controller` 형태)
-  - `BoardController` (`@WebServlet("/board/*")`), `UserController`
-- **DAO / DTO / Service 명**: `PascalCase`
-  - `BoardDAO`, `UserDAO`, `DangerZoneDTO`
-- **변수명 및 메서드명**: `camelCase`
-  - `selectBoardList()`, `dangerZoneList`, `userId`
-- **상수 (Constant)**: `UPPER_SNAKE_CASE`
-  - `MAX_FILE_SIZE`, `DEFAULT_PAGE_SIZE`
-- **패키지명 (Package)**: `lowercase` (전체 소문자)
-  - `com.bear.controller`, `com.bear.dao`, `com.bear.dto`
+## 実行環境について
 
-### 2. Database (Oracle DB)
-- **테이블명 및 컬럼명**: `UPPER_SNAKE_CASE`
-  - 테이블: `BEAR_BOARDS`, `BEAR_DANGER_ZONES`
-  - 컬럼: `BOARD_NO`, `DANGER_LEVEL`, `CREATED_AT`
-- **시퀀스 (Sequence)**: `UPPER_SNAKE_CASE` (`SEQ_[테이블명]_[PK]`)
-  - `SEQ_BEAR_BOARDS_NO`
+アプリケーション本体を実行するには、Java 17・Tomcat 9・Oracleと、必要なテーブルおよびビューの準備が必要です。Eclipseの既存プロジェクトとして読み込み、接続先に合わせて設定してください。
 
-### 3. Frontend & Web Path
-- **JSP 파일명**: `camelCase` 또는 `lowercase`
-  - `bearMap.jsp`, `boardList.jsp`, `boardWrite.jsp`
-- **URL / Servlet Mapping 경로**: RESTful 스타일 `kebab-case` (확장자 `.do` 제거)
-  - `/board/list`, `/board/write`, `/board/detail`
-  - `/user/login`, `/user/signup`
-- **JavaScript 변수/함수명**: `camelCase`
-  - `initMap()`, `drawDangerZone()`, `selectedLat`
-- **HTML DOM ID / Class**:
-  - `id`: `camelCase` (JS 제어 및 식별 목적 / 예: `#mapContainer`, `#submitBtn`)
-  - `class`: `kebab-case` (CSS 스타일링 목적 / 예: `.danger-marker`, `.board-table`)
- 
-### 2. Database (Oracle DB) & DAO SQL 작성 규칙
-- **테이블명 및 컬럼명**: `UPPER_SNAKE_CASE` (DB DDL 정의 시)
-  - 테이블: `BEAR_BOARDS`, `BEAR_DANGER_ZONES`
-  - 컬럼: `BOARD_NO`, `DANGER_LEVEL`, `CREATED_AT`
-- **시퀀스 (Sequence)**: `UPPER_SNAKE_CASE` (`SEQ_[테이블명]_[PK]`)
-  - `SEQ_BEAR_BOARDS_NO`
+- DB接続：`src/main/webapp/META-INF/context.xml.example`を参考に、`jdbc/kumanomae`のDataSourceを設定
+- メール：`src/main/webapp/WEB-INF/classes/mail.properties.example`を参考に送信設定を準備
+- Google Maps：実行環境のAPIキー設定を準備
+- 画像アップロード：実行環境に合った保存先を設定
 
-#### ✍️ DAO 클래스 내 SQL 쿼리 대소문자 작성 규칙
-Java DAO 파일 내부에서 PreparedStatement용 SQL 문을 작성할 때 아래 가이드를 준수합니다.
+認証情報やAPIキーは各自の環境で管理し、公開リポジトリには含めないでください。
 
-1. **SQL 예약어 / 키워드**: `전체 대문자` 사용
-   - `SELECT`, `FROM`, `WHERE`, `INSERT INTO`, `VALUES`, `UPDATE`, `SET`, `DELETE`, `ORDER BY`, `AND`, `OR` 등
-2. **테이블명 및 컬럼명**: `전체 대문자` (`UPPER_SNAKE_CASE`) 사용
-   - Oracle DB 스키마와 일치시켜 가독성 확보 (`BEAR_BOARDS`, `TITLE`, `CREATED_AT`)
-3. **컬럼 별칭 (Alias)**: `소문자` 또는 `camelCase` 사용 (필요 시 큰따옴표 `" "` 활용)
-   - 예: `COUNT(*) AS totalCount`
-4. **Java 내 텍스트 블록 / String 작성 가이드**:
-   - 가독성을 위해 각 절(`SELECT`, `FROM`, `WHERE` 등)마다 줄바꿈 및 들여쓰기 적용
+発表資料は、ルートの`index.html`と`presentation`フォルダーを同じ階層に置いて開けます。埋め込まれたYouTube動画の視聴にはインターネット接続が必要です。
 
-**[DAO SQL 작성 예시]**
-```java
-// 게시글 목록 조회 쿼리 예시
-String sql = "SELECT BOARD_NO, USER_ID, TITLE, DANGER_LEVEL, READ_COUNT, CREATED_AT "
-           + "FROM BEAR_BOARDS "
-           + "WHERE DANGER_LEVEL = ? "
-           + "ORDER BY BOARD_NO DESC";
+## ソースコード
 
-// 신규 제보 등록 쿼리 예시
-String sql = "INSERT INTO BEAR_BOARDS (BOARD_NO, USER_ID, TITLE, CONTENT, LATITUDE, LONGITUDE, DANGER_LEVEL) "
-           + "VALUES (SEQ_BEAR_BOARDS_NO.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+[GitHub — hiro7899/KumanoMae](https://github.com/hiro7899/KumanoMae)
