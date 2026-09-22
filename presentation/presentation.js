@@ -19,7 +19,13 @@ function showPage(index, updateHash = true) {
   document.getElementById('next').disabled = page === slides.length - 1;
   if (updateHash) history.replaceState(null, '', `#${page + 1}`);
   const video = document.getElementById('demo-video');
-  if (!slides[page].contains(video)) video.pause();
+  if (video && !slides[page].contains(video)) video.pause();
+  const youtube = document.getElementById('youtube-demo');
+  if (youtube && !slides[page].contains(youtube) && youtube.dataset.playable === 'true') {
+    youtube.src = youtube.src;
+    youtube.dataset.playable = 'false';
+  }
+  if (youtube && slides[page].contains(youtube)) youtube.dataset.playable = 'true';
 }
 function overviewToggle() {
   const enabled = document.body.classList.toggle('overview');
@@ -57,7 +63,7 @@ document.querySelectorAll('[data-save]').forEach(field => {
   field.addEventListener('input', () => { try { localStorage.setItem(key, field.textContent); } catch {} });
   field.addEventListener('paste', event => { event.preventDefault(); const text = event.clipboardData.getData('text/plain'); field.textContent = text.slice(0,120); field.dispatchEvent(new Event('input')); });
 });
-document.getElementById('video-file').addEventListener('change', event => {
+document.getElementById('video-file')?.addEventListener('change', event => {
   const file = event.target.files[0]; if(!file) return;
   const video = document.getElementById('demo-video');
   video.pause(); if(videoUrl) URL.revokeObjectURL(videoUrl);
@@ -65,7 +71,7 @@ document.getElementById('video-file').addEventListener('change', event => {
   video.closest('.video-box').classList.add('has-video');
   document.getElementById('video-status').textContent = file.name;
 });
-document.getElementById('demo-video').addEventListener('error', () => { document.getElementById('video-status').textContent = '再生できない形式です。MP4動画を選択してください。'; });
+document.getElementById('demo-video')?.addEventListener('error', () => { document.getElementById('video-status').textContent = '再生できない形式です。MP4動画を選択してください。'; });
 window.addEventListener('resize', resizeDeck);
 window.addEventListener('hashchange', () => showPage((Number(location.hash.slice(1)) || 1) - 1, false));
 showPage((Number(location.hash.slice(1)) || 1) - 1, false);
